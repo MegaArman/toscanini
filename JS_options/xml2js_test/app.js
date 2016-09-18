@@ -1,3 +1,7 @@
-console.log('abcd');
+"use strict";
 
-let f1 = function () { console.log('f1')};
+//MAIN CLASS
+//NOTE: require should work in browser assuming you have browserify installed
+var greetings = require("./boilerplate.js");
+// greetings.helloWorld(); //prints Hello World! if you have browserify setup correctly
+//=============================================
