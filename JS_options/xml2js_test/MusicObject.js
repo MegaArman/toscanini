@@ -37,7 +37,6 @@ class MusicObject
   }
 }
 
-
 //==================================Test out this object:==================
 
 let parser = new xml2js.Parser();

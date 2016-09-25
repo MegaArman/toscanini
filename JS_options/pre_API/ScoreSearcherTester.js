@@ -8,10 +8,10 @@ fs.readFile('./super_basic.xml', function(err, data) {     //data is the whole s
     let basicPieceRaw;
 
     parser.parseString(data, function (err, result) {
-        basicPieceRaw = result;
-
-        const basicPiece = new ScoreSearcher(basicPieceRaw);
-        basicPiece.findPitches();
-        console.log('Done');
-    });
+      basicPieceRaw = result;
+      const basicPiece = new ScoreSearcher(basicPieceRaw);
+      // basicPiece.findPitches();
+      basicPiece.findHighestPitch();
+      console.log('Done');
+  });
 });
