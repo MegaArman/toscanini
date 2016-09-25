@@ -5,3 +5,11 @@ I've used xml2js to convert a musicXML file to a JS object and then searched thr
 ### Setup
 -Use npm install to get dependencies listed in package.json
 
+### Execution 
+ node --use_strict MusicObject.js
+ 
+ results in the following output: 
+[ { step: [ 'C' ], octave: [ '4' ] } ]
+[ { step: [ 'B' ], octave: [ '4' ] } ]
+[ { step: [ 'G' ], octave: [ '5' ] } ]
+Done
