@@ -1,14 +1,17 @@
 //The purpose of this class is to find basic information about music scores
-// let pitchRef = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A':9, 'B': 11};
-
-
 class ScoreSearcher
 {
+  //pitch => [{step: ['C']}, octave['4']}] as returned from searching obj
+  //from xml2js
 
   constructor(musicObj) //a JS object from xml2js
   {
     this.musicObj = musicObj;
     this.pitchRef = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A':9, 'B': 11};
+
+    this.maxPitch = -999;
+    this.minPitch = 999;
+    this.findExtremePitches();
   }
 
   traverse(musicObj,func)
@@ -36,36 +39,51 @@ class ScoreSearcher
     this.traverse(this.musicObj, process);
   }
 
-  findHighestPitch()
+  findExtremePitches() //finds max and min pitch
   {
+    let midiNoteNum = 0;
+
     function process(key, value)
     {
-      let midiNoteNum = 0;
-
-
       if (key == 'step')
       {
-        // console.log(this.pitchRef);
-        console.log('step ' + value);
-        // // midiNoteNum += this.pitchRef.value;
-        //
-
-        console.log('midiNoteNum ' + this.pitchRef[value]);
+        midiNoteNum += this.pitchRef[value];
       }
 
       if (key == 'alter')
       {
-        // console.log('alter ' + value);
+        midiNoteNum += parseInt(value);
       }
 
       if (key == 'octave')
       {
-        // console.log('octave ' + value);
-      }
+        midiNoteNum += parseInt(value) * 12;
 
+        if (this.maxPitch < midiNoteNum)
+        {
+          this.maxPitch = midiNoteNum;
+        }
+
+        if (this.minPitch > midiNoteNum)
+        {
+          this.minPitch = midiNoteNum;
+        }
+
+        midiNoteNum = 0;
+      }
     }
 
     this.traverse(this.musicObj, process);
+  }
+
+  getMaxPitch()
+  {
+    return this.maxPitch;
+  }
+
+  getMinPitch()
+  {
+    return this.minPitch;
   }
 }
 

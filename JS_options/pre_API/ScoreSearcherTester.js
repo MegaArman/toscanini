@@ -10,8 +10,8 @@ fs.readFile('./super_basic.xml', function(err, data) {     //data is the whole s
     parser.parseString(data, function (err, result) {
       basicPieceRaw = result;
       const basicPiece = new ScoreSearcher(basicPieceRaw);
-      // basicPiece.findPitches();
-      basicPiece.findHighestPitch();
-      console.log('Done');
+      basicPiece.findPitches();
+      console.log('max midi pitch is ' + basicPiece.getMaxPitch());
+      console.log('min midi pitch is ' + basicPiece.getMinPitch());
   });
 });
