@@ -11,13 +11,8 @@ class MusicObject
     // console.dir(this.musicObj)
   }
 
-  findHighestPitch()
+  findPitches()
   {
-    // console.log('finding highest pitch musicObj is ' + this.musicObj);
-
-    // METHOD 1 for iterating over an entire object:
-    // your object
-
     //called with every property and it's value
     function process(key,value)
     {
@@ -25,13 +20,10 @@ class MusicObject
         {
           console.log(value);
         }
-        // console.log(key + " : "+value);
     }
 
     function traverse(musicObj,func)
     {
-        // console.log('in traverse ' + musicObj);
-
         for (var i in musicObj) {
             func.apply(this,[i, musicObj[i]]);
             if (musicObj[i] !== null && typeof(musicObj[i])=="object") {
@@ -41,10 +33,13 @@ class MusicObject
         }
     }
 
-    //that's all... no magic, no bloated framework
     traverse(this.musicObj,process);
   }
 }
+
+
+//==================================Test out this object:==================
+
 let parser = new xml2js.Parser();
 let basicPieceRaw;
 
@@ -53,13 +48,9 @@ fs.readFile('./super_basic.xml', function(err, data) {
 
     parser.parseString(data, function (err, result) {
         basicPieceRaw = result;
-        // console.log('in parseString ');
 
         const basicPiece = new MusicObject(basicPieceRaw);
-        basicPiece.findHighestPitch();
+        basicPiece.findPitches();
         console.log('Done');
     });
-
 });
-
-// console.dir(basicPieceRaw); //doesn't work!
