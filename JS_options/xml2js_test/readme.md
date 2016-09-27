@@ -11,6 +11,9 @@ Use npm install to get dependencies listed in package.json
  results in the following output: 
  
 [ { step: [ 'C' ], octave: [ '4' ] } ]
+
 [ { step: [ 'B' ], octave: [ '4' ] } ]
+
 [ { step: [ 'G' ], octave: [ '5' ] } ]
+
 Done
