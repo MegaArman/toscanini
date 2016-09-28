@@ -4,7 +4,7 @@ let fs = require('fs'),
 let parser = new xml2js.Parser();
 let ScoreSearcher = require('./ScoreSearcher.js');
 
-fs.readFile('./super_basic.xml', function(err, data) {     //data is the whole score as a string!!!
+fs.readFile('./avamariapg1.xml', function(err, data) {     //data is the whole score as a string!!!
     let basicPieceRaw;
 
     parser.parseString(data, function (err, result) {
