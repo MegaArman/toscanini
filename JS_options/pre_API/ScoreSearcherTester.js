@@ -10,7 +10,7 @@ fs.readFile('./avamariapg1.xml', function(err, data) {     //data is the whole s
     parser.parseString(data, function (err, result) {
       basicPieceRaw = result;
       const basicPiece = new ScoreSearcher(basicPieceRaw);
-      basicPiece.findPitches();
+      basicPiece.findValsByKey('instrument-name');
       console.log('max midi pitch is ' + basicPiece.getMaxPitch());
       console.log('min midi pitch is ' + basicPiece.getMinPitch());
   });

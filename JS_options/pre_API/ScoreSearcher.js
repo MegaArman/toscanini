@@ -1,7 +1,8 @@
 //The purpose of this class is to find basic information about music scores
 class ScoreSearcher
 {
-  constructor(musicObj) //JS object from xml2js, pitch: [{step: ['C']}, octave['4']}]
+  //JS object from xml2js, pitch: [{step: ['C']}, octave['4']}]
+  constructor(musicObj)
   {
     this.musicObj = musicObj;
     this.pitchRef = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A':9, 'B': 11};
@@ -20,11 +21,11 @@ class ScoreSearcher
     }
   }
 
-  findPitches() //logs all pitches in the score
+  findValsByKey(targetKey)
   {
     function process (key,value) //called with every property and it's value
     {
-      if (key == 'pitch') console.log(value);
+      if (key == targetKey) console.log(value);
     }
 
     this.traverse(this.musicObj, process);
@@ -38,6 +39,7 @@ class ScoreSearcher
     {
       if (key == 'step') midiNoteNum += this.pitchRef[value];
       if (key == 'alter') midiNoteNum += parseInt(value);
+
       if (key == 'octave')
       {
         midiNoteNum += parseInt(value) * 12;
