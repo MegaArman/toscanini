@@ -8,7 +8,10 @@ class ScoreSearcher
     this.pitchRef = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A':9, 'B': 11};
     this.maxPitch = -999;
     this.minPitch = 999;
-    this.findExtremePitches();
+    this.instrumentObjects = {};
+
+    this.findExtremePitches(); //1st pass
+    this.makeInstrumentObjects(); //2nd pass ... TODO
   }
 
   traverse(musicObj,func)
@@ -51,6 +54,32 @@ class ScoreSearcher
       }
     }
 
+    this.traverse(this.musicObj, process);
+  }
+
+  //create objects for each instrument, this will reduce searching whole score
+  //'instrument-name' is only used in a initialization part of a score
+  //after which, score-part id refers to the instruments
+  makeInstrumentObjects()
+  {
+    let instrumentNames = [];
+
+    function process(key, value) //builds array of instrument objects
+    {
+      if (key == 'instrument-name') instrumentNames.push(value);
+
+      //NOTE: duplicates are combined to
+      // 1 array part:[p1 obj, p2 obj]
+      if (key == 'part')
+      {
+        let index = 0;
+        for (const name of instrumentNames)
+        {
+          this.instrumentObjects[name] = value[index];
+          index++;
+        }
+      }
+    }
     this.traverse(this.musicObj, process);
   }
 

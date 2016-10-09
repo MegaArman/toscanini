@@ -2,7 +2,7 @@
   "name": "xml2js_test",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "ScoreSearcherTester.js",
   "scripts": {
     "build": "browserify app.js -o bundle.js",
     "watch": "watchify app.js -o bundle.js"
