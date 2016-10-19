@@ -10,3 +10,5 @@ See the xml2js_test for info on how MusicXML is being represented as a JS object
 ### Execution 
  node --use_strict ScoreSearcherTester.js
  
+### Optional
+ http://eslint.org/docs/user-guide/getting-started
