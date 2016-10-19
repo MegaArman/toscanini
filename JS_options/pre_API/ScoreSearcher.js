@@ -20,7 +20,7 @@ class ScoreSearcher
     {
       func.apply(this,[i, musicObj[i]]);
       //recursively step down in the object tree:
-      if (musicObj[i] !== null && typeof(musicObj[i])=="object") this.traverse(musicObj[i],func);
+      if (musicObj[i] !== null && typeof(musicObj[i])=='object') this.traverse(musicObj[i],func);
     }
   }
 

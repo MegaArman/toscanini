@@ -1,5 +1,5 @@
 //Currently the 'import' statement is not widely supported, hence 'require' suffices
-var hrstart = process.hrtime(); //node supported and more precise for speed test
+let hrstart = process.hrtime(); //node supported and more precise for speed test
 
 let fs = require('fs'),
     xml2js = require('xml2js');
@@ -47,7 +47,7 @@ fs.readFile('./vivaldi_winter.xml', function(err, data) {
       // console.log('min midi pitch is ' + basicPiece.getMinPitch());
 
       //PRINT EXECUTION TIME :
-      var hrend = process.hrtime(hrstart);
-      console.log("Execution time (hr): ", hrend[0], hrend[1]/1000000);
+      let hrend = process.hrtime(hrstart);
+      console.log('Execution time (hr): ', hrend[0], hrend[1]/1000000);
   });
 });
