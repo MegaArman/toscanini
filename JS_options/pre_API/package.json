@@ -1,17 +1,11 @@
 {
-  "name": "xml2js_test",
+  "name": "pre_API",
   "version": "1.0.0",
   "description": "",
   "main": "ScoreSearcherTester.js",
-  "scripts": {
-    "build": "browserify app.js -o bundle.js",
-    "watch": "watchify app.js -o bundle.js"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "browserify": "^13.1.0",
-    "watchify": "^3.7.0",
     "xml2js": "^0.4.17"
   }
 }
