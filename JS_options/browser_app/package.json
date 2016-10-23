@@ -1,0 +1,15 @@
+{
+  "name": "browser_input",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "browserify app.js -o bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^13.1.1",
+    "xml2js": "^0.4.17"
+  }
+}
