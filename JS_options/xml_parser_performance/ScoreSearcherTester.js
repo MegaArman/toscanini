@@ -5,7 +5,7 @@ let hrstart = process.hrtime(); //node supported and more precise for speed test
 let parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 let ScoreSearcher = require('./ScoreSearcher.js');
 
-fs.readFile('./vivaldi_winter.xml', function(err, data) {
+fs.readFile('../scores/vivaldi_winter.xml', function(err, data) {
     let basicPieceRaw;
 
     parser.parseString(data, function (err, result) {

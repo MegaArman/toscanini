@@ -12,7 +12,7 @@ let parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 let ScoreSearcher = require('./ScoreSearcher.js');
 
 //data is the whole score as a string!!!
-// fs.readFile('./avamariapg1.xml', function(err, data) {
+// fs.readFile('../scores/avamariapg1.xml', function(err, data) {
 //     let basicPieceRaw;
 //
 //     parser.parseString(data, function (err, result) {
@@ -36,7 +36,7 @@ let ScoreSearcher = require('./ScoreSearcher.js');
 //===============================================================
 //PERFORMANCE TEST:
 //winter is 3.8mb
-fs.readFile('./vivaldi_winter.xml', function(err, data) {
+fs.readFile('../scores/vivaldi_winter.xml', function(err, data) {
     let basicPieceRaw;
 
     parser.parseString(data, function (err, result) {
