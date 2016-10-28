@@ -1,7 +1,6 @@
 //The purpose of this class is to find basic information about music scores
 class ScoreSearcher
 {
-  //JS object from xml2js, pitch: [{step: ['C']}, octave['4']}]
   constructor(musicObj)
   {
     this.musicObj = musicObj;
@@ -9,9 +8,6 @@ class ScoreSearcher
     this.maxPitch = -999;
     this.minPitch = 999;
     this.instrumentObjects = {};
-
-    this.findExtremePitches(); //1st pass
-    this.makeInstrumentObjects(); //2nd pass ... TODO
   }
 
   traverse(musicObj,func)
@@ -81,6 +77,33 @@ class ScoreSearcher
       }
     }
     this.traverse(this.musicObj, process);
+  }
+
+  colorNotes() //finds max and min pitch
+  {
+    function traverse(musicObj)
+    {
+      for (var i in musicObj)
+      {
+        if (i == "note")
+        {
+          if (musicObj[i].length > 1) //TODO ACCOUNT FOR SINGLE NOTE
+          {
+            for (let x in musicObj[i])
+            musicObj[i][x].notehead= { _: 'normal', '$': { color: '#0BFF1B' } };
+          }
+          else
+          {
+            musicObj[i].notehead= { _: 'normal', '$': { color: '#0BFF1B' } };
+          }
+        }
+        //recursively step down in the object tree:
+        if (musicObj[i] !== null && typeof(musicObj[i])=='object') traverse(musicObj[i]);
+      }
+    }
+
+    traverse(this.musicObj);
+    return this.musicObj;
   }
 
   getMaxPitch() { return this.maxPitch;}
