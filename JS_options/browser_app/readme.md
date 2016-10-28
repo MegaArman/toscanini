@@ -4,7 +4,7 @@ This code shows how to create a browser app as opposed to a node based app using
 xml2js works in browser as it is a JavaScript based parser- this may not be the case for other parsers downloaded via NPM
 
 ### Setup
-1) Download this directory (no parent directories needed). 
+1) Download this directory 
 
 2) Use npm install to get dependencies listed in package.json
 
