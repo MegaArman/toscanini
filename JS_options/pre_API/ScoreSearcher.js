@@ -9,14 +9,12 @@ class ScoreSearcher
     this.maxPitch = -999;
     this.minPitch = 999;
     this.instrumentObjects = {};
-
-    this.findExtremePitches(); //1st pass
-    this.makeInstrumentObjects(); //2nd pass ... TODO
+    this.makeInstrumentObjects();
   }
 
   traverse(musicObj,func)
   {
-    for (var i in musicObj)
+    for (let i in musicObj)
     {
       func.apply(this,[i, musicObj[i]]);
       //recursively step down in the object tree:
