@@ -1,4 +1,5 @@
 //Currently the 'import' statement is not widely supported, hence 'require' suffices
+'use strict';
 let hrstart = process.hrtime(); //node supported and more precise for speed test
 
 let fs = require('fs'),
@@ -11,7 +12,6 @@ let parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
 let ScoreSearcher = require('./ScoreSearcher.js');
 
-//data is the whole score as a string!!!
 // fs.readFile('../scores/avamariapg1.xml', function(err, data) {
 //     let basicPieceRaw;
 //
@@ -21,15 +21,6 @@ let ScoreSearcher = require('./ScoreSearcher.js');
 //       basicPiece.findValsByKey('instrument-name');
 //       console.log('max midi pitch is ' + basicPiece.getMaxPitch());
 //       console.log('min midi pitch is ' + basicPiece.getMinPitch());
-//   });
-// });
-
-// fs.readFile('./two_parts_simple.xml', function(err, data) {     !
-//     let basicPieceRaw;
-//
-//     parser.parseString(data, function (err, result) {
-//       basicPieceRaw = result;
-//       const basicPiece = new ScoreSearcher(basicPieceRaw);
 //   });
 // });
 

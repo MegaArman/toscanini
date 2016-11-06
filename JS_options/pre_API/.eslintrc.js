@@ -10,10 +10,6 @@ module.exports = {
     },
     "rules": {
         "no-console":0,
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
         "quotes": [
             "error",
             "single"

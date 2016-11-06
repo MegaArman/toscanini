@@ -1,3 +1,4 @@
+'use strict';
 //The purpose of this class is to find basic information about music scores
 class ScoreSearcher
 {
