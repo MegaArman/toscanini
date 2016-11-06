@@ -2,7 +2,6 @@
 //The purpose of this class is to find basic information about music scores
 class ScoreSearcher
 {
-  //JS object from xml2js, pitch: [{step: ['C']}, octave['4']}]
   constructor(musicObj)
   {
     this.musicObj = musicObj;
@@ -82,8 +81,23 @@ class ScoreSearcher
     this.traverse(this.musicObj, process);
   }
 
-  getMaxPitch() { return this.maxPitch;}
-  getMinPitch() { return this.minPitch;}
+  getMaxPitch() {
+    if (this.maxPitch == -999)
+    {
+      this.findExtremePitches();
+    }
+    return this.maxPitch;
+  }
+
+  getMinPitch() {
+    if (this.minPitch == 999)
+    {
+      this.findExtremePitches();
+    }
+     return this.minPitch;
+  }
+
+  getInstrumentObjects() { return this.instrumentObjects; }
 }
 
 module.exports = ScoreSearcher;
