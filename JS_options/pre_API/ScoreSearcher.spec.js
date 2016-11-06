@@ -5,33 +5,24 @@ const xml2js = require('xml2js');
 const test = require('tape').test;
 const ScoreSearcher = require('./ScoreSearcher');
 
-let parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
+const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
-function avamariapg1()
-{
-
+test('avamariapg1 tests', function(t){
   fs.readFile('../scores/avamariapg1.xml', function(err, data) {
-    let basicPiece;
-
       parser.parseString(data, function (err, result) {
-        basicPiece = new ScoreSearcher(result);
+        const basicPiece = new ScoreSearcher(result);
         basicPiece.findExtremePitches();
 
-        test('avamariapg1 tests', (t) =>{
+        const highestActual = basicPiece.getMaxPitch();
+        const highestExpected = 68; //Ab
 
-          const highestActual = basicPiece.getMaxPitch();
-          const highestExpected = 68; //Ab
+        t.equal(highestActual, highestExpected, 'highest pitch');
 
-          t.equal(highestActual, highestExpected, 'highest pitch');
+        const lowestActual = basicPiece.getMinPitch();
+        const lowestExpected = 15; //Eb
 
-          const lowestActual = basicPiece.getMinPitch();
-          const lowestExpected = 15; //Eb
-
-          t.equal(lowestActual, lowestExpected, 'lowest pitch');
-          t.end();
-        });
+        t.equal(lowestActual, lowestExpected, 'lowest pitch');
+        t.end();
      });
   });
-}
-
-avamariapg1(); //who says you can't nest tests with tape?!
+});
