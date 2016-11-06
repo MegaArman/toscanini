@@ -8,9 +8,10 @@ See the xml2js_test for info on how MusicXML is being represented as a JS object
 2) Use npm install to get dependencies listed in package.json
 
 ### Sample Execution 
- node --use_strict ScoreSearcherTester.js
+ node jsfileyouwanttorun
  
 ### Run Unit Tests
  npm test
+ 
 ### Linting 
  http://eslint.org/docs/user-guide/getting-started
