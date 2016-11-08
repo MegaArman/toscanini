@@ -18,7 +18,7 @@ class ScoreSearcher
     {
       func.apply(this,[i, musicObj[i]]);
       //recursively step down in the object tree:
-      if (musicObj[i] !== null && typeof(musicObj[i])=='object') this.traverse(musicObj[i],func);
+      if (musicObj[i] !== null && typeof(musicObj[i])==='object') this.traverse(musicObj[i],func);
     }
   }
 
@@ -26,7 +26,7 @@ class ScoreSearcher
   {
     function process (key,value) //called with every property and it's value
     {
-      if (key == targetKey) console.log(value);
+      if (key === targetKey) console.log(value);
     }
 
     this.traverse(this.musicObj, process);
@@ -38,10 +38,10 @@ class ScoreSearcher
 
     function process(key, value)
     {
-      if (key == 'step') midiNoteNum += this.pitchRef[value];
-      if (key == 'alter') midiNoteNum += parseInt(value);
+      if (key === 'step') midiNoteNum += this.pitchRef[value];
+      if (key === 'alter') midiNoteNum += parseInt(value);
 
-      if (key == 'octave')
+      if (key === 'octave')
       {
         midiNoteNum += parseInt(value) * 12;
 
@@ -64,11 +64,11 @@ class ScoreSearcher
 
     function process(key, value) //builds array of instrument objects
     {
-      if (key == 'instrument-name') instrumentNames.push(value);
+      if (key === 'instrument-name') instrumentNames.push(value);
 
       //NOTE: duplicates are combined to
       // 1 array part:[p1 obj, p2 obj]
-      if (key == 'part')
+      if (key === 'part')
       {
         let index = 0;
         for (const name of instrumentNames)
@@ -82,7 +82,7 @@ class ScoreSearcher
   }
 
   getMaxPitch() {
-    if (this.maxPitch == -999)
+    if (this.maxPitch === -999)
     {
       this.findExtremePitches();
     }
@@ -90,7 +90,7 @@ class ScoreSearcher
   }
 
   getMinPitch() {
-    if (this.minPitch == 999)
+    if (this.minPitch === 999)
     {
       this.findExtremePitches();
     }

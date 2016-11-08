@@ -17,6 +17,7 @@ module.exports = {
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "eqeqeq": 1
     }
 };
