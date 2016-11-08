@@ -6,10 +6,9 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "test": "node ScoreSearcher.spec.js | faucet"
+    "test": "node ScoreSearcher.spec.js | tap-spec"
   },
   "dependencies": {
-    "faucet": "0.0.1",
     "tape": "^4.6.2",
     "xml2js": "^0.4.17"
   }

@@ -10,25 +10,38 @@ const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 test('avamariapg1 tests', function(t){
   fs.readFile('../scores/avamariapg1.xml', function(err, data) {
       parser.parseString(data, function (err, result) {
-        const basicPiece = new ScoreSearcher(result);
+        const avaMaria = new ScoreSearcher(result);
 
         //test finding highest pitch
-        const highestActual = basicPiece.getMaxPitch();
+        const highestActual = avaMaria.getMaxPitch();
         const highestExpected = 68; //Ab
 
-        t.equal(highestActual, highestExpected, 'highest pitch');
+        t.deepEqual(highestActual, highestExpected, 'highest pitch');
 
         //test finding lowest pitch
-        const lowestActual = basicPiece.getMinPitch();
+        const lowestActual = avaMaria.getMinPitch();
         const lowestExpected = 15; //Eb
 
-        t.equal(lowestActual, lowestExpected, 'lowest pitch');
+        t.deepEqual(lowestActual, lowestExpected, 'lowest pitch');
 
         //test instrument names
-        const actualInstrumentNames = Object.keys(basicPiece.getInstrumentObjects());
+        const actualInstrumentNames = Object.keys(avaMaria.getInstrumentObjects());
         const expectedInstrumentNames = [ 'Choir Aahs', 'Grand Piano' ];
 
-        t.deepEqual(actualInstrumentNames, expectedInstrumentNames, 'instrument names');
+        t.deepEqual(actualInstrumentNames,
+          expectedInstrumentNames, 'instrument names');
+
+        //test maxPitchFor
+        const actualChoirMax = avaMaria.getMaxPitchOf('Choir Aahs');
+        const expectedChoirMax = 65; //F
+
+        t.deepEqual(actualChoirMax, expectedChoirMax, 'getMaxPitchOf');
+
+        //test minPitchFor
+        const actualChoirMin = avaMaria.getMinPitchOf('Choir Aahs');
+        const expectedChoirMin = 53; //F
+
+        t.deepEqual(actualChoirMin, expectedChoirMin, 'getMinPitchOf');
 
         //end
         t.end();
