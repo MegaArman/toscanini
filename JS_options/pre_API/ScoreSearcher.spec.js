@@ -1,4 +1,5 @@
 // node ScoreSearcher.spec.js to run this test - simple as that!
+// ...but if you want pretty output use npm test
 'use strict';
 const fs = require('fs');
 const xml2js = require('xml2js');
@@ -12,38 +13,36 @@ test('avamariapg1 tests', function(t){
       parser.parseString(data, function (err, result) {
         const avaMaria = new ScoreSearcher(result);
 
-        //test finding highest pitch
-        const highestActual = avaMaria.getMaxPitch();
-        const highestExpected = 68; //Ab
+        {//test finding highest pitch
+          const actual = avaMaria.getMaxPitch();
+          const expected = 68; //Ab
+          t.deepEqual(actual, expected, 'highest pitch');
+        }
 
-        t.deepEqual(highestActual, highestExpected, 'highest pitch');
+        {//test finding lowest pitch
+          const actual = avaMaria.getMinPitch();
+          const expected = 15; //Eb
+          t.deepEqual(actual, expected, 'lowest pitch');
+        }
 
-        //test finding lowest pitch
-        const lowestActual = avaMaria.getMinPitch();
-        const lowestExpected = 15; //Eb
+        {//test instrument names
+          const expected = [ 'Choir Aahs', 'Grand Piano' ];
+          const actual = Object.keys(avaMaria.getInstrumentObjects());
+          t.deepEqual(actual, expected, 'instrument names');
+        }
 
-        t.deepEqual(lowestActual, lowestExpected, 'lowest pitch');
+        {//test getMaxPitchOf
+          const actual = avaMaria.getMaxPitchOf('Choir Aahs');
+          const expected = 65; //F
+          t.deepEqual(actual, expected, 'getMaxPitchOf');
+        }
 
-        //test instrument names
-        const actualInstrumentNames = Object.keys(avaMaria.getInstrumentObjects());
-        const expectedInstrumentNames = [ 'Choir Aahs', 'Grand Piano' ];
+        {//test getMinPitchOf
+          const actual = avaMaria.getMinPitchOf('Choir Aahs');
+          const expected = 53; //F
+          t.deepEqual(actual, expected, 'getMinPitchOf');
+        }
 
-        t.deepEqual(actualInstrumentNames,
-          expectedInstrumentNames, 'instrument names');
-
-        //test maxPitchFor
-        const actualChoirMax = avaMaria.getMaxPitchOf('Choir Aahs');
-        const expectedChoirMax = 65; //F
-
-        t.deepEqual(actualChoirMax, expectedChoirMax, 'getMaxPitchOf');
-
-        //test minPitchFor
-        const actualChoirMin = avaMaria.getMinPitchOf('Choir Aahs');
-        const expectedChoirMin = 53; //F
-
-        t.deepEqual(actualChoirMin, expectedChoirMin, 'getMinPitchOf');
-
-        //end
         t.end();
      });
   });

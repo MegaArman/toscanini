@@ -17,7 +17,7 @@ class ScoreSearcher
     for (let i in musicObj)
     {
       func.apply(this,[i, musicObj[i]]);
-      //recursively step down in the object tree:
+
       if (musicObj[i] !== null && typeof(musicObj[i])==='object')
       {
         this.traverse(musicObj[i],func);
@@ -68,7 +68,6 @@ class ScoreSearcher
     {
       if (key === 'step') midiNoteNum += this.pitchRef[value];
       if (key === 'alter') midiNoteNum += parseInt(value);
-
       if (key === 'octave')
       {
         midiNoteNum += parseInt(value) * 12;
@@ -117,10 +116,7 @@ class ScoreSearcher
     return pair['min'];
   }
 
-  getInstrumentObjects()
-  {
-    return this.instrumentObjects;
-  }
+  getInstrumentObjects(){return this.instrumentObjects;}
 }
 
 module.exports = ScoreSearcher;
