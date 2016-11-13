@@ -4,14 +4,16 @@
 const fs = require('fs');
 const xml2js = require('xml2js');
 const ScoreSearcher = require('../pre_API/ScoreSearcher.js');
+const util = require('util');
 
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 let globalMaxPitch = -999;
+let globalMinPitch = 999;
 let args = ['../scores/vivaldi_winter.xml',
             '../scores/avamariapg1.xml'];
 let promises = []; //ends up as array of scoreSearcher objects
 
-function loadJSObjectsIntoMem()
+function createScoreSearchers()
 {
   for (const fileName of args)
   {
@@ -33,7 +35,7 @@ function loadJSObjectsIntoMem()
   }
 }
 
-loadJSObjectsIntoMem();
+createScoreSearchers();
 
 //aggregates results of multiple promises, in other words...
 //after we've created all our JS objects in memory, then calc the globalmaxpitch
@@ -41,10 +43,19 @@ loadJSObjectsIntoMem();
 Promise.all(promises).then(results => {
   for (let pResolve of results)
   {
-    let max = pResolve.getMaxPitch();
-    if (globalMaxPitch < max) globalMaxPitch =max;
-    console.log('max is ' + max);
+    // console.log(Object.keys(pResolve.getInstrumentObjects()));
+    console.log(util.inspect(pResolve.getInstrumentObjects(), false, 1));
+    {
+      let min = pResolve.getMinPitchOf('Piano');
+      if (min < globalMinPitch) globalMinPitch = min;
+    }
+
+    {
+      let max = pResolve.getMaxPitch();
+      if (max > globalMaxPitch) globalMaxPitch = max;
+    }
   }
 
   console.log('globalMaxPitch is ' + globalMaxPitch);
+  console.log('globalMinPitch is ' + globalMinPitch);
 });

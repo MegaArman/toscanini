@@ -35,26 +35,33 @@ class ScoreSearcher
     this.traverse(this.musicObj, process);
   }
 
-  //create objects for each instrument, this will reduce searching whole score
-  //'instrument-name' is only used in a initialization part of a score
-  //after which, score-part id refers to the instruments
+  //create objects for each part, this will reduce searching whole score.
+  //part being the full name of parts, ex: Solo Violin, Violin I, Violin II
   makeInstrumentObjects()
   {
-    let instrumentNames = [];
+    let partNames = [];
 
     function process(key, value) //builds array of instrument objects
     {
-      if (key === 'instrument-name') instrumentNames.push(value);
+      //first find the part names as they're always towards the top of file
+      //This will be pushed in the correct order as we see them:
+      if (key === 'part-name') partNames.push(value);
+
+      //the actual parts data are in an ordered array found via key 'part'
+      //bc they're ordered, they correspond to the ordering of the part-names
       if (key === 'part')
       {
         let index = 0;
-        for (const name of instrumentNames)
+        for (const name of partNames)
         {
-          this.instrumentObjects[name] = value[index];
+          this.instrumentObjects[name] = value[index]; //value is array of parts
           index++;
         }
+
+        return; //avoid redundant traversal:
       }
     }
+
     this.traverse(this.musicObj, process);
   }
 

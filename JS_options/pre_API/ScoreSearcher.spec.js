@@ -26,21 +26,51 @@ test('avamariapg1 tests', function(t){
         }
 
         {//test instrument names
-          const expected = [ 'Choir Aahs', 'Grand Piano' ];
+          const expected = [ 'Voice', 'Piano' ];
           const actual = Object.keys(avaMaria.getInstrumentObjects());
           t.deepEqual(actual, expected, 'instrument names');
         }
 
         {//test getMaxPitchOf
-          const actual = avaMaria.getMaxPitchOf('Choir Aahs');
+          const actual = avaMaria.getMaxPitchOf('Voice');
           const expected = 65; //F
           t.deepEqual(actual, expected, 'getMaxPitchOf');
         }
 
         {//test getMinPitchOf
-          const actual = avaMaria.getMinPitchOf('Choir Aahs');
+          const actual = avaMaria.getMinPitchOf('Voice');
           const expected = 53; //F
           t.deepEqual(actual, expected, 'getMinPitchOf');
+        }
+
+        t.end();
+     });
+  });
+});
+
+test('vivaldi_winter tests', function(t){
+  fs.readFile('../scores/vivaldi_winter.xml', function(err, data) {
+      parser.parseString(data, function (err, result) {
+        const vivaldi = new ScoreSearcher(result);
+
+        {//test instrument names
+          const expected =[ 'Solo Violin', 'Violin I',
+                            'Violin II', 'Viola', 'Violoncello',
+                            'Contrabass', 'Harpsichord' ];
+          const actual = Object.keys(vivaldi.getInstrumentObjects());
+          t.deepEqual(actual, expected, 'instrument names');
+        }
+
+        {//test getMaxPitchOf
+          const actual = vivaldi.getMaxPitchOf('Viola');
+          const expected = 62; //D5
+          t.deepEqual(actual, expected, 'getMaxPitchOf');
+        }
+
+        {//test getMaxPitchOf Violin
+          const actual = vivaldi.getMaxPitchOf('Solo Violin');
+          const expected = 79; //G6
+          t.deepEqual(actual, expected, 'getMaxPitchOf');
         }
 
         t.end();
