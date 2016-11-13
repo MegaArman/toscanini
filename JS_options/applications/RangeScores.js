@@ -4,7 +4,6 @@
 const fs = require('fs');
 const xml2js = require('xml2js');
 const ScoreSearcher = require('../pre_API/ScoreSearcher.js');
-const util = require('util');
 
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 let globalMaxPitch = -999;
@@ -43,8 +42,8 @@ createScoreSearchers();
 Promise.all(promises).then(results => {
   for (let pResolve of results)
   {
-    // console.log(Object.keys(pResolve.getInstrumentObjects()));
-    console.log(util.inspect(pResolve.getInstrumentObjects(), false, 1));
+    console.log(Object.keys(pResolve.getInstrumentObjects()));
+    
     {
       let min = pResolve.getMinPitchOf('Piano');
       if (min < globalMinPitch) globalMinPitch = min;
