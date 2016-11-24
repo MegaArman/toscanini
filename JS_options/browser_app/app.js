@@ -30,8 +30,8 @@ fileInput.addEventListener('change', function(e) {
         //write to file and save file in browser for download
         let builder = new xml2js.Builder();
         let xml = builder.buildObject(basicPiece.colorNotes()); //color notes
-        let blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
-        FileSaver.saveAs(blob, "modified_score.xml");
+        let blob = new Blob([xml], {type: 'text/plain;charset=utf-8'});
+        FileSaver.saveAs(blob, 'modified_score.xml');
       });
     };
 
@@ -39,6 +39,6 @@ fileInput.addEventListener('change', function(e) {
   }
   else
   {
-    fileDisplayArea.innerText = "File not supported! XML files only";
+    fileDisplayArea.innerText = 'File not supported! XML files only';
   }
 });
