@@ -10,6 +10,7 @@ class ScoreSearcher
     this.maxPitch = null;
     this.minPitch = null;
     this.instrumentObjects = {};
+    this.title = null;
     this.makeInstrumentObjects();
   }
 
@@ -46,6 +47,7 @@ class ScoreSearcher
     {
       //first find the part names as they're always towards the top of file
       //This will be pushed in the correct order as we see them:
+      if (key === 'work-title') this.title = value;
       if (key === 'part-name') partNames.push(value);
 
       //the actual parts data are in an ordered array found via key 'part'
@@ -125,49 +127,7 @@ class ScoreSearcher
   }
 
   getInstrumentObjects(){return this.instrumentObjects;}
-
-  colorNotes()
-  {
-    let coloredCopy;
-
-    function clone(obj)
-    {
-      var copy;
-
-      // Handle the 3 simple types, and null or undefined
-      if (null == obj || 'object' != typeof obj) return obj;
-
-      // Handle Array
-      if (obj instanceof Array)
-      {
-          copy = [];
-          for (var i = 0, len = obj.length; i < len; i++) {
-              copy[i] = clone(obj[i]);
-          }
-        return copy;
-      }
-
-    // Handle Object
-      if (obj instanceof Object) {
-        copy = {};
-        for (var attr in obj) {
-          if (obj.hasOwnProperty(attr))
-          {
-            copy[attr] = clone(obj[attr]);
-            if (attr === 'stem')
-            {
-              copy.notehead= { _: 'normal', '$': { color: '#0BFF1B' } };
-            }
-          }
-        }
-        return copy;
-      }
-
-      throw new Error('Unable to copy obj! Its type isnt supported.');
-    }
-    coloredCopy = clone(this.musicObj);
-    return coloredCopy;
-  }
+  getTitle(){return this.title;}
 }
 
 module.exports = ScoreSearcher;
@@ -184,7 +144,7 @@ let analyzeButton = document.getElementById('analyze');
 document.getElementById('fileInput').multiple = true;
 //=========================================
 
-let xmlStrings = [];
+let xmlStrings = {};
 
 fileInput.addEventListener('change', function() {
   let textType = /text.xml/;
@@ -196,25 +156,26 @@ fileInput.addEventListener('change', function() {
       let reader = new FileReader();
 
       reader.onload = function() {
-        xmlStrings.push(reader.result);
+        xmlStrings[file.name] = reader.result;
       };
 
       reader.readAsText(file);
     }
     else
     {
-      alert('Are you sure this was a MusicXML file?');
+      alert('Are you sure these are all MusicXML files?');
     }
   }
 });
 
 window.analyze = function()
 {
-  for (let xml of xmlStrings)
+  for (let fileName in xmlStrings)
   {
-    parser.parseString(xml, function (err, result) {
+    parser.parseString(xmlStrings[fileName], function (err, result) {
       const scoreSearcher = new ScoreSearcher(result);
-      console.log(scoreSearcher.getMaxPitch());
+      console.log(fileName + ' has range ' +
+      scoreSearcher.getMinPitch() + '-' + scoreSearcher.getMaxPitch());
     });
   }
 };

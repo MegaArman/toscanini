@@ -9,7 +9,7 @@ let analyzeButton = document.getElementById('analyze');
 document.getElementById('fileInput').multiple = true;
 //=========================================
 
-let xmlStrings = [];
+let xmlStrings = {};
 
 fileInput.addEventListener('change', function() {
   let textType = /text.xml/;
@@ -21,25 +21,26 @@ fileInput.addEventListener('change', function() {
       let reader = new FileReader();
 
       reader.onload = function() {
-        xmlStrings.push(reader.result);
+        xmlStrings[file.name] = reader.result;
       };
 
       reader.readAsText(file);
     }
     else
     {
-      alert('Are you sure this was a MusicXML file?');
+      alert('Are you sure these are all MusicXML files?');
     }
   }
 });
 
 window.analyze = function()
 {
-  for (let xml of xmlStrings)
+  for (let fileName in xmlStrings)
   {
-    parser.parseString(xml, function (err, result) {
+    parser.parseString(xmlStrings[fileName], function (err, result) {
       const scoreSearcher = new ScoreSearcher(result);
-      console.log(scoreSearcher.getMaxPitch());
+      console.log(fileName + ' has range ' +
+      scoreSearcher.getMinPitch() + '-' + scoreSearcher.getMaxPitch());
     });
   }
 };
