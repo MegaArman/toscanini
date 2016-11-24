@@ -1,0 +1,27 @@
+<!-- BOILERPLATE CODE FOR READING IN A SINGLE FILE -->
+<input type="file" id="fileInput">
+<pre id="fileDisplayArea"><pre>
+<script>
+  let fileInput = document.getElementById('fileInput');
+  let fileDisplayArea = document.getElementById('fileDisplayArea');
+
+  fileInput.addEventListener('change', function(e) {
+    let file = fileInput.files[0];
+    let textType = /text.xml/;
+
+    if (file.type.match(textType))
+    {
+      let reader = new FileReader();
+
+      reader.onload = function(e) {
+        fileDisplayArea.innerText = reader.result;
+      }
+
+      reader.readAsText(file);
+    }
+    else
+    {
+      fileDisplayArea.innerText = "File not supported! XML files only"
+    }
+  });
+</script>
