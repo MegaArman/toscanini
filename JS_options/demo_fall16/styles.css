@@ -1,0 +1,20 @@
+
+#input {
+  flex-grow: 1;
+}
+
+#fileInput{
+  display: none;
+}
+
+#analyze {
+flex-grow: 1;
+}
+
+.container {
+  display:flex;
+  margin-top: 5%;
+    width: 80%;
+    border: 1px solid green;
+    padding: 10px;
+}
