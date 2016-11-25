@@ -1,6 +1,5 @@
 let xml2js = require('xml2js');
 let ScoreSearcher = require('./ScoreSearcher.js');
-
 let parser = new xml2js.Parser({explicitArray: false});
 
 //HTML DEPENDENT CODE=======================

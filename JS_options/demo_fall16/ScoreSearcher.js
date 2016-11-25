@@ -52,7 +52,7 @@ class ScoreSearcher
       if (key === 'part')
       {
         let index = 0;
-        for (const name of partNames)
+        for (let name of partNames)
         {
           this.instrumentObjects[name] = value[index]; //value is array of parts
           index++;

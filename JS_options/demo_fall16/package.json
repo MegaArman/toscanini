@@ -5,12 +5,15 @@
   "main": "app.js",
   "scripts": {
     "build": "browserify app.js -o bundle.js",
-    "watch": "watchify app.js -o bundle.js"
+    "watch": "watchify app.js -o bundle.js",
+    "compile": "node-sass -w --output-style=compressed ./_styles.scss styles.css",
+    "changethemes": "node-sass --output-style=compressed ./materialize-src/sass/materialize.scss ./materialize.css"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "browserify": "^13.1.1",
+    "node-sass": "^3.13.0",
     "watchify": "^3.7.0",
     "xml2js": "^0.4.17"
   }
