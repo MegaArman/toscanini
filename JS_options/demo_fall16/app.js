@@ -6,7 +6,6 @@ let parser = new xml2js.Parser({explicitArray: false});
 //HTML DEPENDENT CODE=======================
 let fileInput = document.getElementById('fileInput');
 let analyzeButton = document.getElementById('analyze');
-document.getElementById('fileInput').multiple = true;
 //=========================================
 
 let xmlStrings = {};

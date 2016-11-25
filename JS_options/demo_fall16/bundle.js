@@ -10,7 +10,6 @@ class ScoreSearcher
     this.maxPitch = null;
     this.minPitch = null;
     this.instrumentObjects = {};
-    this.title = null;
     this.makeInstrumentObjects();
   }
 
@@ -47,7 +46,6 @@ class ScoreSearcher
     {
       //first find the part names as they're always towards the top of file
       //This will be pushed in the correct order as we see them:
-      if (key === 'work-title') this.title = value;
       if (key === 'part-name') partNames.push(value);
 
       //the actual parts data are in an ordered array found via key 'part'
@@ -127,7 +125,6 @@ class ScoreSearcher
   }
 
   getInstrumentObjects(){return this.instrumentObjects;}
-  getTitle(){return this.title;}
 }
 
 module.exports = ScoreSearcher;
@@ -141,7 +138,6 @@ let parser = new xml2js.Parser({explicitArray: false});
 //HTML DEPENDENT CODE=======================
 let fileInput = document.getElementById('fileInput');
 let analyzeButton = document.getElementById('analyze');
-document.getElementById('fileInput').multiple = true;
 //=========================================
 
 let xmlStrings = {};

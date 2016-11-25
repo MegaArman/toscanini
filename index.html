@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <meta charset="utf-8"/>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 <link rel="stylesheet" type="text/css" href="./JS_options/demo_fall16/styles.css">
 
+<title>MusicXML Research</title>
+<h1>Ask Toscanini</h1>
 <div class="container">
-  <label class="btn btn-default btn-lg" id="input">
-    BROWSE...
-    <input type="file" style="display: none;" id="fileInput">
-  </label>
-  <button id="analyze" class="btn btn-default btn-lg">ANALYZE</button>
+  <form action="#">
+    <div class="file-field input-field">
+      <div class="btn">
+        <span>File</span>
+        <input type="file" id = "fileInput" multiple>
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text"
+        placeholder="Upload one or more MusicXML scores">
+      </div>
+    </div>
+  </form>
+  <button id="analyze" class="btn btn-default">ANALYZE</button>
 </div>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 <script src="./JS_options/demo_fall16/bundle.js"></script>

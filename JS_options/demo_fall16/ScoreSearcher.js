@@ -124,49 +124,6 @@ class ScoreSearcher
   }
 
   getInstrumentObjects(){return this.instrumentObjects;}
-
-  colorNotes()
-  {
-    let coloredCopy;
-
-    function clone(obj)
-    {
-      var copy;
-
-      // Handle the 3 simple types, and null or undefined
-      if (null == obj || 'object' != typeof obj) return obj;
-
-      // Handle Array
-      if (obj instanceof Array)
-      {
-          copy = [];
-          for (var i = 0, len = obj.length; i < len; i++) {
-              copy[i] = clone(obj[i]);
-          }
-        return copy;
-      }
-
-    // Handle Object
-      if (obj instanceof Object) {
-        copy = {};
-        for (var attr in obj) {
-          if (obj.hasOwnProperty(attr))
-          {
-            copy[attr] = clone(obj[attr]);
-            if (attr === 'stem')
-            {
-              copy.notehead= { _: 'normal', '$': { color: '#0BFF1B' } };
-            }
-          }
-        }
-        return copy;
-      }
-
-      throw new Error('Unable to copy obj! Its type isnt supported.');
-    }
-    coloredCopy = clone(this.musicObj);
-    return coloredCopy;
-  }
 }
 
 module.exports = ScoreSearcher;
