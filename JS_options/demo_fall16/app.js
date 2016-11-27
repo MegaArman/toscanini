@@ -4,12 +4,13 @@ let parser = new xml2js.Parser({explicitArray: false});
 
 //HTML DEPENDENT CODE=======================
 let fileInput = document.getElementById('fileInput');
-let analyzeButton = document.getElementById('analyze');
 //=========================================
 
-let xmlStrings = {};
+let xmlStrings;
+
 
 fileInput.addEventListener('change', function() {
+  xmlStrings = {};
   let textType = /text.xml/;
 
   for (let file of fileInput.files)
@@ -35,12 +36,22 @@ window.analyze = function()
 {
   for (let fileName in xmlStrings)
   {
-    parser.parseString(xmlStrings[fileName], function (err, result) {
+    parser.parseString(xmlStrings[fileName], function (err, result)
+    {
       const scoreSearcher = new ScoreSearcher(result);
-      console.log(fileName + ' has range ' +
-      scoreSearcher.getMinPitch() + '-' + scoreSearcher.getMaxPitch());
+      const min = scoreSearcher.getMinPitch();
+      const max = scoreSearcher.getMaxPitch();
+
+      $('#results').
+      append('<tr><td>' + fileName + '</td><td>' + min + '-' + max + '</td></tr>');
     });
   }
 };
 
-analyzeButton.addEventListener('click', window.analyze);
+window.clear = function()
+{
+  $('#results').empty();
+};
+
+$('#analyze').on('click', window.analyze);
+$('#clear').on('click', window.clear);
