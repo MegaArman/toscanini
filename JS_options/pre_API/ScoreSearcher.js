@@ -52,7 +52,7 @@ class ScoreSearcher
       if (key === 'part')
       {
         let index = 0;
-        for (const name of partNames)
+        for (let name of partNames)
         {
           this.instrumentObjects[name] = value[index]; //value is array of parts
           index++;
@@ -113,12 +113,21 @@ class ScoreSearcher
 
   getMaxPitchOf(instrumentName)
   {
+    if (Object.keys(this.instrumentObjects).length === 1)
+    {
+      return this.getMaxPitch();
+    }
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
     return pair['max'];
   }
 
   getMinPitchOf(instrumentName)
   {
+    if (Object.keys(this.instrumentObjects).length === 1)
+    {
+      return this.getMinPitch();
+    }
+
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
     return pair['min'];
   }

@@ -48,10 +48,10 @@ window.analyze = function()
       }
 
       let combined = [];
-
+      
       for (let i = 0; i < ranges.length; i++)
       {
-        let str = instrumentNames[i] + ' ' + ranges[i];
+        let str = ' ' + instrumentNames[i] + ' ' + ranges[i];
         combined.push(str);
       }
 

@@ -113,12 +113,20 @@ class ScoreSearcher
 
   getMaxPitchOf(instrumentName)
   {
+    if (Object.keys(this.instrumentObjects).length === 1)
+    {
+      return this.getMaxPitch();
+    }
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
     return pair['max'];
   }
 
   getMinPitchOf(instrumentName)
   {
+    if (Object.keys(this.instrumentObjects).length === 1)
+    {
+      return this.getMinPitch();
+    }
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
     return pair['min'];
   }

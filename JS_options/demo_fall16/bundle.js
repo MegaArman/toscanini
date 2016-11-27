@@ -114,12 +114,20 @@ class ScoreSearcher
 
   getMaxPitchOf(instrumentName)
   {
+    if (Object.keys(this.instrumentObjects).length === 1)
+    {
+      return this.getMaxPitch();
+    }
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
     return pair['max'];
   }
 
   getMinPitchOf(instrumentName)
   {
+    if (Object.keys(this.instrumentObjects).length === 1)
+    {
+      return this.getMinPitch();
+    }
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
     return pair['min'];
   }
@@ -180,10 +188,10 @@ window.analyze = function()
       }
 
       let combined = [];
-
+      
       for (let i = 0; i < ranges.length; i++)
       {
-        let str = instrumentNames[i] + ' ' + ranges[i];
+        let str = ' ' + instrumentNames[i] + ' ' + ranges[i];
         combined.push(str);
       }
 
