@@ -1,4 +1,4 @@
-# browser_app
+# demo_fall16
 This code shows how to create a browser app as opposed to a node based app using the ScoreSearcher class, namely browserify allows require statements to work in browser and the web page uses the FileReader API to allow the user to input a file. 
 
 xml2js works in browser as it is a JavaScript based parser- this may not be the case for other parsers downloaded via NPM
