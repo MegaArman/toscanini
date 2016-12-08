@@ -1,4 +1,4 @@
-#applications
+#cli_applications
 Using the ScoreSearcher API for applications. For example RangeScores.js calculates the range of pitches across multiple pieces.
 
 ### Setup
