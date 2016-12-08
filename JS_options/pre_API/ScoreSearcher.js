@@ -93,6 +93,15 @@ class ScoreSearcher
     return {'max': maxPitch, 'min': minPitch};
   }
 
+  midiNumToNote(midiNoteNum)
+  {
+    const notes =
+    ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    let pitchNum = midiNoteNum % 12;
+    let octaveNum = Math.floor(midiNoteNum / 12);
+
+    return (notes[pitchNum] + octaveNum);
+  }
 
   getMaxPitch() //of the whole piece
   {
@@ -139,7 +148,7 @@ class ScoreSearcher
   {
     let keySignatures = [];
 
-    function process (key,value) //called with every property and it's value
+    function process (key,value)
     {
       if (key === 'fifths')
       {

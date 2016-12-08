@@ -13,42 +13,49 @@ test('avamariapg1 tests', function(t){
     parser.parseString(data, function (err, result) {
       const avaMaria = new ScoreSearcher(result);
 
-      {//test finding highest pitch
+      {
         const actual = avaMaria.getMaxPitch();
         const expected = 68; //Ab
         t.deepEqual(actual, expected, 'highest pitch');
       }
 
-      {//test finding lowest pitch
+      {
         const actual = avaMaria.getMinPitch();
         const expected = 15; //Eb
         t.deepEqual(actual, expected, 'lowest pitch');
       }
 
-      {//test instrument names
+      {
         const expected = [ 'Voice', 'Piano' ];
         const actual = Object.keys(avaMaria.getInstrumentObjects());
         t.deepEqual(actual, expected, 'instrument names');
       }
 
-      {//test getMaxPitchOf
+      {
         const actual = avaMaria.getMaxPitchOf('Voice');
         const expected = 65; //F
         t.deepEqual(actual, expected, 'getMaxPitchOf');
       }
 
-      {//test getMinPitchOf
+      {
         const actual = avaMaria.getMinPitchOf('Voice');
         const expected = 53; //F
         t.deepEqual(actual, expected, 'getMinPitchOf');
       }
 
-      {// test getKeySignatures
+      {
         const actual = ['Bb'];
         const expected = avaMaria.getKeySignatures();
         t.deepEqual(actual, expected, 'getKeySignatures');
       }
 
+      {
+        const actual = ['C0', 'G10', 'F#5'];
+        const expected =
+        [avaMaria.midiNumToNote(0), avaMaria.midiNumToNote(127),
+           avaMaria.midiNumToNote(66)];
+        t.deepEqual(actual, expected, 'midiNumToNote');
+      }
       t.end();
    });
   });
