@@ -43,6 +43,12 @@ test('avamariapg1 tests', function(t){
         t.deepEqual(actual, expected, 'getMinPitchOf');
       }
 
+      {// test getKeySignatures
+        const actual = ['Bb'];
+        const expected = avaMaria.getKeySignatures();
+        t.deepEqual(actual, expected, 'getKeySignatures');
+      }
+
       t.end();
    });
   });
