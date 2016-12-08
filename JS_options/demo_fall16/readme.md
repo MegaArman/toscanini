@@ -13,4 +13,4 @@ First run "npm run watch" to have code auto built for browser, then make changes
 (see package.json and https://www.youtube.com/watch?v=CTAa8IcQh1U&index=1&list=PLiyLAgiWnfNH2rlMV7LdZSwnvBGQRoq-Z if confused)
 
 ### Execution 
- index.html
+ index.html in the root folder
