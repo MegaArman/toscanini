@@ -35,32 +35,44 @@ window.analyze = function()
     parser.parseString(xmlStrings[fileName], function (err, result)
     {
       const scoreSearcher = new ScoreSearcher(result);
-      const min = scoreSearcher.getMinPitch();
-      const max = scoreSearcher.getMaxPitch();
+
+      //Overall Range
+      let min = scoreSearcher.getMinPitch();
+      let max = scoreSearcher.getMaxPitch();
+      min = scoreSearcher.midiNumToNote(min);
+      max = scoreSearcher.midiNumToNote(max);
+
+      //Instruments Range
       const instrumentNames =  Object.keys(scoreSearcher.getInstrumentObjects());
       let ranges = [];
 
       for (let i = 0; i < instrumentNames.length; i++)
       {
-        let min = scoreSearcher.getMinPitchOf(instrumentNames[i]);
-        let max = scoreSearcher.getMaxPitchOf(instrumentNames[i]);
+        let min = scoreSearcher
+        .midiNumToNote(scoreSearcher.getMinPitchOf(instrumentNames[i]));
+        let max = scoreSearcher
+        .midiNumToNote(scoreSearcher.getMaxPitchOf(instrumentNames[i]));
         ranges.push('(' + min + '-' + max + ')');
       }
 
-      let combined = [];
-      
+      let instrumentRanges = [];
+
       for (let i = 0; i < ranges.length; i++)
       {
         let str = ' ' + instrumentNames[i] + ' ' + ranges[i];
-        combined.push(str);
+        instrumentRanges.push(str);
       }
+
+      //Key Signatures
+      const keySignatures = scoreSearcher.getKeySignatures();
 
       $('#results').
       append('<tr>' +
       '<td>' + fileName + '</td>' +
       '<td>' + min + '-' + max +'</td>' +
-      '<td>' +  combined + '</td>'
-      +'</tr>');
+      '<td>' +  instrumentRanges + '</td>' +
+      '<td>' +  keySignatures + '</td>'  +
+      '</tr>');
     });
   }
 };

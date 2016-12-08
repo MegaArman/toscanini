@@ -6,6 +6,9 @@ class ScoreSearcher
   {
     this.musicObj = musicObj; //the entire score
     this.pitchRef = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A':9, 'B': 11};
+    this.fifthsRef =
+    {'-6': 'Gb', '-5': 'Db', '-4':'Ab', '-3': 'Eb', '-2': 'Bb', '-1': 'F',
+    '0': 'C', '1': 'G', '2': 'D', '3': 'A', '4': 'E', '5': 'B', '6': 'F#'};
     this.maxPitch = null;
     this.minPitch = null;
     this.instrumentObjects = {};
@@ -90,6 +93,15 @@ class ScoreSearcher
     return {'max': maxPitch, 'min': minPitch};
   }
 
+  midiNumToNote(midiNoteNum)
+  {
+    const notes =
+    ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+    let pitchNum = midiNoteNum % 12;
+    let octaveNum = Math.floor(midiNoteNum / 12);
+
+    return (notes[pitchNum] + octaveNum);
+  }
 
   getMaxPitch() //of the whole piece
   {
@@ -127,8 +139,36 @@ class ScoreSearcher
     {
       return this.getMinPitch();
     }
+
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
     return pair['min'];
+  }
+
+  getKeySignatures()
+  {
+    let keySignatures = [];
+
+    function process (key,value)
+    {
+      if (key === 'fifths')
+      {
+        let newKeySig = this.fifthsRef[value];
+        let shouldPush = true;
+
+        for (let oldKeySig of keySignatures) //avoid duplicates
+        {
+          if (newKeySig === oldKeySig)
+          {
+            shouldPush = false;
+          }
+        }
+
+        if (shouldPush) keySignatures.push(newKeySig);
+      }
+    }
+
+    this.traverse(this.musicObj, process);
+    return keySignatures;
   }
 
   getInstrumentObjects(){return this.instrumentObjects;}
