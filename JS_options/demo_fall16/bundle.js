@@ -178,6 +178,19 @@ class ScoreSearcher
 module.exports = ScoreSearcher;
 
 },{}],2:[function(require,module,exports){
+//suggest Google Chrome======================
+const isChromium = window.chrome,
+    winNav = window.navigator,
+    vendorName = winNav.vendor,
+    isOpera = winNav.userAgent.indexOf('OPR') > -1,
+    isIEedge = winNav.userAgent.indexOf('Edge') > -1;
+
+const isChrome = isChromium !== null &&
+   isChromium !== undefined && vendorName === 'Google Inc.' && isOpera
+ === false && isIEedge === false;
+if (!isChrome)  alert('Please use Google Chrome!');
+//===========================================
+
 let xml2js = require('xml2js');
 let ScoreSearcher = require('./ScoreSearcher.js');
 let parser = new xml2js.Parser({explicitArray: false});
