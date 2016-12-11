@@ -2,14 +2,18 @@ h1 {
   text-align: center;
 }
 
+#main {
+  position: relative;
+}
+
+#fileInput {
+  height: 3rem;
+}
+
 #download {
   position: absolute;
   right: 2%;
   margin-top: 2%;
-}
-
-#main {
-  position: relative;
 }
 
 #clear {
