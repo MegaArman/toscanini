@@ -49,13 +49,6 @@ test('avamariapg1 tests', function(t){
         t.deepEqual(actual, expected, 'getKeySignatures');
       }
 
-      {
-        const actual = ['C0', 'G10', 'F#5'];
-        const expected =
-        [avaMaria.midiNumToNote(0), avaMaria.midiNumToNote(127),
-           avaMaria.midiNumToNote(66)];
-        t.deepEqual(actual, expected, 'midiNumToNote');
-      }
       t.end();
    });
   });
