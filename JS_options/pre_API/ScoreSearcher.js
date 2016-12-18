@@ -164,16 +164,35 @@ class ScoreSearcher
   getInstrumentObjects(){return this.instrumentObjects;}
 
   //must go by instruments to prevent false positive if two instruments'
-  //pitches in sequence produce the melody.
+  //pitches in sequence produce the melody...chords can cause false positives!
   getInstrumentsWithMelody(melodyString)
   {
     let tempStrNotes = '';
     let instrumentsWithMelody = [];
+    let midiNoteNum = 0;
+
+    //build a string of notes ex: CDAGB--------------------
+    function midiNumToNote(midiNoteNum)
+    {
+      const notes =
+      ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+      let pitchNum = midiNoteNum % 12; //remove the octave info
+      return (notes[pitchNum]);
+    }
 
     function process(key, value)
     {
-      if (key === 'step') tempStrNotes += value;
+      if (key === 'step') midiNoteNum += this.pitchRef[value];
+      if (key === 'alter') midiNoteNum += parseInt(value);
+      if (key === 'octave')
+      {
+        //Must do this... suppose there's a Cb
+        midiNoteNum += parseInt(value) * 12;
+        tempStrNotes += midiNumToNote(midiNoteNum);
+        midiNoteNum = 0; //'octave' is the last key in a note, so reset
+      }
     }
+    //---------------------------------------------------
 
     for (let instrumentData in this.instrumentObjects)
     {
@@ -183,7 +202,6 @@ class ScoreSearcher
       {
         instrumentsWithMelody.push(instrumentData);
       }
-
       tempStrNotes = '';
     }
 

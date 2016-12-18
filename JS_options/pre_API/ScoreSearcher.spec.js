@@ -90,10 +90,17 @@ test('two_parts', function(t){
       const twoParts = new ScoreSearcher(result);
 
       {
+        const actual = twoParts.getInstrumentsWithMelody('BGBC');
+        const expected = ['Violin']; //G6
+        t.deepEqual(actual, expected, 'getInstrumentsWithMelody BGBC');
+      }
+
+      {
         const actual = twoParts.getInstrumentsWithMelody('GD');
         const expected = ['Flute']; //G6
-        t.deepEqual(actual, expected, 'getInstrumentsWithMelody');
+        t.deepEqual(actual, expected, 'getInstrumentsWithMelody GD');
       }
+
 
       t.end();
     });
