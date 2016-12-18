@@ -162,6 +162,33 @@ class ScoreSearcher
   }
 
   getInstrumentObjects(){return this.instrumentObjects;}
+
+  //must go by instruments to prevent false positive if two instruments'
+  //pitches in sequence produce the melody.
+  getInstrumentsWithMelody(melodyString)
+  {
+    let tempStrNotes = '';
+    let instrumentsWithMelody = [];
+
+    function process(key, value)
+    {
+      if (key === 'step') tempStrNotes += value;
+    }
+
+    for (let instrumentData in this.instrumentObjects)
+    {
+      this.traverse(this.instrumentObjects[instrumentData], process);
+
+      if (tempStrNotes.includes(melodyString))
+      {
+        instrumentsWithMelody.push(instrumentData);
+      }
+
+      tempStrNotes = '';
+    }
+
+    return instrumentsWithMelody;
+  }
 }
 
 module.exports = ScoreSearcher;

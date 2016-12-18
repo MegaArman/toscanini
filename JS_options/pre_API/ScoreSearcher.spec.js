@@ -59,7 +59,7 @@ test('vivaldi_winter tests', function(t){
     parser.parseString(data, function (err, result) {
       const vivaldi = new ScoreSearcher(result);
 
-      {//test instrument names
+      {
         const expected =[ 'Solo Violin', 'Violin I',
                           'Violin II', 'Viola', 'Violoncello',
                           'Contrabass', 'Harpsichord' ];
@@ -67,16 +67,32 @@ test('vivaldi_winter tests', function(t){
         t.deepEqual(actual, expected, 'instrument names');
       }
 
-      {//test getMaxPitchOf
+      {
         const actual = vivaldi.getMaxPitchOf('Viola');
         const expected = 62; //D5
         t.deepEqual(actual, expected, 'getMaxPitchOf');
       }
 
-      {//test getMaxPitchOf Violin
+      {
         const actual = vivaldi.getMaxPitchOf('Solo Violin');
         const expected = 79; //G6
         t.deepEqual(actual, expected, 'getMaxPitchOf');
+      }
+
+      t.end();
+    });
+  });
+});
+
+test('two_parts', function(t){
+  fs.readFile('../scores/two_parts.xml', function(err, data) {
+    parser.parseString(data, function (err, result) {
+      const twoParts = new ScoreSearcher(result);
+
+      {
+        const actual = twoParts.getInstrumentsWithMelody('GD');
+        const expected = ['Flute']; //G6
+        t.deepEqual(actual, expected, 'getInstrumentsWithMelody');
       }
 
       t.end();
