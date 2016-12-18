@@ -16,11 +16,9 @@ See the xml2js_test for info on how MusicXML is being represented as a JS object
 ### Linting 
  http://eslint.org/docs/user-guide/getting-started
 
+
 ## ScoreSearcher.js
 Is responsible for the analysis of the score.
-
-###midiNumToNote(midiNoteNum)
-Converts a midi number to a pitch with octave (ex: C4)
 
 ###getMaxPitch()
 gets the max pitch in the entire score
@@ -40,4 +38,10 @@ gets the key signatures of the whole piece (returns an array)
 ###getInstrumentObjects()
 gets all data specific to certain instruments in the score. Can be used with with Object.keys() to get the instrument names
 
+
+## Notate.js
+This class contains a set of utility functions independent of any score in question
+
+### midiNumToNote(midiNoteNum)
+Conevrts a midi note number to an actual pitch + octave such as C4
 
