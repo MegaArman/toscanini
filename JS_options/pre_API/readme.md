@@ -38,6 +38,8 @@ gets the key signatures of the whole piece (returns an array)
 ###getInstrumentObjects()
 gets all data specific to certain instruments in the score. Can be used with with Object.keys() to get the instrument names
 
+###getInstrumentsWithMelody(melodyString)
+returns array of instruments who have a melody
 
 ## Notate.js
 This class contains a set of utility functions independent of any score in question
