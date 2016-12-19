@@ -41,6 +41,9 @@ gets all data specific to certain instruments in the score. Can be used with wit
 ###getInstrumentsWithMelody(melodyString)
 returns array of instruments who have a melody. NOTE: may not work for instruments playing chords
 
+###getTempos()
+returns an array containing all tempos in the score
+
 ## Notate.js
 This class contains a set of utility functions independent of any score in question
 
