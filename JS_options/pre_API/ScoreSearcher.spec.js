@@ -91,7 +91,7 @@ test('two_parts', function(t){
 
       {
         const actual = twoParts.getInstrumentsWithMelody('BGBC');
-        const expected = ['Violin']; //G6
+        const expected = ['Violin'];
         t.deepEqual(actual, expected, 'getInstrumentsWithMelody BGBC');
       }
 
@@ -101,6 +101,21 @@ test('two_parts', function(t){
         t.deepEqual(actual, expected, 'getInstrumentsWithMelody GD');
       }
 
+      t.end();
+    });
+  });
+});
+
+test('super_basic_tempo', function(t){
+  fs.readFile('../scores/super_basic_tempo.xml', function(err, data) {
+    parser.parseString(data, function (err, result) {
+      const twoParts = new ScoreSearcher(result);
+
+      {
+        const actual = twoParts.getTempos();
+        const expected = [105, 90];
+        t.deepEqual(actual, expected, 'getTempos');
+      }
 
       t.end();
     });

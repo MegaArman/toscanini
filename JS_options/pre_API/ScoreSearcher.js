@@ -30,7 +30,7 @@ class ScoreSearcher
 
   findValsByKey(targetKey)
   {
-    function process (key,value) //called with every property and it's value
+    function process(key,value) //called with every property and it's value
     {
       if (key === targetKey) console.log(value);
     }
@@ -138,7 +138,7 @@ class ScoreSearcher
   {
     let keySignatures = [];
 
-    function process (key,value)
+    function process(key,value)
     {
       if (key === 'fifths')
       {
@@ -206,6 +206,19 @@ class ScoreSearcher
     }
 
     return instrumentsWithMelody;
+  }
+
+  getTempos()
+  {
+    let tempos = [];
+
+    function process(key,value)
+    {
+      if (key === 'tempo') tempos.push(parseInt(value));
+    }
+
+    this.traverse(this.musicObj, process);
+    return tempos;
   }
 }
 
