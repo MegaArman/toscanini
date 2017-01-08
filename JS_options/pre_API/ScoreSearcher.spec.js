@@ -106,8 +106,8 @@ test('two_parts', function(t){
   });
 });
 
-test('super_basic_tempo', function(t){
-  fs.readFile('../scores/super_basic_tempo.xml', function(err, data) {
+test('two_tempos', function(t){
+  fs.readFile('../scores/two_tempos.xml', function(err, data) {
     parser.parseString(data, function (err, result) {
       const twoParts = new ScoreSearcher(result);
 
