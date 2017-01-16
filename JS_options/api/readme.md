@@ -1,4 +1,4 @@
-#pre_API 
+#API
 Here I am creating a class which can search the JS object representation of a MusicXML score for meaningful info.
 See the xml2js_test for info on how MusicXML is being represented as a JS object.
 
@@ -37,7 +37,7 @@ gets the key signatures of the whole piece (returns an array)
 
 ###getInstrumentObjects()
 gets all data specific to certain instruments in the score. Can be used with with Object.keys() to get the instrument names
-
+  
 ###getInstrumentsWithMelody(melodyString)
 returns array of instruments who have a melody. NOTE: may not work for instruments playing chords
 
