@@ -2,7 +2,7 @@
 //alogorithm:
 //initially convert the music xml files to json with xml2json - a fast c based xml parser
 //the next time the user uses the service the JSON representation of their
-//scores will be loaded into memory
+//scores will be loaded into memory. This was 24.7mb of beethoven - so several hundred pages
 
 'use strict';
 const fs = require('fs');

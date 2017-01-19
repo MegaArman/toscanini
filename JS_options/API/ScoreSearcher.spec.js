@@ -1,7 +1,8 @@
 // node ScoreSearcher.spec.js to run this test - simple as that!
-// ...but if you want pretty output use npm test
+// ...but if you want pretty output use npm run test
 'use strict';
 const fs = require('fs');
+//xml2js is meant for browser use! Server can use xml2json for speed:
 const xml2js = require('xml2js');
 const test = require('tape').test;
 const ScoreSearcher = require('./ScoreSearcher');
@@ -11,41 +12,41 @@ const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 test('avamariapg1 tests', function(t){
   fs.readFile('../scores/avamariapg1.xml', function(err, data) {
     parser.parseString(data, function (err, result) {
-      const avaMaria = new ScoreSearcher(result);
+      const scoreSearcher = new ScoreSearcher(result);
 
       {
-        const actual = avaMaria.getMaxPitch();
+        const actual = scoreSearcher.getMaxPitch();
         const expected = 68; //Ab
         t.deepEqual(actual, expected, 'highest pitch');
       }
 
       {
-        const actual = avaMaria.getMinPitch();
+        const actual = scoreSearcher.getMinPitch();
         const expected = 15; //Eb
         t.deepEqual(actual, expected, 'lowest pitch');
       }
 
       {
         const expected = [ 'Voice', 'Piano' ];
-        const actual = Object.keys(avaMaria.getInstrumentObjects());
+        const actual = Object.keys(scoreSearcher.getInstrumentObjects());
         t.deepEqual(actual, expected, 'instrument names');
       }
 
       {
-        const actual = avaMaria.getMaxPitchOf('Voice');
+        const actual = scoreSearcher.getMaxPitchOf('Voice');
         const expected = 65; //F
         t.deepEqual(actual, expected, 'getMaxPitchOf');
       }
 
       {
-        const actual = avaMaria.getMinPitchOf('Voice');
+        const actual = scoreSearcher.getMinPitchOf('Voice');
         const expected = 53; //F
         t.deepEqual(actual, expected, 'getMinPitchOf');
       }
 
       {
         const actual = ['Bb'];
-        const expected = avaMaria.getKeySignatures();
+        const expected = scoreSearcher.getKeySignatures();
         t.deepEqual(actual, expected, 'getKeySignatures');
       }
 
@@ -57,24 +58,24 @@ test('avamariapg1 tests', function(t){
 test('vivaldi_winter tests', function(t){
   fs.readFile('../scores/vivaldi_winter.xml', function(err, data) {
     parser.parseString(data, function (err, result) {
-      const vivaldi = new ScoreSearcher(result);
+      const scoreSearcher = new ScoreSearcher(result);
 
       {
         const expected =[ 'Solo Violin', 'Violin I',
                           'Violin II', 'Viola', 'Violoncello',
                           'Contrabass', 'Harpsichord' ];
-        const actual = Object.keys(vivaldi.getInstrumentObjects());
+        const actual = Object.keys(scoreSearcher.getInstrumentObjects());
         t.deepEqual(actual, expected, 'instrument names');
       }
 
       {
-        const actual = vivaldi.getMaxPitchOf('Viola');
+        const actual = scoreSearcher.getMaxPitchOf('Viola');
         const expected = 62; //D5
         t.deepEqual(actual, expected, 'getMaxPitchOf');
       }
 
       {
-        const actual = vivaldi.getMaxPitchOf('Solo Violin');
+        const actual = scoreSearcher.getMaxPitchOf('Solo Violin');
         const expected = 79; //G6
         t.deepEqual(actual, expected, 'getMaxPitchOf');
       }
@@ -87,17 +88,17 @@ test('vivaldi_winter tests', function(t){
 test('two_parts', function(t){
   fs.readFile('../scores/two_parts.xml', function(err, data) {
     parser.parseString(data, function (err, result) {
-      const twoParts = new ScoreSearcher(result);
+      const scoreSearcher = new ScoreSearcher(result);
 
       {
-        const actual = twoParts.getInstrumentsWithMelody('BGBC');
+        const actual = scoreSearcher.getInstrumentsWithMelody('BGBC');
         const expected = ['Violin'];
         t.deepEqual(actual, expected, 'getInstrumentsWithMelody BGBC');
       }
 
       {
-        const actual = twoParts.getInstrumentsWithMelody('GD');
-        const expected = ['Flute']; //G6
+        const actual = scoreSearcher.getInstrumentsWithMelody('GD');
+        const expected = ['Flute'];
         t.deepEqual(actual, expected, 'getInstrumentsWithMelody GD');
       }
 
@@ -109,10 +110,10 @@ test('two_parts', function(t){
 test('two_tempos', function(t){
   fs.readFile('../scores/two_tempos.xml', function(err, data) {
     parser.parseString(data, function (err, result) {
-      const twoParts = new ScoreSearcher(result);
+      const scoreSearcher = new ScoreSearcher(result);
 
       {
-        const actual = twoParts.getTempos();
+        const actual = scoreSearcher.getTempos();
         const expected = [105, 90];
         t.deepEqual(actual, expected, 'getTempos');
       }
