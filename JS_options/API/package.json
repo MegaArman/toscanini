@@ -6,10 +6,11 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "test": "./node_modules/.bin/tape *.spec.js | tap-spec"
+    "test": "./node_modules/.bin/tape *.spec.js | faucet",
+    "performance_test": "./node_modules/.bin/tape json_performance.js | faucet"
   },
   "dependencies": {
-    "tap-spec": "^4.1.1",
+    "faucet": "0.0.1",
     "tape": "^4.6.2",
     "xml2js": "^0.4.17",
     "xml2json": "^0.11.0"
