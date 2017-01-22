@@ -13,7 +13,7 @@ module.exports = {
         "no-console":0,
         "quotes": [
             "error",
-            "single"
+            "double"
         ],
         "semi": [
             "error",

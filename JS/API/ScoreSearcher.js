@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 class ScoreSearcher
 {
   constructor(musicObj)
   {
     this.musicObj = musicObj; //the entire score
-    this.pitchRef = {'C': 0, 'D': 2, 'E': 4, 'F': 5, 'G': 7, 'A':9, 'B': 11};
+    this.pitchRef = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
     this.fifthsRef =
-    {'-6': 'Gb', '-5': 'Db', '-4':'Ab', '-3': 'Eb', '-2': 'Bb', '-1': 'F',
-    '0': 'C', '1': 'G', '2': 'D', '3': 'A', '4': 'E', '5': 'B', '6': 'F#'};
+    {"-6": "Gb", "-5": "Db", "-4":"Ab", "-3": "Eb", "-2": "Bb", "-1": "F",
+    "0": "C", "1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"};
     this.maxPitch = null;
     this.minPitch = null;
     this.instrumentObjects = {};
@@ -21,7 +21,7 @@ class ScoreSearcher
     {
       func.apply(this,[i, musicObj[i]]);
 
-      if (musicObj[i] !== null && typeof(musicObj[i])==='object')
+      if (musicObj[i] !== null && typeof(musicObj[i])==="object")
       {
         this.traverse(musicObj[i],func);
       }
@@ -30,7 +30,7 @@ class ScoreSearcher
 
   findValsByKey(targetKey)
   {
-    function process(key,value) //called with every property and it's value
+    function process(key,value) //called with every property and it"s value
     {
       if (key === targetKey) console.log(value);
     }
@@ -46,13 +46,13 @@ class ScoreSearcher
 
     function process(key, value) //builds array of instrument objects
     {
-      //first find the part names as they're always towards the top of file
+      //first find the part names as they"re always towards the top of file
       //This will be pushed in the correct order as we see them:
-      if (key === 'part-name') partNames.push(value);
+      if (key === "part-name") partNames.push(value);
 
-      //the actual parts data are in an ordered array found via key 'part'
-      //bc they're ordered, they correspond to the ordering of the part-names
-      if (key === 'part')
+      //the actual parts data are in an ordered array found via key "part"
+      //bc they"re ordered, they correspond to the ordering of the part-names
+      if (key === "part")
       {
         let index = 0;
         for (let name of partNames)
@@ -76,21 +76,21 @@ class ScoreSearcher
 
     function process(key, value)
     {
-      if (key === 'step') midiNoteNum += this.pitchRef[value];
-      if (key === 'alter') midiNoteNum += parseInt(value);
-      if (key === 'octave')
+      if (key === "step") midiNoteNum += this.pitchRef[value];
+      if (key === "alter") midiNoteNum += parseInt(value);
+      if (key === "octave")
       {
         midiNoteNum += parseInt(value) * 12;
 
         if (maxPitch < midiNoteNum) maxPitch = midiNoteNum;
         if (minPitch > midiNoteNum) minPitch = midiNoteNum;
 
-        midiNoteNum = 0; //'octave' is the last key in a note, so reset
+        midiNoteNum = 0; //"octave" is the last key in a note, so reset
       }
     }
 
     this.traverse(musicObj, process);
-    return {'max': maxPitch, 'min': minPitch};
+    return {"max": maxPitch, "min": minPitch};
   }
 
   getMaxPitch() //of the whole piece
@@ -98,7 +98,7 @@ class ScoreSearcher
     if (this.maxPitch === null)
     {
       let pair = this.findExtremePitches(this.musicObj);
-      this.maxPitch = pair['max'];
+      this.maxPitch = pair["max"];
     }
     return this.maxPitch;
   }
@@ -108,7 +108,7 @@ class ScoreSearcher
     if (this.minPitch === null)
     {
       let pair = this.findExtremePitches(this.musicObj);
-      this.minPitch = pair['min'];
+      this.minPitch = pair["min"];
     }
     return this.minPitch;
   }
@@ -120,7 +120,7 @@ class ScoreSearcher
       return this.getMaxPitch();
     }
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
-    return pair['max'];
+    return pair["max"];
   }
 
   getMinPitchOf(instrumentName)
@@ -131,7 +131,7 @@ class ScoreSearcher
     }
 
     let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
-    return pair['min'];
+    return pair["min"];
   }
 
   getKeySignatures()
@@ -140,7 +140,7 @@ class ScoreSearcher
 
     function process(key,value)
     {
-      if (key === 'fifths')
+      if (key === "fifths")
       {
         let newKeySig = this.fifthsRef[value];
         let shouldPush = true;
@@ -163,11 +163,11 @@ class ScoreSearcher
 
   getInstrumentObjects(){return this.instrumentObjects;}
 
-  //must go by instruments to prevent false positive if two instruments'
+  //must go by instruments to prevent false positive if two instruments"
   //pitches in sequence produce the melody...chords can cause false positives!
   getInstrumentsWithMelody(melodyString)
   {
-    let tempStrNotes = '';
+    let tempStrNotes = "";
     let instrumentsWithMelody = [];
     let midiNoteNum = 0;
 
@@ -175,21 +175,21 @@ class ScoreSearcher
     function midiNumToNote(midiNoteNum)
     {
       const notes =
-      ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+      ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
       let pitchNum = midiNoteNum % 12; //remove the octave info
       return (notes[pitchNum]);
     }
 
     function process(key, value)
     {
-      if (key === 'step') midiNoteNum += this.pitchRef[value];
-      if (key === 'alter') midiNoteNum += parseInt(value);
-      if (key === 'octave')
+      if (key === "step") midiNoteNum += this.pitchRef[value];
+      if (key === "alter") midiNoteNum += parseInt(value);
+      if (key === "octave")
       {
-        //Must do this... suppose there's a Cb
+        //Must do this... suppose there"s a Cb
         midiNoteNum += parseInt(value) * 12;
         tempStrNotes += midiNumToNote(midiNoteNum);
-        midiNoteNum = 0; //'octave' is the last key in a note, so reset
+        midiNoteNum = 0; //"octave" is the last key in a note, so reset
       }
     }
     //---------------------------------------------------
@@ -202,7 +202,7 @@ class ScoreSearcher
       {
         instrumentsWithMelody.push(instrumentData);
       }
-      tempStrNotes = '';
+      tempStrNotes = "";
     }
 
     return instrumentsWithMelody;
@@ -214,7 +214,7 @@ class ScoreSearcher
 
     function process(key,value)
     {
-      if (key === 'tempo') tempos.push(parseInt(value));
+      if (key === "tempo") tempos.push(parseInt(value));
     }
 
     this.traverse(this.musicObj, process);
