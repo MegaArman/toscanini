@@ -2,7 +2,6 @@
 // ...but if you want pretty output use npm run test
 "use strict";
 const fs = require("fs");
-//xml2js is meant for browser use! Server can use xml2json for speed:
 const xml2js = require("xml2js");
 const test = require("tape").test;
 const ScoreSearcher = require("./ScoreSearcher");
@@ -11,12 +10,15 @@ const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
 test("avamariapg1 tests", function(t){
   fs.readFile("../scores/avamariapg1.xml", function(err, data) {
+    if (err) throw err;
     parser.parseString(data, function (err, result) {
+      if (err) throw err;
+
       const scoreSearcher = new ScoreSearcher(result);
 
       {
         const actual = scoreSearcher.getMaxPitch();
-        const expected = 68; //Ab
+        const expected = 68; //Abn
         t.deepEqual(actual, expected, "highest pitch");
       }
 
@@ -57,7 +59,9 @@ test("avamariapg1 tests", function(t){
 
 test("vivaldi_winter tests", function(t){
   fs.readFile("../scores/vivaldi_winter.xml", function(err, data) {
+    if (err) throw err;
     parser.parseString(data, function (err, result) {
+      if (err) throw err;
       const scoreSearcher = new ScoreSearcher(result);
 
       {
@@ -87,7 +91,10 @@ test("vivaldi_winter tests", function(t){
 
 test("two_parts", function(t){
   fs.readFile("../scores/two_parts.xml", function(err, data) {
+    if (err) throw err;
     parser.parseString(data, function (err, result) {
+      if (err) throw err;
+
       const scoreSearcher = new ScoreSearcher(result);
 
       {
@@ -109,7 +116,10 @@ test("two_parts", function(t){
 
 test("two_tempos", function(t){
   fs.readFile("../scores/two_tempos.xml", function(err, data) {
+    if (err) throw err;
     parser.parseString(data, function (err, result) {
+      if (err) throw err;
+
       const scoreSearcher = new ScoreSearcher(result);
 
       {

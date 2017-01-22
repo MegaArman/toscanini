@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "test": "./node_modules/.bin/tape *.spec.js | faucet",
-    "performance_test": "./node_modules/.bin/tape json_performance.js | faucet"
+    "performance": "./node_modules/.bin/tape json_performance_test.js | faucet"
   },
   "dependencies": {
     "xml2js": "^0.4.17",

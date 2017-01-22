@@ -1,8 +1,7 @@
-//parses what would be hundreds of pages of xml
+//parses what would be hundreds of pages of xml (24.7mb)
 //alogorithm:
 //initially convert the music xml files to json with xml2json - a fast c based xml parser
 //the next time the user uses the service the JSON representation of their
-//scores will be loaded into memory. This was 24.7mb of beethoven - so several hundred pages
 
 "use strict";
 const fs = require("fs");
@@ -64,7 +63,10 @@ const ScoreSearcher = require("./ScoreSearcher");
 let hrstart = process.hrtime(); //node supported and more precise for speed test
 
 test("mov 1 tests", function(t){
-  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 1.json", function(err, jsonstring) {
+  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 1.json",
+   function(err, jsonstring) {
+    if (err) throw err;
+
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
 
     {
@@ -93,12 +95,15 @@ test("mov 1 tests", function(t){
 
 
 test("mov 2 tests", function(t){
-  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 2.json", function(err, jsonstring) {
+  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 2.json",
+  function(err, jsonstring) {
+    if (err) throw err;
+
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
 
     {
-      const expected = [ "Flute", "Oboes", "Clarinets in Bb", "Bassoons", "Horn in Eb",
-      "Trumpet in Eb", "Timpani", "Violin I",
+      const expected = [ "Flute", "Oboes", "Clarinets in Bb",
+      "Bassoons", "Horn in Eb", "Trumpet in Eb", "Timpani", "Violin I",
       "Violin II", "Viola", "Violoncello", "Contrabass" ];
 
       const actual = Object.keys(scoreSearcher.getInstrumentObjects());
@@ -122,7 +127,10 @@ test("mov 2 tests", function(t){
 });
 
 test("mov 3 tests", function(t){
-  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 3.json", function(err, jsonstring) {
+  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 3.json",
+  function(err, jsonstring) {
+    if (err) throw err;
+
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
 
     {
@@ -150,7 +158,10 @@ test("mov 3 tests", function(t){
 });
 
 test("mov 4 tests", function(t){
-  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 4.json", function(err, jsonstring) {
+  fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 4.json",
+  function(err, jsonstring) {
+    if (err) throw err;
+
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
 
     {
