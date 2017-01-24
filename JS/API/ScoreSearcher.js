@@ -1,31 +1,65 @@
 "use strict";
 
+//"private static" utility definitions=========================================
+const pitchRef = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
+const fifthsRef =
+{"-6": "Gb", "-5": "Db", "-4":"Ab", "-3": "Eb", "-2": "Bb", "-1": "F",
+"0": "C", "1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"};
+
+function traverse(musicObj,func)
+{
+  for (let i in musicObj)
+  {
+    func.apply(this,[i, musicObj[i]]);
+
+    if (musicObj[i] !== null && typeof(musicObj[i])==="object")
+    {
+      traverse(musicObj[i],func);
+    }
+  }
+}
+
+//create objects for each part, this will reduce searching whole score.
+//part being the full name of parts, ex: Solo Violin, Violin I, Violin II
+function makeInstrumentObjects(musicObj)
+{
+  let partNames = [];
+  let instrumentObjects = {};
+
+  function process(key, value) //builds array of instrument objects
+  {
+    //first find the part names as they"re always towards the top of file
+    //This will be pushed in the correct order as we see them:
+    if (key === "part-name") partNames.push(value);
+
+    //the actual parts data are in an ordered array found via key "part"
+    //bc they"re ordered, they correspond to the ordering of the part-names
+    if (key === "part")
+    {
+      let index = 0;
+      for (let name of partNames)
+      {
+        instrumentObjects[name] = value[index]; //value is array of parts
+        index++;
+      }
+
+      return; //avoid redundant traversal:
+    }
+  }
+
+  traverse(musicObj, process);
+  return instrumentObjects;
+}
+//=============================================================================
+
 class ScoreSearcher
 {
   constructor(musicObj)
   {
     this.musicObj = musicObj; //the entire score
-    this.pitchRef = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
-    this.fifthsRef =
-    {"-6": "Gb", "-5": "Db", "-4":"Ab", "-3": "Eb", "-2": "Bb", "-1": "F",
-    "0": "C", "1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"};
     this.maxPitch = null;
     this.minPitch = null;
-    this.instrumentObjects = {};
-    this.makeInstrumentObjects();
-  }
-
-  traverse(musicObj,func)
-  {
-    for (let i in musicObj)
-    {
-      func.apply(this,[i, musicObj[i]]);
-
-      if (musicObj[i] !== null && typeof(musicObj[i])==="object")
-      {
-        this.traverse(musicObj[i],func);
-      }
-    }
+    this.instrumentObjects = makeInstrumentObjects(musicObj);
   }
 
   findValsByKey(targetKey)
@@ -35,37 +69,7 @@ class ScoreSearcher
       if (key === targetKey) console.log(value);
     }
 
-    this.traverse(this.musicObj, process);
-  }
-
-  //create objects for each part, this will reduce searching whole score.
-  //part being the full name of parts, ex: Solo Violin, Violin I, Violin II
-  makeInstrumentObjects()
-  {
-    let partNames = [];
-
-    function process(key, value) //builds array of instrument objects
-    {
-      //first find the part names as they"re always towards the top of file
-      //This will be pushed in the correct order as we see them:
-      if (key === "part-name") partNames.push(value);
-
-      //the actual parts data are in an ordered array found via key "part"
-      //bc they"re ordered, they correspond to the ordering of the part-names
-      if (key === "part")
-      {
-        let index = 0;
-        for (let name of partNames)
-        {
-          this.instrumentObjects[name] = value[index]; //value is array of parts
-          index++;
-        }
-
-        return; //avoid redundant traversal:
-      }
-    }
-
-    this.traverse(this.musicObj, process);
+    traverse(this.musicObj, process);
   }
 
   findExtremePitches(musicObj) //finds max and min pitch
@@ -76,7 +80,7 @@ class ScoreSearcher
 
     function process(key, value)
     {
-      if (key === "step") midiNoteNum += this.pitchRef[value];
+      if (key === "step") midiNoteNum += pitchRef[value];
       if (key === "alter") midiNoteNum += parseInt(value);
       if (key === "octave")
       {
@@ -89,7 +93,7 @@ class ScoreSearcher
       }
     }
 
-    this.traverse(musicObj, process);
+    traverse(musicObj, process);
     return {"max": maxPitch, "min": minPitch};
   }
 
@@ -142,7 +146,7 @@ class ScoreSearcher
     {
       if (key === "fifths")
       {
-        let newKeySig = this.fifthsRef[value];
+        let newKeySig = fifthsRef[value];
         let shouldPush = true;
 
         for (let oldKeySig of keySignatures) //avoid duplicates
@@ -157,7 +161,7 @@ class ScoreSearcher
       }
     }
 
-    this.traverse(this.musicObj, process);
+    traverse(this.musicObj, process);
     return keySignatures;
   }
 
@@ -182,7 +186,7 @@ class ScoreSearcher
 
     function process(key, value)
     {
-      if (key === "step") midiNoteNum += this.pitchRef[value];
+      if (key === "step") midiNoteNum += pitchRef[value];
       if (key === "alter") midiNoteNum += parseInt(value);
       if (key === "octave")
       {
@@ -196,7 +200,7 @@ class ScoreSearcher
 
     for (let instrumentData in this.instrumentObjects)
     {
-      this.traverse(this.instrumentObjects[instrumentData], process);
+      traverse(this.instrumentObjects[instrumentData], process);
 
       if (tempStrNotes.includes(melodyString))
       {
@@ -217,7 +221,7 @@ class ScoreSearcher
       if (key === "tempo") tempos.push(parseInt(value));
     }
 
-    this.traverse(this.musicObj, process);
+    traverse(this.musicObj, process);
     return tempos;
   }
 }
