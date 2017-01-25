@@ -42,9 +42,3 @@ returns array of instruments who have a melody. NOTE: may not work for instrumen
 ###getTempos()
 returns an array containing all tempos in the score
 
-## Notate.js
-This class contains a set of utility functions independent of any score in question
-
-### midiNumToNote(midiNoteNum)
-Conevrts a midi note number to an actual pitch + octave such as C4
-
