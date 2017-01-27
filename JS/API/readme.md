@@ -10,7 +10,7 @@ A working stack for all things this repo as of 1/27/17:
 
 -Text editor (least important, but suggested): Atom (https://github.com/atom/atom- you may need to run 'yum install libXScrnSaver' before you run it for the first time) and install packages linter and linter-eslint (these are for syntax/style  checking)
 
-### Setup
+## Setup
 1) Clone/download
 
 2) Use npm install to get dependencies listed in package.json
