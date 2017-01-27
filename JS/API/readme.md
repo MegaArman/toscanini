@@ -51,8 +51,51 @@ returns array of instruments who have a melody. NOTE: may not work for instrumen
 ###getTempos()
 returns an array containing all tempos in the score
 
-## Notate.js
-This class contains a set of utility functions independent of any score in question
+## Adding new query functions to ScoreSearcher.js
+consider this code from ScoreSearcher.js:
 
-### midiNumToNote(midiNoteNum)
-Conevrts a midi note number to an actual pitch + octave such as C4
+    function traverse(musicObj,func)
+    {
+      for (let i in musicObj)
+      {
+        func.apply(this,[i, musicObj[i]]);
+
+        if (musicObj[i] !== null && typeof(musicObj[i])==="object")
+        {
+          traverse(musicObj[i],func);
+        }
+      }
+    }
+
+    findValsByKey(targetKey)
+    {
+      function process(key,value) //called with every property and its value
+      {
+        if (key === targetKey) console.log(value);
+      }
+
+      traverse(this.musicObj, process);
+    }
+    
+So essentially traverse(musicObj, func) is a function to traverse any JavaScript object which may contain other JavaScript objects and or arrays with unknown amount of nesting. Its first argument (musicObj) is for a JS object (typically the entire JS object for the score or an instrument) and second argument (func) is a callback function (which is invoked by func.apply(this,[i, musicObj[i]]); ). In this case findValsByKey calls traverse by giving it its process function as a call back. 
+
+***The process function is essentially where all the magic happens- it is where you would write your code to process the music data. Its arguments (key, value) are passed from func.apply(this,[i, musicObj[i]]) in traverse...***
+
+findValsByKey-->traverse-->findValsByKey's process function
+
+try calling scoreSearcher.findValsByKey('octave') to see all the octave data logged for a score
+
+### Skeleton code
+    getNewInfoAboutWholeScore()
+    {
+      function process(key,value) //called with every property and its value
+      {
+        if (key === targetKey) 
+        {
+           //do stuff with value here...
+        }
+      }
+
+      traverse(this.musicObj, process);
+    }
+    
