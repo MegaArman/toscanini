@@ -21,8 +21,9 @@ A working stack for all things this repo as of 1/27/17:
 ### Run Unit Tests
  npm test
 
-### other
+### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
+ 
 ## ScoreSearcher.js
 Is responsible for the analysis of the score.
 
