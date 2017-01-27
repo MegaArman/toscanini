@@ -1,19 +1,5 @@
 #API
 
-### Setup
-1) Clone/download
-
-2) Use npm install to get dependencies listed in package.json
-
-### Sample Execution 
- node jsfileyouwanttorun
- 
-### Run Unit Tests
- npm test
- 
-### Linting 
- http://eslint.org/docs/user-guide/getting-started
-
 ## Tooling
 
 A working stack for all things this repo as of 1/27/17:
@@ -24,6 +10,19 @@ A working stack for all things this repo as of 1/27/17:
 
 -Text editor (least important, but suggested): Atom (https://github.com/atom/atom- you may need to run 'yum install libXScrnSaver' before you run it for the first time) and install packages linter and linter-eslint (these are for syntax/style  checking)
 
+### Setup
+1) Clone/download
+
+2) Use npm install to get dependencies listed in package.json
+
+## Sample Execution 
+ node _jsfileyouwanttorun_
+ 
+### Run Unit Tests
+ npm test
+
+### other
+ package.json files may have scripts you can invoke via 'npm run _scriptname_'
 ## ScoreSearcher.js
 Is responsible for the analysis of the score.
 
