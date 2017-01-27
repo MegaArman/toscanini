@@ -14,6 +14,15 @@
 ### Linting 
  http://eslint.org/docs/user-guide/getting-started
 
+## Tooling
+
+A working stack for all things this repo as of 1/27/17:
+
+-OS: CentOS 7 (highly suggested if you want to work on backend)
+
+-JS runtime environment (and more): Node v6.9.4
+
+-Text editor (least important, but suggested): Atom (https://github.com/atom/atom- you may need to run 'yum install libXScrnSaver' before you run it for the first time) and install packages linter and linter-eslint (these are for syntax/style  checking)
 
 ## ScoreSearcher.js
 Is responsible for the analysis of the score.
@@ -47,14 +56,3 @@ This class contains a set of utility functions independent of any score in quest
 
 ### midiNumToNote(midiNoteNum)
 Conevrts a midi note number to an actual pitch + octave such as C4
-
-## Tooling
-
-A working stack for all things this repo as of 1/27/17:
-
--OS: CentOS 7 (highly suggested if you want to work on backend)
-
--JS runtime environment (and more): Node v6.9.4
-
--Text editor (least important, but suggested): Atom (https://github.com/atom/atom- you may need to run 'yum install libXScrnSaver' before you run it for the first time) and install packages linter and linter-eslint (these are for syntax/style  checking)
-
