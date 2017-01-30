@@ -12,19 +12,19 @@ test("avamariapg1 tests", function(t){
   {
     const actual = scoreSearcher.getMaxPitch();
     const expected = 68; //Abn
-    t.deepEqual(actual, expected, "highest pitch");
+    t.deepEqual(actual, expected, "getMaxPitch");
   }
 
   {
     const actual = scoreSearcher.getMinPitch();
     const expected = 15; //Eb
-    t.deepEqual(actual, expected, "lowest pitch");
+    t.deepEqual(actual, expected, "getMinPitch");
   }
 
   {
     const expected = [ "Voice", "Piano" ];
-    const actual = Object.keys(scoreSearcher.getInstrumentObjects());
-    t.deepEqual(actual, expected, "instrument names");
+    const actual = scoreSearcher.getInstrumentNames();
+    t.deepEqual(actual, expected, "getInstrumentNames");
   }
 
   {
@@ -56,8 +56,8 @@ test("vivaldi_winter tests", function(t){
     const expected =[ "Solo Violin", "Violin I",
                       "Violin II", "Viola", "Violoncello",
                       "Contrabass", "Harpsichord" ];
-    const actual = Object.keys(scoreSearcher.getInstrumentObjects());
-    t.deepEqual(actual, expected, "instrument names");
+    const actual = scoreSearcher.getInstrumentNames();
+    t.deepEqual(actual, expected, "getInstrumentNames");
   }
 
   {
@@ -82,13 +82,13 @@ test("two_parts", function(t){
   {
     const actual = scoreSearcher.getInstrumentsWithMelody("BGBC");
     const expected = ["Violin"];
-    t.deepEqual(actual, expected, "getInstrumentsWithMelody BGBC");
+    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
   }
 
   {
     const actual = scoreSearcher.getInstrumentsWithMelody("GD");
     const expected = ["Flute"];
-    t.deepEqual(actual, expected, "getInstrumentsWithMelody GD");
+    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
   }
 
   t.end();

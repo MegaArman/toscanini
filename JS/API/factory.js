@@ -165,9 +165,9 @@ const scoreSearcherInstance = (musicObj) =>
     return keySignatures;
   };
 
-  scoreSearcher.getInstrumentObjects = () =>
+  scoreSearcher.getInstrumentNames= () =>
   {
-    return instrumentObjects;
+    return Object.keys(instrumentObjects);
   };
 
   scoreSearcher.getInstrumentsWithMelody = (melodyString) =>
@@ -236,8 +236,7 @@ const ScoreSearcher = (MusicXML) =>
 
   parser.parseString(MusicXML, function (err, result) {
     if (err) throw err;
-    console.log(result);
-     scoreSearcher = scoreSearcherInstance(result);
+   scoreSearcher = scoreSearcherInstance(result);
   });
   return scoreSearcher;
 
