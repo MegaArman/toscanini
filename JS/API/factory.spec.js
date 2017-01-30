@@ -28,15 +28,15 @@ test("avamariapg1 tests", function(t){
   }
 
   {
-    const actual = scoreSearcher.getMaxPitchOf("Voice");
+    const actual = scoreSearcher.getMaxPitch("Voice");
     const expected = 65; //F
-    t.deepEqual(actual, expected, "getMaxPitchOf");
+    t.deepEqual(actual, expected, "getMaxPitch");
   }
 
   {
-    const actual = scoreSearcher.getMinPitchOf("Voice");
+    const actual = scoreSearcher.getMinPitch("Voice");
     const expected = 53; //F
-    t.deepEqual(actual, expected, "getMinPitchOf");
+    t.deepEqual(actual, expected, "getMinPitch");
   }
 
   {
@@ -61,15 +61,15 @@ test("vivaldi_winter tests", function(t){
   }
 
   {
-    const actual = scoreSearcher.getMaxPitchOf("Viola");
+    const actual = scoreSearcher.getMaxPitch("Viola");
     const expected = 62; //D5
-    t.deepEqual(actual, expected, "getMaxPitchOf");
+    t.deepEqual(actual, expected, "getMaxPitch");
   }
 
   {
-    const actual = scoreSearcher.getMaxPitchOf("Solo Violin");
+    const actual = scoreSearcher.getMaxPitch("Solo Violin");
     const expected = 79; //G6
-    t.deepEqual(actual, expected, "getMaxPitchOf");
+    t.deepEqual(actual, expected, "getMaxPitch");
   }
 
   t.end();
