@@ -1,6 +1,6 @@
 "use strict";
 const xml2js = require("xml2js");
-const parser =  xml2js.Parser({explicitArray: false, mergeAttrs: true});
+const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
 //"private static" utility definitions=========================================
 const pitchRef = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
@@ -56,7 +56,7 @@ function makeInstrumentObjects(musicObj)
 
 const scoreSearcherInstance = (musicObj) =>
 {
-  const scoreSearcher = {};
+  const scoreSearcher = {}; //privates
   let maxOverallPitch = null;
   let minOverallPitch = null;
 
@@ -229,13 +229,18 @@ const scoreSearcherInstance = (musicObj) =>
   return scoreSearcher;
 };
 
+//Constructor
 const ScoreSearcher = (MusicXML) =>
 {
+  let scoreSearcher;
+
   parser.parseString(MusicXML, function (err, result) {
     if (err) throw err;
-
-    return scoreSearcherInstance(result);
+    console.log(result);
+     scoreSearcher = scoreSearcherInstance(result);
   });
+  return scoreSearcher;
+
 };
 
 module.exports = ScoreSearcher;
