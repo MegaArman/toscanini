@@ -54,25 +54,16 @@ function makeInstrumentObjects(musicObj)
 }
 //=============================================================================
 
+//"class"
 const scoreSearcherInstance = (musicObj) =>
 {
-  const scoreSearcher = {}; //privates
-  let maxOverallPitch = null;
-  let minOverallPitch = null;
-
+  //"private" variables
+  const scoreSearcher = {};
   const instrumentObjects = makeInstrumentObjects(musicObj);
 
-  scoreSearcher.findValsByKey = (targetKey) =>
+  //"private" functions
+  function findExtremePitches(myMusicObj)
   {
-    function process(key,value) //called with every property and it"s value
-    {
-      if (key === targetKey) console.log(value);
-    }
-
-    traverse(musicObj, process);
-  };
-
-  scoreSearcher.findExtremePitches = (myMusicObj) => {
     let midiNoteNum = 0;
     let max = -999;
     let min = 999;
@@ -94,26 +85,41 @@ const scoreSearcherInstance = (musicObj) =>
 
     traverse(myMusicObj, process);
     return {"max": max, "min": min};
+  }
+
+  //"public" functions
+  scoreSearcher.findValsByKey = (targetKey) =>
+  {
+    function process(key,value) //called with every property and it"s value
+    {
+      if (key === targetKey) console.log(value);
+    }
+
+    traverse(musicObj, process);
   };
 
   scoreSearcher.getMaxPitch = () =>
   {
-    if (maxOverallPitch === null)
+    const me = scoreSearcher;
+
+    if (me.maxOverallPitch === undefined)
     {
-      let pair = scoreSearcher.findExtremePitches(musicObj);
-      maxOverallPitch = pair["max"];
+      let pair = findExtremePitches(musicObj);
+      me.maxOverallPitch = pair["max"];
     }
-    return maxOverallPitch;
+    return me.maxOverallPitch;
   };
 
   scoreSearcher.getMinPitch = () =>//of the whole piece
   {
-    if (minOverallPitch === null)
+    const me = scoreSearcher;
+
+    if (me.minOverallPitch === undefined)
     {
-      let pair = scoreSearcher.findExtremePitches(musicObj);
-      minOverallPitch = pair["min"];
+      let pair = findExtremePitches(musicObj);
+      me.minOverallPitch = pair["min"];
     }
-    return minOverallPitch;
+    return me.minOverallPitch;
   };
 
   scoreSearcher.getMaxPitchOf = (instrumentName) =>
@@ -123,7 +129,7 @@ const scoreSearcherInstance = (musicObj) =>
       return scoreSearcher.getMaxPitch();
     }
 
-    let pair = scoreSearcher.findExtremePitches(instrumentObjects[instrumentName]);
+    let pair = findExtremePitches(instrumentObjects[instrumentName]);
     return pair["max"];
   };
 
@@ -134,7 +140,7 @@ const scoreSearcherInstance = (musicObj) =>
       return scoreSearcher.getMinPitch();
     }
 
-    let pair = scoreSearcher.findExtremePitches(instrumentObjects[instrumentName]);
+    let pair = findExtremePitches(instrumentObjects[instrumentName]);
     return pair["min"];
   };
 
