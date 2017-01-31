@@ -52,8 +52,33 @@ function makeInstrumentObjects(musicObj)
   traverse(musicObj, process);
   return instrumentObjects;
 }
-//=============================================================================
 
+function getRange(myMusicObj)
+{
+  let midiNoteNum = 0;
+  let max = -999;
+  let min = 999;
+
+  function process(key, value)
+  {
+    if (key === "step") midiNoteNum += pitchRef[value];
+    if (key === "alter") midiNoteNum += parseInt(value);
+    if (key === "octave")
+    {
+      midiNoteNum += parseInt(value) * 12;
+
+      if (max < midiNoteNum) max = midiNoteNum;
+      if (min > midiNoteNum) min = midiNoteNum;
+
+      midiNoteNum = 0; //"octave" is the last key in a note, so reset
+    }
+  }
+
+  traverse(myMusicObj, process);
+  return {"max": max, "min": min};
+}
+
+//=============================================================================
 //"class"
 const scoreSearcherInstance = (musicObj) =>
 {
@@ -61,32 +86,9 @@ const scoreSearcherInstance = (musicObj) =>
   const scoreSearcher = {};
   const instrumentObjects = makeInstrumentObjects(musicObj);
 
-  //"private" functions------------------------------
-  function getRange(myMusicObj)
-  {
-    let midiNoteNum = 0;
-    let max = -999;
-    let min = 999;
+  //"private" functions in scope------------------------------
 
-    function process(key, value)
-    {
-      if (key === "step") midiNoteNum += pitchRef[value];
-      if (key === "alter") midiNoteNum += parseInt(value);
-      if (key === "octave")
-      {
-        midiNoteNum += parseInt(value) * 12;
-
-        if (max < midiNoteNum) max = midiNoteNum;
-        if (min > midiNoteNum) min = midiNoteNum;
-
-        midiNoteNum = 0; //"octave" is the last key in a note, so reset
-      }
-    }
-
-    traverse(myMusicObj, process);
-    return {"max": max, "min": min};
-  }
-
+  //...
 
   //"public" functions---------------------------
   scoreSearcher.findValsByKey = (targetKey) =>
