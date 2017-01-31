@@ -80,8 +80,11 @@ findValsByKey-->traverse-->findValsByKey's process function
 try calling scoreSearcher.findValsByKey('octave') to see all the octave data logged for a score
 
 ### Skeleton code
-    getNewInfoAboutWholeScore()
+    getNewInfoAboutSomething(instrumentName)
     {
+      //determine whether or not to check a specific instrument or the whole score
+      let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+
       function process(key,value) //called with every property and its value
       {
         if (key === targetKey) 
@@ -90,6 +93,6 @@ try calling scoreSearcher.findValsByKey('octave') to see all the octave data log
         }
       }
 
-      traverse(this.musicObj, process);
+      traverse(jsObj, process);
     }
     
