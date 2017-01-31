@@ -55,7 +55,7 @@ function makeInstrumentObjects(musicObj)
 
 //=============================================================================
 //"class"
-const scoreSearcher= (musicObj) =>
+const getScoreSearcherInstance = (musicObj) =>
 {
   //"private" variables..note state is safest kept constant-------------------
   const scoreSearcher = {};
@@ -211,17 +211,17 @@ const scoreSearcher= (musicObj) =>
   return scoreSearcher;
 };
 
-//Constructor
-const ScoreSearcher = (MusicXML) =>
+//Factory function, similar to a "constructor"
+function ScoreSearcher(MusicXML)
 {
   let scoreSearcherInstance;
 
-  parser.parseString(MusicXML, function (err, result) {
+  parser.parseString(MusicXML, function (err, jsObj) {
     if (err) throw err;
-    scoreSearcherInstance = scoreSearcher(result);
+    scoreSearcherInstance = getScoreSearcherInstance(jsObj);
   });
 
   return scoreSearcherInstance;
-};
+}
 
 module.exports = ScoreSearcher;
