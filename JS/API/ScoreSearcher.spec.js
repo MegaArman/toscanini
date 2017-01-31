@@ -2,128 +2,107 @@
 // ...but if you want pretty output use npm run test
 "use strict";
 const fs = require("fs");
-const xml2js = require("xml2js");
 const test = require("tape").test;
 const ScoreSearcher = require("./ScoreSearcher");
-const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
 test("avamariapg1 tests", function(t){
-  let data = fs.readFileSync("../scores/avamariapg1.xml");
+  let musicXML = fs.readFileSync("../scores/avamariapg1.xml");
+  const scoreSearcher =  ScoreSearcher(musicXML);
 
-  parser.parseString(data, function (err, result) {
-    if (err) throw err;
+  {
+    const actual = scoreSearcher.getMaxPitch();
+    const expected = 68; //Abn
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
 
-    const scoreSearcher = new ScoreSearcher(result);
+  {
+    const actual = scoreSearcher.getMinPitch();
+    const expected = 15; //Eb
+    t.deepEqual(actual, expected, "getMinPitch");
+  }
 
-    {
-      const actual = scoreSearcher.getMaxPitch();
-      const expected = 68; //Abn
-      t.deepEqual(actual, expected, "highest pitch");
-    }
+  {
+    const expected = [ "Voice", "Piano" ];
+    const actual = scoreSearcher.getInstrumentNames();
+    t.deepEqual(actual, expected, "getInstrumentNames");
+  }
 
-    {
-      const actual = scoreSearcher.getMinPitch();
-      const expected = 15; //Eb
-      t.deepEqual(actual, expected, "lowest pitch");
-    }
+  {
+    const actual = scoreSearcher.getMaxPitch("Voice");
+    const expected = 65; //F
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
 
-    {
-      const expected = [ "Voice", "Piano" ];
-      const actual = Object.keys(scoreSearcher.getInstrumentObjects());
-      t.deepEqual(actual, expected, "instrument names");
-    }
+  {
+    const actual = scoreSearcher.getMinPitch("Voice");
+    const expected = 53; //F
+    t.deepEqual(actual, expected, "getMinPitch");
+  }
 
-    {
-      const actual = scoreSearcher.getMaxPitchOf("Voice");
-      const expected = 65; //F
-      t.deepEqual(actual, expected, "getMaxPitchOf");
-    }
+  {
+    const actual = ["Bb"];
+    const expected = scoreSearcher.getKeySignatures();
+    t.deepEqual(actual, expected, "getKeySignatures");
+  }
 
-    {
-      const actual = scoreSearcher.getMinPitchOf("Voice");
-      const expected = 53; //F
-      t.deepEqual(actual, expected, "getMinPitchOf");
-    }
-
-    {
-      const actual = ["Bb"];
-      const expected = scoreSearcher.getKeySignatures();
-      t.deepEqual(actual, expected, "getKeySignatures");
-    }
-
-    t.end();
- });
+  t.end();
 });
 
 test("vivaldi_winter tests", function(t){
-  let data = fs.readFileSync("../scores/vivaldi_winter.xml");
+  let musicXML = fs.readFileSync("../scores/vivaldi_winter.xml");
+  const scoreSearcher =  ScoreSearcher(musicXML);
 
-  parser.parseString(data, function (err, result) {
-    if (err) throw err;
-    const scoreSearcher = new ScoreSearcher(result);
+  {
+    const expected =[ "Solo Violin", "Violin I",
+                      "Violin II", "Viola", "Violoncello",
+                      "Contrabass", "Harpsichord" ];
+    const actual = scoreSearcher.getInstrumentNames();
+    t.deepEqual(actual, expected, "getInstrumentNames");
+  }
 
-    {
-      const expected =[ "Solo Violin", "Violin I",
-                        "Violin II", "Viola", "Violoncello",
-                        "Contrabass", "Harpsichord" ];
-      const actual = Object.keys(scoreSearcher.getInstrumentObjects());
-      t.deepEqual(actual, expected, "instrument names");
-    }
+  {
+    const actual = scoreSearcher.getMaxPitch("Viola");
+    const expected = 62; //D5
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
 
-    {
-      const actual = scoreSearcher.getMaxPitchOf("Viola");
-      const expected = 62; //D5
-      t.deepEqual(actual, expected, "getMaxPitchOf");
-    }
+  {
+    const actual = scoreSearcher.getMaxPitch("Solo Violin");
+    const expected = 79; //G6
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
 
-    {
-      const actual = scoreSearcher.getMaxPitchOf("Solo Violin");
-      const expected = 79; //G6
-      t.deepEqual(actual, expected, "getMaxPitchOf");
-    }
-
-    t.end();
-  });
+  t.end();
 });
 
 test("two_parts", function(t){
-  let data = fs.readFileSync("../scores/two_parts.xml");
+  let musicXML = fs.readFileSync("../scores/two_parts.xml");
+  const scoreSearcher = ScoreSearcher(musicXML);
 
-  parser.parseString(data, function (err, result) {
-    if (err) throw err;
+  {
+    const actual = scoreSearcher.getInstrumentsWithMelody("BGBC");
+    const expected = ["Violin"];
+    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
+  }
 
-    const scoreSearcher = new ScoreSearcher(result);
+  {
+    const actual = scoreSearcher.getInstrumentsWithMelody("GD");
+    const expected = ["Flute"];
+    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
+  }
 
-    {
-      const actual = scoreSearcher.getInstrumentsWithMelody("BGBC");
-      const expected = ["Violin"];
-      t.deepEqual(actual, expected, "getInstrumentsWithMelody BGBC");
-    }
-
-    {
-      const actual = scoreSearcher.getInstrumentsWithMelody("GD");
-      const expected = ["Flute"];
-      t.deepEqual(actual, expected, "getInstrumentsWithMelody GD");
-    }
-
-    t.end();
-  });
+  t.end();
 });
 
 test("two_tempos", function(t){
-  let data = fs.readFileSync("../scores/two_tempos.xml");
+  let musicXML = fs.readFileSync("../scores/two_tempos.xml");
+  const scoreSearcher =  ScoreSearcher(musicXML);
 
-  parser.parseString(data, function (err, result) {
-    if (err) throw err;
+  {
+    const actual = scoreSearcher.getTempos();
+    const expected = [105, 90];
+    t.deepEqual(actual, expected, "getTempos");
+  }
 
-    const scoreSearcher = new ScoreSearcher(result);
-
-    {
-      const actual = scoreSearcher.getTempos();
-      const expected = [105, 90];
-      t.deepEqual(actual, expected, "getTempos");
-    }
-
-    t.end();
-  });
+  t.end();
 });

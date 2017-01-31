@@ -1,4 +1,6 @@
 "use strict";
+const xml2js = require("xml2js");
+const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
 //"private static" utility definitions=========================================
 const pitchRef = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
@@ -50,95 +52,68 @@ function makeInstrumentObjects(musicObj)
   traverse(musicObj, process);
   return instrumentObjects;
 }
-//=============================================================================
 
-class ScoreSearcher
+function getRange(myMusicObj)
 {
-  constructor(musicObj)
+  let midiNoteNum = 0;
+  let max = -999;
+  let min = 999;
+
+  function process(key, value)
   {
-    this.musicObj = musicObj; //the entire score
-    this.maxPitch = null;
-    this.minPitch = null;
-    this.instrumentObjects = makeInstrumentObjects(musicObj);
+    if (key === "step") midiNoteNum += pitchRef[value];
+    if (key === "alter") midiNoteNum += parseInt(value);
+    if (key === "octave")
+    {
+      midiNoteNum += parseInt(value) * 12;
+
+      if (max < midiNoteNum) max = midiNoteNum;
+      if (min > midiNoteNum) min = midiNoteNum;
+
+      midiNoteNum = 0; //"octave" is the last key in a note, so reset
+    }
   }
 
-  findValsByKey(targetKey)
+  traverse(myMusicObj, process);
+  return {"max": max, "min": min};
+}
+
+//=============================================================================
+//"class"
+const scoreSearcher= (musicObj) =>
+{
+  //"private" variables..note state is safest kept constant-------------------
+  const scoreSearcher = {};
+  const instrumentObjects = makeInstrumentObjects(musicObj);
+
+  //"private" functions in scope------------------------------
+
+  //...
+
+  //"public" functions---------------------------
+  scoreSearcher.findValsByKey = (targetKey) =>
   {
     function process(key,value) //called with every property and it"s value
     {
       if (key === targetKey) console.log(value);
     }
 
-    traverse(this.musicObj, process);
-  }
-
-  findExtremePitches(musicObj) //finds max and min pitch
-  {
-    let midiNoteNum = 0;
-    let maxPitch = -999;
-    let minPitch = 999;
-
-    function process(key, value)
-    {
-      if (key === "step") midiNoteNum += pitchRef[value];
-      if (key === "alter") midiNoteNum += parseInt(value);
-      if (key === "octave")
-      {
-        midiNoteNum += parseInt(value) * 12;
-
-        if (maxPitch < midiNoteNum) maxPitch = midiNoteNum;
-        if (minPitch > midiNoteNum) minPitch = midiNoteNum;
-
-        midiNoteNum = 0; //"octave" is the last key in a note, so reset
-      }
-    }
-
     traverse(musicObj, process);
-    return {"max": maxPitch, "min": minPitch};
-  }
+  };
 
-  getMaxPitch() //of the whole piece
+  scoreSearcher.getMaxPitch = (instrumentName) =>
   {
-    if (this.maxPitch === null)
-    {
-      let pair = this.findExtremePitches(this.musicObj);
-      this.maxPitch = pair["max"];
-    }
-    return this.maxPitch;
-  }
+    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    return getRange(jsObj)["max"];
+  };
 
-  getMinPitch() //of the whole piece
+  scoreSearcher.getMinPitch = (instrumentName) =>//of the whole piece
   {
-    if (this.minPitch === null)
-    {
-      let pair = this.findExtremePitches(this.musicObj);
-      this.minPitch = pair["min"];
-    }
-    return this.minPitch;
-  }
+    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    return getRange(jsObj)["min"];
+  };
 
-  getMaxPitchOf(instrumentName)
-  {
-    if (Object.keys(this.instrumentObjects).length === 1)
-    {
-      return this.getMaxPitch();
-    }
-    let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
-    return pair["max"];
-  }
-
-  getMinPitchOf(instrumentName)
-  {
-    if (Object.keys(this.instrumentObjects).length === 1)
-    {
-      return this.getMinPitch();
-    }
-
-    let pair = this.findExtremePitches(this.instrumentObjects[instrumentName]);
-    return pair["min"];
-  }
-
-  getKeySignatures()
+  scoreSearcher.getKeySignatures = () =>
   {
     let keySignatures = [];
 
@@ -161,15 +136,16 @@ class ScoreSearcher
       }
     }
 
-    traverse(this.musicObj, process);
+    traverse(musicObj, process);
     return keySignatures;
-  }
+  };
 
-  getInstrumentObjects(){return this.instrumentObjects;}
+  scoreSearcher.getInstrumentNames= () =>
+  {
+    return Object.keys(instrumentObjects);
+  };
 
-  //must go by instruments to prevent false positive if two instruments"
-  //pitches in sequence produce the melody...chords can cause false positives!
-  getInstrumentsWithMelody(melodyString)
+  scoreSearcher.getInstrumentsWithMelody = (melodyString) =>
   {
     let tempStrNotes = "";
     let instrumentsWithMelody = [];
@@ -190,7 +166,7 @@ class ScoreSearcher
       if (key === "alter") midiNoteNum += parseInt(value);
       if (key === "octave")
       {
-        //Must do this... suppose there"s a Cb
+        //Must do scoreSearcher... suppose there"s a Cb
         midiNoteNum += parseInt(value) * 12;
         tempStrNotes += midiNumToNote(midiNoteNum);
         midiNoteNum = 0; //"octave" is the last key in a note, so reset
@@ -198,9 +174,9 @@ class ScoreSearcher
     }
     //---------------------------------------------------
 
-    for (let instrumentData in this.instrumentObjects)
+    for (let instrumentData in instrumentObjects)
     {
-      traverse(this.instrumentObjects[instrumentData], process);
+      traverse(instrumentObjects[instrumentData], process);
 
       if (tempStrNotes.includes(melodyString))
       {
@@ -210,9 +186,9 @@ class ScoreSearcher
     }
 
     return instrumentsWithMelody;
-  }
+  };
 
-  getTempos()
+  scoreSearcher.getTempos = () =>
   {
     let tempos = [];
 
@@ -221,9 +197,24 @@ class ScoreSearcher
       if (key === "tempo") tempos.push(parseInt(value));
     }
 
-    traverse(this.musicObj, process);
+    traverse(musicObj, process);
     return tempos;
-  }
-}
+  };
+
+  return scoreSearcher;
+};
+
+//Constructor
+const ScoreSearcher = (MusicXML) =>
+{
+  let scoreSearcherInstance;
+
+  parser.parseString(MusicXML, function (err, result) {
+    if (err) throw err;
+    scoreSearcherInstance = scoreSearcher(result);
+  });
+  return scoreSearcherInstance;
+
+};
 
 module.exports = ScoreSearcher;
