@@ -27,17 +27,11 @@ A working stack for all things this repo as of 1/27/17:
 ## ScoreSearcher.js
 Is responsible for the analysis of the score.
 
-###getMaxPitch()
-gets the max pitch in the entire score
+###getMaxPitch(instrumentName)
+if no instrumentName is provided (ex: "flute"), gets the max pitch in the entire score
 
-###getMinPitch()
-gets the min pitch in the entire score
-
-###getMaxPitchOf(instrumentName)
-gets the max pitch of a certain instrument
-
-###getMinPitchOf(instrumentName)
-get the min pitch of a certain instrument
+###getMinPitch(instrumentName)
+if no instrumentName is provided (ex: "flute"), gets the min pitch in the entire score
 
 ###getKeySignatures()
 gets the key signatures of the whole piece (returns an array)
