@@ -8,7 +8,7 @@ A working stack for all things this repo as of 1/27/17:
 
 -JS runtime environment (and more): Node v6.9.4
 
--Text editor (least important): Atom (https://github.com/atom/atom- you may need to run 'yum install libXScrnSaver' before you run it for the first time). Regardless of the editor you use, please install packages linter and linter-eslint (these are for syntax/style  checking)
+-Text editor (least important): Atom (https://github.com/atom/atom- you may need to run 'yum install libXScrnSaver' before you run it for the first time). Regardless of the editor you use, please install packages linter (search "linter 1.11" in atom) and linter-eslint (these are for syntax/style  checking)
 
 ## Setup
 1) Clone/download
@@ -95,4 +95,3 @@ try calling scoreSearcher.findValsByKey('octave') to see all the octave data log
 
       traverse(jsObj, process);
     }
-    
