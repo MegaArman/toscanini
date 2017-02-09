@@ -19,6 +19,7 @@ module.exports = {
             "error",
             "always"
         ],
-        "eqeqeq": 1
+        "eqeqeq": 2,
+        "brace-style": [1, "allman"]
     }
 };

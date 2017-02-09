@@ -216,7 +216,8 @@ function ScoreSearcher(MusicXML)
 {
   let scoreSearcherInstance;
 
-  parser.parseString(MusicXML, function (err, jsObj) {
+  parser.parseString(MusicXML, function (err, jsObj)
+  {
     if (err) throw err;
     scoreSearcherInstance = getScoreSearcherInstance(jsObj);
   });

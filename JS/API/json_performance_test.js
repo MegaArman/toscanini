@@ -62,9 +62,11 @@ const ScoreSearcher = require("./ScoreSearcher");
 //================================================================
 let hrstart = process.hrtime(); //node supported and more precise for speed test
 
-test("mov 1 tests", function(t){
+test("mov 1 tests", function(t)
+{
   fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 1.json",
-   function(err, jsonstring) {
+   function(err, jsonstring)
+   {
     if (err) throw err;
 
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
@@ -94,9 +96,11 @@ test("mov 1 tests", function(t){
 });
 
 
-test("mov 2 tests", function(t){
+test("mov 2 tests", function(t)
+{
   fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 2.json",
-  function(err, jsonstring) {
+  function(err, jsonstring)
+  {
     if (err) throw err;
 
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
@@ -126,9 +130,11 @@ test("mov 2 tests", function(t){
   });
 });
 
-test("mov 3 tests", function(t){
+test("mov 3 tests", function(t)
+{
   fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 3.json",
-  function(err, jsonstring) {
+  function(err, jsonstring)
+  {
     if (err) throw err;
 
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
@@ -157,9 +163,11 @@ test("mov 3 tests", function(t){
   });
 });
 
-test("mov 4 tests", function(t){
+test("mov 4 tests", function(t)
+{
   fs.readFile("../scores_json/Beethoven-Symphony No. 4 Mov. 4.json",
-  function(err, jsonstring) {
+  function(err, jsonstring)
+  {
     if (err) throw err;
 
     const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));

@@ -5,7 +5,8 @@ const fs = require("fs");
 const test = require("tape").test;
 const ScoreSearcher = require("./ScoreSearcher");
 
-test("avamariapg1 tests", function(t){
+test("avamariapg1 tests", function(t)
+{
   let musicXML = fs.readFileSync("../scores/avamariapg1.xml");
   const scoreSearcher =  ScoreSearcher(musicXML);
 
@@ -48,7 +49,8 @@ test("avamariapg1 tests", function(t){
   t.end();
 });
 
-test("vivaldi_winter tests", function(t){
+test("vivaldi_winter tests", function(t)
+{
   let musicXML = fs.readFileSync("../scores/vivaldi_winter.xml");
   const scoreSearcher =  ScoreSearcher(musicXML);
 
@@ -75,7 +77,8 @@ test("vivaldi_winter tests", function(t){
   t.end();
 });
 
-test("two_parts", function(t){
+test("two_parts", function(t)
+{
   let musicXML = fs.readFileSync("../scores/two_parts.xml");
   const scoreSearcher = ScoreSearcher(musicXML);
 
@@ -94,7 +97,8 @@ test("two_parts", function(t){
   t.end();
 });
 
-test("two_tempos", function(t){
+test("two_tempos", function(t)
+{
   let musicXML = fs.readFileSync("../scores/two_tempos.xml");
   const scoreSearcher =  ScoreSearcher(musicXML);
 
