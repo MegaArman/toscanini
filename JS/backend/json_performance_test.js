@@ -1,11 +1,10 @@
-//parses what would be hundreds of pages of xml (24.7mb)
 //alogorithm:
 //initially convert the music xml files to json with xml2json - a fast c based xml parser
 //the next time the user uses the service the JSON representation of their
 
 "use strict";
 const fs = require("fs");
-const test = require("tape").test;
+const test = require("tape");
 const ScoreSearcher = require("./ScoreSearcher");
 
 //=============================================================
@@ -75,7 +74,7 @@ test("mov 1 tests", function(t)
       const expected = [ "Flute", "Oboes", "Clarinets in Bb", "Bassoons",
       "Bb Basso Horn", "Trumpets in Bb", "Timpani",
       "Violin I", "Violin II", "Viola", "Violoncello", "Contrabass" ];
-      const actual = Object.keys(scoreSearcher.getInstrumentObjects());
+      const actual = scoreSearcher.getInstrumentNames();
       t.deepEqual(actual, expected, "instrument names");
     }
 
@@ -110,7 +109,7 @@ test("mov 2 tests", function(t)
       "Bassoons", "Horn in Eb", "Trumpet in Eb", "Timpani", "Violin I",
       "Violin II", "Viola", "Violoncello", "Contrabass" ];
 
-      const actual = Object.keys(scoreSearcher.getInstrumentObjects());
+      const actual = scoreSearcher.getInstrumentNames();
       t.deepEqual(actual, expected, "instrument names");
     }
 
@@ -143,7 +142,7 @@ test("mov 3 tests", function(t)
       const expected = [ "Flute", "Oboes", "Clarinets in Bb", "Bassoons",
       "Bb Basso Horn", "Trumpets in Bb", "Timpani",
       "Violin I", "Violin II", "Viola", "Violoncello", "Contrabass" ];
-      const actual = Object.keys(scoreSearcher.getInstrumentObjects());
+      const actual = scoreSearcher.getInstrumentNames();
       t.deepEqual(actual, expected, "instrument names");
     }
 
@@ -176,7 +175,7 @@ test("mov 4 tests", function(t)
       const expected = [ "Flute", "Oboes", "Clarinets in Bb", "Bassoons",
       "Bb Basso Horn", "Trumpets in Bb", "Timpani",
       "Violin I", "Violin II", "Viola", "Violoncello", "Contrabass" ];
-      const actual = Object.keys(scoreSearcher.getInstrumentObjects());
+      const actual = scoreSearcher.getInstrumentNames();
       t.deepEqual(actual, expected, "instrument names");
     }
 
