@@ -19,7 +19,9 @@ A working stack for all things this repo as of 1/27/17:
  node _jsfileyouwanttorun_
  
 ### Run Unit Tests
- npm test
+ npm t
+ 
+ If your code doesn't survive the linter, no tests will run.
 
 ### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
