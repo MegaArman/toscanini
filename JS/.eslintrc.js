@@ -20,6 +20,6 @@ module.exports = {
             "always"
         ],
         "eqeqeq": 2,
-        "brace-style": [1, "allman"]
+        "brace-style": [2, "allman"]
     }
 };
