@@ -59,7 +59,7 @@ const ScoreSearcher = require("./ScoreSearcher");
 //   });
 // });
 //================================================================
-let hrstart = process.hrtime(); //node supported and more precise for speed test
+console.time("Took");
 
 test("mov 1 tests", function(t)
 {
@@ -190,8 +190,7 @@ test("mov 4 tests", function(t)
       const expected = 24;
       t.deepEqual(actual, expected, "lowest pitch");
     }
-    let hrend = process.hrtime(hrstart);
-    console.log("Execution time (hr): ", hrend[0], hrend[1]/1000000);
+    console.timeEnd("Took");
 
     t.end();
   });
