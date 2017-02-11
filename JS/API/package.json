@@ -1,13 +1,14 @@
 {
   "name": "API",
   "version": "1.0.0",
+  "bin" : "./node_modules/.bin/",
   "description": "",
   "main": "ScoreSearcher.spec.js",
   "author": "",
   "license": "ISC",
   "scripts": {
     "lint": "./node_modules/.bin/eslint *.js",
-    "test": "npm run lint && ./node_modules/.bin/tape *.spec.js | faucet"
+    "test":   "\"npm run lint && tape *.spec.js | faucet\""
   },
   "dependencies": {
     "xml2js": "^0.4.17"
