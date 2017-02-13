@@ -1,15 +1,23 @@
 {
   "name": "API",
   "version": "1.0.0",
+  "bin" : "./node_modules/.bin/",
   "description": "",
   "main": "ScoreSearcher.spec.js",
   "author": "",
   "license": "ISC",
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint *.js",
-    "test": "npm run lint && ./node_modules/.bin/tape *.spec.js"
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/MegaArman/MusicXMLResearch/tree/master/JS/backend"
   },
-  "dependencies": {
+  "scripts":
+  {
+    "lint": "./node_modules/.bin/eslint *.js",
+    "test":   "npm run lint && tape *.spec.js"
+  },
+  "dependencies":
+  {
     "xml2json": "^0.11.0"
   },
   "devDependencies": {
