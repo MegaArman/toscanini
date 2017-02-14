@@ -11,11 +11,7 @@ function traverse(obj,func)
   for (let i in obj)
   {
     func.apply(this,[i, obj[i]]);
-
-    if (obj[i] !== null && typeof(obj[i])==="object")
-    {
-      traverse(obj[i],func);
-    }
+    if (obj[i] !== null && typeof(obj[i])==="object") traverse(obj[i],func);
   }
 }
 
@@ -74,6 +70,8 @@ const factoryScoreSearcher = (musicObj) =>
     traverse(musicObj, process);
   };
 
+  scoreSearcher.getInstrumentNames = () => Object.keys(instrumentObjects);
+
   scoreSearcher.getMinPitch = (instrumentName) =>//of the whole piece
   {
     let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
@@ -131,10 +129,7 @@ const factoryScoreSearcher = (musicObj) =>
 
         for (let oldKeySig of keySignatures) //avoid duplicates
         {
-          if (newKeySig === oldKeySig)
-          {
-            shouldPush = false;
-          }
+          if (newKeySig === oldKeySig) shouldPush = false;
         }
 
         if (shouldPush) keySignatures.push(newKeySig);
@@ -143,11 +138,6 @@ const factoryScoreSearcher = (musicObj) =>
 
     traverse(musicObj, process);
     return keySignatures;
-  };
-
-  scoreSearcher.getInstrumentNames= () =>
-  {
-    return Object.keys(instrumentObjects);
   };
 
   scoreSearcher.getInstrumentsWithMelody = (melodyString) =>
