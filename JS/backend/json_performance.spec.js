@@ -68,7 +68,7 @@ test("mov 1 tests", function(t)
    {
     if (err) throw err;
 
-    const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
+    const scoreSearcher =  ScoreSearcher(JSON.parse(jsonstring));
 
     {
       const expected = [ "Flute", "Oboes", "Clarinets in Bb", "Bassoons",
@@ -102,7 +102,7 @@ test("mov 2 tests", function(t)
   {
     if (err) throw err;
 
-    const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
+    const scoreSearcher =  ScoreSearcher(JSON.parse(jsonstring));
 
     {
       const expected = [ "Flute", "Oboes", "Clarinets in Bb",
@@ -136,7 +136,7 @@ test("mov 3 tests", function(t)
   {
     if (err) throw err;
 
-    const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
+    const scoreSearcher =  ScoreSearcher(JSON.parse(jsonstring));
 
     {
       const expected = [ "Flute", "Oboes", "Clarinets in Bb", "Bassoons",
@@ -169,7 +169,7 @@ test("mov 4 tests", function(t)
   {
     if (err) throw err;
 
-    const scoreSearcher = new ScoreSearcher(JSON.parse(jsonstring));
+    const scoreSearcher =  ScoreSearcher(JSON.parse(jsonstring));
 
     {
       const expected = [ "Flute", "Oboes", "Clarinets in Bb", "Bassoons",

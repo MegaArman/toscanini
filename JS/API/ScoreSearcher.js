@@ -4,7 +4,7 @@ const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 const factoryScoreSearcher = require("./ScoreSearcher.proto.js");
 
 // similar to a "constructor"
-function ScoreSearcher(MusicXML)
+module.exports = (MusicXML) =>
 {
   let scoreSearcher;
 
@@ -15,6 +15,4 @@ function ScoreSearcher(MusicXML)
   });
 
   return scoreSearcher;
-}
-
-module.exports = ScoreSearcher;
+};
