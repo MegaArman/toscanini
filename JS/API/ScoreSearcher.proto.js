@@ -44,6 +44,13 @@ function makeInstrumentObjects(musicObj)
   }
 
   traverse(musicObj, process);
+
+  //if there's a single instrument we need to do some hacking...
+  if (Object.keys(instrumentObjects).length === 1)
+  {
+    const instrumentName = Object.keys(instrumentObjects)[0];
+    instrumentObjects[instrumentName] = musicObj;
+  }
   return instrumentObjects;
 }
 
