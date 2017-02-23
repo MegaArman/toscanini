@@ -1,5 +1,5 @@
 // node ScoreSearcher.spec.js to run this test - simple as that!
-// ...but if you want pretty output use npm run test
+// ...but if you want pretty output use npm run test or npm t
 "use strict";
 const fs = require("fs");
 const test = require("tape").test;
@@ -23,8 +23,8 @@ test("avamariapg1 tests", function(t)
   }
 
   {
-    const expected = [ "Voice", "Piano" ];
     const actual = scoreSearcher.getInstrumentNames();
+    const expected = [ "Voice", "Piano" ];
     t.deepEqual(actual, expected, "getInstrumentNames");
   }
 
@@ -55,10 +55,10 @@ test("vivaldi_winter tests", function(t)
   const scoreSearcher =  ScoreSearcher(musicXML);
 
   {
+    const actual = scoreSearcher.getInstrumentNames();
     const expected =[ "Solo Violin", "Violin I",
                       "Violin II", "Viola", "Violoncello",
                       "Contrabass", "Harpsichord" ];
-    const actual = scoreSearcher.getInstrumentNames();
     t.deepEqual(actual, expected, "getInstrumentNames");
   }
 

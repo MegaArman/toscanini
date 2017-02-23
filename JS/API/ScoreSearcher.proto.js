@@ -51,6 +51,7 @@ function makeInstrumentObjects(musicObj)
     const instrumentName = Object.keys(instrumentObjects)[0];
     instrumentObjects[instrumentName] = musicObj;
   }
+
   return instrumentObjects;
 }
 
