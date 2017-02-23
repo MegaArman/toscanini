@@ -1,0 +1,12 @@
+[{
+	"function": "getInstrumentNames",
+	"args":"",
+	"return": [ "Solo Violin", "Violin I",
+										"Violin II", "Viola", "Violoncello",
+										"Contrabass", "Harpsichord" ]
+},
+{
+	"function": "getMaxPitch",
+	"args":["Viola"],
+	"return": 62
+}]
