@@ -108,5 +108,11 @@ test("two_tempos", function(t)
     t.deepEqual(actual, expected, "getTempos");
   }
 
+  { //confirms for single instrument we can use the same queries 
+    const actual = scoreSearcher.getMinPitch("Flute");
+    const expected = scoreSearcher.getMinPitch();
+    t.deepEqual(actual, expected, "getTempos");
+  }
+
   t.end();
 });
