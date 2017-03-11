@@ -21,7 +21,8 @@ A working stack for all things this repo as of 1/27/17:
 ### Run Unit Tests
  npm t
  
- If your code doesn't survive the linter, no tests will run.
+ This will run the linter before your unit tests...
+ *If your code doesn't survive the linter, no tests will run.*
 
 ### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
