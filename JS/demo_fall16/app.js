@@ -67,16 +67,6 @@ window.analyze = function()
         instrumentRanges.push(str);
       }
 
-      let freqList = "";
-
-	  for (let i = 0; i < scoreSearcher.types.length; i++)
-	  {
-		  if (freqOfNoteTypes[i] != 0)
-		  {
-			freqList += scoreSearcher.types[i] + ': ' + freqOfNoteTypes[i] + '<br>';
-		  }
-	  }
-
       //Key Signatures
       const keySignatures = scoreSearcher.getKeySignatures();
 
@@ -84,9 +74,8 @@ window.analyze = function()
       append('<tr>' +
       '<td>' + fileName + '</td>' +
       '<td>' + min + '-' + max +'</td>' +
-      '<td>' +  instrumentRanges.join("<br>")  + '</td>' +
+      '<td>' +  instrumentRanges + '</td>' +
       '<td>' +  keySignatures + '</td>'  +
-	  '<td>' +  freqList + '</td>'  +
       '</tr>');
     });
   }

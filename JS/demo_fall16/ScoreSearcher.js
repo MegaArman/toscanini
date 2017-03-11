@@ -13,10 +13,6 @@ class ScoreSearcher
     this.minPitch = null;
     this.instrumentObjects = {};
     this.makeInstrumentObjects();
-
-	//types of notes
-	this.types = ["1024th", "512th", "256th", "128th", "64th", "32nd", "16th", "eighth", "quarter", "half", "whole", "breve", "long", "maxima"]; //list of all types of notes
-
   }
 
   traverse(musicObj,func)
@@ -173,34 +169,6 @@ class ScoreSearcher
 
     this.traverse(this.musicObj, process);
     return keySignatures;
-  }
-
-  //count each type of notes
-  //this function needs to be improved later
-  //1. distinguish 'rest' <rest/> or <rest measure=....
-  //2. check if the note is dotted. <dot/>
-  getListOfNoteTypes()
-  {
-
-	let freqOfTypes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-
-	function process (key,value)
-    {
-      if (key === "type")
-      {
-		for (let i = 0; i < this.types.length; i++)
-		{
-		  if (value === this.types[i])
-		  {
-			freqOfTypes[i]++;
-		  }
-		}
-	  }
-    }
-
-    this.traverse(this.musicObj, process);
-
-    return freqOfTypes;
   }
 
   getInstrumentObjects(){return this.instrumentObjects;}
