@@ -26,8 +26,8 @@ A working stack for all things this repo as of 1/27/17:
 ### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
  
-## ScoreSearcher.js
-Is responsible for the analysis of the score.
+## ScoreSearcher.proto.js
+Holds queries:
 
 ###getMaxPitch(instrumentName)
 if no instrumentName is provided (ex: "flute"), gets the max pitch in the entire score
