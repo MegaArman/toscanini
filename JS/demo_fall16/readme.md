@@ -1,5 +1,5 @@
 # demo_fall16
-Demo website for 12/8/16
+_Demo website for 12/8/16. Please do not change any code in this subdirectory as it is only here as boilerplate_
 
 xml2js works in browser as it is a JavaScript based parser- this may not be the case for other parsers downloaded via NPM
 
@@ -14,3 +14,5 @@ First run "npm run watch" to have code auto built for browser, then make changes
 
 ### Execution 
  index.html in the root folder
+
+
