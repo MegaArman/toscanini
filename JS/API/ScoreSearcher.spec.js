@@ -46,6 +46,12 @@ test("avamariapg1 tests", function(t)
     t.deepEqual(actual, expected, "getKeySignatures");
   }
 
+  {
+    const actual = scoreSearcher.getAccidentals();
+    const expected = 86;
+    t.deepEqual(actual, expected, "getAccidentals");
+  }
+
   t.end();
 });
 
@@ -108,7 +114,7 @@ test("two_tempos", function(t)
     t.deepEqual(actual, expected, "getTempos");
   }
 
-  { //confirms for single instrument we can use the same queries 
+  { //confirms for single instrument we can use the same queries
     const actual = scoreSearcher.getMinPitch("Flute");
     const expected = scoreSearcher.getMinPitch();
     t.deepEqual(actual, expected, "getTempos");
