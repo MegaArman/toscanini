@@ -46,12 +46,6 @@ test("avamariapg1 tests", function(t)
     t.deepEqual(actual, expected, "getKeySignatures");
   }
 
-  {
-    const actual = scoreSearcher.getAccidentals();
-    const expected = 86;
-    t.deepEqual(actual, expected, "getAccidentals");
-  }
-
   t.end();
 });
 
@@ -118,6 +112,20 @@ test("two_tempos", function(t)
     const actual = scoreSearcher.getMinPitch("Flute");
     const expected = scoreSearcher.getMinPitch();
     t.deepEqual(actual, expected, "getTempos");
+  }
+
+  t.end();
+});
+
+test("AccidentalsEverywhere", function(t)
+{
+  let musicXML = fs.readFileSync("../scores/AccidentalsEverywhere.xml");
+  const scoreSearcher = ScoreSearcher(musicXML);
+
+  {
+    const actual = scoreSearcher.getAccidentals();
+    const expected = 8;
+    t.deepEqual(actual, expected, "getAccidentals");
   }
 
   t.end();
