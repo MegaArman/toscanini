@@ -204,6 +204,33 @@ const factoryScoreSearcher = (musicObj) =>
     return tempos;
   };
 
+  scoreSearcher.notesInRange = (instrumentName, maxRange, minRange) =>
+  {
+    let inRangeNotes = 0;
+    let totalNotes = 0;
+    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+
+    function process(key,value)
+    {
+      let pitch = 0;
+      if (key === "step") pitch = pitchToMidiNum[value];
+      else if(key === "alter") pitch += parseInt(value);
+      else if(key === "octave")
+      {
+        pitch += (12*value);
+        if (pitch >= minRange && pitch <= maxRange) inRangeNotes++;
+        totalNotes++; //Will it have access to these variables ^ with its scope?
+        pitch = 0;
+      }
+    }
+
+    traverse(jsObj, process);
+
+    let ratio = inRangeNotes/totalNotes;
+
+    return ratio * 100;
+  };
+
   return scoreSearcher;
 };
 

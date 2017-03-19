@@ -108,10 +108,24 @@ test("two_tempos", function(t)
     t.deepEqual(actual, expected, "getTempos");
   }
 
-  { //confirms for single instrument we can use the same queries 
+  { //confirms for single instrument we can use the same queries
     const actual = scoreSearcher.getMinPitch("Flute");
     const expected = scoreSearcher.getMinPitch();
     t.deepEqual(actual, expected, "getTempos");
+  }
+
+  t.end();
+});
+
+test("AccidentalsEverywhere", function(t)
+{
+  let musicXML = fs.readFileSync("../scores/AccidentalsEverywhere.xml");
+  const scoreSearcher = ScoreSearcher(musicXML);
+
+  {
+    const actual = scoreSearcher.notesInRange("", 64, 24); //Highest to lowest note
+    const expected = 100;
+    t.deepEqual(actual, expected, "notesInRange");
   }
 
   t.end();
