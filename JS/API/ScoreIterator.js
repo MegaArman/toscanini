@@ -44,7 +44,6 @@ function makeInstrumentObjects(musicObj)
 
   traverse(musicObj, process);
 
-
   //if there's a single instrument we need to do some hacking...
   if (Object.keys(instrumentObjects).length === 1)
   {
@@ -76,9 +75,9 @@ function ScoreIterable(instrumentObjects)
          if (singleNote["pitch"] !== undefined)
          {
            //Calculate midinum
-            midiNum += pitchToMidiNum[singleNote["pitch"]["step"]];
-            if (singleNote["pitch"]["alter"] !== undefined)
-             midiNum += parseInt(singleNote["pitch"]["alter"]);
+           midiNum += pitchToMidiNum[singleNote["pitch"]["step"]];
+           if (singleNote["pitch"]["alter"] !== undefined)
+            midiNum += parseInt(singleNote["pitch"]["alter"]);
 
            midiNum += parseInt(singleNote["pitch"]["octave"]) * 12;
 
@@ -103,7 +102,6 @@ function ScoreIterable(instrumentObjects)
 
            midiNum = 0;
          }
-        //  TODO: not a pitch
          else if (singleNote["rest"] !== undefined)
          {
            part.push(singleNote["duration"]);
@@ -139,21 +137,21 @@ const factoryScoreIterator = (MusicXML) =>
   });
 
   const instrumentObjects = makeInstrumentObjects(musicObj);
+  const scoreIterator = {};
   let scoreIterable = ScoreIterable(instrumentObjects);
-  let selectedInstrument;
+  let selectedInstrument = "NONE";
   let currentIndex = -1;
-  const scoreIterator = {}; //does the iterating
-
 
   scoreIterator.selectInstrument = (instrumentName) =>
   {
     selectedInstrument = instrumentName;
-    // console.log(selectedInstrument);
   };
 
   scoreIterator.next = () =>
   {
     currentIndex++;
+    if (scoreIterable[selectedInstrument] === undefined)
+      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
     return scoreIterable[selectedInstrument][currentIndex];
   };
 

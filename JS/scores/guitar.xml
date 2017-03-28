@@ -63,7 +63,7 @@
       <print>
         <system-layout>
           <system-margins>
-            <left-margin>0.00</left-margin>
+            <left-margin>-0.00</left-margin>
             <right-margin>608.23</right-margin>
             </system-margins>
           <top-system-distance>170.00</top-system-distance>
@@ -125,10 +125,10 @@
         <type>quarter</type>
         <stem>down</stem>
         </note>
-      <note default-x="215.78" default-y="-20.00">
+      <note default-x="215.78" default-y="-5.00">
         <pitch>
-          <step>B</step>
-          <octave>3</octave>
+          <step>E</step>
+          <octave>4</octave>
           </pitch>
         <duration>1</duration>
         <voice>1</voice>
