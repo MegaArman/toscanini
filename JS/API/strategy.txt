@@ -1,0 +1,41 @@
+GOAL:
+next() => {"pitch": "A", "duration": 2, ... } // use pitch and octave instead of midi num?
+// internally this sets an index
+
+
+instrumentObjects =
+{
+  "flute": {"notes": [.......], "durations": [......], ...}
+  ...
+}
+
+return Object.assign({}, instrumentObjects.flute.notes[iterator]...)
+
+OR
+
+instrumentObjects =
+{
+  "flute": [[{"note": 23, "duration": 2}, {"note": 27, "duration": 2}], []]
+
+  ...
+}
+
+OR
+
+instrumentObjects =
+{
+  "flute": [{23: 2, 27:2}, []]
+  ^ NO. Cant use map because what if the chord has two of the same note?
+  ...
+}
+
+can we assume if there are two notes play at once in one part there are two voices?
+^ in reality no.. guitars can play two notes at once
+
+=====aside====
+should makeInstrumentObjects really be inside the factoryScoreSearcher and contained within a closure?
+From a scoping perspective, this is less static parent lookup and provents makeInstrumentObjects from being called twice...
+
+then again, should all private functions be static since their definition is consistent..? less memory?
+
+Why aren't you using map instead of object in makeInstrumentObjects
