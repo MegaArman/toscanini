@@ -11,9 +11,9 @@ test("two_tempos", function(t)
   const scoreIterator =  ScoreIterator(musicXML);
 
   {
-    console.dir(JSON.stringify(scoreIterator));
-    const actual = scoreIterator;
-    const expected = [{"pitches": 48}]; // TODO: durations!
+    scoreIterator.selectInstrument("Classical Guitar");
+    const actual = scoreIterator.next();
+    const expected = [{"pitch": 45}]; // TODO: durations!
 
     t.deepEqual(actual, expected, "next");
   }

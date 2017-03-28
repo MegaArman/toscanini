@@ -44,6 +44,7 @@ function makeInstrumentObjects(musicObj)
 
   traverse(musicObj, process);
 
+
   //if there's a single instrument we need to do some hacking...
   if (Object.keys(instrumentObjects).length === 1)
   {
@@ -54,21 +55,9 @@ function makeInstrumentObjects(musicObj)
   return instrumentObjects;
 }
 
-//=============================================================================
-const factoryScoreIterator = (MusicXML) =>
+function ScoreIterable(instrumentObjects)
 {
-  let musicObj;
-  let scoreIterable = []; // object that gets iterated over
-  let selectedInstrument;
-  const scoreIterator = {}; //does the iterating
-
-  parser.parseString(MusicXML, function (err, jsObj)
-  {
-    if (err) throw err;
-    musicObj = jsObj;
-  });
-
-  const instrumentObjects = makeInstrumentObjects(musicObj);
+  let scoreIterable = {};
 
   for (let instrumentName in instrumentObjects)
   {
@@ -76,7 +65,6 @@ const factoryScoreIterator = (MusicXML) =>
     let part = [];
     let chordMap = new Map(); //contains {"default-x", [pitches]}
     //^ MUST USE MAP NOT OBJECT to ensure notes are always in correct order
-
     //strategy: loop through measure to see symbols happening at same points in time (default-x)
     const process = (key, value) =>
     {
@@ -100,7 +88,6 @@ const factoryScoreIterator = (MusicXML) =>
 
            if (chordMap.has(defaultX))
            {
-            //  console.log("current time", chordMap.get(defaultX));
             let newList = chordMap.get(defaultX);
             newList.push(note);
             chordMap.set(defaultX, newList);
@@ -116,11 +103,11 @@ const factoryScoreIterator = (MusicXML) =>
 
            midiNum = 0;
          }
-         //TODO: not a pitch
-        //  else
-        //  {
-        //    part.push("not note symbol");
-        //  }
+        //  TODO: not a pitch
+         else if (singleNote["rest"] !== undefined)
+         {
+           part.push(singleNote["duration"]);
+         }
        } //loop through measure
 
        //construct chords
@@ -135,25 +122,42 @@ const factoryScoreIterator = (MusicXML) =>
    };
    traverse(instrumentObjects[instrumentName], process);
 
-  //  console.log("chordMap", chordMap);
-   let partObj = {};
-   partObj[instrumentName]= part;
-   scoreIterable.push(partObj);
+   scoreIterable[instrumentName] = part;
  } //loop through instruments
 
+  return scoreIterable;
+}
 
- scoreIterator.selectInstrument = (instrumentName) =>
- {
-   selectedInstrument = instrumentName;
- };
+//=============================================================================
+const factoryScoreIterator = (MusicXML) =>
+{
+  let musicObj;
+  parser.parseString(MusicXML, function (err, jsObj)
+  {
+    if (err) throw err;
+    musicObj = jsObj;
+  });
 
-  // scoreIterator.next = () =>
-  // {
-  //
-  // }
+  const instrumentObjects = makeInstrumentObjects(musicObj);
+  let scoreIterable = ScoreIterable(instrumentObjects);
+  let selectedInstrument;
+  let currentIndex = -1;
+  const scoreIterator = {}; //does the iterating
+
+
+  scoreIterator.selectInstrument = (instrumentName) =>
+  {
+    selectedInstrument = instrumentName;
+    // console.log(selectedInstrument);
+  };
+
+  scoreIterator.next = () =>
+  {
+    currentIndex++;
+    return scoreIterable[selectedInstrument][currentIndex];
+  };
 
   return scoreIterator;
-
 };
 
 module.exports = factoryScoreIterator;

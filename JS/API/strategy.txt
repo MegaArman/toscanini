@@ -39,3 +39,11 @@ From a scoping perspective, this is less static parent lookup and provents makeI
 then again, should all private functions be static since their definition is consistent..? less memory?
 
 Why aren't you using map instead of object in makeInstrumentObjects
+
+
+=========================
+strategy to create chord iterable:
+loop through all notes of a measure and if they occur at same default-x (position),
+they are part of a chord. Clear upon new measure. What about ties???
+
+can this be used to create getNextchord
