@@ -64,7 +64,8 @@ function ScoreIterable(instrumentObjects)
     let part = [];
     let chordMap = new Map(); //contains {"default-x", [pitches]}
     //^ MUST USE MAP NOT OBJECT to ensure notes are always in correct order
-    //strategy: loop through measure to see symbols happening at same points in time (default-x)
+    //strategy: loop through measure to see symbols happening
+    //at same points in time (default-x)
     const process = (key, value) =>
     {
      if (key === "note") //return as arrays
@@ -83,6 +84,8 @@ function ScoreIterable(instrumentObjects)
 
            let note = {};
            note.pitch = midiNum;
+           note.duration = parseInt(singleNote["duration"]);
+
            let defaultX = singleNote["default-x"];
 
            if (chordMap.has(defaultX))
@@ -114,7 +117,8 @@ function ScoreIterable(instrumentObjects)
          part.push(val);
        }
 
-       // in case coordinates are same - could happen on new page or new measure?
+       // in case coordinates are same
+       //- could happen on new page or new measure?
        chordMap.clear();
      }
    };
@@ -149,13 +153,52 @@ const factoryScoreIterator = (MusicXML) =>
 
   scoreIterator.next = () =>
   {
-    currentIndex++;
+    if (currentIndex === scoreIterable[selectedInstrument].length - 1)
+    {
+      throw new Error("No next exists!");
+    }
+    else
+    {
+      currentIndex++;
+    }
     if (scoreIterable[selectedInstrument] === undefined)
       throw 'No valid instrument selected, ex: selectInstrument("Flute")';
     return scoreIterable[selectedInstrument][currentIndex];
   };
 
+  scoreIterator.prev = () =>
+  {
+    if (currentIndex === 0)
+    {
+      throw new Error("No prev exists!");
+    }
+    else
+    {
+      currentIndex--;
+    }
+
+    if (scoreIterable[selectedInstrument] === undefined)
+      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
+    return scoreIterable[selectedInstrument][currentIndex];
+  };
+
+  scoreIterator.hasNext = () =>
+  {
+    if (scoreIterable[selectedInstrument] === undefined)
+      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
+
+    return (currentIndex < scoreIterable[selectedInstrument].length - 1);
+  };
+
+  scoreIterator.hasPrev = () =>
+  {
+    if (scoreIterable[selectedInstrument] === undefined)
+      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
+
+    return (currentIndex > 0);
+  };
+
   return scoreIterator;
-};
+}; //end of factory
 
 module.exports = factoryScoreIterator;
