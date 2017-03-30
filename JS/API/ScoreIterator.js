@@ -130,6 +130,14 @@ function ScoreIterable(instrumentObjects)
   return scoreIterable;
 }
 
+const errors =
+{
+  "noValidInstrumentSelected": 'No valid instrument selected, ex: ("Flute")!',
+  "noNext": "no next exists",
+  "noPrev": "no prev exists!",
+  "invalidPosition": "setPosition to invalid index"
+};
+
 //=============================================================================
 const factoryScoreIterator = (MusicXML) =>
 {
@@ -155,14 +163,14 @@ const factoryScoreIterator = (MusicXML) =>
   {
     if (currentIndex === scoreIterable[selectedInstrument].length - 1)
     {
-      throw new Error("No next exists!");
+      throw new Error(errors.noNext);
     }
     else
     {
       currentIndex++;
     }
     if (scoreIterable[selectedInstrument] === undefined)
-      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
+      throw new Error(errors.noValidInstrumentSelected);
     return scoreIterable[selectedInstrument][currentIndex];
   };
 
@@ -178,14 +186,14 @@ const factoryScoreIterator = (MusicXML) =>
     }
 
     if (scoreIterable[selectedInstrument] === undefined)
-      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
+      throw new Error(errors.noValidInstrumentSelected);
     return scoreIterable[selectedInstrument][currentIndex];
   };
 
   scoreIterator.hasNext = () =>
   {
     if (scoreIterable[selectedInstrument] === undefined)
-      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
+      throw new Error(errors.noValidInstrumentSelected);
 
     return (currentIndex < scoreIterable[selectedInstrument].length - 1);
   };
@@ -193,11 +201,19 @@ const factoryScoreIterator = (MusicXML) =>
   scoreIterator.hasPrev = () =>
   {
     if (scoreIterable[selectedInstrument] === undefined)
-      throw 'No valid instrument selected, ex: selectInstrument("Flute")';
+      throw new Error(errors.noValidInstrumentSelected);
 
     return (currentIndex > 0);
   };
 
+  scoreIterator.getPosition = () => currentIndex;
+  
+  scoreIterator.setPosition = (position) =>
+  {
+    if (position > scoreIterable.length -1)
+      throw new Error(errors.invalidPosition);
+    currentIndex = position;
+  };
   return scoreIterator;
 }; //end of factory
 

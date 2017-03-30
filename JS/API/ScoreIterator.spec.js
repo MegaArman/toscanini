@@ -14,6 +14,8 @@ test("next", function(t)
 
   scoreIterator.selectInstrument("Classical Guitar");
 
+  t.deepEqual(scoreIterator.getPosition(), -1, "getPosition");
+
   //Measure 1:
   t.deepEqual(scoreIterator.next(), [{"pitch": 45, "duration": 1}], "next");
   t.deepEqual(scoreIterator.next(), [{"pitch": 50, "duration": 1}], "next");
@@ -28,6 +30,9 @@ test("next", function(t)
   t.deepEqual(scoreIterator.next(), [{"pitch": 41, "duration": 1},
                                      {"pitch": 45, "duration": 1}], "m2 next");
   t.deepEqual(scoreIterator.next(), 2);
+
+  //end position
+  t.deepEqual(scoreIterator.getPosition(), 6, "getPosition at end");
 
   //post end
   t.deepEqual(scoreIterator.hasNext(), false, "hasNext");
@@ -51,6 +56,12 @@ test("next", function(t)
 
   //pre start
   t.deepEqual(scoreIterator.hasPrev(), false, "hasPrev");
+  t.deepEqual(scoreIterator.getPosition(), 0, "getPosition back to start");
+
+  //setPosition
+  scoreIterator.setPosition(3);
+  t.deepEqual(scoreIterator.getPosition(), 3, "setPosition");
+
 
   t.end();
 });
