@@ -83,7 +83,7 @@ function ScoreIterable(instrumentObjects)
            midiNum += parseInt(singleNote["pitch"]["octave"]) * 12;
 
            let note = {};
-           note.pitch = midiNum;
+           note.midiNum = midiNum;
            note.duration = parseInt(singleNote["duration"]);
 
            let defaultX = singleNote["default-x"];
@@ -207,7 +207,7 @@ const factoryScoreIterator = (MusicXML) =>
   };
 
   scoreIterator.getPosition = () => currentIndex;
-  
+
   scoreIterator.setPosition = (position) =>
   {
     if (position > scoreIterable.length -1)
