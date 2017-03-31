@@ -143,24 +143,43 @@ function ScoreIterable(instrumentObjects)
          }
          else if (singleNoteTag["rest"] !== undefined)
          {
+           let currentTime = voiceTimes[voice - 1];
+           let existingVal = timeNotesMap.get(currentTime);
+
+           if (existingVal)
+           {
+             timeNotesMap.set(currentTime, existingVal);
+           }
+           else
+           {
+             let arr = [];
+             arr.push(parseInt(singleNoteTag["duration"]));
+             timeNotesMap.set(currentTime, arr);
+           }
+
            part.push(singleNoteTag["duration"]); //TODO
          }
        } //loop through measure
 
-       for (let val of timeNotesMap.values())
-       {
-         part.push(val);
-       }
+       let sortedKeys = [];
 
+       for (let key of timeNotesMap.keys())
+       {
+         sortedKeys.push(key);
+       }
+       sortedKeys.sort();
+
+       for (let key of sortedKeys)
+       {
+         let timeStampedMap = new Map();
+         timeStampedMap.set(key, timeNotesMap.get(key));
+         part.push(timeStampedMap);
+       }
        // in case coordinates are same
        //- could happen on new page or new measure?
        console.log("timeNotesMap", timeNotesMap);
 
      } //if note
-     for (let val of timeNotesMap.values())
-     {
-       part.push(val);
-     }
    };
    traverse(instrumentObjects[instrumentName], process);
 
@@ -191,10 +210,11 @@ const factoryScoreIterator = (MusicXML) =>
   const instrumentObjects = makeInstrumentObjects(musicObj);
   const scoreIterator = {};
   let scoreIterable = ScoreIterable(instrumentObjects);
+  // console.dir(scoreIterable);
+
+  scoreIterable["Classical Guitar"].forEach((map) => console.log(map));
   let selectedInstrument = "NONE";
   let currentIndex = -1;
-
-
 
   scoreIterator.selectInstrument = (instrumentName) =>
   {
