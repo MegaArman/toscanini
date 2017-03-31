@@ -72,7 +72,6 @@ function ScoreIterable(instrumentObjects)
     //beginning of measure
     let bassNoteDuration = -1000; //bass note of potential chord!
 
-
     const process = (key, value) =>
     {
      if (key === "note") //returns an array of note tags for a measure
@@ -149,10 +148,10 @@ function ScoreIterable(instrumentObjects)
          }
        } //loop through measure
 
-      //  for (let val of timeNotesMap.values())
-      //  {
-      //    part.push(val);
-      //  }
+       for (let val of timeNotesMap.values())
+       {
+         part.push(val);
+       }
 
        // in case coordinates are same
        //- could happen on new page or new measure?
