@@ -5,7 +5,7 @@ const ScoreIterator = require("./ScoreIterator");
 
 //TODO: test selectInstrument
 
-let musicXML = fs.readFileSync("../scores/guitar.xml");
+let musicXML = fs.readFileSync("../scores/guitar_two_voices.xml");
 // {"Classical Guitar":[[{"pitch":45}],[{"pitch":50}],[{"pitch":47},{"pitch":50}],[{"pitch":47}],"2",[{"pitch":41},{"pitch":50}],[{"pitch":41},{"pitch":47}]]}
 
 test("next", function(t)

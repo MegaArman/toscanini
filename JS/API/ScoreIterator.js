@@ -19,38 +19,28 @@ function traverse(obj,func)
 function makeInstrumentObjects(musicObj)
 {
   let partNames = [];
-  let instrumentObjects = {};
+  let instrumentObjects = {}; //will be like {"Flute" [..array of measures]}
+  let measureArraysSeen = 0;
 
   function process(key, value) //builds array of instrument objects
   {
     //first find the part names as they"re always towards the top of file
     //This will be pushed in the correct order as we see them:
     if (key === "part-name") partNames.push(value);
-
-    //the actual parts data are in an ordered array found via key "part"
-    //bc they"re ordered, they correspond to the ordering of the part-names
-    if (key === "part")
+    if (key === "measure")
     {
-      let index = 0;
-      for (let name of partNames)
-      {
-        instrumentObjects[name] = value[index]; //value is array of parts
-        index++;
-      }
+      const instrumentName = partNames[measureArraysSeen];
+      instrumentObjects[instrumentName] = [];
 
-      return; //avoid redundant traversal
+      for (const measure of value)
+      {
+        instrumentObjects[instrumentName].push(measure);
+      }
+      measureArraysSeen++;
     }
   }
 
   traverse(musicObj, process);
-
-  //if there's a single instrument we need to do some hacking...
-  if (Object.keys(instrumentObjects).length === 1)
-  {
-    const instrumentName = Object.keys(instrumentObjects)[0];
-    instrumentObjects[instrumentName] = musicObj;
-  }
-
   return instrumentObjects;
 }
 
@@ -63,16 +53,19 @@ function ScoreIterable(instrumentObjects)
   {
     const process = (key, value) =>
     {
+
+
       let midiNum = 0;
       let timeNotesMap = new Map(); //contains {"default-x", [pitches]}
       //^ MUST USE MAP NOT OBJECT to ensure notes are always in correct order
       //strategy: loop through measure to see symbols happening
-      //at same points in time (default-x)
+      //at same points in time (default-x)        measureArraysSeen++;
+
       let voiceTimes = [];
       // ^^^ [5, 2] means voice 1 currently at 5, voice 2 currently at 2
       //voiceTimes[voice] => gives the time in beats the voice is from
       //beginning of measure
-      let bassNoteDuration = -1000; //bass note of potential chord!
+      let bassNoteDuration = -123; //bass note of potential chord!
      if (key === "note") //NOTE: returns an array of note tags for a measure
      //**** A MEASURE
      {
