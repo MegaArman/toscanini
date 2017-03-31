@@ -57,24 +57,24 @@ function makeInstrumentObjects(musicObj)
 function ScoreIterable(instrumentObjects)
 {
   let scoreIterable = {};
+  let part = [];
 
   for (let instrumentName in instrumentObjects)
   {
-    let midiNum = 0;
-    let part = [];
-    let timeNotesMap = new Map(); //contains {"default-x", [pitches]}
-    //^ MUST USE MAP NOT OBJECT to ensure notes are always in correct order
-    //strategy: loop through measure to see symbols happening
-    //at same points in time (default-x)
-    let voiceTimes = [];
-    // ^^^ [5, 2] means voice 1 currently at 5, voice 2 currently at 2
-    //voiceTimes[voice] => gives the time in beats the voice is from
-    //beginning of measure
-    let bassNoteDuration = -1000; //bass note of potential chord!
-
     const process = (key, value) =>
     {
-     if (key === "note") //returns an array of note tags for a measure
+      let midiNum = 0;
+      let timeNotesMap = new Map(); //contains {"default-x", [pitches]}
+      //^ MUST USE MAP NOT OBJECT to ensure notes are always in correct order
+      //strategy: loop through measure to see symbols happening
+      //at same points in time (default-x)
+      let voiceTimes = [];
+      // ^^^ [5, 2] means voice 1 currently at 5, voice 2 currently at 2
+      //voiceTimes[voice] => gives the time in beats the voice is from
+      //beginning of measure
+      let bassNoteDuration = -1000; //bass note of potential chord!
+     if (key === "note") //NOTE: returns an array of note tags for a measure
+     //**** A MEASURE
      {
        for (let singleNoteTag of value)
        {
@@ -114,11 +114,10 @@ function ScoreIterable(instrumentObjects)
            //only single voice playing multiple notes has chord tag
            if (singleNoteTag["chord"] !== undefined)
            {
-            //  console.log("has chord!");
              currentTime = currentTime - bassNoteDuration;
            }
-           console.log("currentTime", currentTime);
-           console.log("note", note);
+          //  console.log("currentTime", currentTime);
+          //  console.log("note", note);
            let existingVal = timeNotesMap.get(currentTime);
           //  console.log("existing", existingVal);
 
@@ -144,7 +143,7 @@ function ScoreIterable(instrumentObjects)
          }
          else if (singleNoteTag["rest"] !== undefined)
          {
-          //  part.push(singleNoteTag["duration"]);
+           part.push(singleNoteTag["duration"]); //TODO
          }
        } //loop through measure
 
@@ -158,20 +157,14 @@ function ScoreIterable(instrumentObjects)
        console.log("timeNotesMap", timeNotesMap);
 
      } //if note
-    //  else if (key === "measure")
-    //  {
-    //    console.log("=============measure=======================");
-    //    for (let val of timeNotesMap.values())
-    //    {
-    //      part.push(val);
-    //    }
-    //    timeNotesMap.clear();
-    //    voiceTimes = [];
-    //  }
+     for (let val of timeNotesMap.values())
+     {
+       part.push(val);
+     }
    };
    traverse(instrumentObjects[instrumentName], process);
 
-   scoreIterable[instrumentName] = part;
+   scoreIterable[instrumentName] = part; //TODO
  } //loop through instruments
 
   return scoreIterable;
@@ -198,7 +191,6 @@ const factoryScoreIterator = (MusicXML) =>
   const instrumentObjects = makeInstrumentObjects(musicObj);
   const scoreIterator = {};
   let scoreIterable = ScoreIterable(instrumentObjects);
-  console.log("scoreIterable", scoreIterable);
   let selectedInstrument = "NONE";
   let currentIndex = -1;
 
