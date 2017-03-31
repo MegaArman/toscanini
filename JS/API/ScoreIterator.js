@@ -62,64 +62,98 @@ function ScoreIterable(instrumentObjects)
   {
     let midiNum = 0;
     let part = [];
-    let chordMap = new Map(); //contains {"default-x", [pitches]}
+    let timeNotesMap = new Map(); //contains {"default-x", [pitches]}
     //^ MUST USE MAP NOT OBJECT to ensure notes are always in correct order
     //strategy: loop through measure to see symbols happening
     //at same points in time (default-x)
+    let voiceTimes = [];
+    // ^^^ [5, 2] means voice 1 currently at 5, voice 2 currently at 2
+    //voiceTimes[voice] => gives the time in beats the voice is from
+    //beginning of measure
+
     const process = (key, value) =>
     {
-     if (key === "note") //return as arrays
+     if (key === "note") //returns an array of note tags for a measure
      {
-       for (let singleNote of value)
+       for (let singleNoteTag of value)
        {
-         //if a pitch
-         if (singleNote["pitch"] !== undefined)
-         {
-           //Calculate midinum
-           midiNum += pitchToMidiNum[singleNote["pitch"]["step"]];
-           if (singleNote["pitch"]["alter"] !== undefined)
-            midiNum += parseInt(singleNote["pitch"]["alter"]);
+         let voice = parseInt(singleNoteTag["voice"]);
 
-           midiNum += parseInt(singleNote["pitch"]["octave"]) * 12;
+         //check if first time seeing this voice
+         if (voice === undefined)
+         {
+           throw new Error("No voice tag??");
+         }
+         else
+         {
+           while (voiceTimes.length < voice)
+           {
+             voiceTimes.push(0);
+           }
+         }
+
+         if (singleNoteTag["pitch"] !== undefined)
+         {
+           //1) Calculate midinum
+           //TODO: make helper
+           midiNum += pitchToMidiNum[singleNoteTag["pitch"]["step"]];
+           if (singleNoteTag["pitch"]["alter"] !== undefined)
+              midiNum += parseInt(singleNoteTag["pitch"]["alter"]);
+           midiNum += parseInt(singleNoteTag["pitch"]["octave"]) * 12;
 
            let note = {};
            note.midiNum = midiNum;
-           note.duration = parseInt(singleNote["duration"]);
+           note.duration = parseInt(singleNoteTag["duration"]);
 
-           let defaultX = singleNote["default-x"];
+           //2) append to map at that time
+          //  console.log("voice", voice);
+           let currentTime = voiceTimes[voice - 1];
+           console.log("currentTime", currentTime);
+           let existingVal = timeNotesMap.get(currentTime);
+          //  console.log("existing", existingVal);
 
-           if (chordMap.has(defaultX))
+           if (existingVal)
            {
-            let newList = chordMap.get(defaultX);
-            newList.push(note);
-            chordMap.set(defaultX, newList);
+            //  console.log("existingVal", existingVal);
+             existingVal.push(note);
+             timeNotesMap.set(currentTime, existingVal);
            }
-           //this a new point in time
            else
            {
-             let newList= [];
-             newList.push(note);
-
-             chordMap.set(defaultX, newList);
+             let arr = [];
+             arr.push(note);
+             timeNotesMap.set(currentTime, arr);
            }
 
+           if (singleNoteTag["chord"] === undefined)
+              voiceTimes[voice - 1] += note.duration;
            midiNum = 0;
          }
-         else if (singleNote["rest"] !== undefined)
+         else if (singleNoteTag["rest"] !== undefined)
          {
-           part.push(singleNote["duration"]);
+          //  part.push(singleNoteTag["duration"]);
          }
        } //loop through measure
 
-       //construct chords
-       for (let val of chordMap.values())
-       {
-         part.push(val);
-       }
+      //  for (let val of timeNotesMap.values())
+      //  {
+      //    part.push(val);
+      //  }
 
        // in case coordinates are same
        //- could happen on new page or new measure?
-       chordMap.clear();
+       console.log("timeNotesMap", timeNotesMap);
+
+     } //if note
+     else if (key === "measure")
+     {
+       console.log("=============measure=======================");
+       for (let val of timeNotesMap.values())
+       {
+         part.push(val);
+       }
+       timeNotesMap.clear();
+       voiceTimes = [];
      }
    };
    traverse(instrumentObjects[instrumentName], process);
@@ -149,10 +183,14 @@ const factoryScoreIterator = (MusicXML) =>
   });
 
   const instrumentObjects = makeInstrumentObjects(musicObj);
+  console.dir(instrumentObjects["Classical Guitar"]);
   const scoreIterator = {};
   let scoreIterable = ScoreIterable(instrumentObjects);
+  console.log("scoreIterable", scoreIterable);
   let selectedInstrument = "NONE";
   let currentIndex = -1;
+
+
 
   scoreIterator.selectInstrument = (instrumentName) =>
   {
