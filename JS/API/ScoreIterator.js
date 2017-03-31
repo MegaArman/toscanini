@@ -51,10 +51,8 @@ function ScoreIterable(instrumentObjects)
 
   for (let instrumentName in instrumentObjects)
   {
-    const process = (key, value) =>
+    for (let measure of instrumentObjects[instrumentName])
     {
-
-
       let midiNum = 0;
       let timeNotesMap = new Map(); //contains {"default-x", [pitches]}
       //^ MUST USE MAP NOT OBJECT to ensure notes are always in correct order
@@ -66,12 +64,13 @@ function ScoreIterable(instrumentObjects)
       //voiceTimes[voice] => gives the time in beats the voice is from
       //beginning of measure
       let bassNoteDuration = -123; //bass note of potential chord!
-     if (key === "note") //NOTE: returns an array of note tags for a measure
-     //**** A MEASURE
-     {
-       for (let singleNoteTag of value)
+      let notes = measure["note"];
+
+      if (notes !== undefined) //NOTE: returns an array of note tags for a measure
+      {
+       for (let singleNote of notes)
        {
-         let voice = parseInt(singleNoteTag["voice"]);
+         let voice = parseInt(singleNote["voice"]);
 
          //check if first time seeing this voice
          if (voice === undefined)
@@ -86,18 +85,18 @@ function ScoreIterable(instrumentObjects)
            }
          }
 
-         if (singleNoteTag["pitch"] !== undefined)
+         if (singleNote["pitch"] !== undefined)
          {
            //1) Calculate midinum
            //TODO: make helper
-           midiNum += pitchToMidiNum[singleNoteTag["pitch"]["step"]];
-           if (singleNoteTag["pitch"]["alter"] !== undefined)
-              midiNum += parseInt(singleNoteTag["pitch"]["alter"]);
-           midiNum += parseInt(singleNoteTag["pitch"]["octave"]) * 12;
+           midiNum += pitchToMidiNum[singleNote["pitch"]["step"]];
+           if (singleNote["pitch"]["alter"] !== undefined)
+              midiNum += parseInt(singleNote["pitch"]["alter"]);
+           midiNum += parseInt(singleNote["pitch"]["octave"]) * 12;
 
            let note = {};
            note.midiNum = midiNum;
-           note.duration = parseInt(singleNoteTag["duration"]);
+           note.duration = parseInt(singleNote["duration"]);
 
            let currentTime = voiceTimes[voice - 1];
 
@@ -105,7 +104,7 @@ function ScoreIterable(instrumentObjects)
            //two notes of different duration at same start time are two voices
            //^ this is mentioned in the musicxml standard!
            //only single voice playing multiple notes has chord tag
-           if (singleNoteTag["chord"] !== undefined)
+           if (singleNote["chord"] !== undefined)
            {
              currentTime = currentTime - bassNoteDuration;
            }
@@ -127,14 +126,14 @@ function ScoreIterable(instrumentObjects)
              timeNotesMap.set(currentTime, arr);
            }
 
-           if (singleNoteTag["chord"] === undefined)
+           if (singleNote["chord"] === undefined)
            {
              voiceTimes[voice - 1] += note.duration;
              bassNoteDuration = note.duration;
            }
            midiNum = 0;
          }
-         else if (singleNoteTag["rest"] !== undefined)
+         else if (singleNote["rest"] !== undefined)
          {
            let currentTime = voiceTimes[voice - 1];
            let existingVal = timeNotesMap.get(currentTime);
@@ -146,11 +145,11 @@ function ScoreIterable(instrumentObjects)
            else
            {
              let arr = [];
-             arr.push(parseInt(singleNoteTag["duration"]));
+             arr.push(parseInt(singleNote["duration"]));
              timeNotesMap.set(currentTime, arr);
            }
 
-           part.push(singleNoteTag["duration"]); //TODO
+           part.push(singleNote["duration"]); //TODO
          }
        } //loop through measure
 
@@ -168,13 +167,10 @@ function ScoreIterable(instrumentObjects)
          timeStampedMap.set(key, timeNotesMap.get(key));
          part.push(timeStampedMap);
        }
-       // in case coordinates are same
-       //- could happen on new page or new measure?
-       console.log("timeNotesMap", timeNotesMap);
 
+       console.log("timeNotesMap", timeNotesMap);
      } //if note
-   };
-   traverse(instrumentObjects[instrumentName], process);
+   } //instrumentName
 
    scoreIterable[instrumentName] = part; //TODO
  } //loop through instruments
