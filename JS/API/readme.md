@@ -40,8 +40,8 @@ if no instrumentName is provided (ex: "flute"), gets the min pitch in the entire
 ### getKeySignatures()
 gets the key signatures of the whole piece (returns an array)
 
-### getInstrumentObjects()
-gets all data specific to certain instruments in the score. Can be used with with Object.keys() to get the instrument names
+### getInstrumentNames()
+gets the name of the instruments in the score (returns as an array)
   
 ### getInstrumentsWithMelody(melodyString)
 returns array of instruments who have a melody. NOTE: may not work for instruments playing chords
