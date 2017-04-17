@@ -68,7 +68,7 @@ function onRequest(request, response)
 
 const server = http.createServer(onRequest);
 
-// Listen on port 8000, IP defaults to 127.0.0.1
+// Listen on port, IP defaults to 127.0.0.1
 server.listen(port);
 
 // Put a friendly message on the terminal
