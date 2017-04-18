@@ -3,6 +3,7 @@ const fs = require("fs");
 const ScoreSearcher = require("./ScoreSearcher.js");
 
 const factsDB = new Map();
+//TODO: should call writeFacts if it does not exist
 const fileNames = fs.readdirSync("./scores");
 fileNames.forEach((fileName) =>
 {

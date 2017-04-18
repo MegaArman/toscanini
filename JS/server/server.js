@@ -1,20 +1,10 @@
 // Load the http module to create an http server.
 const http = require("http");
 const fs = require("fs");
-const ScoreSearcher = require("./ScoreSearcher.js");
+const searchFacts = require("./searchFacts");
 
-const musicXML = fs.readFileSync("../scores/vivaldi_winter.xml");
-const scoreSearcher = ScoreSearcher(musicXML);
-const minPitch = scoreSearcher.getMinPitch().toString();
-const maxPitch = scoreSearcher.getMaxPitch().toString();
-const instrumentNames = scoreSearcher.getInstrumentNames().toString();
-const result = {};
+const expected = {"flute": {"minPitch": 50, "maxPitch": 80}};
 const port = 7999;
-
-result["minPitch"] = minPitch;
-result["maxPitch"] = maxPitch;
-result["instrumentNames"] = instrumentNames;
-const resultJSON = JSON.stringify(result);
 
 function send404Response(response)
 {
@@ -58,8 +48,7 @@ function onRequest(request, response)
 			response.writeHead(200, {"Content-Type": "text/plain"});
 			response.write("Success");
 
-			let factsJSON = fs.readFileSync("./facts.json");
-			response.end(factsJSON);
+			response.end(JSON.stringify(searchFacts(expected)));
 		});
 	}
 	else
