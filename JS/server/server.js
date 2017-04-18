@@ -2,8 +2,6 @@
 const http = require("http");
 const fs = require("fs");
 const searchFacts = require("./searchFacts");
-
-const expected = {"flute": {"minPitch": 50, "maxPitch": 80}};
 const port = 7999;
 
 function send404Response(response)
@@ -44,11 +42,11 @@ function onRequest(request, response)
 		request.on("end", ()=> 
 		{
 			console.log("requestBody", requestBody);
-			console.log("will send back the suitable scores");
 			response.writeHead(200, {"Content-Type": "text/plain"});
 			response.write("Success");
-
-			response.end(JSON.stringify(searchFacts(expected)));
+			
+			const query = JSON.parse(requestBody);
+			response.end(JSON.stringify(searchFacts(query)));
 		});
 	}
 	else

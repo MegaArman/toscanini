@@ -1,4 +1,5 @@
-const query = {"instrument": "flute"};
+let query = {"flute": {"minPitch": 50, "maxPitch": 80}};
+query = JSON.stringify(query);
 
 $("#ask").on("click", ()=> 
 {

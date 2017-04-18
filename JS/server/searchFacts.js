@@ -19,12 +19,8 @@ module.exports = (expected) =>
 				const expectedMinPitch = expected[instrumentName]["minPitch"];
 				const expectedMaxPitch = expected[instrumentName]["maxPitch"];
 	
-				console.log("hasFlute!");
-	
 				if (minPitch > expectedMinPitch && maxPitch > expectedMaxPitch)
 						matchingPieces.push(pieceName);
-				else
-					console.log("won't pass", pieceName);
 			}
 		}
 	});
