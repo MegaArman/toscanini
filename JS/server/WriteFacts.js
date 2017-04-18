@@ -20,11 +20,11 @@ const fileNames = fs.readdirSync("./scores");
 fileNames.forEach((fileName) =>
 {
 	console.log("./scores/" + fileName);
-	if (!fileName.includes(".xml"))
-		return;
-		const musicXML = fs.readFileSync("./scores/" + fileName);
-		const scoreSearcher = ScoreSearcher(musicXML);
-	//console.log(scoreSearcher.getMaxPitch());
+	//if (!fileName.includes(".xml"))
+	//	return;
+	const musicXML = fs.readFileSync("./scores/" + fileName);
+	const scoreSearcher = ScoreSearcher(musicXML);
+	console.log(scoreSearcher.getMaxPitch());
 });
 
 
