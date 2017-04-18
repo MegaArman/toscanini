@@ -29,8 +29,8 @@ fileNames.forEach((fileName) =>
 	instrumentNames.forEach((instrumentName) => 
 	{
 		let range = {};
-		range["min"] = scoreSearcher.getMinPitch(instrumentName);
-		range["max"] = scoreSearcher.getMaxPitch(instrumentName);
+		range["minPitch"] = scoreSearcher.getMinPitch(instrumentName);
+		range["maxPitch"] = scoreSearcher.getMaxPitch(instrumentName);
 		instrumentRanges[instrumentName] = range;
 	});	
 	fact["instrumentRanges"] = instrumentRanges;
@@ -38,5 +38,10 @@ fileNames.forEach((fileName) =>
 	factsDB.set(fileName, fact);
 });
 
-
-console.log(factsDB);
+fs.writeFile("facts.json", JSON.stringify([...factsDB]), (err) =>
+{
+	if (err)
+		console.log("err");
+	else
+		console.log("saved!");
+});
