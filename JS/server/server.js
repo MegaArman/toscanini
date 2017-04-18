@@ -57,7 +57,9 @@ function onRequest(request, response)
 			console.log("will send back the suitable scores");
 			response.writeHead(200, {"Content-Type": "text/plain"});
 			response.write("Success");
-			response.end(resultJSON);
+
+			let factsJSON = fs.readFileSync("./facts.json");
+			response.end(factsJSON);
 		});
 	}
 	else
