@@ -15,17 +15,28 @@ const ScoreSearcher = require("./ScoreSearcher.js");
 //	console.log("range", range);
 //	facts[instrumentName] = range;
 //});
-
+const factsDB = new Map();
 const fileNames = fs.readdirSync("./scores");
 fileNames.forEach((fileName) =>
 {
 	console.log("./scores/" + fileName);
-	//if (!fileName.includes(".xml"))
-	//	return;
 	const musicXML = fs.readFileSync("./scores/" + fileName);
 	const scoreSearcher = ScoreSearcher(musicXML);
-	console.log(scoreSearcher.getMaxPitch());
+	const instrumentNames = scoreSearcher.getInstrumentNames(); //[]
+	const fact = {};
+	const instrumentRanges = {};
+	
+	instrumentNames.forEach((instrumentName) => 
+	{
+		let range = {};
+		range["min"] = scoreSearcher.getMinPitch(instrumentName);
+		range["max"] = scoreSearcher.getMaxPitch(instrumentName);
+		instrumentRanges[instrumentName] = range;
+	});	
+	fact["instrumentRanges"] = instrumentRanges;
+	fact["tempos"] = scoreSearcher.getTempos();
+	factsDB.set(fileName, fact);
 });
 
 
-console.log("done");
+console.log(factsDB);

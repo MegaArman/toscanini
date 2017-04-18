@@ -196,7 +196,14 @@ const factoryScoreSearcher = (musicObj) =>
 
     function process(key,value)
     {
-      if (key === "tempo") tempos.push(parseInt(value));
+      if (key === "tempo")
+			{
+				const tempo = parseInt(value);
+				const exists = tempos.some((oldTempo) => (oldTempo === tempo));
+				
+				if (!exists)
+					tempos.push(parseInt(value));
+			}
     }
 
     traverse(musicObj, process);
