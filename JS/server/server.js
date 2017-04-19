@@ -33,7 +33,7 @@ function onRequest(request, response)
 		{
 			requestBody += data;
 
-			if (requestBody.length > 1e5)
+			if (requestBody.length > 1e4) //
 			{
 				response.writeHead(413, "Request Entity Too Large", {"Content-Type": "text/html"});
 				response.end("<html>failed</html>");
