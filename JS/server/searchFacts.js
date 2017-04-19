@@ -19,7 +19,7 @@ module.exports = (expected) =>
 				const expectedMinPitch = expected[instrumentName]["minPitch"];
 				const expectedMaxPitch = expected[instrumentName]["maxPitch"];
 	
-				if (minPitch > expectedMinPitch && maxPitch > expectedMaxPitch)
+				if (minPitch > expectedMinPitch && maxPitch < expectedMaxPitch)
 						matchingPieces.push(pieceName);
 			}
 		}
