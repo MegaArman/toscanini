@@ -1,4 +1,3 @@
-
 <html>
 	<head>
     <title>Toscanini Search Engine</title>
@@ -7,15 +6,18 @@
   </head>
 
 	<body style="margin:64px">
-		<h3>TOSCANINI SEARCH ENGINE</h3>
-    <p>Type in a query like so "Flute 50 80" and hit the ASK TOSCANINI button to search for pieces with Flute in that midi note range
-       , see 
+		<h2>TOSCANINI SEARCH ENGINE</h2>
+    <h5>Instructions:</h5>
+    <p>1) Enter instrument range queries with format "flute D4 G#6" or "flute 50 80", 
+      see
       <a href="http://www.electronics.dit.ie/staff/tscarff/Music_technology/midi/midi_note_numbers_for_octaves.htm">midi note table</a> 
-    
+      if you prefer to use midi note numbers.
     </p>
+    <p>2) When you've entered all your queries, hit the "ASK TOSCANINI" button and we'll show you our matching scores!</p>
+    <h5>Side Notes:</h5>
     <p>-With no search tags you will see all scores we have</p>
     <p>-This engine is not case sensitive</p>
-    <p>-This engine will interpret pieces with part "Trumpet in C" to match criteria for "trumpet"</p>
+    <p>-Queries check for name inclusion, so querying for "trumpet 40 70" can give you scores with "Trumpets in C" assuming the range is appropriate</p>
   <div class="chips chips-initial"></div> 
 	<button style="background-color:#e65100" type="button" class="btn btn-default" id="ask">Ask Toscanini</button>
   </body>
