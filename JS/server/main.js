@@ -13,3 +13,15 @@ $("#ask").on("click", ()=>
 	});
 });
 
+$(".chips-placeholder").material_chip(
+{
+  placeholder: "Enter a tag",
+  secondaryPlaceholder: "+Flute G5 G7",
+});
+
+  
+  $(".chips").on("chip.add", (e, chip) =>
+  {
+    console.dir(chip["tag"]);
+  // you have the added chip here
+  });
