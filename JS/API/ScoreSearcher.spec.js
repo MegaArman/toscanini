@@ -50,7 +50,7 @@ test("AccidentalsEverywhere", function(t)
   let musicXML = fs.readFileSync("../scores/AccidentalsEverywhere.xml");
   const scoreSearcher = ScoreSearcher(musicXML);
 
-  {
+  { 
     const actual = scoreSearcher.notesInRange("", 64, 24); //Highest to lowest note
     const expected = 100;
     t.deepEqual(actual, expected, "notesInRange");
@@ -59,8 +59,13 @@ test("AccidentalsEverywhere", function(t)
   {
     const actual = scoreSearcher.notesInRange("", 55, 24); //Highest to lowest note
     const expected = 62;
-    console.log("Actual: " + actual);
     t.deepEqual(actual, expected, "notesInRange");
+  }
+  
+  {
+    const actual = scoreSearcher.getAccidentals();
+    const expected = 8;
+    t.deepEqual(actual, expected, "getAccidentals");
   }
 
   t.end();
