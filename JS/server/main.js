@@ -15,13 +15,12 @@ $("#ask").on("click", ()=>
 	});
 });
 
-$(".chips-placeholder").material_chip(
+$(".chips-initial").material_chip(
 {
-  placeholder: "Enter a tag",
-  secondaryPlaceholder: "+Flute G5 G7",
+  data: [{tag: "flute 50 80"}] 
 });
-
-  
+query["flute"] = {"minPitch": 50, "maxPitch": 80}
+ 
  $(".chips").on("chip.add", (e, chip) =>
  {     
    console.log("e", e);
@@ -30,7 +29,7 @@ $(".chips-placeholder").material_chip(
    if (splitTag.length !== 3)
    {
       
-      alert("all search criteria must be of format, flute G5 G7");
+      alert("all search criteria must be of format, flute 50 80");
       $(".chip:last").remove();
       return;
    }
