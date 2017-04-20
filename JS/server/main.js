@@ -67,7 +67,6 @@ $("#search").on('keyup', (e) =>
   }
 });
 
-
 $("#ask").on("click", ()=> 
 {
   const query = {};
@@ -140,7 +139,7 @@ $("#ask").on("click", ()=>
   const queryJSON = JSON.stringify(query);
   
   if (validQuery)
-  {
+  {    
     $.ajax(
     {
       type: "POST",
@@ -148,13 +147,15 @@ $("#ask").on("click", ()=>
       data: queryJSON,
       success: (scoresJSON) => 
       {
+        $(".download").remove();
+        $("#resultsFor").text("Showing results for ");
+        $("#query").text($("#search").val()); 
         const scores = JSON.parse(scoresJSON);
+
         scores.forEach((scoreName) =>
         {
           $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
-          "class='download collection-item'" + "download>" +
-          scoreName +
-          "</a>");
+            "class='download collection-item'" + "download>" + scoreName + "</a>"); 
         });
       },      
       error: () => alert("no response from server")
@@ -162,7 +163,3 @@ $("#ask").on("click", ()=>
   }
 });
 
-$("#clear").on("click", () =>
-{
-  $("#matchingScores").empty();
-});

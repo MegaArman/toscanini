@@ -54,16 +54,24 @@
        #matchingScores {
           margin-top: 32px;
        }
-    
+       
+       #resultsHeader {
+          padding: 10px 20px;
+       }
+        
+       #query {
+          font-style: italic;
+       } 
+
        .download{
-          color: #0366d6 !important;
+           color: #0366d6 !important;
        }
      </style>
    </head>
 
 	<body>
     <h5>Instructions:</h5>
-    <p>Suppose you want pieces with flute that plays in range D4-G#6 and viola in C3-E5...</p>
+    <p>Suppose you want pieces with flute that plays in range D4 G#6 and viola in C3 E5...</p>
     <p>1) Enter an instrument range query in the search box below as "flute D4 G#6 and viola C3 E5"</p>
     <p>2) When you've entered all your queries,
     hit the "Toscanini Search" button and we'll show you our matching scores!</p>
@@ -84,8 +92,12 @@
   </nav>
 
 	<button id="ask" type="button" class="btn btn-default">Toscanini Search</button>
-  <button id="clear" type="button" class="btn btn-default">Clear Results</button>
-  <div id="matchingScores" class="collection"></div>
+
+  <div id="matchingScores" class="collection">
+    <div id ="resultsHeader">     
+      <b id="resultsFor"></b><b id="query"></b>
+    </div> 
+  </div>
 
   </body>
 </html>
