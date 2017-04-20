@@ -1,47 +1,95 @@
 <html>
 	<head>
     <title>Ask Toscanini!</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  </head>
+    <img class="logo" src="https://raw.githubusercontent.com/MegaArman/MusicXMLResearch/master/JS/server/Ask_Toscanini!.png"
+       alt="Toscanini Search Engine">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <style>
+      .logo {
+          display: block;
+          margin-left: auto;
+          margin-right:auto;
+        }
 
-	<body style="margin:64px">
-   <img src="https://raw.githubusercontent.com/MegaArman/MusicXMLResearch/master/JS/server/Ask_Toscanini!.png" alt="Toscanini Search Engine" style="display:block;margin-left:auto;margin-right:auto">
+       body {
+          margin:64px;
+       }
 
+       #nav {
+          background-color:white;
+          margin-top:32px; 
+          margin-bottom:16px;
+       }
+     
+       #nav-wrapper {
+          background-color:white
+       }
+        
+       #inputField {
+          color:black;
+       }
+
+       #search {
+          padding-left:2rem;
+          background-color:white;
+       }
+
+       #ask {
+          background-color:#ff8533;
+          text-transform:none;
+          font-family:arial,sans-serif;
+          font-weight:bold;
+       }
+      
+       #clear {
+          background-color:#ff8533;
+          text-transform:none;
+          margin-left:12px;
+          font-family:arial,sans-serif;
+          font-weight:bold;
+       }
+       
+       #matchingScores {
+          margin-top: 32px;
+       }
+    
+       .download{
+          color: #0366d6 !important;
+       }
+     </style>
+   </head>
+
+	<body>
     <h5>Instructions:</h5>
     <p>Suppose you want pieces with flute that plays in range D4-G#6 and viola in C3-E5...</p>
     <p>1) Enter an instrument range query in the search box below as "flute D4 G#6 and viola C3 E5"</p>
-    <p>2) When you've entered all your queries, hit the "Toscanini Search" button and we'll show you our matching scores!</p>
+    <p>2) When you've entered all your queries,
+    hit the "Toscanini Search" button and we'll show you our matching scores!</p>
     
     <h5>Side Notes:</h5>
     <p>-This engine is not case sensitive</p>
-    <p>-Queries check for name inclusion, so querying for "trumpet 40 70" can give you scores with "Trumpets in C" assuming the range is appropriate</p>
+    <p>-Queries check for name inclusion, 
+    so querying for "trumpet 40 70" can give you scores with "Trumpets in C" assuming the range is appropriate</p>
 
-  <nav style="margin-top:32px; margin-bottom:16px">
-    <div class="nav-wrapper" style="background-color:white">
+  <nav id="nav">
+    <div class="nav-wrapper">
       <form onSubmit="return false;">
-        <div class="input-field" style="color:black; margin">
-          <input style="padding-left:2rem" id="search" type="search" placeholder="flute D4 G#6 and viola C3 E5"required>
+        <div id="inputField" class="input-field">
+          <input id="search" type="search" placeholder="flute D4 G#6 and viola C3 E5"required>
         </div>
       </form>
     </div>
   </nav>
 
-	<button style="background-color:#ff8533;text-transform:none;font-family:arial,sans-serif;font-weight:bold" 
-  type="button"  class="btn btn-default" id="ask">Toscanini Search</button>
-  
-  <button style="background-color:#ff8533;text-transform:none;font-family:arial,sans-serif;font-weight:bold"
-  type="button" class="btn btn-default" id="clear">Clear Results</button>
-
+	<button id="ask" type="button" class="btn btn-default">Toscanini Search</button>
+  <button id="clear" type="button" class="btn btn-default">Clear Results</button>
   <div id="matchingScores" class="collection"></div>
 
   </body>
 </html>
 
-<!-- Compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-
-<!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script src="./main.js"></script>

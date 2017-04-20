@@ -152,7 +152,7 @@ $("#ask").on("click", ()=>
         scores.forEach((scoreName) =>
         {
           $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
-          "class='collection-item'" + "download>" +
+          "class='download collection-item'" + "download>" +
           scoreName +
           "</a>");
         });
