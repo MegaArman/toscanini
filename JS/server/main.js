@@ -76,7 +76,8 @@ $("#ask").on("click", ()=>
   {
     if (queryPart.length !== 3)
     {
-      alert("all search criteria must be of format, flute 50 80");
+      validQuery = false;
+      alert("all search criteria must be of format, flute 50 80 with the word 'and' seperating criteria");
       return;
     }
     //Store instrument name
@@ -111,8 +112,8 @@ $("#ask").on("click", ()=>
 
     if (instrumentName in query)
     { 
-      alert(instrumentName + " already has a range criteria");
       validQuery = false;
+      alert(instrumentName + " already has a range criteria");
       return;
     }
     else
@@ -122,8 +123,8 @@ $("#ask").on("click", ()=>
 
     if (minPitch > maxPitch)
     {
-      alert("min pitch should not be greater than the max pitch, please fix!"); 
       validQuery = false;
+      alert("min pitch should not be greater than the max pitch, please fix!"); 
       return;
     }
 
