@@ -25,6 +25,27 @@ function onRequest(request, response)
 			response.writeHead(200, {"Content-Type": "text/javascript"});
 			fs.createReadStream("./main.js").pipe(response);
 		}
+    else if (request.url.includes("/scores/")
+             && request.url.includes(".xml"))
+    {
+      const score = request.url.replace("/scores/", "");
+      const readStream = fs.createReadStream("./scores/" + score);
+      
+      readStream.on("open", ()=>
+      {
+        response.writeHead(200, {"Content-Type": "text/xml"});
+        readStream.pipe(response);
+      });
+
+      readStream.on("error", (err) =>
+      {
+        send404Response(response);
+      }); 
+    }
+    else
+    {
+      send404Response(response);
+    }
 	}
 	else if (request.method === "POST")
 	{
@@ -43,7 +64,6 @@ function onRequest(request, response)
 		{
 			console.log("requestBody", requestBody);
 			response.writeHead(200, {"Content-Type": "text/plain"});
-			response.write("Success");
 			
 			const query = JSON.parse(requestBody);
 			response.end(JSON.stringify(searchFacts(query)));

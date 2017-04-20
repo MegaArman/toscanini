@@ -56,7 +56,6 @@ function noteOctaveToMIDI(noteOctave)
   }
 
   const MIDI = pitch + accidental + 12 * octave;
-  console.log("MIDI", MIDI);
   return MIDI;
 }
 
@@ -125,10 +124,6 @@ $("#ask").on("click", ()=>
       alert(instrumentName + " already has a range criteria");
       return;
     }
-    else
-    {
-      console.log("new!");
-    }
 
     if (minPitch > maxPitch)
     {
@@ -151,10 +146,23 @@ $("#ask").on("click", ()=>
       type: "POST",
       url: "/",
       data: queryJSON,
-      success: (scores) => alert(scores),
-      error: () => alert("error!!!")
+      success: (scoresJSON) => 
+      {
+        const scores = JSON.parse(scoresJSON);
+        scores.forEach((scoreName) =>
+        {
+          $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
+          "class='collection-item'" + "download>" +
+          scoreName +
+          "</a>");
+        });
+      },      
+      error: () => alert("no response from server")
     });
   }
 });
 
-
+$("#clear").on("click", () =>
+{
+  $("#matchingScores").empty();
+});
