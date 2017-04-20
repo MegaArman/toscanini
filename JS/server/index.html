@@ -1,26 +1,25 @@
 <html>
 	<head>
-    <title>Toscanini Search Engine</title>
+    <title>Ask Toscanini!</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   </head>
 
 	<body style="margin:64px">
-		<h2>TOSCANINI SEARCH ENGINE</h2>
-    
+   <img src="https://raw.githubusercontent.com/MegaArman/MusicXMLResearch/master/JS/server/Ask_Toscanini!.png" alt="Toscanini Search Engine" style="display:block;margin-left:auto;margin-right:auto">
+
     <h5>Instructions:</h5>
     <p>Suppose you want pieces with flute that plays in range D4-G#6 and viola in C3-E5...</p>
     <p>1) Enter an instrument range query in the search box below as "flute D4 G#6 and viola C3 E5"</p>
-    <p>2) When you've entered all your queries, hit the "ASK TOSCANINI" button and we'll show you our matching scores!</p>
+    <p>2) When you've entered all your queries, hit the "Toscanini Search" button and we'll show you our matching scores!</p>
     
     <h5>Side Notes and Examples:</h5>
-    <p>-With no search tags you will see all scores we have</p>
     <p>-This engine is not case sensitive</p>
     <p>-Queries check for name inclusion, so querying for "trumpet 40 70" can give you scores with "Trumpets in C" assuming the range is appropriate</p>
 
   <nav style="margin-top:32px; margin-bottom:16px">
     <div class="nav-wrapper" style="background-color:white">
-      <form>
+      <form onSubmit="return false;">
         <div class="input-field" style="color:black; margin">
           <input style="padding-left:2rem" id="search" type="search" placeholder="flute D4 G#6 and viola C3 E5"required>
         </div>
@@ -28,7 +27,7 @@
     </div>
   </nav>
 
-	<button style="background-color:#e65100" type="button" class="btn btn-default" id="ask">Ask Toscanini</button>
+	<button style="background-color:#ff8533;text-transform:none;font-family:arial,sans-serif;font-weight:bold" type="button" class="btn btn-default" id="ask">Toscanini Search</button>
   </body>
 </html>
 

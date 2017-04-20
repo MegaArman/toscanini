@@ -60,6 +60,16 @@ function noteOctaveToMIDI(noteOctave)
   return MIDI;
 }
 
+$("#search").on('keyup', (e) =>
+{
+  if (e.keyCode == 13)
+  {
+   $("#ask").trigger("click");
+   return false;
+  }
+});
+
+
 $("#ask").on("click", ()=> 
 {
   const query = {};
