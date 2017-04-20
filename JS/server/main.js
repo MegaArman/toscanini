@@ -1,4 +1,5 @@
-//GOAL let query = {"flute": {"minPitch": 50, "maxPitch": 80}};
+//The goal of this file is to submit a  query of format
+//{"flute": {"minPitch": 50, "maxPitch": 80}, "viola": {"minPitch": 40, "maxPitch": 74}};
 
 function ascii(c)
 {
@@ -32,7 +33,6 @@ const noteToMIDI =
 //noteOctave, ex: C2
 function noteOctaveToMIDI(noteOctave)
 {
-  console.log("noteOctave", noteOctave);
   let pitch;
   let accidental;
   let octave;
@@ -60,102 +60,91 @@ function noteOctaveToMIDI(noteOctave)
   return MIDI;
 }
 
-let query = {};
-
 $("#ask").on("click", ()=> 
 {
-  let queryString = JSON.stringify(query);
+  const query = {};
+  let validQuery = true;
 
-	$.ajax(
-	{
-		type: "POST",
-		url: "/",
-		data: queryString,
-		success: (scores) => alert(scores),
-		error: () => alert("error!!!")
-	});
-});
-
-$(".chips-initial").material_chip(
-{
-  data: [{tag: "flute 50 80"}] 
-});
-query["flute"] = {"minPitch": 50, "maxPitch": 80}
- 
-$(".chips").on("chip.add", (e, chip) =>
-{     
-  //console.log("e", e);
-  const splitTag = chip["tag"].split(" ");
-  console.log(splitTag);
-  if (splitTag.length !== 3)
+  //take the input string, flute 34 70 and guitar 30 90 and output
+  //=>[ [ 'flute', '34', '70' ], [ 'guitar', '30', '90' ] ]
+  const inputMatrix = $("#search").val().split("and").map((query) =>
   {
+    return (query.replace(/\s+/g, " ").trim().split(" "));
+  });
+
+  inputMatrix.forEach((queryPart) => 
+  {
+    if (queryPart.length !== 3)
+    {
+      alert("all search criteria must be of format, flute 50 80");
+      return;
+    }
+    //Store instrument name
+    const instrumentName = queryPart[0].toLowerCase();
+
+    //Check if they use note octave notation, ex: C2 or midi nums, ex: 24
+    const firstASCIICharMinPitch = ascii(queryPart[1].toUpperCase().charAt(0));
+    const firstASCIICharMaxPitch = ascii(queryPart[2].toUpperCase().charAt(0));
+    let maxPitch;
+    let minPitch;
+
+  //  console.log("firstASCIICharMin", firstASCIICharMinPitch);
+    //console.log("firstASCIICharMax", firstASCIICharMaxPitch);
     
-    alert("all search criteria must be of format, flute 50 80");
-    $(".chip:last").remove();
-    return;
-  }
-  //Store instrument name
-  const instrumentName = splitTag[0].toLowerCase();
+    if (firstASCIICharMinPitch >= 65 && firstASCIICharMinPitch <= 71)
+    {
+      minPitch = noteOctaveToMIDI(queryPart[1]);
+    }
+    else
+    {
+      minPitch = parseInt(queryPart[1]);
+    }
 
-  //Check if they use note octave notation, ex: C2 or midi nums, ex: 24
-  const firstASCIICharMinPitch = ascii(splitTag[1].toUpperCase().charAt(0));
-  const firstASCIICharMaxPitch = ascii(splitTag[2].toUpperCase().charAt(0));
-  let maxPitch;
-  let minPitch;
+    if (firstASCIICharMaxPitch >= 65 && firstASCIICharMaxPitch <= 71)
+    {
+      maxPitch = noteOctaveToMIDI(queryPart[2]);
+    } 
+    else
+    {
+     maxPitch = parseInt(queryPart[2]);
+    }
 
-  console.log("firstASCIICharMin", firstASCIICharMinPitch);
-  console.log("firstASCIICharMax", firstASCIICharMaxPitch);
+    if (instrumentName in query)
+    { 
+      alert(instrumentName + " already has a range criteria");
+      validQuery = false;
+      return;
+    }
+    else
+    {
+      console.log("new!");
+    }
+
+    if (minPitch > maxPitch)
+    {
+      alert("min pitch should not be greater than the max pitch, please fix!"); 
+      validQuery = false;
+      return;
+    }
+
+    //perform the insertion
+    query[instrumentName] = {"minPitch": minPitch, "maxPitch": maxPitch};
+    console.log("post insert", query); 
+  });
+
+  const queryJSON = JSON.stringify(query);
   
-  if (firstASCIICharMinPitch >= 65 && firstASCIICharMinPitch <= 71)
+  if (validQuery)
   {
-    minPitch = noteOctaveToMIDI(splitTag[1]);
+    $.ajax(
+    {
+      type: "POST",
+      url: "/",
+      data: queryJSON,
+      success: (scores) => alert(scores),
+      error: () => alert("error!!!")
+    });
   }
-  else
-  {
-    minPitch = parseInt(splitTag[1]);
-  }
-
-  if (firstASCIICharMaxPitch >= 65 && firstASCIICharMaxPitch <= 71)
-  {
-    maxPitch = noteOctaveToMIDI(splitTag[2]);
-  } 
-  else
-  {
-   maxPitch = parseInt(splitTag[2]);
-  }
-
-
-  if (instrumentName in query)
-  { 
-    $(".chip:last").remove();
-    console.log("instrument exists");
-    alert("this instrument already has a criteria");
-    return;
-  }
-  else
-  {
-    console.log("new!");
-  }
-
-  if (minPitch > maxPitch)
-  {
-    $(".chip:last").remove();
-    alert("min pitch should not be greater than the max pitch, please fix!"); 
-    return;
-  }
-
-  const range = {};
-  range["minPitch"] = minPitch;
-  range["maxPitch"] = maxPitch;
-  query[instrumentName] = range;
-  console.log("post insert", query);
 });
 
-$('.chips').on('chip.delete', function(e, chip)
-{
-  const splitTag = chip["tag"].split(" ");
-  const toDelete = splitTag[0].toLowerCase();
-  delete query[toDelete];
-  console.log("post delete", query);
-});
-                  
+
