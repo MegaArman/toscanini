@@ -64,7 +64,6 @@ $("#search").on('keyup', (e) =>
 {
   if (e.keyCode == 13)
   {
-   $("#ask").trigger("click");
    return false;
   }
 });
