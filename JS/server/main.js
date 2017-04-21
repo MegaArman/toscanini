@@ -85,8 +85,10 @@ $("#ask").on("click", ()=>
     {
       if ("composer" in queries)
       {
-        alert(queryPart[0] +
-        "- we only support querying for one composer at this time, please fix");
+        if (queryPart[0].length != 0)
+          alert(queryPart[0] + "- we only support querying for one composer at this time, please fix");
+        else
+          alert("and must be followed by a query");
         validQuery = false;
         return;
       } 
