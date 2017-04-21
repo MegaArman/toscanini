@@ -189,7 +189,7 @@ $("#lucky").on("click", () =>
     {
       $(".download").remove();
       $("#resultsFor").text("It's your lucky day!!!");
-      $("#query").text();
+      $("#query").text("");
 
       const scoreName = JSON.parse(scoresJSON);
  
@@ -198,4 +198,4 @@ $("#lucky").on("click", () =>
     },      
     error: () => alert("no response from server")
   });
-});``
+});
