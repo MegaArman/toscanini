@@ -64,9 +64,10 @@ function onRequest(request, response)
 		{
 			console.log("requestBody", requestBody);
 			response.writeHead(200, {"Content-Type": "text/plain"});
-			
-			const query = JSON.parse(requestBody);
+		  
+			const query = (requestBody === "lucky") ? "lucky" : JSON.parse(requestBody);
 			response.end(JSON.stringify(searchFacts(query)));
+      
 		});
 	}
 	else

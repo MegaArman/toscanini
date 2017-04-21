@@ -178,3 +178,24 @@ $("#ask").on("click", ()=>
   }
 });
 
+$("#lucky").on("click", () =>
+{
+  $.ajax(
+  {
+    type: "POST",
+    url: "/",
+    data: "lucky",
+    success: (scoresJSON) => 
+    {
+      $(".download").remove();
+      $("#resultsFor").text("It's your lucky day!!!");
+      $("#query").text();
+
+      const scoreName = JSON.parse(scoresJSON);
+ 
+      $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
+        "class='download collection-item'" + "download>" + scoreName + "</a>"); 
+    },      
+    error: () => alert("no response from server")
+  });
+});``

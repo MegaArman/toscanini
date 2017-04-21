@@ -5,7 +5,22 @@ const factsMap = new Map(JSON.parse(factsJSON));
 //queries of form {"flute": {"minPitch": 50, "maxPitch": 80}};
 module.exports = (query) => //ex: invoked w searchFacts(query)
 {
-	const matchingPieces = [];
+  if (query === "lucky")
+  {
+    //get # between 0 and factsMap.length - 1
+    const r = Math.floor(Math.random() * (factsMap.size));
+    const keys = factsMap.keys();
+    let randomScore = "";  
+
+    for (let i = 0; i < r; i++)
+    {
+      randomScore = keys.next().value;
+    } 
+    
+    return randomScore;
+  }
+    
+  const matchingPieces = [];
   
   let queryComposer;
   if ("composer" in query)
