@@ -20,6 +20,11 @@ function onRequest(request, response)
 				response.writeHead(200, {"Content-Type": "text/html"});
 				fs.createReadStream("./index.html").pipe(response);
 		}
+    else if (request.url ==="/materialize.css")
+    {
+    	response.writeHead(200, {"Content-Type": "text/css"});
+			fs.createReadStream("./materialize.css").pipe(response);
+    }
 		else if (request.url === "/main.js")
 		{
 			response.writeHead(200, {"Content-Type": "text/javascript"});
