@@ -6,10 +6,42 @@ const factsMap = new Map(JSON.parse(factsJSON));
 module.exports = (query) => //ex: invoked w searchFacts(query)
 {
 	const matchingPieces = [];
+  
+  let queryComposer;
+  if ("composer" in query)
+  {
+    queryComposer = query["composer"];
+    delete query["composer"];
+  }
+  
+  let queryTempo;
+  if ("tempo" in query)
+  {
+    console.log("queryTempo should be", query["tempo"]);
+    queryTempo = query["tempo"];
+    delete query["tempo"];
+  }
+
   const queryInstrumentNames = Object.keys(query);
+  
+  //iterate over pieces in our facts database
   //................value, key
-	factsMap.forEach((pieceFacts, pieceName) => //iterate over facts pieces
+  factsMap.forEach((pieceFacts, pieceName) =>
 	{
+    
+    //check if our piece is by the composer they want
+    if (queryComposer && !pieceName.toLowerCase().includes(queryComposer))
+      return false;
+    
+    if (queryTempo)
+    {
+      for (let tempo of pieceFacts["tempos"])
+      {
+        if (tempo < queryTempo["minPitch"] || tempo > queryTempo["maxPitch"])
+          return false;
+      }
+    }
+    
     //see if piece has query instruments and if they're in range
     //to do so we need to check substrings, so "trumpet in C" passes for query "trumpet"
     const pieceInstrumentNames = Object.keys(pieceFacts["instrumentRanges"]);
@@ -43,6 +75,7 @@ module.exports = (query) => //ex: invoked w searchFacts(query)
          return false
        }          	
     }
+    
     matchingPieces.push(pieceName); //if it made it this far it passes!
 
   });

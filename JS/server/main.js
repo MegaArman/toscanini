@@ -69,7 +69,7 @@ $("#search").on('keyup', (e) =>
 
 $("#ask").on("click", ()=> 
 {
-  const query = {};
+  const queries = {};
   let validQuery = true;
 
   //take the input string, flute 34 70 and guitar 30 90 and output
@@ -81,12 +81,27 @@ $("#ask").on("click", ()=>
 
   inputMatrix.forEach((queryPart) => 
   {
+    if (queryPart.length === 1)
+    {
+      if ("composer" in queries)
+      {
+        alert(queryPart[0] +
+        "- we only support querying for one composer at this time, please fix");
+        validQuery = false;
+        return;
+      } 
+      
+      queries["composer"] = queryPart[0].toLowerCase();    
+      console.log("post insert composer", queries);
+      return;
+    }
     if (queryPart.length !== 3)
     {
       validQuery = false;
-      alert("all search criteria must be of format, flute 50 80 with the word 'and' seperating criteria");
+      alert("query starting with " + queryPart[0] + " is not of appropriate length- see instructions");
       return;
     }
+
     //Store instrument name
     const instrumentName = queryPart[0].toLowerCase();
 
@@ -117,7 +132,7 @@ $("#ask").on("click", ()=>
      maxPitch = parseInt(queryPart[2]);
     }
 
-    if (instrumentName in query)
+    if (instrumentName in queries)
     { 
       validQuery = false;
       alert(instrumentName + " already has a range criteria");
@@ -127,24 +142,24 @@ $("#ask").on("click", ()=>
     if (minPitch > maxPitch)
     {
       validQuery = false;
-      alert("min pitch should not be greater than the max pitch, please fix!"); 
+      alert(queryPart[0] + " -minimum should not be greater than maximum, please fix!"); 
       return;
     }
 
     //perform the insertion
-    query[instrumentName] = {"minPitch": minPitch, "maxPitch": maxPitch};
-    console.log("post insert", query); 
+    queries[instrumentName] = {"minPitch": minPitch, "maxPitch": maxPitch};
+    console.log("post insert instrument", queries); 
   });
+ 
+  const queriesJSON = JSON.stringify(queries);
 
-  const queryJSON = JSON.stringify(query);
-  
   if (validQuery)
   {    
     $.ajax(
     {
       type: "POST",
       url: "/",
-      data: queryJSON,
+      data: queriesJSON,
       success: (scoresJSON) => 
       {
         $(".download").remove();
