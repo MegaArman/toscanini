@@ -32,7 +32,6 @@ module.exports = (query) => //ex: invoked w searchFacts(query)
   let queryTempo;
   if ("tempo" in query)
   {
-    console.log("queryTempo should be", query["tempo"]);
     queryTempo = query["tempo"];
     delete query["tempo"];
   }
