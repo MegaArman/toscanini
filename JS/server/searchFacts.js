@@ -36,6 +36,13 @@ module.exports = (query) => //ex: invoked w searchFacts(query)
     delete query["tempo"];
   }
 
+  let queryKey;
+  if ("key" in query)
+  {
+    queryKey = query["key"];
+    delete query["key"];
+  }
+
   const queryInstrumentNames = Object.keys(query);
   
   //iterate over pieces in our facts database
@@ -47,6 +54,7 @@ module.exports = (query) => //ex: invoked w searchFacts(query)
     if (queryComposer && !pieceName.toLowerCase().includes(queryComposer))
       return false;
     
+    //check if our piece has a tempo range they want
     if (queryTempo)
     {
       for (let tempo of pieceFacts["tempos"])
@@ -56,6 +64,13 @@ module.exports = (query) => //ex: invoked w searchFacts(query)
       }
     }
     
+    //check if our piece has the key they want
+    //indexOf returns -1 if doesn't exist
+    if (queryKey && pieceFacts["keySignatures"].indexOf(queryKey) === -1)
+    {
+      return false;
+    }
+
     //see if piece has query instruments and if they're in range
     //to do so we need to check substrings, so "trumpet in C" passes for query "trumpet"
     const pieceInstrumentNames = Object.keys(pieceFacts["instrumentRanges"]);

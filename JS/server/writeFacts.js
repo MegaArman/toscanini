@@ -23,6 +23,7 @@ fileNames.forEach((fileName) =>
 	});	
 	fact["instrumentRanges"] = instrumentRanges;
 	fact["tempos"] = scoreSearcher.getTempos();
+  fact["keySignatures"] = scoreSearcher.getKeySignatures(); 
 	factsDB.set(fileName, fact);
 });
 

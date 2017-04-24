@@ -80,7 +80,8 @@ $("#ask").on("click", ()=>
   });
 
   inputMatrix.forEach((queryPart) => 
-  {
+  { 
+    //composer
     if (queryPart.length === 1)
     {
       if ("composer" in queries)
@@ -97,6 +98,19 @@ $("#ask").on("click", ()=>
       console.log("post insert composer", queries);
       return;
     }
+
+    //key signature
+    if (queryPart.length === 2 && queryPart[0].toLowerCase() === "key")
+    {
+      if ("key" in queries)
+      {
+        alert("key criteria already exists, please fix");
+      }
+      queries["key"] = queryPart[1];
+      console.log("post insert key", queries);
+      return;
+    }
+
     if (queryPart.length !== 3)
     {
       validQuery = false;
