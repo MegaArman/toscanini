@@ -106,7 +106,11 @@ $("#ask").on("click", ()=>
       {
         alert("key criteria already exists, please fix");
       }
-      queries["key"] = queryPart[1];
+     
+      const keyWithoutAccidental = queryPart[1].charAt(0).toUpperCase();
+      queries["key"] = (queryPart[1].length === 2) ? 
+                       keyWithoutAccidental + queryPart[1].charAt(1) : keyWithoutAccidental;
+
       console.log("post insert key", queries);
       return;
     }
