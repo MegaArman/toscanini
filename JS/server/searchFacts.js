@@ -5,6 +5,7 @@ const factsMap = new Map(JSON.parse(factsJSON));
 //queries of form {"flute": {"minPitch": 50, "maxPitch": 80}};
 module.exports = (query) => //ex: invoked w searchFacts(query)
 {
+  console.time("Took");
   if (query === "lucky")
   {
     //get # between 0 and factsMap.length - 1
@@ -109,6 +110,7 @@ module.exports = (query) => //ex: invoked w searchFacts(query)
 
   });
   
+  console.timeEnd("Took");
 	return matchingPieces;
 }
 

@@ -1,4 +1,6 @@
 // Load the http module to create an http server.
+
+console.time("Took");
 const fs = require("fs");
 const ScoreSearcher = require("./ScoreSearcher.js");
 
@@ -34,3 +36,4 @@ fs.writeFile("facts.json", JSON.stringify([...factsDB]), (err) =>
 	else
 		console.log("saved!");
 });
+console.timeEnd("Took");
