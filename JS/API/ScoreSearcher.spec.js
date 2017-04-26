@@ -5,6 +5,78 @@ const fs = require("fs");
 const test = require("tape").test;
 const ScoreSearcher = require("./ScoreSearcher");
 
+test("avamariapg1 tests", function(t)
+{
+  let musicXML = fs.readFileSync("../scores/avamariapg1.xml");
+  const scoreSearcher =  ScoreSearcher(musicXML);
+
+  {
+    const actual = scoreSearcher.getMaxPitch();
+    const expected = 68; //Abn
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
+
+  {
+    const actual = scoreSearcher.getMinPitch();
+    const expected = 15; //Eb
+    t.deepEqual(actual, expected, "getMinPitch");
+  }
+
+  {
+    const actual = scoreSearcher.getInstrumentNames();
+    const expected = [ "Voice", "Piano" ];
+    t.deepEqual(actual, expected, "getInstrumentNames");
+  }
+
+  {
+    const actual = scoreSearcher.getMaxPitch("Voice");
+    const expected = 65; //F
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
+
+  {
+    const actual = scoreSearcher.getMinPitch("Voice");
+    const expected = 53; //F
+    t.deepEqual(actual, expected, "getMinPitch");
+  }
+
+  {
+    const actual = ["Bb"];
+    const expected = scoreSearcher.getKeySignatures();
+    t.deepEqual(actual, expected, "getKeySignatures");
+  }
+
+  t.end();
+});
+
+test("vivaldi_winter tests", function(t)
+{
+  let musicXML = fs.readFileSync("../scores/vivaldi_winter.xml");
+  const scoreSearcher =  ScoreSearcher(musicXML);
+
+  {
+    const actual = scoreSearcher.getInstrumentNames();
+    const expected =[ "Solo Violin", "Violin I",
+                      "Violin II", "Viola", "Violoncello",
+                      "Contrabass", "Harpsichord" ];
+    t.deepEqual(actual, expected, "getInstrumentNames");
+  }
+
+  {
+    const actual = scoreSearcher.getMaxPitch("Viola");
+    const expected = 62; //D5
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
+
+  {
+    const actual = scoreSearcher.getMaxPitch("Solo Violin");
+    const expected = 79; //G6
+    t.deepEqual(actual, expected, "getMaxPitch");
+  }
+
+  t.end();
+});
+
 test("two_parts", function(t)
 {
   let musicXML = fs.readFileSync("../scores/two_parts.xml");
