@@ -6,21 +6,48 @@
 	<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Ask Toscanini!</title>
-    <img class="logo" src="https://raw.githubusercontent.com/MegaArman/MusicXMLResearch/master/JS/server/Ask_Toscanini!.png"
+    <img class="logo" src="https://raw.githubusercontent.com/MegaArman/MusicXMLResearch/master/ask_toscanini/Ask_Toscanini!.png"
       alt="Toscanini Search Engine">
     <style>
-      .logo {
-          display: block;
-          margin-left: auto;
-          margin-right:auto;
-        }
-
-       body {
+      body {
           margin:64px;
           font-size: large;
        }
 
-       #nav {
+			.btn {
+          background-color:#e63900 !important;
+          text-transform:none;
+          font-family:arial,sans-serif;
+          font-weight:bold;
+       }
+			
+			.download {
+           color: #0366d6 !important;
+       }
+
+			 .logo {
+          display: block;
+          margin-left: auto;
+          margin-right:auto;
+        }
+			
+			 #ask:hover, #lucky:hover {
+          background-color:#ff4000 !important;
+       }	
+	
+			 #inputField {
+          color:black;
+       }
+		  
+			 #lucky {
+          margin-left: 12px;
+       }
+			
+			 #matchingScores {
+          margin-top: 32px;
+       }
+      
+			 #nav {
           background-color:white;
           margin-top:32px; 
           margin-bottom:16px;
@@ -29,45 +56,22 @@
        #nav-wrapper {
           background-color:white
        }
-        
-       #inputField {
-          color:black;
-       }
-
-       #search {
-          padding-left:2rem;
-          background-color:white;
-       }
-
-      .btn {
-          background-color:#e63900 !important;
-          text-transform:none;
-          font-family:arial,sans-serif;
-          font-weight:bold;
-       }
-      
-       #lucky {
-          margin-left: 12px;
-       }       
-
-       #ask:hover, #lucky:hover {
-          background-color:#ff4000 !important;
-       }
-
-       #matchingScores {
-          margin-top: 32px;
-       }
-       
-       #resultsHeader {
+     
+ 		   #resultsHeader {
           padding: 10px 20px;
        }
         
        #query {
           font-style: italic;
-       } 
+       }  
+			
+			#test2label {
+				margin-left:50px;
+			}
 
-       .download{
-           color: #0366d6 !important;
+		   #search {
+          padding-left:2rem;
+          background-color:white;
        }
      </style>
    </head>
@@ -108,7 +112,13 @@
         </form>
       </div>
     </nav>
-
+  <form action="#">
+      <input name="group1" type="radio" id="test1" checked/>
+      <label for="test1">PDF</label>
+      <input name="group1" type="radio" id="test2" />
+      <label for="test2" id="test2label">MusicXML</label>
+    
+  </form>
     <button id="ask" type="button" class="btn btn-default">Toscanini Search</button>
     <button id="lucky" type="button" class="btn btn-default">I'm Feeling Musically Lucky</button>
 
