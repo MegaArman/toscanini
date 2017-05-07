@@ -47,6 +47,23 @@ function onRequest(request, response)
         send404Response(response);
       }); 
     }
+   	else if (request.url.includes("/scores_pdf/")
+             && request.url.includes(".pdf"))
+    {
+      const score = request.url.replace("/scores_pdf/", "");
+      const readStream = fs.createReadStream("./scores_pdf/" + score);
+      
+      readStream.on("open", ()=>
+      {
+        response.writeHead(200, {"Content-Type": "text/xml"});
+        readStream.pipe(response);
+      });
+
+      readStream.on("error", (err) =>
+      {
+        send404Response(response);
+      }); 
+    }
     else
     {
       send404Response(response);

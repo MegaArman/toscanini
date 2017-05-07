@@ -186,12 +186,17 @@ $("#ask").on("click", ()=>
         $("#resultsFor").text("Showing results for ");
         $("#query").text($("#search").val()); 
         const scores = JSON.parse(scoresJSON);
-
-        scores.forEach((scoreName) =>
+				
+				scores.forEach((scoreName) =>
         {
-				  if($('#test1').is(':checked'))
+					let dir = "./scores/"
+
+					if($('#test1').is(':checked')) {
 						scoreName = scoreName.replace(".xml", ".pdf");
-          $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
+						dir = "./scores_pdf/" 
+					}
+
+					$("#matchingScores").append("<a href='" + dir + scoreName + "'" +  
             "class='download collection-item'" + "download>" + scoreName + "</a>"); 
         });
       },      
@@ -214,8 +219,12 @@ $("#lucky").on("click", () =>
       $("#query").text("");
 
       let scoreName = JSON.parse(scoresJSON);
- 			if($('#test1').is(':checked'))
-						scoreName = scoreName.replace(".xml", ".pdf");
+			let dir = "./scores";
+
+ 			if($('#test1').is(':checked')) {
+				scoreName = scoreName.replace(".xml", ".pdf");
+				dir = "./scores_pdf" 
+			}
 
       $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
         "class='download collection-item'" + "download>" + scoreName + "</a>"); 
