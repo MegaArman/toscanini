@@ -1,6 +1,6 @@
 # MusicXMLResearch
 
-https://megaarman.github.io//MusicXMLResearch/
+https://megaarman.github.io/Toscanini/
 
 ^ Only tested in Chrome
 
