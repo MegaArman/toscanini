@@ -189,6 +189,8 @@ $("#ask").on("click", ()=>
 
         scores.forEach((scoreName) =>
         {
+				  if($('#test1').is(':checked'))
+						scoreName = scoreName.replace(".xml", ".pdf");
           $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
             "class='download collection-item'" + "download>" + scoreName + "</a>"); 
         });
@@ -211,8 +213,10 @@ $("#lucky").on("click", () =>
       $("#resultsFor").text("It's your lucky day!!!");
       $("#query").text("");
 
-      const scoreName = JSON.parse(scoresJSON);
- 
+      let scoreName = JSON.parse(scoresJSON);
+ 			if($('#test1').is(':checked'))
+						scoreName = scoreName.replace(".xml", ".pdf");
+
       $("#matchingScores").append("<a href='./scores/" + scoreName + "'" +  
         "class='download collection-item'" + "download>" + scoreName + "</a>"); 
     },      
