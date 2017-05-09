@@ -21,31 +21,39 @@ function makeInstrumentObjects(musicObj)
 {
   let partNames = [];
   let instrumentObjects = {};
+	let key;
+	let value;
 
-  function process(key, value) //builds array of instrument objects
-  {
-    //first find the part names as they"re always towards the top of file
-    //This will be pushed in the correct order as we see them:
-    if (key === "part-name") partNames.push(value);
-
+	function searchForInstruments(obj)
+	{
+		for (let i in obj)
+		{
+			key = i;
+			value = obj[i];
+	
+			if (key === "part-name") 
+			{
+				partNames.push(value);
+			}
     //the actual parts data are in an ordered array found via key "part"
     //bc they"re ordered, they correspond to the ordering of the part-names
-    if (key === "part")
-    {
-      let index = 0;
-      for (let name of partNames)
-      {
-        instrumentObjects[name] = value[index]; //value is array of parts
-        index++;
-      }
+			else if (key === "part")
+			{
+				let index = 0;
+				for (let name of partNames)
+				{
+					instrumentObjects[name] = value[index]; //value is array of parts
+					index++;
+				}
 
-      return; //avoid redundant traversal
-    }
-  }
-
-  traverse(musicObj, process);
-
-  //if there's a single instrument we need to do some hacking...
+				return; //avoid redundant traversal- VERY IMPORTANT
+			}
+			else if (obj[i] !== null && typeof(obj[i])==="object") searchForInstruments(obj[i]);
+		}
+	}
+	searchForInstruments(musicObj);
+  
+	//if there's a single instrument we need to do some hacking...
   if (Object.keys(instrumentObjects).length === 1)
   {
     const instrumentName = Object.keys(instrumentObjects)[0];
