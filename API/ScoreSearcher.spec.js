@@ -11,15 +11,13 @@ test("avamariapg1 tests", function(t)
   const scoreSearcher =  ScoreSearcher(musicXML);
 
   {
-    const actual = scoreSearcher.getMaxPitch();
-    const expected = 68; //Abn
-    t.deepEqual(actual, expected, "getMaxPitch");
-  }
-
-  {
-    const actual = scoreSearcher.getMinPitch();
-    const expected = 15; //Eb
-    t.deepEqual(actual, expected, "getMinPitch");
+		const range = scoreSearcher.getPitchRange();
+    const actualMin = range["minPitch"];
+		const actualMax = range["maxPitch"];
+    const expectedMin = 15; //Eb
+		const expectedMax = 68;
+    t.deepEqual(actualMin, expectedMin, "getPitchRange min");	
+    t.deepEqual(actualMax, expectedMax, "getPitchRange max");
   }
 
   {
@@ -28,16 +26,16 @@ test("avamariapg1 tests", function(t)
     t.deepEqual(actual, expected, "getInstrumentNames");
   }
 
-  {
-    const actual = scoreSearcher.getMaxPitch("Voice");
-    const expected = 65; //F
-    t.deepEqual(actual, expected, "getMaxPitch");
+	{
+    const actual = scoreSearcher.getPitchRange("Voice")["minPitch"];
+    const expected = 53; //F
+    t.deepEqual(actual, expected, "getPitchRange Voice min");
   }
 
   {
-    const actual = scoreSearcher.getMinPitch("Voice");
-    const expected = 53; //F
-    t.deepEqual(actual, expected, "getMinPitch");
+    const actual = scoreSearcher.getPitchRange("Voice")["maxPitch"];
+    const expected = 65; //F
+    t.deepEqual(actual, expected, "getPitchRange Voice max");
   }
 
   {
@@ -63,15 +61,15 @@ test("vivaldi_winter tests", function(t)
   }
 
   {
-    const actual = scoreSearcher.getMaxPitch("Viola");
+    const actual = scoreSearcher.getPitchRange("Viola")["maxPitch"];
     const expected = 62; //D5
-    t.deepEqual(actual, expected, "getMaxPitch");
+    t.deepEqual(actual, expected, "getPitchRange Viola max");
   }
 
   {
-    const actual = scoreSearcher.getMaxPitch("Solo Violin");
+    const actual = scoreSearcher.getPitchRange("Solo Violin")["maxPitch"];
     const expected = 79; //G6
-    t.deepEqual(actual, expected, "getMaxPitch");
+    t.deepEqual(actual, expected, "getPitchRange Solo Violin max");
   }
 
   t.end();
@@ -109,8 +107,8 @@ test("two_tempos", function(t)
   }
 
   { //confirms for single instrument we can use the same queries
-    const actual = scoreSearcher.getMinPitch("Flute");
-    const expected = scoreSearcher.getMinPitch();
+    const actual = scoreSearcher.getPitchRange("Flute")["minPitch"];
+    const expected = scoreSearcher.getPitchRange()["minPitch"];
     t.deepEqual(actual, expected, "getTempos");
   }
 

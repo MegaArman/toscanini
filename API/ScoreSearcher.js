@@ -87,32 +87,11 @@ const ScoreSearcher = (musicObj) =>
 
   scoreSearcher.getInstrumentNames = () => Object.keys(instrumentObjects);
 
-  scoreSearcher.getMinPitch = (instrumentName) =>//of the whole piece
+  scoreSearcher.getPitchRange = (instrumentName) =>//of the whole piece
   {
     let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
     let midiNum = 0;
     let min = 999;
-
-    function process(key, value)
-    {
-      if (key === "step") midiNum += pitchToMidiNum[value];
-      if (key === "alter") midiNum += parseInt(value);
-      if (key === "octave")
-      {
-        midiNum += parseInt(value) * 12;
-        if (min > midiNum) min = midiNum;
-        midiNum = 0; //"octave" is the last key in a note, so reset
-      }
-    }
-
-    traverse(jsObj, process);
-    return min;
-  };
-
-  scoreSearcher.getMaxPitch = (instrumentName) =>
-  {
-    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
-    let midiNum = 0;
     let max = -999;
 
     function process(key, value)
@@ -122,14 +101,16 @@ const ScoreSearcher = (musicObj) =>
       if (key === "octave")
       {
         midiNum += parseInt(value) * 12;
+        if (min > midiNum) min = midiNum;
         if (max < midiNum) max = midiNum;
         midiNum = 0; //"octave" is the last key in a note, so reset
       }
     }
 
     traverse(jsObj, process);
-    return max;
-   };
+		const range = {"minPitch": min, "maxPitch": max};
+    return range;
+  }; 
 
   scoreSearcher.getKeySignatures = () =>
   {
