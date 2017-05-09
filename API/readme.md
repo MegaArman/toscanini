@@ -28,14 +28,15 @@ _Refer to .eslintrc.js in the parent directory to see what linter rules there ar
 ### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
  
-## ScoreSearcher.proto.js
-Holds queries:
+## ScoreSearcher.js
+const scoreSearcher = ScoreSearcher(musicXML); //create a ScoreSearcher instance from musicXML
 
-### getMaxPitch(instrumentName)
-if no instrumentName is provided (ex: "flute"), gets the max pitch in the entire score
+The brains of the Toscanini system. Currently has the following queries:
 
-### getMinPitch(instrumentName)
-if no instrumentName is provided (ex: "flute"), gets the min pitch in the entire score
+### getPitchRange(instrumentName)
+Returns a tuple like {"minPitch": 30, "maxPitch": 72"} 
+
+if no instrumentName is provided (ex: "flute"), gets the min and max pitches of the entire score.
 
 ### getKeySignatures()
 gets the key signatures of the whole piece (returns an array)
