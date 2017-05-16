@@ -11,11 +11,11 @@ test("avamariapg1 tests", function(t)
   const scoreSearcher =  ScoreSearcher(musicXML);
 
   {
-		const range = scoreSearcher.getPitchRange();
+    const range = scoreSearcher.getPitchRange();
     const actualMin = range["minPitch"];
-		const actualMax = range["maxPitch"];
+    const actualMax = range["maxPitch"];
     const expectedMin = 15; //Eb
-		const expectedMax = 68;
+    const expectedMax = 68;
     t.deepEqual(actualMin, expectedMin, "getPitchRange min");	
     t.deepEqual(actualMax, expectedMax, "getPitchRange max");
   }
@@ -26,7 +26,7 @@ test("avamariapg1 tests", function(t)
     t.deepEqual(actual, expected, "getInstrumentNames");
   }
 
-	{
+  {
     const actual = scoreSearcher.getPitchRange("Voice")["minPitch"];
     const expected = 53; //F
     t.deepEqual(actual, expected, "getPitchRange Voice min");

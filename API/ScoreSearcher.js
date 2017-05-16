@@ -3,15 +3,20 @@
 //"private static" utility definitions=========================================
 const pitchToMidiNum = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
 const fifthToPitch =
-{"-6": "Gb", "-5": "Db", "-4":"Ab", "-3": "Eb", "-2": "Bb", "-1": "F",
-"0": "C", "1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"};
+{
+  "-6": "Gb", "-5": "Db", "-4":"Ab", "-3": "Eb", "-2": "Bb", "-1": "F",
+  "0": "C","1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"
+};
 
 function traverse(obj,func)
 {
   for (let i in obj)
   {
     func.apply(this,[i, obj[i]]);
-    if (obj[i] !== null && typeof(obj[i])==="object") traverse(obj[i],func);
+    if (obj[i] !== null && typeof(obj[i])==="object")
+    {
+      traverse(obj[i],func);
+    }
   }
 }
 
@@ -21,39 +26,42 @@ function makeInstrumentObjects(musicObj)
 {
   let partNames = [];
   let instrumentObjects = {};
-	let key;
-	let value;
+  let key;
+  let value;
 
-	function searchForInstruments(obj)
-	{
-		for (let i in obj)
-		{
-			key = i;
-			value = obj[i];
-	
-			if (key === "part-name") 
-			{
-				partNames.push(value);
-			}
-    //the actual parts data are in an ordered array found via key "part"
-    //bc they"re ordered, they correspond to the ordering of the part-names
-			else if (key === "part")
-			{
-				let index = 0;
-				for (let name of partNames)
-				{
-					instrumentObjects[name] = value[index]; //value is array of parts
-					index++;
-				}
+  function searchForInstruments(obj)
+  {
+    for (let i in obj)
+    {
+      key = i;
+      value = obj[i];
 
-				return; //avoid redundant traversal- VERY IMPORTANT
-			}
-			else if (obj[i] !== null && typeof(obj[i])==="object") searchForInstruments(obj[i]);
-		}
-	}
-	searchForInstruments(musicObj);
-  
-	//if there's a single instrument we need to do some hacking...
+      if (key === "part-name") 
+      {
+        partNames.push(value);
+      }
+//the actual parts data are in an ordered array found via key "part"
+//bc they"re ordered, they correspond to the ordering of the part-names
+      else if (key === "part")
+      {
+        let index = 0;
+        for (let name of partNames)
+        {
+          instrumentObjects[name] = value[index]; //value is array of parts
+          index++;
+        }
+
+        return; //avoid redundant traversal- VERY IMPORTANT
+      }
+      else if (obj[i] !== null && typeof(obj[i])==="object")
+      { 
+       searchForInstruments(obj[i]);
+      }
+    }
+  }
+  searchForInstruments(musicObj);
+
+  //if there's a single instrument we need to do some hacking...
   if (Object.keys(instrumentObjects).length === 1)
   {
     const instrumentName = Object.keys(instrumentObjects)[0];
@@ -79,7 +87,10 @@ const ScoreSearcher = (musicObj) =>
   {
     function process(key,value) //called with every property and it"s value
     {
-      if (key === targetKey) console.log(value);
+      if (key === targetKey) 
+      {
+        console.log(value);
+      }
     }
 
     traverse(musicObj, process);
@@ -96,19 +107,31 @@ const ScoreSearcher = (musicObj) =>
 
     function process(key, value)
     {
-      if (key === "step") midiNum += pitchToMidiNum[value];
-      if (key === "alter") midiNum += parseInt(value);
-      if (key === "octave")
+      if (key === "step")
+      {
+        midiNum += pitchToMidiNum[value];
+      }
+      else if (key === "alter") 
+      {
+        midiNum += parseInt(value);
+      }
+      else if (key === "octave")
       {
         midiNum += parseInt(value) * 12;
-        if (min > midiNum) min = midiNum;
-        if (max < midiNum) max = midiNum;
+        if (min > midiNum) 
+        {
+          min = midiNum;
+        }
+        if (max < midiNum) 
+        {
+          max = midiNum;
+        }
         midiNum = 0; //"octave" is the last key in a note, so reset
       }
     }
 
     traverse(jsObj, process);
-		const range = {"minPitch": min, "maxPitch": max};
+    const range = {"minPitch": min, "maxPitch": max};
     return range;
   }; 
 
@@ -125,10 +148,16 @@ const ScoreSearcher = (musicObj) =>
 
         for (let oldKeySig of keySignatures) //avoid duplicates
         {
-          if (newKeySig === oldKeySig) shouldPush = false;
+          if (newKeySig === oldKeySig)
+          {
+            shouldPush = false;
+          }
         }
 
-        if (shouldPush) keySignatures.push(newKeySig);
+        if (shouldPush)
+        {
+          keySignatures.push(newKeySig);
+        }
       }
     }
 
@@ -153,9 +182,15 @@ const ScoreSearcher = (musicObj) =>
 
     function process(key, value)
     {
-      if (key === "step") midiNum += pitchToMidiNum[value];
-      if (key === "alter") midiNum += parseInt(value);
-      if (key === "octave")
+      if (key === "step")
+      {
+        midiNum += pitchToMidiNum[value];
+      }
+      else if (key === "alter")
+      {
+        midiNum += parseInt(value);
+      }
+      else if (key === "octave")
       {
         //Must do scoreSearcher... suppose there"s a Cb
         midiNum += parseInt(value) * 12;
@@ -186,13 +221,15 @@ const ScoreSearcher = (musicObj) =>
     function process(key,value)
     {
       if (key === "tempo")
-			{
-				const tempo = parseInt(value);
-				const exists = tempos.some((oldTempo) => (oldTempo === tempo));
-				
-				if (!exists)
-					tempos.push(parseInt(value));
-			}
+      {
+        const tempo = parseInt(value);
+        const exists = tempos.some((oldTempo) => (oldTempo === tempo));
+        
+        if (!exists) 
+        {
+          tempos.push(parseInt(value));
+        }
+      }
     }
 
     traverse(musicObj, process);
@@ -201,7 +238,8 @@ const ScoreSearcher = (musicObj) =>
 
   scoreSearcher.getAccidentals = () =>
   {
-    let currKey = {"C": 0, "D": 0, "E": 0, "F": 0, "G": 0, "A": 0, "B": 0}; //Sharps/flats for a given note
+    //Sharps/flats for a given note
+    let currKey = {"C": 0, "D": 0, "E": 0, "F": 0, "G": 0, "A": 0, "B": 0};     
     let accidentals = 0;
     let currNote = "A";
 
@@ -233,12 +271,18 @@ const ScoreSearcher = (musicObj) =>
 
     function process(key, value)
     {
-      if (key === "fifths")
+      if (key === "fifths") 
+      {
         setKey(value);
-      else if (key === "step")
+      }
+      else if (key === "step") 
+      {
         currNote = value;
+      }
       else if (key === "alter" && currKey[currNote] !== parseInt(value))
+      {
         accidentals++;
+      }
     }
 
     traverse(musicObj, process);
@@ -258,7 +302,10 @@ module.exports = (MusicXML) =>
 
   parser.parseString(MusicXML, function (err, jsObj)
   {
-    if (err) throw err;
+    if (err)
+    {
+      throw err;
+    }
     scoreSearcher = ScoreSearcher(jsObj);
   });
 
