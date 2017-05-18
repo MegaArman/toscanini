@@ -73,17 +73,17 @@ function makeInstrumentObjects(musicObj)
 
 //=============================================================================
 //"class"
-const ScoreSearcher = (musicObj) =>
+const ScoreAnalyzer = (musicObj) =>
 {
   //"private" variables..note state is safest kept constant-------------------
-  const scoreSearcher = {};
+  const scoreAnalyzer = {};
   const instrumentObjects = makeInstrumentObjects(musicObj);
 
   //"private" functions in scope------------------------------
   //...ex: function poop() { ... }
 
   //"public" functions---------------------------
-  scoreSearcher.findValsByKey = (targetKey) =>
+  scoreAnalyzer.findValsByKey = (targetKey) =>
   {
     function process(key,value) //called with every property and it"s value
     {
@@ -96,9 +96,9 @@ const ScoreSearcher = (musicObj) =>
     traverse(musicObj, process);
   };
 
-  scoreSearcher.getInstrumentNames = () => Object.keys(instrumentObjects);
+  scoreAnalyzer.getInstrumentNames = () => Object.keys(instrumentObjects);
 
-  scoreSearcher.getPitchRange = (instrumentName) =>//of the whole piece
+  scoreAnalyzer.getPitchRange = (instrumentName) =>//of the whole piece
   {
     let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
     let midiNum = 0;
@@ -135,7 +135,7 @@ const ScoreSearcher = (musicObj) =>
     return range;
   }; 
 
-  scoreSearcher.getKeySignatures = () =>
+  scoreAnalyzer.getKeySignatures = () =>
   {
     let keySignatures = [];
 
@@ -165,7 +165,7 @@ const ScoreSearcher = (musicObj) =>
     return keySignatures;
   };
 
-  scoreSearcher.getInstrumentsWithMelody = (melodyString) =>
+  scoreAnalyzer.getInstrumentsWithMelody = (melodyString) =>
   {
     let tempStrNotes = "";
     let instrumentsWithMelody = [];
@@ -192,7 +192,7 @@ const ScoreSearcher = (musicObj) =>
       }
       else if (key === "octave")
       {
-        //Must do scoreSearcher... suppose there"s a Cb
+        //Must do scoreAnalyzer... suppose there"s a Cb
         midiNum += parseInt(value) * 12;
         tempStrNotes += midiNumToNote(midiNum);
         midiNum = 0; //"octave" is the last key in a note, so reset
@@ -214,7 +214,7 @@ const ScoreSearcher = (musicObj) =>
     return instrumentsWithMelody;
   };
 
-  scoreSearcher.getTempos = () =>
+  scoreAnalyzer.getTempos = () =>
   {
     let tempos = [];
 
@@ -236,7 +236,7 @@ const ScoreSearcher = (musicObj) =>
     return tempos;
   };
 
-  scoreSearcher.getAccidentals = () =>
+  scoreAnalyzer.getAccidentals = () =>
   {
     //Sharps/flats for a given note
     let currKey = {"C": 0, "D": 0, "E": 0, "F": 0, "G": 0, "A": 0, "B": 0};     
@@ -289,17 +289,17 @@ const ScoreSearcher = (musicObj) =>
     return accidentals;
   };
 
-  return scoreSearcher;
-}; //ScoreSearcher 
+  return scoreAnalyzer;
+}; //ScoreAnalyzer 
 
 const xml2js = require("xml2js");
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
 // similar to a "constructor", converts musicxml to a javascript object
-// creates and returns a ScoreSearcher instance
+// creates and returns a ScoreAnalyzer instance
 module.exports = (musicxml) =>
 {
-  let scoreSearcher;
+  let scoreAnalyzer;
 
   //musicObj is the resulting JS object. musicxml->musicObj
   parser.parseString(musicxml, function (err, musicObj)
@@ -308,9 +308,9 @@ module.exports = (musicxml) =>
     {
       throw err;
     }
-    scoreSearcher = ScoreSearcher(musicObj);
+    scoreAnalyzer = ScoreAnalyzer(musicObj);
   });
 
-  return scoreSearcher;
+  return scoreAnalyzer;
 };
 

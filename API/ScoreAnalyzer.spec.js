@@ -1,17 +1,17 @@
-// node ScoreSearcher.spec.js to run this test - simple as that!
+// node ScoreAnalyzer.spec.js to run this test - simple as that!
 // ...but if you want pretty output use npm run test or npm t
 "use strict";
 const fs = require("fs");
 const test = require("tape").test;
-const ScoreSearcher = require("./ScoreSearcher");
+const ScoreAnalyzer = require("./ScoreAnalyzer");
 
 test("avamariapg1 tests", function(t)
 {
   let musicXML = fs.readFileSync("./scores/avamariapg1.xml");
-  const scoreSearcher =  ScoreSearcher(musicXML);
+  const scoreAnalyzer =  ScoreAnalyzer(musicXML);
 
   {
-    const range = scoreSearcher.getPitchRange();
+    const range = scoreAnalyzer.getPitchRange();
     const actualMin = range["minPitch"];
     const actualMax = range["maxPitch"];
     const expectedMin = 15; //Eb
@@ -21,26 +21,26 @@ test("avamariapg1 tests", function(t)
   }
 
   {
-    const actual = scoreSearcher.getInstrumentNames();
+    const actual = scoreAnalyzer.getInstrumentNames();
     const expected = [ "Voice", "Piano" ];
     t.deepEqual(actual, expected, "getInstrumentNames");
   }
 
   {
-    const actual = scoreSearcher.getPitchRange("Voice")["minPitch"];
+    const actual = scoreAnalyzer.getPitchRange("Voice")["minPitch"];
     const expected = 53; //F
     t.deepEqual(actual, expected, "getPitchRange Voice min");
   }
 
   {
-    const actual = scoreSearcher.getPitchRange("Voice")["maxPitch"];
+    const actual = scoreAnalyzer.getPitchRange("Voice")["maxPitch"];
     const expected = 65; //F
     t.deepEqual(actual, expected, "getPitchRange Voice max");
   }
 
   {
     const actual = ["Bb"];
-    const expected = scoreSearcher.getKeySignatures();
+    const expected = scoreAnalyzer.getKeySignatures();
     t.deepEqual(actual, expected, "getKeySignatures");
   }
 
@@ -50,10 +50,10 @@ test("avamariapg1 tests", function(t)
 test("vivaldi_winter tests", function(t)
 {
   let musicXML = fs.readFileSync("./scores/vivaldi_winter.xml");
-  const scoreSearcher =  ScoreSearcher(musicXML);
+  const scoreAnalyzer =  ScoreAnalyzer(musicXML);
 
   {
-    const actual = scoreSearcher.getInstrumentNames();
+    const actual = scoreAnalyzer.getInstrumentNames();
     const expected =[ "Solo Violin", "Violin I",
                       "Violin II", "Viola", "Violoncello",
                       "Contrabass", "Harpsichord" ];
@@ -61,13 +61,13 @@ test("vivaldi_winter tests", function(t)
   }
 
   {
-    const actual = scoreSearcher.getPitchRange("Viola")["maxPitch"];
+    const actual = scoreAnalyzer.getPitchRange("Viola")["maxPitch"];
     const expected = 62; //D5
     t.deepEqual(actual, expected, "getPitchRange Viola max");
   }
 
   {
-    const actual = scoreSearcher.getPitchRange("Solo Violin")["maxPitch"];
+    const actual = scoreAnalyzer.getPitchRange("Solo Violin")["maxPitch"];
     const expected = 79; //G6
     t.deepEqual(actual, expected, "getPitchRange Solo Violin max");
   }
@@ -78,16 +78,16 @@ test("vivaldi_winter tests", function(t)
 test("two_parts", function(t)
 {
   let musicXML = fs.readFileSync("./scores/two_parts.xml");
-  const scoreSearcher = ScoreSearcher(musicXML);
+  const scoreAnalyzer = ScoreAnalyzer(musicXML);
 
   {
-    const actual = scoreSearcher.getInstrumentsWithMelody("BGBC");
+    const actual = scoreAnalyzer.getInstrumentsWithMelody("BGBC");
     const expected = ["Violin"];
     t.deepEqual(actual, expected, "getInstrumentsWithMelody");
   }
 
   {
-    const actual = scoreSearcher.getInstrumentsWithMelody("GD");
+    const actual = scoreAnalyzer.getInstrumentsWithMelody("GD");
     const expected = ["Flute"];
     t.deepEqual(actual, expected, "getInstrumentsWithMelody");
   }
@@ -98,17 +98,17 @@ test("two_parts", function(t)
 test("two_tempos", function(t)
 {
   let musicXML = fs.readFileSync("./scores/two_tempos.xml");
-  const scoreSearcher =  ScoreSearcher(musicXML);
+  const scoreAnalyzer =  ScoreAnalyzer(musicXML);
 
   {
-    const actual = scoreSearcher.getTempos();
+    const actual = scoreAnalyzer.getTempos();
     const expected = [105, 90];
     t.deepEqual(actual, expected, "getTempos");
   }
 
   { //confirms for single instrument we can use the same queries
-    const actual = scoreSearcher.getPitchRange("Flute")["minPitch"];
-    const expected = scoreSearcher.getPitchRange()["minPitch"];
+    const actual = scoreAnalyzer.getPitchRange("Flute")["minPitch"];
+    const expected = scoreAnalyzer.getPitchRange()["minPitch"];
     t.deepEqual(actual, expected, "getTempos");
   }
 
@@ -118,10 +118,10 @@ test("two_tempos", function(t)
 test("AccidentalsEverywhere", function(t)
 {
   let musicXML = fs.readFileSync("./scores/AccidentalsEverywhere.xml");
-  const scoreSearcher = ScoreSearcher(musicXML);
+  const scoreAnalyzer = ScoreAnalyzer(musicXML);
 
   {
-    const actual = scoreSearcher.getAccidentals();
+    const actual = scoreAnalyzer.getAccidentals();
     const expected = 8;
     t.deepEqual(actual, expected, "getAccidentals");
   }
