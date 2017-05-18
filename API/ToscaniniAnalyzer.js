@@ -73,7 +73,7 @@ function makeInstrumentObjects(musicObj)
 
 //=============================================================================
 //"class"
-const ScoreAnalyzer = (musicObj) =>
+const ToscaniniAnalyzer = (musicObj) =>
 {
   //"private" variables..note state is safest kept constant-------------------
   const scoreAnalyzer = {};
@@ -290,13 +290,13 @@ const ScoreAnalyzer = (musicObj) =>
   };
 
   return scoreAnalyzer;
-}; //ScoreAnalyzer 
+}; //ToscaniniAnalyzer 
 
 const xml2js = require("xml2js");
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
 // similar to a "constructor", converts musicxml to a javascript object
-// creates and returns a ScoreAnalyzer instance
+// creates and returns a ToscaniniAnalyzer instance
 module.exports = (musicxml) =>
 {
   let scoreAnalyzer;
@@ -308,7 +308,7 @@ module.exports = (musicxml) =>
     {
       throw err;
     }
-    scoreAnalyzer = ScoreAnalyzer(musicObj);
+    scoreAnalyzer = ToscaniniAnalyzer(musicObj);
   });
 
   return scoreAnalyzer;

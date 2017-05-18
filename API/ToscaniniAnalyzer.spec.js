@@ -1,17 +1,17 @@
-// node ScoreAnalyzer.spec.js to run this test - simple as that!
+// node ToscaniniAnalyzer.spec.js to run this test - simple as that!
 // ...but if you want pretty output use npm run test or npm t
 "use strict";
 const fs = require("fs");
 const test = require("tape").test;
-const ScoreAnalyzer = require("./ScoreAnalyzer");
+const ToscaniniAnalyzer = require("./ToscaniniAnalyzer");
 
 test("avamariapg1 tests", function(t)
 {
   let musicXML = fs.readFileSync("./scores/avamariapg1.xml");
-  const scoreAnalyzer =  ScoreAnalyzer(musicXML);
+  const toscaniniAnalyzer =  ToscaniniAnalyzer(musicXML);
 
   {
-    const range = scoreAnalyzer.getPitchRange();
+    const range = toscaniniAnalyzer.getPitchRange();
     const actualMin = range["minPitch"];
     const actualMax = range["maxPitch"];
     const expectedMin = 15; //Eb
@@ -21,26 +21,26 @@ test("avamariapg1 tests", function(t)
   }
 
   {
-    const actual = scoreAnalyzer.getInstrumentNames();
+    const actual = toscaniniAnalyzer.getInstrumentNames();
     const expected = [ "Voice", "Piano" ];
     t.deepEqual(actual, expected, "getInstrumentNames");
   }
 
   {
-    const actual = scoreAnalyzer.getPitchRange("Voice")["minPitch"];
+    const actual = toscaniniAnalyzer.getPitchRange("Voice")["minPitch"];
     const expected = 53; //F
     t.deepEqual(actual, expected, "getPitchRange Voice min");
   }
 
   {
-    const actual = scoreAnalyzer.getPitchRange("Voice")["maxPitch"];
+    const actual = toscaniniAnalyzer.getPitchRange("Voice")["maxPitch"];
     const expected = 65; //F
     t.deepEqual(actual, expected, "getPitchRange Voice max");
   }
 
   {
     const actual = ["Bb"];
-    const expected = scoreAnalyzer.getKeySignatures();
+    const expected = toscaniniAnalyzer.getKeySignatures();
     t.deepEqual(actual, expected, "getKeySignatures");
   }
 
@@ -50,10 +50,10 @@ test("avamariapg1 tests", function(t)
 test("vivaldi_winter tests", function(t)
 {
   let musicXML = fs.readFileSync("./scores/vivaldi_winter.xml");
-  const scoreAnalyzer =  ScoreAnalyzer(musicXML);
+  const toscaniniAnalyzer =  ToscaniniAnalyzer(musicXML);
 
   {
-    const actual = scoreAnalyzer.getInstrumentNames();
+    const actual = toscaniniAnalyzer.getInstrumentNames();
     const expected =[ "Solo Violin", "Violin I",
                       "Violin II", "Viola", "Violoncello",
                       "Contrabass", "Harpsichord" ];
@@ -61,13 +61,13 @@ test("vivaldi_winter tests", function(t)
   }
 
   {
-    const actual = scoreAnalyzer.getPitchRange("Viola")["maxPitch"];
+    const actual = toscaniniAnalyzer.getPitchRange("Viola")["maxPitch"];
     const expected = 62; //D5
     t.deepEqual(actual, expected, "getPitchRange Viola max");
   }
 
   {
-    const actual = scoreAnalyzer.getPitchRange("Solo Violin")["maxPitch"];
+    const actual = toscaniniAnalyzer.getPitchRange("Solo Violin")["maxPitch"];
     const expected = 79; //G6
     t.deepEqual(actual, expected, "getPitchRange Solo Violin max");
   }
@@ -78,16 +78,16 @@ test("vivaldi_winter tests", function(t)
 test("two_parts", function(t)
 {
   let musicXML = fs.readFileSync("./scores/two_parts.xml");
-  const scoreAnalyzer = ScoreAnalyzer(musicXML);
+  const toscaniniAnalyzer = ToscaniniAnalyzer(musicXML);
 
   {
-    const actual = scoreAnalyzer.getInstrumentsWithMelody("BGBC");
+    const actual = toscaniniAnalyzer.getInstrumentsWithMelody("BGBC");
     const expected = ["Violin"];
     t.deepEqual(actual, expected, "getInstrumentsWithMelody");
   }
 
   {
-    const actual = scoreAnalyzer.getInstrumentsWithMelody("GD");
+    const actual = toscaniniAnalyzer.getInstrumentsWithMelody("GD");
     const expected = ["Flute"];
     t.deepEqual(actual, expected, "getInstrumentsWithMelody");
   }
@@ -98,17 +98,17 @@ test("two_parts", function(t)
 test("two_tempos", function(t)
 {
   let musicXML = fs.readFileSync("./scores/two_tempos.xml");
-  const scoreAnalyzer =  ScoreAnalyzer(musicXML);
+  const toscaniniAnalyzer =  ToscaniniAnalyzer(musicXML);
 
   {
-    const actual = scoreAnalyzer.getTempos();
+    const actual = toscaniniAnalyzer.getTempos();
     const expected = [105, 90];
     t.deepEqual(actual, expected, "getTempos");
   }
 
   { //confirms for single instrument we can use the same queries
-    const actual = scoreAnalyzer.getPitchRange("Flute")["minPitch"];
-    const expected = scoreAnalyzer.getPitchRange()["minPitch"];
+    const actual = toscaniniAnalyzer.getPitchRange("Flute")["minPitch"];
+    const expected = toscaniniAnalyzer.getPitchRange()["minPitch"];
     t.deepEqual(actual, expected, "getTempos");
   }
 
@@ -118,10 +118,10 @@ test("two_tempos", function(t)
 test("AccidentalsEverywhere", function(t)
 {
   let musicXML = fs.readFileSync("./scores/AccidentalsEverywhere.xml");
-  const scoreAnalyzer = ScoreAnalyzer(musicXML);
+  const toscaniniAnalyzer = ToscaniniAnalyzer(musicXML);
 
   {
-    const actual = scoreAnalyzer.getAccidentals();
+    const actual = toscaniniAnalyzer.getAccidentals();
     const expected = 8;
     t.deepEqual(actual, expected, "getAccidentals");
   }
