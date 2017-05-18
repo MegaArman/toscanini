@@ -28,8 +28,8 @@ _Refer to .eslintrc.js in the parent directory to see what linter rules there ar
 ### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
  
-## ScoreSearcher.js
-const scoreSearcher = ScoreSearcher(musicXML); //create a ScoreSearcher instance from musicXML
+## ToscaniniAnalyzer.js
+const toscaniniAnalyzer = ToscaniniAnalyzer(musicXML); //create a ToscaniniAnalyzer instance from musicXML
 
 The brains of the Toscanini system. Currently has the following queries:
 
@@ -50,8 +50,8 @@ returns array of instruments who have a melody. NOTE: may not work for instrumen
 ### getTempos()
 returns an array containing all tempos in the score
 
-## Adding new query functions to ScoreSearcher.js
-consider this code from ScoreSearcher.js:
+## Adding new query functions to ToscaniniAnalyzer.js
+consider this code from ToscaniniAnalyzer.js:
 
     function traverse(musicObj,func)
     {
@@ -82,7 +82,7 @@ So essentially traverse(musicObj, func) is a function to traverse any JavaScript
 
 findValsByKey-->traverse-->findValsByKey's process function
 
-try calling scoreSearcher.findValsByKey('octave') to see all the octave data logged for a score
+try calling toscaniniAnalyzer.findValsByKey('octave') to see all the octave data logged for a score
 
 ### Skeleton code
     getNewInfoAboutSomething(instrumentName)
