@@ -295,18 +295,20 @@ const ScoreSearcher = (musicObj) =>
 const xml2js = require("xml2js");
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
-// similar to a "constructor"
-module.exports = (MusicXML) =>
+// similar to a "constructor", converts musicxml to a javascript object
+// creates and returns a ScoreSearcher instance
+module.exports = (musicxml) =>
 {
   let scoreSearcher;
 
-  parser.parseString(MusicXML, function (err, jsObj)
+  //musicObj is the resulting JS object. musicxml->musicObj
+  parser.parseString(musicxml, function (err, musicObj)
   {
     if (err)
     {
       throw err;
     }
-    scoreSearcher = ScoreSearcher(jsObj);
+    scoreSearcher = ScoreSearcher(musicObj);
   });
 
   return scoreSearcher;
