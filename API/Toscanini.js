@@ -10,14 +10,14 @@ const fifthToPitch =
 
 function traverse(obj,func)
 {
-  for (let i in obj)
+  Object.keys(obj).forEach((key) =>
   {
-    func.apply(this,[i, obj[i]]);
-    if (obj[i] !== null && typeof(obj[i])==="object")
+    func.apply(this,[key, obj[key]]);
+    if (obj[key] !== null && typeof(obj[key])==="object")
     {
-      traverse(obj[i],func);
+      traverse(obj[key],func);
     }
-  }
+  });
 }
 
 //create objects for each part, this will reduce searching whole score.
