@@ -7,7 +7,7 @@ const Toscanini = require("./Toscanini");
 
 test("avamariapg1 tests", function(t)
 {
-  let musicXML = fs.readFileSync("./scores/avamariapg1.xml");
+  const musicXML = fs.readFileSync("./scores/avamariapg1.xml");
   const toscanini =  Toscanini(musicXML);
 
   {
@@ -49,7 +49,7 @@ test("avamariapg1 tests", function(t)
 
 test("vivaldi_winter tests", function(t)
 {
-  let musicXML = fs.readFileSync("./scores/vivaldi_winter.xml");
+  const musicXML = fs.readFileSync("./scores/vivaldi_winter.xml");
   const toscanini =  Toscanini(musicXML);
 
   {
@@ -77,7 +77,7 @@ test("vivaldi_winter tests", function(t)
 
 test("two_parts", function(t)
 {
-  let musicXML = fs.readFileSync("./scores/two_parts.xml");
+  const musicXML = fs.readFileSync("./scores/two_parts.xml");
   const toscanini = Toscanini(musicXML);
 
   {
@@ -97,7 +97,7 @@ test("two_parts", function(t)
 
 test("two_tempos", function(t)
 {
-  let musicXML = fs.readFileSync("./scores/two_tempos.xml");
+  const musicXML = fs.readFileSync("./scores/two_tempos.xml");
   const toscanini =  Toscanini(musicXML);
 
   {
@@ -117,7 +117,7 @@ test("two_tempos", function(t)
 
 test("AccidentalsEverywhere", function(t)
 {
-  let musicXML = fs.readFileSync("./scores/AccidentalsEverywhere.xml");
+  const musicXML = fs.readFileSync("./scores/AccidentalsEverywhere.xml");
   const toscanini = Toscanini(musicXML);
 
   {
