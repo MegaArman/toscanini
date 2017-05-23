@@ -296,9 +296,7 @@ const Toscanini = (musicObj) =>
 const xml2js = require("xml2js");
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
-// similar to a "constructor", converts musicxml to a javascript object
-// creates and returns a Toscanini instance
-module.exports = (musicxml) =>
+const constructor = (musicxml) =>
 {
   let scoreObj;
 
@@ -314,3 +312,4 @@ module.exports = (musicxml) =>
   return Toscanini(scoreObj);
 };
 
+module.exports = constructor; 
