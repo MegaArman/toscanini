@@ -71,7 +71,7 @@ function makeInstrumentObjects(musicObj)
 
 //=============================================================================
 //"class"
-const Toscanini = (musicObj) =>
+const createToscanini = (musicObj) =>
 {
   //"private" variables..note state is safest kept constant-------------------
   const toscanini = {};
@@ -288,7 +288,7 @@ const Toscanini = (musicObj) =>
   };
 
   return toscanini;
-}; //Toscanini 
+}; //createToscanini 
 
 //======================================================================
 const xml2js = require("xml2js");
@@ -307,7 +307,7 @@ const constructor = (musicxml) =>
     scoreObj = obj;
   });
 
-  return Toscanini(scoreObj);
+  return createToscanini(scoreObj);
 };
 
 module.exports = constructor; 
