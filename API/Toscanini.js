@@ -24,40 +24,38 @@ function traverse(obj,func)
 //part being the full name of parts, ex: Solo Violin, Violin I, Violin II
 function makeInstrumentObjects(musicObj)
 {
-  let partNames = [];
-  let instrumentObjects = {};
-  let key;
-  let value;
+  const partNames = [];
+  const instrumentObjects = {};
 
   function searchForInstruments(obj)
   {
-    for (let i in obj)
+    Object.keys(obj).forEach((key) =>
     {
-      key = i;
-      value = obj[i];
+      const value = obj[key];
 
       if (key === "part-name") 
       {
         partNames.push(value);
       }
-//the actual parts data are in an ordered array found via key "part"
-//bc they"re ordered, they correspond to the ordering of the part-names
+      //the actual parts data are in an ordered array found via key "part"
+      //bc they"re ordered, they correspond to the ordering of the part-names
       else if (key === "part")
       {
         let index = 0;
-        for (let name of partNames)
+
+        partNames.forEach((name) =>
         {
           instrumentObjects[name] = value[index]; //value is array of parts
           index++;
-        }
+        });
 
         return; //avoid redundant traversal- VERY IMPORTANT
       }
-      else if (obj[i] !== null && typeof(obj[i])==="object")
+      else if (value !== null && typeof(value)==="object")
       { 
-       searchForInstruments(obj[i]);
+       searchForInstruments(value);
       }
-    }
+    });
   }
   searchForInstruments(musicObj);
 
@@ -146,13 +144,13 @@ const Toscanini = (musicObj) =>
         let newKeySig = fifthToPitch[value];
         let shouldPush = true;
 
-        for (let oldKeySig of keySignatures) //avoid duplicates
+        keySignatures.forEach((oldKeySignature) =>
         {
-          if (newKeySig === oldKeySig)
+          if (newKeySig === oldKeySignature)
           {
             shouldPush = false;
           }
-        }
+        });
 
         if (shouldPush)
         {
@@ -200,16 +198,16 @@ const Toscanini = (musicObj) =>
     }
     //---------------------------------------------------
 
-    for (let instrumentData in instrumentObjects)
+    Object.keys(instrumentObjects).forEach((instrumentName) =>
     {
-      traverse(instrumentObjects[instrumentData], process);
+      traverse(instrumentObjects[instrumentName], process);
 
       if (tempStrNotes.includes(melodyString))
       {
-        instrumentsWithMelody.push(instrumentData);
+        instrumentsWithMelody.push(instrumentName);
       }
       tempStrNotes = "";
-    }
+    });
 
     return instrumentsWithMelody;
   };
