@@ -2,13 +2,13 @@
 
 ## Tooling
 
-A working stack for all things this repo as of 1/27/17:
+Last updated 1/27/17:
 
--OS: CentOS 7 (highly suggested if you want to work on backend)
+-OS: CentOS 7 (recommended)
 
 -JS runtime environment (and more): Node v6.9.4
 
--Text editor (least important): Atom (https://github.com/atom/atom- you may need to run 'yum install libXScrnSaver' before you run it for the first time). Regardless of the editor you use, please install packages linter (search "linter 1.11" in Atom) and linter-eslint if you want real time linting within your editor.
+-Text editor: Any text editor that supports a plugin called "eslint". I've had success with Atom and Vim.
 
 _Refer to .eslintrc.js in the parent directory to see what linter rules there are_
 ## Setup
@@ -34,7 +34,7 @@ const toscanini = Toscanini(musicXML); //create a Toscanini instance from musicX
 The brains of the Toscanini system. Currently has the following queries:
 
 ### getPitchRange(instrumentName)
-Returns a tuple like {"minPitch": 30, "maxPitch": 72"} 
+Returns an object like {"minPitch": 30, "maxPitch": 72"} 
 
 if no instrumentName is provided (ex: "flute"), gets the min and max pitches of the entire score.
 
@@ -70,7 +70,10 @@ consider this code from Toscanini.js:
     {
       function process(key,value) //called with every property and its value
       {
-        if (key === targetKey) console.log(value);
+        if (key === targetKey) 
+        { 
+         console.log(value);
+        }
       }
 
       traverse(this.musicObj, process);
@@ -82,7 +85,7 @@ So essentially traverse(musicObj, func) is a function to traverse any JavaScript
 
 findValsByKey-->traverse-->findValsByKey's process function
 
-try calling toscanini.findValsByKey('octave') to see all the octave data logged for a score
+try calling toscanini.findValsByKey('octave') to see all the octaves of a score
 
 ### Skeleton code
     getNewInfoAboutSomething(instrumentName)
