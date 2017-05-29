@@ -115,16 +115,3 @@ test("two_tempos", function(t)
   t.end();
 });
 
-test("AccidentalsEverywhere", function(t)
-{
-  const musicXML = fs.readFileSync("./scores/AccidentalsEverywhere.xml");
-  const toscanini = Toscanini(musicXML);
-
-  {
-    const actual = toscanini.getAccidentals();
-    const expected = 8;
-    t.deepEqual(actual, expected, "getAccidentals");
-  }
-
-  t.end();
-});

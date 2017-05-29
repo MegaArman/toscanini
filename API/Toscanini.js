@@ -233,60 +233,7 @@ const createToscanini = (musicObj) =>
     traverse(musicObj, process);
     return tempos;
   };
-
-  toscanini.getAccidentals = () =>
-  {
-    //Sharps/flats for a given note
-    let currKey = {"C": 0, "D": 0, "E": 0, "F": 0, "G": 0, "A": 0, "B": 0};     
-    let accidentals = 0;
-    let currNote = "A";
-
-    function setKey(fifths)
-    {
-      let keyArray = [0, 0, 0, 0, 0, 0, 0]; //[F, C, G, D, A, E, B]
-      if (fifths > 0)   //Sharps
-      {
-        for (let i = 0; i < fifths; i++)
-        {
-          keyArray[i % 7]++;
-        }
-      }
-      else if (fifths < 0)   //Flats
-      {
-        for (let i = 0; i < (-fifths); i++)
-        {
-          keyArray[6 - (i % 7)]--;
-        }
-      }
-      currKey["F"] = keyArray[0];
-      currKey["C"] = keyArray[1];
-      currKey["G"] = keyArray[2];
-      currKey["D"] = keyArray[3];
-      currKey["A"] = keyArray[4];
-      currKey["E"] = keyArray[5];
-      currKey["B"] = keyArray[6];
-    }
-
-    function process(key, value)
-    {
-      if (key === "fifths") 
-      {
-        setKey(value);
-      }
-      else if (key === "step") 
-      {
-        currNote = value;
-      }
-      else if (key === "alter" && currKey[currNote] !== parseInt(value))
-      {
-        accidentals++;
-      }
-    }
-
-    traverse(musicObj, process);
-    return accidentals;
-  };
-
+ 
   return toscanini;
 }; //createToscanini 
 
