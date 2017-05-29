@@ -5,9 +5,9 @@ const fs = require("fs");
 const test = require("tape").test;
 const Toscanini = require("./Toscanini");
 
-test("avamariapg1 tests", function(t)
+test("ava_maria_pg1 tests", function(t)
 {
-  const musicXML = fs.readFileSync("./scores/avamariapg1.xml");
+  const musicXML = fs.readFileSync("./scores/ava_maria_pg1.xml");
   const toscanini =  Toscanini(musicXML);
 
   {
