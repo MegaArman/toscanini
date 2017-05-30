@@ -233,7 +233,31 @@ const createToscanini = (musicObj) =>
     traverse(musicObj, process);
     return tempos;
   };
+
+  toscanini.getTimeSignatures = () =>
+  {
+    const timeSignatures = []; //ex: [{beats: 5, beats-type: 2}, ...]
+    
+    function process(key,value)
+    {
+     if (key === "time")
+     {
+      const newTimeSignature = 
+        [parseInt(value["beats"]), parseInt(value["beat-type"])];
  
+      if (!timeSignatures.some((oldTimeSignature) => 
+            oldTimeSignature[0] === newTimeSignature[0]
+            && oldTimeSignature[1] === newTimeSignature[1])) 
+      {
+        timeSignatures.push(newTimeSignature);
+      } 
+     }
+    }
+
+    traverse(musicObj, process);
+    return timeSignatures;
+  };
+
   return toscanini;
 }; //createToscanini 
 
