@@ -50,6 +50,9 @@ returns array of instruments who have a melody. NOTE: may not work for instrumen
 ### getTempos()
 returns an array containing all tempos in the score
 
+### getTimeSignatures()
+returns a matrix like so [[4,4], [9,8]] for time signatures 4/4 and 9/8
+
 ## Adding new query functions to Toscanini.js
 consider this code from Toscanini.js:
 
