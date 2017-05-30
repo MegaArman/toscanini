@@ -214,18 +214,17 @@ const createToscanini = (musicObj) =>
 
   toscanini.getTempos = () =>
   {
-    let tempos = [];
+    const tempos = [];
 
     function process(key,value)
     {
       if (key === "tempo")
       {
-        const tempo = parseInt(value);
-        const exists = tempos.some((oldTempo) => (oldTempo === tempo));
+        const newTempo = parseInt(value);
         
-        if (!exists) 
+        if (!tempos.includes(newTempo)) 
         {
-          tempos.push(parseInt(value));
+          tempos.push(newTempo);
         }
       }
     }

@@ -5,7 +5,7 @@ const fs = require("fs");
 const test = require("tape").test;
 const Toscanini = require("./Toscanini");
 
-test("ava_maria_pg1 tests", function(t)
+test("ava_maria_pg1 tests", (t) =>
 {
   const musicXML = fs.readFileSync("./scores/ava_maria_pg1.xml");
   const toscanini =  Toscanini(musicXML);
@@ -47,7 +47,7 @@ test("ava_maria_pg1 tests", function(t)
   t.end();
 });
 
-test("vivaldi_winter tests", function(t)
+test("vivaldi_winter tests", (t) =>
 {
   const musicXML = fs.readFileSync("./scores/vivaldi_winter.xml");
   const toscanini =  Toscanini(musicXML);
@@ -75,7 +75,7 @@ test("vivaldi_winter tests", function(t)
   t.end();
 });
 
-test("two_parts", function(t)
+test("two_parts", (t) =>
 {
   const musicXML = fs.readFileSync("./scores/two_parts.xml");
   const toscanini = Toscanini(musicXML);
@@ -95,7 +95,7 @@ test("two_parts", function(t)
   t.end();
 });
 
-test("two_tempos", function(t)
+test("two_tempos", (t) =>
 {
   const musicXML = fs.readFileSync("./scores/two_tempos.xml");
   const toscanini =  Toscanini(musicXML);
