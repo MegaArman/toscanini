@@ -213,10 +213,10 @@ const createToscanini = (musicObj) =>
     return instrumentsWithMelody;
   };
 
-  toscanini.getTempos = () =>
+  toscanini.getTempos = (instrumentName) =>
   {
     const tempos = [];
-
+    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
     function process(key,value)
     {
       if (key === "tempo")
@@ -230,13 +230,14 @@ const createToscanini = (musicObj) =>
       }
     }
 
-    traverse(musicObj, process);
+    traverse(jsObj, process);
     return tempos;
   };
 
-  toscanini.getTimeSignatures = () =>
+  toscanini.getTimeSignatures = (instrumentName) =>
   {
     const timeSignatures = []; //ex: [{beats: 5, beats-type: 2}, ...]
+    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
     function process(key,value)
     {
@@ -254,7 +255,7 @@ const createToscanini = (musicObj) =>
      }
     }
 
-    traverse(musicObj, process);
+    traverse(jsObj, process);
     return timeSignatures;
   };
 

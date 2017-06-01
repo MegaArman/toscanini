@@ -73,9 +73,39 @@ test("vivaldi_winter tests", (t) =>
   }
 
   {
-    const actual = ["Bb"];
+    const actual = ["Ab", "Eb"];
     const expected = toscanini.getKeySignatures("Violin I");
     t.deepEqual(actual, expected, "getKeySignatures Violin I");
+  }
+
+  {
+    const actual = ["Ab", "Eb"];
+    const expected = toscanini.getKeySignatures();
+    t.deepEqual(actual, expected, "getKeySignatures score");
+  }
+
+  {
+    const actual = [[4, 4], [3, 8]];
+    const expected = toscanini.getTimeSignatures("Violin I");
+    t.deepEqual(actual, expected, "getTimeSignatures Violin I");
+  }
+
+  {
+    const actual = [[4, 4], [3, 8]];
+    const expected = toscanini.getTimeSignatures();
+    t.deepEqual(actual, expected, "getTimeSignatures score");
+  }
+
+  {
+    const actual = [68, 60, 33, 78, 45, 40 ];
+    const expected = toscanini.getTempos("Viola");
+    t.deepEqual(actual, expected, "getTempos Viola");
+  }
+
+  {
+    const actual = [68, 60, 33, 78, 45, 40];
+    const expected = toscanini.getTempos();
+    t.deepEqual(actual, expected, "getTempos score");
   }
   t.end();
 });
