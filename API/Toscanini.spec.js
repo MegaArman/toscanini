@@ -16,7 +16,7 @@ test("ava_maria_pg1 tests", (t) =>
     const actualMax = range["maxPitch"];
     const expectedMin = 15; //Eb
     const expectedMax = 68;
-    t.deepEqual(actualMin, expectedMin, "getPitchRange min");	
+    t.deepEqual(actualMin, expectedMin, "getPitchRange min");
     t.deepEqual(actualMax, expectedMax, "getPitchRange max");
   }
 
@@ -72,6 +72,11 @@ test("vivaldi_winter tests", (t) =>
     t.deepEqual(actual, expected, "getPitchRange Solo Violin max");
   }
 
+  {
+    const actual = ["Bb"];
+    const expected = toscanini.getKeySignatures("Violin I");
+    t.deepEqual(actual, expected, "getKeySignatures Violin I");
+  }
   t.end();
 });
 
@@ -127,4 +132,3 @@ test("two_time_signatures", (t) =>
   }
   t.end();
 });
-
