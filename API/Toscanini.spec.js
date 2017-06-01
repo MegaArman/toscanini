@@ -97,12 +97,14 @@ test("vivaldi_winter tests", (t) =>
   }
 
   {
-    const actual = [68, 60, 33, 78, 45, 40 ];
+    //this test is failing
+    const actual = [68, 60, 33, 78, 45, 40];
     const expected = toscanini.getTempos("Viola");
     t.deepEqual(actual, expected, "getTempos Viola");
   }
 
   {
+    //this test is including all the tempos
     const actual = [68, 60, 33, 78, 45, 40];
     const expected = toscanini.getTempos();
     t.deepEqual(actual, expected, "getTempos score");

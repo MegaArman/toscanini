@@ -216,7 +216,6 @@ const createToscanini = (musicObj) =>
   toscanini.getTempos = (instrumentName) =>
   {
     const tempos = [];
-    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
     function process(key,value)
     {
       if (key === "tempo")
@@ -230,7 +229,7 @@ const createToscanini = (musicObj) =>
       }
     }
 
-    traverse(jsObj, process);
+    traverse(musicObj, process);
     return tempos;
   };
 
