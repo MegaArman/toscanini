@@ -16,7 +16,7 @@ test("ava_maria_pg1 tests", (t) =>
     const actualMax = range["maxPitch"];
     const expectedMin = 15; //Eb
     const expectedMax = 68;
-    t.deepEqual(actualMin, expectedMin, "getPitchRange min");	
+    t.deepEqual(actualMin, expectedMin, "getPitchRange min");
     t.deepEqual(actualMax, expectedMax, "getPitchRange max");
   }
 
@@ -72,6 +72,43 @@ test("vivaldi_winter tests", (t) =>
     t.deepEqual(actual, expected, "getPitchRange Solo Violin max");
   }
 
+  {
+    const actual = ["Ab", "Eb"];
+    const expected = toscanini.getKeySignatures("Violin I");
+    t.deepEqual(actual, expected, "getKeySignatures Violin I");
+  }
+
+  {
+    const actual = ["Ab", "Eb"];
+    const expected = toscanini.getKeySignatures();
+    t.deepEqual(actual, expected, "getKeySignatures score");
+  }
+
+  {
+    const actual = [[4, 4], [3, 8]];
+    const expected = toscanini.getTimeSignatures("Violin I");
+    t.deepEqual(actual, expected, "getTimeSignatures Violin I");
+  }
+
+  {
+    const actual = [[4, 4], [3, 8]];
+    const expected = toscanini.getTimeSignatures();
+    t.deepEqual(actual, expected, "getTimeSignatures score");
+  }
+
+  {
+    //this test is failing
+    const actual = [68, 60, 33, 78, 45, 40];
+    const expected = toscanini.getTempos("Viola");
+    t.deepEqual(actual, expected, "getTempos Viola");
+  }
+
+  {
+    //this test is including all the tempos
+    const actual = [68, 60, 33, 78, 45, 40];
+    const expected = toscanini.getTempos();
+    t.deepEqual(actual, expected, "getTempos score");
+  }
   t.end();
 });
 
@@ -127,4 +164,3 @@ test("two_time_signatures", (t) =>
   }
   t.end();
 });
-

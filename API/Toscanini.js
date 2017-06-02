@@ -33,7 +33,7 @@ function makeInstrumentObjects(musicObj)
     {
       const value = obj[key];
 
-      if (key === "part-name") 
+      if (key === "part-name")
       {
         partNames.push(value);
       }
@@ -52,7 +52,7 @@ function makeInstrumentObjects(musicObj)
         return; //avoid redundant traversal- VERY IMPORTANT
       }
       else if (value !== null && typeof(value)==="object")
-      { 
+      {
        searchForInstruments(value);
       }
     });
@@ -85,7 +85,7 @@ const createToscanini = (musicObj) =>
   {
     function process(key,value) //called with every property and it"s value
     {
-      if (key === targetKey) 
+      if (key === targetKey)
       {
         console.log(value);
       }
@@ -109,18 +109,18 @@ const createToscanini = (musicObj) =>
       {
         midiNum += pitchToMidiNum[value];
       }
-      else if (key === "alter") 
+      else if (key === "alter")
       {
         midiNum += parseInt(value);
       }
       else if (key === "octave")
       {
         midiNum += parseInt(value) * 12;
-        if (min > midiNum) 
+        if (min > midiNum)
         {
           min = midiNum;
         }
-        if (max < midiNum) 
+        if (max < midiNum)
         {
           max = midiNum;
         }
@@ -131,11 +131,12 @@ const createToscanini = (musicObj) =>
     traverse(jsObj, process);
     const range = {"minPitch": min, "maxPitch": max};
     return range;
-  }; 
+  };
 
-  toscanini.getKeySignatures = () =>
+  toscanini.getKeySignatures = (instrumentName) =>
   {
     let keySignatures = [];
+    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
     function process(key,value)
     {
@@ -159,7 +160,7 @@ const createToscanini = (musicObj) =>
       }
     }
 
-    traverse(musicObj, process);
+    traverse(jsObj, process);
     return keySignatures;
   };
 
@@ -212,17 +213,16 @@ const createToscanini = (musicObj) =>
     return instrumentsWithMelody;
   };
 
-  toscanini.getTempos = () =>
+  toscanini.getTempos = (instrumentName) =>
   {
     const tempos = [];
-
     function process(key,value)
     {
       if (key === "tempo")
       {
         const newTempo = parseInt(value);
-        
-        if (!tempos.includes(newTempo)) 
+
+        if (!tempos.includes(newTempo))
         {
           tempos.push(newTempo);
         }
@@ -233,32 +233,33 @@ const createToscanini = (musicObj) =>
     return tempos;
   };
 
-  toscanini.getTimeSignatures = () =>
+  toscanini.getTimeSignatures = (instrumentName) =>
   {
     const timeSignatures = []; //ex: [{beats: 5, beats-type: 2}, ...]
-    
+    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+
     function process(key,value)
     {
      if (key === "time")
      {
-      const newTimeSignature = 
+      const newTimeSignature =
         [parseInt(value["beats"]), parseInt(value["beat-type"])];
- 
-      if (!timeSignatures.some((oldTimeSignature) => 
+
+      if (!timeSignatures.some((oldTimeSignature) =>
             oldTimeSignature[0] === newTimeSignature[0]
-            && oldTimeSignature[1] === newTimeSignature[1])) 
+            && oldTimeSignature[1] === newTimeSignature[1]))
       {
         timeSignatures.push(newTimeSignature);
-      } 
+      }
      }
     }
 
-    traverse(musicObj, process);
+    traverse(jsObj, process);
     return timeSignatures;
   };
 
   return toscanini;
-}; //createToscanini 
+}; //createToscanini
 
 //======================================================================
 const xml2js = require("xml2js");
@@ -280,4 +281,4 @@ const constructor = (musicxml) =>
   return createToscanini(scoreObj);
 };
 
-module.exports = constructor; 
+module.exports = constructor;
