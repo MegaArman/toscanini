@@ -213,7 +213,7 @@ const createToscanini = (musicObj) =>
     return instrumentsWithMelody;
   };
 
-  toscanini.getTempos = (instrumentName) =>
+  toscanini.getTempos = () =>
   {
     const tempos = [];
     function process(key,value)
