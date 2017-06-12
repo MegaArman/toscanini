@@ -41,8 +41,8 @@ Returns an object like {"minPitch": 30, "maxPitch": 72"}
 
 if no instrumentName is provided (ex: "flute"), gets the min and max pitches of the entire score.
 
-### getKeySignatures()
-gets the key signatures of the whole piece (returns an array)
+### getKeySignatures(instrumentName)
+gets the key signatures of the whole piece (returns an array) or for a particular instrument
 
 ### getInstrumentNames()
 gets the name of the instruments in the score (returns as an array)
@@ -53,8 +53,11 @@ returns array of instruments who have a melody. NOTE: may not work for instrumen
 ### getTempos()
 returns an array containing all tempos in the score
 
-### getTimeSignatures()
-returns a matrix like so [[4,4], [9,8]] for time signatures 4/4 and 9/8
+### getTimeSignatures(instrumentName)
+returns a matrix like so [[4,4], [9,8]] for time signatures 4/4 and 9/8, for a particular instrument
+
+### getDynamics(instrumentName)
+returns an array of dynamics for a particular instrument, or all dynamics in a score
 
 ## Adding new query functions to Toscanini.js
 consider this code from Toscanini.js:
