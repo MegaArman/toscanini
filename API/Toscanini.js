@@ -84,7 +84,7 @@ const createToscanini = (musicObj) =>
   toscanini.getValsByTagName = (tagName) =>
   {
     const vals = [];
-   
+
     function process(key,value) //called with every property and it"s value
     {
       if (key === tagName)
@@ -259,6 +259,31 @@ const createToscanini = (musicObj) =>
 
     traverse(jsObj, process);
     return timeSignatures;
+  };
+
+  toscanini.getDynamics = (instrumentName) =>
+  {
+    const finalDynamics = [];
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    const possibleDynamics = ["ppppp", "pppp", "ppp", "pp", "p","mp",
+      "mf", "f", "ff", "fff", "ffff", "fffff"];
+
+    function process(key,value)
+    {
+      if (key === "dynamics" && typeof value === "object")
+      {
+        const newDynamics = possibleDynamics
+          .find(dynamic => (dynamic in value));
+        
+        if (!finalDynamics.includes(newDynamics))
+        {
+          finalDynamics.push(newDynamics);
+        }
+      }
+    }
+
+    traverse(jsObj, process);
+    return finalDynamics;
   };
 
   return toscanini;

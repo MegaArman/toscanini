@@ -54,9 +54,35 @@ test("basic", (t) =>
 
   {
     const actual = toscanini.getValsByTagName("octave");
-    const expected = ["4", "4", "5"]; 
+    const expected = ["4", "4", "5"];
     t.deepEqual(actual, expected, "getValsByTagName");
   }
+  t.end();
+});
+
+test("dynamics_test test", (t) =>
+{
+  const musicXML = fs.readFileSync("./scores/dynamics_test.xml");
+  const toscanini =  Toscanini(musicXML);
+
+  {
+    const actual = ["pp", "f", "mp", "ff", "mf"];
+    const expected = toscanini.getDynamics();
+    t.deepEqual(actual, expected, "getDynamics score");
+  }
+
+  {
+    const actual = ["pp", "f", "mp"];
+    const expected = toscanini.getDynamics("Violin");
+    t.deepEqual(actual, expected, "getDynamics Violin");
+  }
+
+  {
+    const actual = ["ff", "f", "mf"];
+    const expected = toscanini.getDynamics("Violoncello");
+    t.deepEqual(actual, expected, "getDynamics Violoncello");
+  }
+
   t.end();
 });
 
@@ -173,5 +199,8 @@ test("vivaldi_winter tests", (t) =>
     const expected = toscanini.getTempos();
     t.deepEqual(actual, expected, "getTempos score");
   }
+
   t.end();
 });
+
+
