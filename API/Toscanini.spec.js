@@ -60,6 +60,32 @@ test("basic", (t) =>
   t.end();
 });
 
+test("dynamics_test test", (t) =>
+{
+  const musicXML = fs.readFileSync("./scores/dynamics_test.xml");
+  const toscanini =  Toscanini(musicXML);
+
+  {
+    const actual = ["pp", "f", "mp", "ff", "mf"];
+    const expected = toscanini.getDynamics();
+    t.deepEqual(actual, expected, "getDynamics score");
+  }
+
+  {
+    const actual = ["pp", "f", "mp"];
+    const expected = toscanini.getDynamics("Violin");
+    t.deepEqual(actual, expected, "getDynamics Violin");
+  }
+
+  {
+    const actual = ["ff", "f", "mf"];
+    const expected = toscanini.getDynamics("Violoncello");
+    t.deepEqual(actual, expected, "getDynamics Violoncello");
+  }
+
+  t.end();
+});
+
 test("two_parts", (t) =>
 {
   const musicXML = fs.readFileSync("./scores/two_parts.xml");
@@ -177,28 +203,4 @@ test("vivaldi_winter tests", (t) =>
   t.end();
 });
 
-test("dynamics_test test", (t) =>
-{
-  const musicXML = fs.readFileSync("./scores/dynamics_test.xml");
-  const toscanini =  Toscanini(musicXML);
 
-  {
-    const actual = ["pp", "f", "mp", "ff", "mf"];
-    const expected = toscanini.getDynamics();
-    t.deepEqual(actual, expected, "getDynamics score");
-  }
-
-  {
-    const actual = ["pp", "f", "mp"];
-    const expected = toscanini.getDynamics("Violin");
-    t.deepEqual(actual, expected, "getDynamics Violin");
-  }
-
-  {
-    const actual = ["ff", "f", "mf"];
-    const expected = toscanini.getDynamics("Violoncello");
-    t.deepEqual(actual, expected, "getDynamics Violoncello");
-  }
-
-  t.end();
-});
