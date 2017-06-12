@@ -270,16 +270,14 @@ const createToscanini = (musicObj) =>
 
     function process(key,value)
     {
-      if (key === "dynamics")
+      if (key === "dynamics" && typeof value === "object")
       {
-        if(typeof value === "object")
+        const newDynamics = possibleDynamics
+          .find(dynamic => (dynamic in value));
+        
+        if (!finalDynamics.includes(newDynamics))
         {
-          const newDynamics = possibleDynamics
-            .find(dynamic => (dynamic in value));
-            if (!finalDynamics.includes(newDynamics))
-            {
-              finalDynamics.push(newDynamics);
-            }
+          finalDynamics.push(newDynamics);
         }
       }
     }
