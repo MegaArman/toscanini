@@ -81,17 +81,20 @@ const createToscanini = (musicObj) =>
   //...ex: function poop() { ... }
 
   //"public" functions---------------------------
-  toscanini.findValsByKey = (targetKey) =>
+  toscanini.getValsByTagName = (tagName) =>
   {
+    const vals = [];
+   
     function process(key,value) //called with every property and it"s value
     {
-      if (key === targetKey)
+      if (key === tagName)
       {
-        console.log(value);
+        vals.push(value);
       }
     }
 
     traverse(musicObj, process);
+    return vals;
   };
 
   toscanini.getInstrumentNames = () => Object.keys(instrumentObjects);

@@ -5,6 +5,19 @@ const fs = require("fs");
 const test = require("tape").test;
 const Toscanini = require("./Toscanini");
 
+test("basic", (t) =>
+{
+  const musicxml = fs.readFileSync("./scores/basic.xml");
+  const toscanini = Toscanini(musicxml);
+
+  {
+    const actual = toscanini.getValsByTagName("octave");
+    const expected = ["4", "4", "5"]; 
+    t.deepEqual(actual, expected, "getValsByTagName");
+  }
+  t.end();
+});
+
 test("ava_maria_pg1 tests", (t) =>
 {
   const musicXML = fs.readFileSync("./scores/ava_maria_pg1.xml");
