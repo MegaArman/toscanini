@@ -34,7 +34,7 @@ const toscanini = Toscanini(musicXML); //create a Toscanini instance from musicX
 Currently supports the following queries:
 
 ### getValsByTagName(tagName)
-Returns the values for an xml tag, ex: "octave". Mainly useful for testing to see what's in a score.
+Returns all the values matching an xml tag name as an array, ex: toscanini.getValsByTagName("octave") => ["4", "4", "5"]. Mainly useful for testing to see what's in a score.
 
 ### getPitchRange(instrumentName)
 Returns an object like {"minPitch": 30, "maxPitch": 72"} 
