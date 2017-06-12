@@ -31,7 +31,10 @@ _Refer to .eslintrc.js in the parent directory to see what linter rules there ar
 ## Toscanini.js
 const toscanini = Toscanini(musicXML); //create a Toscanini instance from musicXML
 
-The brains of the Toscanini system. Currently has the following queries:
+Currently supports the following queries:
+
+### getValsByTagName(tagName)
+Returns the values for an xml tag, ex: "octave". Mainly useful for testing to see what's in a score.
 
 ### getPitchRange(instrumentName)
 Returns an object like {"minPitch": 30, "maxPitch": 72"} 
