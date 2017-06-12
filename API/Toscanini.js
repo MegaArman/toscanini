@@ -101,7 +101,7 @@ const createToscanini = (musicObj) =>
 
   toscanini.getPitchRange = (instrumentName) =>//of the whole piece
   {
-    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
     let midiNum = 0;
     let min = 999;
     let max = -999;
@@ -138,14 +138,14 @@ const createToscanini = (musicObj) =>
 
   toscanini.getKeySignatures = (instrumentName) =>
   {
-    let keySignatures = [];
-    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    const keySignatures = [];
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
     function process(key,value)
     {
       if (key === "fifths")
       {
-        let newKeySig = fifthToPitch[value];
+        const newKeySig = fifthToPitch[value];
         let shouldPush = true;
 
         keySignatures.forEach((oldKeySignature) =>
@@ -170,7 +170,7 @@ const createToscanini = (musicObj) =>
   toscanini.getInstrumentsWithMelody = (melodyString) =>
   {
     let tempStrNotes = "";
-    let instrumentsWithMelody = [];
+    const instrumentsWithMelody = [];
     let midiNum = 0;
 
     //build a string of notes ex: CDAGB--------------------
@@ -178,7 +178,7 @@ const createToscanini = (musicObj) =>
     {
       const notes =
       ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-      let pitchNum = midiNum % 12; //remove the octave info
+      const pitchNum = midiNum % 12; //remove the octave info
       return (notes[pitchNum]);
     }
 
@@ -239,7 +239,7 @@ const createToscanini = (musicObj) =>
   toscanini.getTimeSignatures = (instrumentName) =>
   {
     const timeSignatures = []; //ex: [{beats: 5, beats-type: 2}, ...]
-    let jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
     function process(key,value)
     {
