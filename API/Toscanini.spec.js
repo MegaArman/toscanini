@@ -5,19 +5,6 @@ const fs = require("fs");
 const test = require("tape").test;
 const Toscanini = require("./Toscanini");
 
-test("basic", (t) =>
-{
-  const musicxml = fs.readFileSync("./scores/basic.xml");
-  const toscanini = Toscanini(musicxml);
-
-  {
-    const actual = toscanini.getValsByTagName("octave");
-    const expected = ["4", "4", "5"]; 
-    t.deepEqual(actual, expected, "getValsByTagName");
-  }
-  t.end();
-});
-
 test("ava_maria_pg1 tests", (t) =>
 {
   const musicXML = fs.readFileSync("./scores/ava_maria_pg1.xml");
@@ -57,6 +44,72 @@ test("ava_maria_pg1 tests", (t) =>
     t.deepEqual(actual, expected, "getKeySignatures");
   }
 
+  t.end();
+});
+
+test("basic", (t) =>
+{
+  const musicxml = fs.readFileSync("./scores/basic.xml");
+  const toscanini = Toscanini(musicxml);
+
+  {
+    const actual = toscanini.getValsByTagName("octave");
+    const expected = ["4", "4", "5"]; 
+    t.deepEqual(actual, expected, "getValsByTagName");
+  }
+  t.end();
+});
+
+test("two_parts", (t) =>
+{
+  const musicXML = fs.readFileSync("./scores/two_parts.xml");
+  const toscanini = Toscanini(musicXML);
+
+  {
+    const actual = toscanini.getInstrumentsWithMelody("BGBC");
+    const expected = ["Violin"];
+    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
+  }
+
+  {
+    const actual = toscanini.getInstrumentsWithMelody("GD");
+    const expected = ["Flute"];
+    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
+  }
+
+  t.end();
+});
+
+test("two_tempos", (t) =>
+{
+  const musicXML = fs.readFileSync("./scores/two_tempos.xml");
+  const toscanini =  Toscanini(musicXML);
+
+  {
+    const actual = toscanini.getTempos();
+    const expected = [105, 90];
+    t.deepEqual(actual, expected, "getTempos");
+  }
+
+  { //confirms for single instrument we can use the same queries
+    const actual = toscanini.getPitchRange("Flute")["minPitch"];
+    const expected = toscanini.getPitchRange()["minPitch"];
+    t.deepEqual(actual, expected, "getTempos");
+  }
+
+  t.end();
+});
+
+test("two_time_signatures", (t) =>
+{
+  const musicxml = fs.readFileSync("./scores/time_signature_change.xml");
+  const toscanini = Toscanini(musicxml);
+
+  {
+    const actual = toscanini.getTimeSignatures();
+    const expected = [[4,4], [9,8]];
+    t.deepEqual(actual, expected, "getTimeSignatures");
+  }
   t.end();
 });
 
@@ -119,59 +172,6 @@ test("vivaldi_winter tests", (t) =>
     const actual = [68, 60, 33, 78, 45, 40];
     const expected = toscanini.getTempos();
     t.deepEqual(actual, expected, "getTempos score");
-  }
-  t.end();
-});
-
-test("two_parts", (t) =>
-{
-  const musicXML = fs.readFileSync("./scores/two_parts.xml");
-  const toscanini = Toscanini(musicXML);
-
-  {
-    const actual = toscanini.getInstrumentsWithMelody("BGBC");
-    const expected = ["Violin"];
-    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
-  }
-
-  {
-    const actual = toscanini.getInstrumentsWithMelody("GD");
-    const expected = ["Flute"];
-    t.deepEqual(actual, expected, "getInstrumentsWithMelody");
-  }
-
-  t.end();
-});
-
-test("two_tempos", (t) =>
-{
-  const musicXML = fs.readFileSync("./scores/two_tempos.xml");
-  const toscanini =  Toscanini(musicXML);
-
-  {
-    const actual = toscanini.getTempos();
-    const expected = [105, 90];
-    t.deepEqual(actual, expected, "getTempos");
-  }
-
-  { //confirms for single instrument we can use the same queries
-    const actual = toscanini.getPitchRange("Flute")["minPitch"];
-    const expected = toscanini.getPitchRange()["minPitch"];
-    t.deepEqual(actual, expected, "getTempos");
-  }
-
-  t.end();
-});
-
-test("two_time_signatures", (t) =>
-{
-  const musicxml = fs.readFileSync("./scores/time_signature_change.xml");
-  const toscanini = Toscanini(musicxml);
-
-  {
-    const actual = toscanini.getTimeSignatures();
-    const expected = [[4,4], [9,8]];
-    t.deepEqual(actual, expected, "getTimeSignatures");
   }
   t.end();
 });
