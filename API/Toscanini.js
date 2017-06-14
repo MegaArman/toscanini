@@ -274,7 +274,7 @@ const createToscanini = (musicObj) =>
       {
         const newDynamics = possibleDynamics
           .find(dynamic => (dynamic in value));
-        
+
         if (!finalDynamics.includes(newDynamics))
         {
           finalDynamics.push(newDynamics);
@@ -284,6 +284,68 @@ const createToscanini = (musicObj) =>
 
     traverse(jsObj, process);
     return finalDynamics;
+  };
+
+  toscanini.getRhythmComplexity = (instrumentName) =>
+  {
+    const finalRhythm = [];
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+
+    function process(key,value)
+    {
+      if (key === "note")
+      {
+        console.log(value);
+        console.log("----------------------");
+        if (value instanceof Array)
+        {
+          console.log("yes");
+          value.forEach((note) =>
+          {
+            let newRhythm = note["type"];
+
+            console.log(note["dot"]);
+            if (note["dot"] === undefined)
+            {
+              newRhythm = newRhythm + " 0";
+
+            }
+            else
+            {
+              newRhythm = newRhythm + " "+ note["dot"].length;
+            }
+
+            //excluding rests
+            if (!finalRhythm.includes(newRhythm) && note["rest"] === undefined)
+            {
+              finalRhythm.push(newRhythm);
+            }
+          });
+        }
+        else
+        {
+          let newRhythm = value["type"];
+
+          if (value["dot"] === undefined)
+          {
+            newRhythm = newRhythm + " 0";
+          }
+          else
+          {
+            newRhythm = newRhythm + " " + value["dot"].length;
+          }
+
+          //excluding rests
+          if (!finalRhythm.includes(newRhythm) && value["rest"] === undefined)
+          {
+            finalRhythm.push(newRhythm);
+          }
+        }
+      }
+    }
+
+    traverse(jsObj, process);
+    return finalRhythm;
   };
 
   return toscanini;
@@ -305,6 +367,8 @@ const constructor = (musicxml) =>
     }
     scoreObj = obj;
   });
+
+  // console.log(JSON.stringify(scoreObj, null, 4));
 
   return createToscanini(scoreObj);
 };
