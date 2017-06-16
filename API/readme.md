@@ -59,6 +59,16 @@ returns a matrix like so [[4,4], [9,8]] for time signatures 4/4 and 9/8, for a p
 ### getDynamics(instrumentName)
 returns an array of dynamics for a particular instrument, or all dynamics in a score
 
+### getRhythmComplexity(instrumentName)
+returns an array of note lengths associated with a score or instrument, returning a string or a series of strings, with a number representing the number of dots associated with that note.
+
+ex.
+half = half 0
+dotted half = half 1
+double dotted half = half 2
+
+score result example: ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
+
 ## Adding new query functions to Toscanini.js
 consider this code from Toscanini.js:
 
