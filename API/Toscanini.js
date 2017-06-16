@@ -295,24 +295,30 @@ const createToscanini = (musicObj) =>
     {
       if (key === "note")
       {
-        console.log(value);
-        console.log("----------------------");
+        // console.log(value);
+        // console.log("----------------------");
         if (value instanceof Array)
         {
-          console.log("yes");
+          // console.log("yes");
           value.forEach((note) =>
           {
             let newRhythm = note["type"];
 
-            console.log(note["dot"]);
+            // console.log(note["dot"]);
             if (note["dot"] === undefined)
             {
               newRhythm = newRhythm + " 0";
-
             }
             else
             {
-              newRhythm = newRhythm + " "+ note["dot"].length;
+              if (note["dot"] instanceof Array)
+              {
+                newRhythm = newRhythm + " " + note["dot"].length;
+              }
+              else
+              {
+                newRhythm = newRhythm + " 1";
+              }
             }
 
             //excluding rests
@@ -332,9 +338,15 @@ const createToscanini = (musicObj) =>
           }
           else
           {
-            newRhythm = newRhythm + " " + value["dot"].length;
+            if (value["dot"] instanceof Array)
+            {
+              newRhythm = newRhythm + " " + value["dot"].length;
+            }
+            else
+            {
+              newRhythm = newRhythm + " 1";
+            }
           }
-
           //excluding rests
           if (!finalRhythm.includes(newRhythm) && value["rest"] === undefined)
           {

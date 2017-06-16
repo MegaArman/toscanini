@@ -1,0 +1,669 @@
+TAP version 13
+# rhythmic_complexity
+{
+    "score-partwise": {
+        "version": "3.0",
+        "work": {
+            "work-title": "rhythmic complexity"
+        },
+        "identification": {
+            "rights": "rhythmic complexity",
+            "encoding": {
+                "encoding-date": "2017-06-13",
+                "encoder": "Galina Belolipetski",
+                "software": [
+                    "Sibelius 7.5.1",
+                    "Direct export, not from Dolet"
+                ],
+                "encoding-description": "Sibelius / MusicXML 3.0",
+                "supports": [
+                    {
+                        "element": "print",
+                        "type": "yes",
+                        "value": "yes",
+                        "attribute": "new-system"
+                    },
+                    {
+                        "element": "print",
+                        "type": "yes",
+                        "value": "yes",
+                        "attribute": "new-page"
+                    },
+                    {
+                        "element": "accidental",
+                        "type": "yes"
+                    },
+                    {
+                        "element": "beam",
+                        "type": "yes"
+                    },
+                    {
+                        "element": "stem",
+                        "type": "yes"
+                    }
+                ]
+            }
+        },
+        "defaults": {
+            "scaling": {
+                "millimeters": "215.9",
+                "tenths": "1233"
+            },
+            "page-layout": {
+                "page-height": "1595",
+                "page-width": "1233",
+                "page-margins": {
+                    "type": "both",
+                    "left-margin": "85",
+                    "right-margin": "85",
+                    "top-margin": "85",
+                    "bottom-margin": "85"
+                }
+            },
+            "system-layout": {
+                "system-margins": {
+                    "left-margin": "93",
+                    "right-margin": "0"
+                },
+                "system-distance": "92"
+            },
+            "appearance": {
+                "line-width": [
+                    {
+                        "_": "0.9375",
+                        "type": "stem"
+                    },
+                    {
+                        "_": "5",
+                        "type": "beam"
+                    },
+                    {
+                        "_": "0.9375",
+                        "type": "staff"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "light barline"
+                    },
+                    {
+                        "_": "5",
+                        "type": "heavy barline"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "leger"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "ending"
+                    },
+                    {
+                        "_": "1.25",
+                        "type": "wedge"
+                    },
+                    {
+                        "_": "0.9375",
+                        "type": "enclosure"
+                    },
+                    {
+                        "_": "1.25",
+                        "type": "tuplet bracket"
+                    },
+                    {
+                        "_": "5",
+                        "type": "bracket"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "dashes"
+                    },
+                    {
+                        "_": "0.9375",
+                        "type": "extend"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "octave shift"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "pedal"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "slur middle"
+                    },
+                    {
+                        "_": "0.625",
+                        "type": "slur tip"
+                    },
+                    {
+                        "_": "1.5625",
+                        "type": "tie middle"
+                    },
+                    {
+                        "_": "0.625",
+                        "type": "tie tip"
+                    }
+                ],
+                "note-size": [
+                    {
+                        "_": "75",
+                        "type": "cue"
+                    },
+                    {
+                        "_": "60",
+                        "type": "grace"
+                    }
+                ]
+            },
+            "music-font": {
+                "font-family": "Opus Std",
+                "font-size": "19.854"
+            },
+            "lyric-font": {
+                "font-family": "Plantin MT Std",
+                "font-size": "11.4781"
+            },
+            "lyric-language": {
+                "xml:lang": "en"
+            }
+        },
+        "credit": [
+            {
+                "page": "1",
+                "credit-words": {
+                    "_": "rhythmic complexity",
+                    "default-x": "616",
+                    "default-y": "155",
+                    "font-family": "Plantin MT Std",
+                    "font-style": "normal",
+                    "font-size": "22.0255",
+                    "font-weight": "normal",
+                    "justify": "center",
+                    "valign": "middle"
+                }
+            },
+            {
+                "page": "1",
+                "credit-words": {
+                    "_": "rhythmic complexity",
+                    "default-x": "616",
+                    "default-y": "148",
+                    "font-family": "Plantin MT Std",
+                    "font-style": "normal",
+                    "font-size": "10.0821",
+                    "font-weight": "normal",
+                    "justify": "center",
+                    "valign": "middle"
+                }
+            }
+        ],
+        "part-list": {
+            "score-part": [
+                {
+                    "id": "P1",
+                    "part-name": "Violin",
+                    "part-name-display": {
+                        "display-text": "Violin"
+                    },
+                    "part-abbreviation": "Vln.",
+                    "part-abbreviation-display": {
+                        "display-text": "Vln."
+                    },
+                    "score-instrument": {
+                        "id": "P1-I1",
+                        "instrument-name": "Violin",
+                        "instrument-sound": "strings.violin",
+                        "solo": "",
+                        "virtual-instrument": {
+                            "virtual-library": "General MIDI",
+                            "virtual-name": "Violin"
+                        }
+                    }
+                },
+                {
+                    "id": "P2",
+                    "part-name": "String Bass",
+                    "part-name-display": {
+                        "display-text": "String Bass"
+                    },
+                    "part-abbreviation": "S. Bass",
+                    "part-abbreviation-display": {
+                        "display-text": "S. Bass"
+                    },
+                    "score-instrument": {
+                        "id": "P2-I1",
+                        "instrument-name": "String Bass",
+                        "instrument-sound": "strings.contrabass",
+                        "ensemble": "",
+                        "virtual-instrument": {
+                            "virtual-library": "General MIDI",
+                            "virtual-name": "Contrabass ensemble"
+                        }
+                    }
+                }
+            ]
+        },
+        "part": [
+            {
+                "id": "P1",
+                "measure": [
+                    {
+                        "number": "1",
+                        "width": "241",
+                        "print": {
+                            "new-page": "yes",
+                            "system-layout": {
+                                "system-margins": {
+                                    "left-margin": "137",
+                                    "right-margin": "0"
+                                },
+                                "top-system-distance": "220"
+                            }
+                        },
+                        "attributes": {
+                            "divisions": "256",
+                            "key": {
+                                "color": "#000000",
+                                "fifths": "0",
+                                "mode": "major"
+                            },
+                            "time": {
+                                "color": "#000000",
+                                "beats": "4",
+                                "beat-type": "4"
+                            },
+                            "staves": "1",
+                            "clef": {
+                                "number": "1",
+                                "color": "#000000",
+                                "sign": "G",
+                                "line": "2"
+                            },
+                            "staff-details": {
+                                "number": "1",
+                                "print-object": "yes"
+                            }
+                        },
+                        "note": [
+                            {
+                                "color": "#000000",
+                                "default-x": "76",
+                                "default-y": "5",
+                                "pitch": {
+                                    "step": "G",
+                                    "octave": "4"
+                                },
+                                "duration": "768",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "half",
+                                "dot": "",
+                                "stem": "up",
+                                "staff": "1"
+                            },
+                            {
+                                "default-x": "186",
+                                "rest": "",
+                                "duration": "256",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "staff": "1"
+                            }
+                        ]
+                    },
+                    {
+                        "number": "2",
+                        "width": "249",
+                        "note": [
+                            {
+                                "color": "#000000",
+                                "default-x": "15",
+                                "default-y": "10",
+                                "pitch": {
+                                    "step": "A",
+                                    "octave": "4"
+                                },
+                                "duration": "256",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "stem": "up",
+                                "staff": "1"
+                            },
+                            {
+                                "color": "#000000",
+                                "default-x": "69",
+                                "default-y": "-55",
+                                "pitch": {
+                                    "step": "B",
+                                    "octave": "4"
+                                },
+                                "duration": "384",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "dot": "",
+                                "stem": "down",
+                                "staff": "1"
+                            },
+                            {
+                                "color": "#000000",
+                                "default-x": "143",
+                                "default-y": "-50",
+                                "pitch": {
+                                    "step": "C",
+                                    "octave": "5"
+                                },
+                                "duration": "128",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "eighth",
+                                "stem": "down",
+                                "staff": "1"
+                            },
+                            {
+                                "default-x": "182",
+                                "rest": "",
+                                "duration": "256",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "staff": "1"
+                            }
+                        ]
+                    },
+                    {
+                        "number": "3",
+                        "width": "180",
+                        "note": {
+                            "color": "#000000",
+                            "default-x": "15",
+                            "pitch": {
+                                "step": "D",
+                                "octave": "5"
+                            },
+                            "duration": "1024",
+                            "instrument": {
+                                "id": "P1-I1"
+                            },
+                            "voice": "1",
+                            "type": "whole",
+                            "staff": "1"
+                        }
+                    },
+                    {
+                        "number": "4",
+                        "width": "253",
+                        "note": [
+                            {
+                                "color": "#000000",
+                                "default-x": "15",
+                                "default-y": "-30",
+                                "pitch": {
+                                    "step": "G",
+                                    "octave": "5"
+                                },
+                                "duration": "768",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "half",
+                                "dot": "",
+                                "stem": "down",
+                                "staff": "1"
+                            },
+                            {
+                                "default-x": "183",
+                                "rest": "",
+                                "duration": "256",
+                                "instrument": {
+                                    "id": "P1-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "staff": "1"
+                            }
+                        ],
+                        "barline": {
+                            "bar-style": "light-heavy"
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "P2",
+                "measure": [
+                    {
+                        "number": "1",
+                        "width": "241",
+                        "print": {
+                            "new-page": "yes",
+                            "system-layout": {
+                                "system-margins": {
+                                    "left-margin": "137",
+                                    "right-margin": "0"
+                                }
+                            },
+                            "staff-layout": {
+                                "number": "1",
+                                "staff-distance": "55"
+                            }
+                        },
+                        "attributes": {
+                            "divisions": "256",
+                            "key": {
+                                "color": "#000000",
+                                "fifths": "0",
+                                "mode": "major"
+                            },
+                            "time": {
+                                "color": "#000000",
+                                "beats": "4",
+                                "beat-type": "4"
+                            },
+                            "staves": "1",
+                            "clef": {
+                                "number": "1",
+                                "color": "#000000",
+                                "sign": "F",
+                                "line": "4"
+                            },
+                            "staff-details": {
+                                "number": "1",
+                                "print-object": "yes"
+                            },
+                            "transpose": {
+                                "diatonic": "0",
+                                "chromatic": "0",
+                                "octave-change": "-1"
+                            }
+                        },
+                        "note": {
+                            "color": "#000000",
+                            "default-x": "76",
+                            "pitch": {
+                                "step": "G",
+                                "octave": "2"
+                            },
+                            "duration": "1024",
+                            "instrument": {
+                                "id": "P2-I1"
+                            },
+                            "voice": "1",
+                            "type": "whole",
+                            "staff": "1"
+                        }
+                    },
+                    {
+                        "number": "2",
+                        "width": "249",
+                        "note": [
+                            {
+                                "color": "#000000",
+                                "default-x": "15",
+                                "default-y": "-5",
+                                "pitch": {
+                                    "step": "G",
+                                    "octave": "2"
+                                },
+                                "duration": "512",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "half",
+                                "stem": "up",
+                                "staff": "1"
+                            },
+                            {
+                                "color": "#000000",
+                                "default-x": "118",
+                                "default-y": "-15",
+                                "pitch": {
+                                    "step": "E",
+                                    "octave": "2"
+                                },
+                                "duration": "384",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "dot": "",
+                                "stem": "up",
+                                "staff": "1"
+                            },
+                            {
+                                "default-x": "210",
+                                "rest": "",
+                                "duration": "128",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "eighth",
+                                "staff": "1"
+                            }
+                        ]
+                    },
+                    {
+                        "number": "3",
+                        "width": "180",
+                        "note": [
+                            {
+                                "color": "#000000",
+                                "default-x": "15",
+                                "default-y": "-10",
+                                "pitch": {
+                                    "step": "F",
+                                    "alter": "1",
+                                    "octave": "2"
+                                },
+                                "duration": "768",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "half",
+                                "dot": "",
+                                "accidental": "sharp",
+                                "stem": "up",
+                                "staff": "1"
+                            },
+                            {
+                                "default-x": "126",
+                                "rest": "",
+                                "duration": "256",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "staff": "1"
+                            }
+                        ]
+                    },
+                    {
+                        "number": "4",
+                        "width": "253",
+                        "note": [
+                            {
+                                "color": "#000000",
+                                "default-x": "15",
+                                "default-y": "-5",
+                                "pitch": {
+                                    "step": "G",
+                                    "octave": "2"
+                                },
+                                "duration": "480",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "quarter",
+                                "dot": [
+                                    "",
+                                    "",
+                                    ""
+                                ],
+                                "stem": "up",
+                                "staff": "1"
+                            },
+                            {
+                                "default-x": "102",
+                                "rest": "",
+                                "duration": "32",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "32nd",
+                                "staff": "1"
+                            },
+                            {
+                                "default-x": "128",
+                                "rest": "",
+                                "duration": "512",
+                                "instrument": {
+                                    "id": "P2-I1"
+                                },
+                                "voice": "1",
+                                "type": "half",
+                                "staff": "1"
+                            }
+                        ],
+                        "barline": {
+                            "bar-style": "light-heavy"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+ok 1 getRhythmComplexity score
+ok 2 getRhythmComplexity Violin
+ok 3 getRhythmComplexity String Bass
+
+1..3
+# tests 3
+# pass  3
+
+# ok
+
