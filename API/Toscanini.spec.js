@@ -85,6 +85,32 @@ test("dynamics_test test", (t) =>
 
   t.end();
 });
+test("rhythmic_complexity", (t) =>
+{
+  const musicXML = fs.readFileSync("./scores/rhythmic_complexity.xml");
+  const toscanini = Toscanini(musicXML);
+
+  {
+    const actual = toscanini.getRhythmComplexity();
+    const expected = ["half 1", "quarter 0", "quarter 1",
+     "eighth 0", "whole 0", "half 0", "quarter 3"];
+    t.deepEqual(actual, expected, "getRhythmComplexity score");
+  }
+
+  {
+    const actual = toscanini.getRhythmComplexity("Violin");
+    const expected = ["half 1", "quarter 0", "quarter 1",
+     "eighth 0", "whole 0"];
+    t.deepEqual(actual, expected, "getRhythmComplexity Violin");
+  }
+
+  {
+    const actual = toscanini.getRhythmComplexity("String Bass");
+    const expected = ["whole 0", "half 0", "quarter 1", "half 1", "quarter 3"];
+    t.deepEqual(actual, expected, "getRhythmComplexity String Bass");
+  }
+  t.end();
+});
 
 test("two_parts", (t) =>
 {
@@ -136,6 +162,7 @@ test("two_time_signatures", (t) =>
     const expected = [[4,4], [9,8]];
     t.deepEqual(actual, expected, "getTimeSignatures");
   }
+
   t.end();
 });
 
@@ -202,5 +229,3 @@ test("vivaldi_winter tests", (t) =>
 
   t.end();
 });
-
-
