@@ -295,16 +295,12 @@ const createToscanini = (musicObj) =>
     {
       if (key === "note")
       {
-        // console.log(value);
-        // console.log("----------------------");
         if (value instanceof Array)
         {
-          // console.log("yes");
           value.forEach((note) =>
           {
             let newRhythm = note["type"];
 
-            // console.log(note["dot"]);
             if (note["dot"] === undefined)
             {
               newRhythm = newRhythm + " 0";
