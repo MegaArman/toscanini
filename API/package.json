@@ -12,7 +12,7 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint *.js",
-    "test": "npm run lint && nyc tape *.spec.js | tap-spec"
+    "test": "npm run lint && nyc tape tests/*.js | tap-spec"
   },
   "dependencies": {
     "xml2js": "^0.4.17"
