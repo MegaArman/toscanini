@@ -20,7 +20,7 @@
   "devDependencies": {
     "eslint": "^3.15.0",
     "nyc": "^11.0.2",
-    "tap-nyc": "^1.0.0",
+    "tap-nyc": "^1.0.1",
     "tape": "^4.6.3"
   }
 }
