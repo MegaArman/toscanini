@@ -356,6 +356,39 @@ const createToscanini = (musicObj) =>
     return finalRhythm;
   };
 
+  toscanini.getScoreLength = (instrumentName) =>
+  {
+    const scoreLength = [];
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+
+    let measureNumber = 0;
+    function process(key, value)
+    {
+      if (key === "measure")
+      {
+        if (value instanceof Array)
+        {
+          value.forEach((measure) =>
+          {
+            if (measure["number"] > measureNumber)
+            {
+              measureNumber = measure["number"];
+            }
+
+            console.log(measureNumber);
+          });
+        }
+        //else
+      }
+    }
+
+    traverse(jsObj, process);
+
+    let measureReport = "measures: " + measureNumber;
+    scoreLength.push(measureReport);
+    return scoreLength;
+  };
+
   return toscanini;
 }; //createToscanini
 
