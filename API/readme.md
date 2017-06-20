@@ -69,6 +69,9 @@ double dotted half = half 2
 
 score result example: ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
 
+### getNumberOfMeasures
+returns the number of measures in a score.
+
 ## Adding new query functions to Toscanini.js
 consider this code from Toscanini.js:
 
