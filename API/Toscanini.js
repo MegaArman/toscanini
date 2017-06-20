@@ -356,37 +356,20 @@ const createToscanini = (musicObj) =>
     return finalRhythm;
   };
 
-  toscanini.getScoreLength = (instrumentName) =>
+  toscanini.getNumberOfMeasures = () =>
   {
-    const scoreLength = [];
-    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
-
     let measureNumber = 0;
+
     function process(key, value)
     {
       if (key === "measure")
       {
-        if (value instanceof Array)
-        {
-          value.forEach((measure) =>
-          {
-            if (measure["number"] > measureNumber)
-            {
-              measureNumber = measure["number"];
-            }
-
-            console.log(measureNumber);
-          });
-        }
-        //else
+        measureNumber = value.length;
       }
     }
+    traverse(instrumentObjects[Object.keys(instrumentObjects)[0]], process);
 
-    traverse(jsObj, process);
-
-    let measureReport = "measures: " + measureNumber;
-    scoreLength.push(measureReport);
-    return scoreLength;
+    return measureNumber;
   };
 
   return toscanini;
@@ -395,6 +378,7 @@ const createToscanini = (musicObj) =>
 //======================================================================
 const xml2js = require("xml2js");
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
+
 
 const constructor = (musicxml) =>
 {
