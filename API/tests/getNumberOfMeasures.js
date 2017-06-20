@@ -4,7 +4,7 @@ const path = require("path");
 const test = require("tape").test;
 const Toscanini = require("../Toscanini");
 
-test("score_length_test test", (t) =>
+test("number_of_measures test", (t) =>
 {
   const musicXML =
     fs.readFileSync(path.resolve(__dirname, "../scores/dynamics_test.xml"));
@@ -19,7 +19,7 @@ test("score_length_test test", (t) =>
   t.end();
 });
 
-test("score_length_test two tempos", (t) =>
+test("number_of_measures two tempos", (t) =>
 {
   const musicXML =
     fs.readFileSync(path.resolve(__dirname, "../scores/two_tempos_scorelen.xml"));
