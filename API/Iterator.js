@@ -2,7 +2,7 @@
 const fs = require("fs");
 const et = require("elementtree");
 
-const musicXML = fs.readFileSync("./scores/two_parts.xml").toString();
+const musicXML = fs.readFileSync("./scores/guitar_two_voices.xml").toString();
 const etree = et.parse(musicXML);
 
 //TODO measures should just be of the first instrument
@@ -12,5 +12,14 @@ const etree = et.parse(musicXML);
 //  console.log(note.findtext(".//step"));
 //});
 
-const wins = etree.findall(".//note").filter((note) => (note === "A"));
-console.log(wins);
+//iterator.nextMeasure().iteratorNextbeat()
+
+const firstMeasure = etree.findall(".//measure")[1];
+
+firstMeasure["_children"].forEach((child) => 
+{
+  if (child["tag"] === "note")
+  {
+    console.log(child.findtext(".//duration"));
+  }
+});
