@@ -1,0 +1,473 @@
+child note Element {
+  _id: 64,
+  tag: 'note',
+  attrib: { 'default-x': '75.17', 'default-y': '-25.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 65,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 68,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 69,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 70,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 71,
+       tag: 'stem',
+       attrib: {},
+       text: 'up',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 72,
+  tag: 'note',
+  attrib: { 'default-x': '124.94', 'default-y': '-10.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 73,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 76,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 77,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 78,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 79,
+       tag: 'stem',
+       attrib: {},
+       text: 'down',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 80,
+  tag: 'note',
+  attrib: { 'default-x': '174.71', 'default-y': '-20.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 81,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 84,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 85,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 86,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 87,
+       tag: 'stem',
+       attrib: {},
+       text: 'down',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 88,
+  tag: 'note',
+  attrib: { 'default-x': '174.71', 'default-y': '-10.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 89,
+       tag: 'chord',
+       attrib: {},
+       text: '',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 90,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 93,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 94,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 95,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 96,
+       tag: 'stem',
+       attrib: {},
+       text: 'down',
+       tail: '\n        ',
+       _children: [] } ] }
+chord FOUND IT!!!
+child note Element {
+  _id: 97,
+  tag: 'note',
+  attrib: { 'default-x': '224.48', 'default-y': '-5.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 98,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 101,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 102,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 103,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 104,
+       tag: 'stem',
+       attrib: {},
+       text: 'down',
+       tail: '\n        ',
+       _children: [] } ] }
+voices { '1': 5 }
+child note Element {
+  _id: 106,
+  tag: 'note',
+  attrib: { 'default-x': '12.00', 'default-y': '-35.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 107,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 110,
+       tag: 'duration',
+       attrib: {},
+       text: '2',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 111,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 112,
+       tag: 'type',
+       attrib: {},
+       text: 'half',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 113,
+       tag: 'stem',
+       attrib: {},
+       text: 'down',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 114,
+  tag: 'note',
+  attrib: { 'default-x': '120.78', 'default-y': '-55.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 115,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 118,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 119,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 120,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 121,
+       tag: 'stem',
+       attrib: {},
+       text: 'up',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 122,
+  tag: 'note',
+  attrib: {},
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 123,
+       tag: 'rest',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 126,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 127,
+       tag: 'voice',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 128,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 131,
+  tag: 'note',
+  attrib: { 'default-x': '12.36', 'default-y': '-5.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 132,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 135,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 136,
+       tag: 'voice',
+       attrib: {},
+       text: '2',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 137,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 138,
+       tag: 'stem',
+       attrib: {},
+       text: 'up',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 139,
+  tag: 'note',
+  attrib: { 'default-x': '54.71', 'default-y': '-25.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 140,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 143,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 144,
+       tag: 'voice',
+       attrib: {},
+       text: '2',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 145,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 146,
+       tag: 'stem',
+       attrib: {},
+       text: 'down',
+       tail: '\n        ',
+       _children: [] } ] }
+child note Element {
+  _id: 147,
+  tag: 'note',
+  attrib: { 'default-x': '66.57', 'default-y': '-20.00' },
+  text: '\n        ',
+  tail: '\n      ',
+  _children: 
+   [ Element {
+       _id: 148,
+       tag: 'chord',
+       attrib: {},
+       text: '',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 149,
+       tag: 'pitch',
+       attrib: {},
+       text: '\n          ',
+       tail: '\n        ',
+       _children: [Object] },
+     Element {
+       _id: 152,
+       tag: 'duration',
+       attrib: {},
+       text: '1',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 153,
+       tag: 'voice',
+       attrib: {},
+       text: '2',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 154,
+       tag: 'type',
+       attrib: {},
+       text: 'quarter',
+       tail: '\n        ',
+       _children: [] },
+     Element {
+       _id: 155,
+       tag: 'stem',
+       attrib: {},
+       text: 'down',
+       tail: '\n        ',
+       _children: [] } ] }
+chord FOUND IT!!!
+voices { '1': 4, '2': 3 }
