@@ -1,13 +1,15 @@
 "use strict";
 
-const gradeScore = (musicObj) =>
+const gradeScore = (musicXML) =>
 {
-  const grade = {};
+  const gradeLevel = {};
 
-  grade.assessMeter()
+  gradeLevel.assessMeter = () =>
   {
+    const toscanini = Toscanini(musicXML);
     const timeSignatures = toscanini.getTimeSignatures();
     const meterAssessment = [];
+    let averageMeter = 0;
 
     timeSignatures.forEach((timeSignature) =>
     {
@@ -36,33 +38,43 @@ const gradeScore = (musicObj) =>
       {
         meterAssessment.push(1);
       }
-      else {
+      else
+      {
         meterAssessment.push(6);
       }
     });
-  }
-}
+
+    for (var i = 0; i < meterAssessment.length; i++)
+    {
+      averageMeter += meterAssessment[i];
+    }
+    averageMeter /= meterAssessment.length;
+
+    return averageMeter;
+  };
+
+};
 
 //======================================================================
 const xml2js = require("xml2js");
 const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 
-const constructor = (musicxml) =>
+const constructor = (musicXML) =>
 {
-  let scoreObj;
+  let toscObj;
 
-  parser.parseString(musicxml, (err, obj) =>
+  parser.parseString(musicXML, (err, obj) =>
   {
     if (err)
     {
       throw err;
     }
-    scoreObj = obj;
+    toscObj = obj;
   });
 
   // console.log(JSON.stringify(scoreObj, null, 4));
 
-  return gradeScore(scoreObj);
+  return gradeScore(toscObj);
 };
 
 module.exports = constructor;
