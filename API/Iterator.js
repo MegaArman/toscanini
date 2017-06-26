@@ -4,17 +4,13 @@ const et = require("elementtree");
 
 const musicXML = fs.readFileSync("./scores/basic.xml").toString();
 const etree = et.parse(musicXML);
+
 const measures = etree.findall(".//measure");
-
-//measure, beatmap
-
-const iterator = {};
 const instrumentPart  = [];
 
 measures.forEach((measure) => 
 {
-  //  console.log("measure num", measure.attrib.number);
-  const beatMap = new Map();
+  const beats = [];
   let currentBeat = 1;
   //const voices = {};
     
@@ -27,10 +23,11 @@ measures.forEach((measure) =>
       const step = child.findtext(".//step");
       const note = {};
       note[step] = duration;
+      note.beat = currentBeat;
 
       (child.findtext("[rest]")) ?  
-        beatMap.set(currentBeat, {"rest": duration}):
-        beatMap.set(currentBeat, note);
+        beats.push({"beat": currentBeat, "rest": duration}):
+        beats.push(note);
       currentBeat += duration;
      // if (child.findtext("[chord]"))
      // {
@@ -51,50 +48,73 @@ measures.forEach((measure) =>
     }
   });
  
-  instrumentPart.push(beatMap);
+  instrumentPart.push(beats);
 });
 
 //-----------------------------------
+const iterator = {};
 let measureNum = 0;
 let beatMap = instrumentPart[0];
-let beatMapKeys = beatMap.keys();
-let beatIndex = 0;
+let beatIndex = -1;
+
+const errors =  
+{
+  "noNext": "no next exists!",
+  "noPrev": "no prev exists!"
+};
 
 iterator.nextMeasure = () =>
-{
-  measureNum++;
-  beatMap = instrumentPart[measureNum];
-  beatMapKeys = beatMap.keys();
+{ 
+  if (measureNum >= instrumentPart.length)
+  {
+    throw new Error(errors.noNext);
+  }
+  beatMap = instrumentPart[++measureNum];
   beatIndex = 0;
-  console.log("beatMapKeys", beatMapKeys);
-  return beatMap.get(1);
+  return beatMap[0];
 };
 
 iterator.prevMeasure = () =>
 {
-  measureNum--;
-  beatMap = instrumentPart[measureNum];
-  beatMapKeys = beatMap.keys();
+  if (measureNum === 0)
+  {
+    throw new Error(errors.noPrev);
+  }
+  beatMap = instrumentPart[--measureNum];
   beatIndex = 0;
-  return instrumentPart[measureNum].get(1);
+  return beatMap[0];
 };
 
 iterator.next = () =>
 {
- beatIndex++;
- console.log(beatIndex);
- return beatMap.get(beatMapKeys[beatIndex]);
+ if (beatIndex === beatMap.length - 1)
+ {
+  iterator.nextMeasure();
+  return beatMap[beatIndex];
+ }
+ return beatMap[++beatIndex];
 };
 
 
 iterator.prev = () =>
 {
- beatIndex--;
- return  beatMap.get(beatMapKeys[beatIndex]);
+  if (beatIndex === 0)
+  {
+    iterator.prevMeasure();
+    beatIndex = beatMap.length - 1;
+    return beatMap[beatIndex];
+  }
+  return beatMap[--beatIndex];
 };
 
 //console.log("instrumentPart", instrumentPart);
-console.log(iterator.nextMeasure());
-console.log(iterator.prevMeasure());
+//console.log(iterator.nextMeasure());
+//console.log(iterator.prevMeasure());
+console.log(iterator.next());
+console.log(iterator.next());
+console.log(iterator.next());
 console.log(iterator.next());
 console.log(iterator.prev());
+console.log(iterator.prev());
+console.log(iterator.prev());
+console.log(iterator.prev()); //Too low
