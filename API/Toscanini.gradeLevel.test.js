@@ -16,4 +16,6 @@ test ("assess-meter", (t) =>
     const expected = 1;
     t.deepEqual(actual, expected, "assess-meter ave maria");
   }
+
+  t.end();
 });

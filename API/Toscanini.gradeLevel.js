@@ -82,4 +82,5 @@ const constructor = (musicxml) =>
 module.exports = constructor;
 
 //10-1:30 = 3:30
-//2:30-4:30 = 2:00
+//2:30-4:45 = 2:15
+//total 5:45
