@@ -1,15 +1,17 @@
 "use strict";
 const Toscanini = require("./Toscanini");
-const path = require("path");
 
-function arraySame(first, second) {
+function arraySame(first, second)
+{
     var compareLen = first.length;
-    if (compareLen != second.length) return false;
-    while (compareLen--) {
+    if (compareLen !== second.length)
+      return false;
+    while (compareLen--)
+    {
         if (first[compareLen] !== second[compareLen]) return false;
     }
     return true;
-};
+}
 
 //------------------------------------------------------------------------
 
@@ -36,7 +38,8 @@ const gradeScore = (musicxml) =>
       {
         meterAssessment.push(4);
       }
-      else if (arraySame(timeSignature, [6, 8]) || arraySame(timeSignature, [6, 4])
+      else if (arraySame(timeSignature, [6, 8])
+        || arraySame(timeSignature, [6, 4])
         || arraySame(timeSignature, [3, 8]))
       {
         meterAssessment.push(3);
@@ -50,7 +53,7 @@ const gradeScore = (musicxml) =>
       }
       else if ((arraySame(timeSignature, [4,4]) ||
         arraySame(timeSignature, [2, 4]) || arraySame(timeSignature, [3, 4]))
-        & (timeSignatures.length == 1))
+        & (timeSignatures.length === 1))
       {
         meterAssessment.push(1);
       }
@@ -65,9 +68,14 @@ const gradeScore = (musicxml) =>
       averageMeter += meterAssessment[i];
     }
     averageMeter /= meterAssessment.length;
-
+    //maybe instead of this I can ask for the largest meterassesment?
     return averageMeter;
   };
+
+  // gradeLevel.assessDynamics = () =>
+  // {
+  //
+  // }
 
   return gradeLevel;
 };
@@ -80,7 +88,3 @@ const constructor = (musicxml) =>
 };
 
 module.exports = constructor;
-
-//10-1:30 = 3:30
-//2:30-4:45 = 2:15
-//total 5:45
