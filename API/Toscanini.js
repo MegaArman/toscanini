@@ -233,6 +233,11 @@ const createToscanini = (musicObj) =>
     }
 
     traverse(musicObj, process);
+
+    if (tempos.length === 0)
+    {
+      tempos.push(120);
+    }
     return tempos;
   };
 
@@ -266,7 +271,8 @@ const createToscanini = (musicObj) =>
     const finalDynamics = [];
     const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
     const possibleDynamics = ["ppppp", "pppp", "ppp", "pp", "p","mp",
-      "mf", "f", "ff", "fff", "ffff", "fffff"];
+      "mf", "f", "ff", "fff", "ffff", "fffff", "fp", "sf", "rfz", "rf",
+      "sfz", "sfzp", "fz"];
 
     function process(key,value)
     {

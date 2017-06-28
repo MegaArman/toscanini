@@ -72,10 +72,53 @@ const gradeScore = (musicxml) =>
     return averageMeter;
   };
 
-  // gradeLevel.assessDynamics = () =>
-  // {
-  //
-  // }
+  gradeLevel.assessTempo = () =>
+  {
+    //does not include more nuances of the changes in tempo - words not
+    //extensively included
+
+    const toscanini = Toscanini(musicxml);
+    const tempos = toscanini.getTempos();
+    const tempoAssessment = [];
+    let averageTempo = 0;
+
+    tempos.forEach((tempo) =>
+    {
+      if (tempo < 40 || tempo > 208)
+      {
+        tempoAssessment.push(6);
+      }
+      else if (tempo > 200 && tempo < 208)
+      {
+        tempoAssessment.push(5);
+      }
+      else if (tempo > 168 && tempo <= 200)
+      {
+        tempoAssessment.push(4);
+      }
+      else if ((tempo > 40 && tempo <= 66))
+      {
+        //not entirely sure what Michael meant in this one
+        tempoAssessment.push(3);
+      }
+      else if ((tempo > 66 && tempo < 78) || (tempo > 120 && tempo <= 168))
+      {
+        tempoAssessment.push(2);
+      }
+      else if (tempo >= 78 && tempo <= 120)
+      {
+        tempoAssessment.push(1);
+      }
+    });
+
+    for (var i = 0; i < tempoAssessment.length; i++)
+    {
+      averageTempo += tempoAssessment[i];
+    }
+    averageTempo /= tempoAssessment.length;
+    //maybe instead of this I can ask for the largest meterassesment?
+    return averageTempo;
+  };
 
   return gradeLevel;
 };

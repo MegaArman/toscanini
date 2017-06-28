@@ -24,3 +24,18 @@ test("two_tempos", (t) =>
 
   t.end();
 });
+
+test("no tempos", (t) =>
+{
+  const musicXML =
+    fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml"));
+  const toscanini =  Toscanini(musicXML);
+
+  {
+    const actual = toscanini.getTempos();
+    const expected = [120];
+    t.deepEqual(actual, expected, "getTempos");
+  }
+
+  t.end();
+});
