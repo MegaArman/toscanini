@@ -19,6 +19,27 @@ const gradeScore = (musicxml) =>
 {
   const gradeLevel = {};
 
+  gradeLevel.assessDynamics = () =>
+  {
+    const toscanini = Toscanini(musicxml);
+    const dynamics = toscanini.getDynamics();
+    const dynamicAssessment = [];
+    let averageDynamic = 0;
+    //missing crescendo and diminuendo
+
+    dynamics.forEach((dynamic) =>
+    {
+      //TODO
+      //this depends on whether it is choral or instrumental
+    });
+
+    for (var i = 0; i < dynamicAssessment.length; i++)
+    {
+      averageDynamic += dynamicAssessment[i];
+    }
+    averageDynamic /= dynamicAssessment.length;
+  };
+
   gradeLevel.assessMeter = () =>
   {
     const toscanini = Toscanini(musicxml);
@@ -70,6 +91,25 @@ const gradeScore = (musicxml) =>
     averageMeter /= meterAssessment.length;
     //maybe instead of this I can ask for the largest meterassesment?
     return averageMeter;
+  };
+
+  gradeLevel.assessRhythmicComplexity = () =>
+  {
+    const toscanini = Toscanini(musicxml);
+    const rhythms = toscanini.getRhythmComplexity();
+    const rhythmAssessment = [];
+    let averageRhythm = 0;
+
+    rhythms.forEach((rhythm) =>
+    {
+      //TODO need to set up triplets first, comparison easier
+    });
+
+    for (var i = 0; i < rhythmAssessment.length; i++)
+    {
+      averageRhythm += rhythmAssessment[i];
+    }
+    averageRhythm /= rhythmAssessment.length;
   };
 
   gradeLevel.assessTempo = () =>

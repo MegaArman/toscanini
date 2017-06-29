@@ -6,11 +6,11 @@ const Toscanini = require("../Toscanini");
 
 test("rhythmic_complexity", (t) =>
 {
-  const musicXML =
+  let musicXML =
     fs.readFileSync(
       path.resolve(__dirname, "../scores/rhythmic_complexity.xml"));
-      
-  const toscanini = Toscanini(musicXML);
+
+  let toscanini = Toscanini(musicXML);
 
   {
     const actual = toscanini.getRhythmComplexity();
@@ -31,5 +31,18 @@ test("rhythmic_complexity", (t) =>
     const expected = ["whole 0", "half 0", "quarter 1", "half 1", "quarter 3"];
     t.deepEqual(actual, expected, "getRhythmComplexity String Bass");
   }
+
+  musicXML =
+    fs.readFileSync(
+      path.resolve(__dirname, "../scores/triplets.xml"));
+
+  toscanini = Toscanini(musicXML);
+
+  {
+    const actual = toscanini.getRhythmComplexity();
+    const expected = ["quarter 0"];
+    t.deepEqual(actual, expected, "getRhythmComplexity triplets");
+  }
+
   t.end();
 });
