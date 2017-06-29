@@ -12,7 +12,8 @@
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint *.js",
-    "test": "npm run lint && nyc tape tests/*.js | tap-nyc"
+    "test": "npm run lint && nyc tape toscanini_tests/*.js | tap-nyc",
+    "gt": "npm run lint && nyc tape grade_level_tests/*.js | tap-nyc"
   },
   "dependencies": {
     "xml2js": "^0.4.17"

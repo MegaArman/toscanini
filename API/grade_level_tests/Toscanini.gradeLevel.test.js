@@ -2,13 +2,13 @@
 const fs = require("fs");
 const path = require("path");
 const test = require("tape").test;
-const GradeScore = require("./Toscanini.gradeLevel.js");
+const GradeScore = require("../Toscanini.gradeLevel.js");
 
 
 test ("assess-meter", (t) =>
 {
   let musicXML =
-    fs.readFileSync(path.resolve(__dirname, "./scores/ava_maria_pg1.xml"));
+    fs.readFileSync(path.resolve(__dirname, "../scores/ava_maria_pg1.xml"));
   let gradeScore = GradeScore(musicXML);
 
   {
@@ -18,7 +18,7 @@ test ("assess-meter", (t) =>
   }
 
   musicXML =
-    fs.readFileSync(path.resolve(__dirname, "./scores/vivaldi_winter.xml"));
+    fs.readFileSync(path.resolve(__dirname, "../scores/vivaldi_winter.xml"));
   gradeScore = GradeScore(musicXML);
 
   {
@@ -33,7 +33,7 @@ test ("assess-meter", (t) =>
 test ("assess-tempo", (t) =>
 {
   let musicXML =
-    fs.readFileSync(path.resolve(__dirname, "./scores/ava_maria_pg1.xml"));
+    fs.readFileSync(path.resolve(__dirname, "../scores/ava_maria_pg1.xml"));
   let gradeScore = GradeScore(musicXML);
 
   {
@@ -43,7 +43,7 @@ test ("assess-tempo", (t) =>
   }
 
   musicXML =
-    fs.readFileSync(path.resolve(__dirname, "./scores/vivaldi_winter.xml"));
+    fs.readFileSync(path.resolve(__dirname, "../scores/vivaldi_winter.xml"));
   gradeScore = GradeScore(musicXML);
 
   {
