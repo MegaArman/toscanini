@@ -2,8 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const test = require("tape").test;
-const GradeScore = require("../Toscanini.gradeLevel.js");
-
+const GradeScore = require("../lib/Toscanini.gradeLevel.js");
 
 test ("assess-meter", (t) =>
 {
