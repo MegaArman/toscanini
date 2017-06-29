@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const test = require("tape").test;
-const Toscanini = require("../Toscanini");
+const Toscanini = require("../lib/Toscanini");
 
 test("number_of_measures test", (t) =>
 {
