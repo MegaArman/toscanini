@@ -21,8 +21,8 @@ test("number_of_measures test", (t) =>
 
 test("number_of_measures two tempos", (t) =>
 {
-  const musicXML =
-    fs.readFileSync(path.resolve(__dirname, "../scores/two_tempos_scorelen.xml"));
+  const musicXML = fs
+    .readFileSync(path.resolve(__dirname, "../scores/two_tempos_scorelen.xml"));
   const toscanini =  Toscanini(musicXML);
 
   {
