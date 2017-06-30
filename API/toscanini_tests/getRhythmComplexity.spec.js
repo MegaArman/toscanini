@@ -12,19 +12,19 @@ test("rhythmic_complexity", (t) =>
 
   let toscanini = Toscanini(musicXML);
 
-  {
-    const actual = toscanini.getRhythmComplexity();
-    const expected = ["half 1", "eighth 0", "quarter 0", "quarter 1",
-     "whole 0", "half 0", "quarter 3"];
-    t.deepEqual(actual, expected, "getRhythmComplexity score");
-  }
-
   // {
-  //   const actual = toscanini.getRhythmComplexity("Violin");
+  //   const actual = toscanini.getRhythmComplexity();
   //   const expected = ["half 1", "eighth 0", "quarter 0", "quarter 1",
-  //     "whole 0"];
-  //   t.deepEqual(actual, expected, "getRhythmComplexity Violin");
+  //    "whole 0", "half 0", "quarter 3"];
+  //   t.deepEqual(actual, expected, "getRhythmComplexity score");
   // }
+
+  {
+    const actual = toscanini.getRhythmComplexity("Violin");
+    const expected = ["half 1", "eighth 0", "quarter 0", "quarter 1",
+      "whole 0"];
+    t.deepEqual(actual, expected, "getRhythmComplexity Violin");
+  }
   //
   // {
   //   const actual = toscanini.getRhythmComplexity("String Bass");
