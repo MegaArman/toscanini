@@ -2,11 +2,11 @@
 const et = require("elementtree");
 
 //-----------------------------------
-const createIterator = (instrumentPart)=>
+const createIterator = (measures) =>
 {
   const iterator = {};
   let measureNum = 0;
-  let beatMap = instrumentPart[0];
+  let beatMap = measures[0];
   let beatIndex = -1;
 
   const errors =  
@@ -17,11 +17,11 @@ const createIterator = (instrumentPart)=>
 
   iterator.nextMeasure = () =>
   { 
-    if (measureNum >= instrumentPart.length)
+    if (measureNum >= measures.length)
     {
       throw new Error(errors.noNext);
     }
-    beatMap = instrumentPart[++measureNum];
+    beatMap = measures[++measureNum];
     beatIndex = 0;
     return beatMap[0];
   };
@@ -32,7 +32,7 @@ const createIterator = (instrumentPart)=>
     {
       throw new Error(errors.noPrev);
     }
-    beatMap = instrumentPart[--measureNum];
+    beatMap = measures[--measureNum];
     beatIndex = 0;
     return beatMap[0];
   };
@@ -47,6 +47,10 @@ const createIterator = (instrumentPart)=>
    return beatMap[++beatIndex];
   };
 
+  iterator.hasNext = () =>
+  {
+    return (beatIndex < beatMap.length - 1 && measureNum < measures.length - 1);
+  };
 
   iterator.prev = () =>
   {
@@ -65,10 +69,10 @@ const createIterator = (instrumentPart)=>
 const constructor = (musicxml) =>
 {
   const etree = et.parse(musicxml);
-  const measures = etree.findall(".//measure");
-  const instrumentPart  = [];
+  const measuresXML = etree.findall(".//measure");
+  const measures  = [];
 
-  measures.forEach((measure) => 
+  measuresXML.forEach((measure) => 
   {
     const beats = [];
     let currentBeat = 1;
@@ -80,13 +84,13 @@ const constructor = (musicxml) =>
       {
         //const voice = child.findtext(".//voice");
 
-        const note = {};
-        note.beat = currentBeat;
-        note.duration =  parseInt(child.findtext(".//duration")); 
+        const symbol = {};
+        symbol.beat = currentBeat;
+        symbol.duration =  parseInt(child.findtext(".//duration")); 
 
         if (child.findtext("[rest]"))
         {
-          note.rest = true; 
+          symbol.rest = true; 
         }
         else
         { 
@@ -106,11 +110,11 @@ const constructor = (musicxml) =>
             }
           });
           noteString += octave;
-          note.pitch = noteString;
+          symbol.note = noteString;
         }
 
-        beats.push(note);
-        currentBeat += note.duration;
+        beats.push(symbol);
+        currentBeat += symbol.duration;
        // if (child.findtext("[chord]"))
        // {
        //   
@@ -130,10 +134,10 @@ const constructor = (musicxml) =>
       }
     });
 
-    instrumentPart.push(beats);
+    measures.push(beats);
   });
 
-  return createIterator(instrumentPart);
+  return createIterator(measures);
 };
 
 module.exports = constructor;
