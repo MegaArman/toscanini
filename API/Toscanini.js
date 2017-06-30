@@ -297,6 +297,8 @@ const createToscanini = (musicObj) =>
     const finalRhythm = [];
     const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
+    let popNote = new Object();
+
     function process(key,value)
     {
       if (key === "note")
@@ -305,54 +307,82 @@ const createToscanini = (musicObj) =>
         {
           value.forEach((note) =>
           {
-            let newRhythm = note["type"];
+            if (note["rest"] !== undefined)
+            {
+              popNote.noteType = note["type"];
 
-            if (note["dot"] === undefined)
-            {
-              newRhythm = newRhythm + " 0";
-            }
-            else
-            {
-              if (note["dot"] instanceof Array)
+              if (note["dot"] === undefined)
               {
-                newRhythm = newRhythm + " " + note["dot"].length;
+                popNote.dotted = 0;
               }
               else
               {
-                newRhythm = newRhythm + " 1";
+                if (note["dot"] instanceof Array)
+                {
+                  popNote.dotted = note["dot"].length;
+                }
+                else
+                {
+                  popNote.dotted = 1;
+                }
               }
-            }
 
-            //excluding rests
-            if (!finalRhythm.includes(newRhythm) && note["rest"] === undefined)
-            {
-              finalRhythm.push(newRhythm);
+              let toPush = true;
+
+              // console.log(JSON.stringify(popNote));
+              //excluding rests
+              finalRhythm.forEach((potentialRhythm) =>
+              {
+                if (JSON.stringify(potentialRhythm) === JSON.stringify(popNote))
+                {
+                  toPush = false;
+                }
+              });
+
+              if (toPush === true)
+              {
+                finalRhythm.push(popNote);
+              }
             }
           });
         }
         else
         {
-          let newRhythm = value["type"];
+          if (value["rest"] !== undefined)
+          {
+            popNote.noteType = value["type"];
 
-          if (value["dot"] === undefined)
-          {
-            newRhythm = newRhythm + " 0";
-          }
-          else
-          {
-            if (value["dot"] instanceof Array)
+            if (value["dot"] === undefined)
             {
-              newRhythm = newRhythm + " " + value["dot"].length;
+              popNote.dotted = 0;
             }
             else
             {
-              newRhythm = newRhythm + " 1";
+              if (value["dot"] instanceof Array)
+              {
+                popNote.dotted = value["dot"].length;
+              }
+              else
+              {
+                popNote.dotted = 1;
+              }
             }
-          }
-          //excluding rests
-          if (!finalRhythm.includes(newRhythm) && value["rest"] === undefined)
-          {
-            finalRhythm.push(newRhythm);
+
+            let toPush = true;
+
+            //excluding rests
+            finalRhythm.forEach((potentialRhythm) =>
+            {
+              if (JSON.stringify(potentialRhythm) === JSON.stringify(popNote))
+              {
+                toPush = false;
+              }
+            });
+
+            if (toPush === true)
+            {
+              finalRhythm.push(popNote);
+            }
           }
         }
       }
