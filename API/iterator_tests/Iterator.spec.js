@@ -6,22 +6,48 @@ const musicxml = fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml"))
                  .toString();
 
 //returns largest pitch interval in semitones
-function getLargestInterval()
+function getLargestAscendingInterval()
 {
   const a = Iterator(musicxml);
   const b = Iterator(musicxml);  
-  let largestInterval;
+  let largestInterval = -1;
 
   a.next();
   while (a.hasNext() && b.hasNext())
   {
     const aNext = a.next();
     const bNext = b.next();
-    const newInterval = noteToMidi(a.next().note) - noteToMidi(b.next().note);
-    largestInterval = (largestInterval < newInterval) ? 
-                       newInterval: largestInterval;
-  }
+    const newInterval = noteToMidi(aNext.note) - noteToMidi(bNext.note);
 
+    if (aNext.note && bNext.note && newInterval > largestInterval)
+    {
+      largestInterval = newInterval;
+    }
+  }
   return largestInterval;
 }
-console.log(getLargestInterval());
+
+
+function getLargestDescendingInterval()
+{
+  const a = Iterator(musicxml);
+  const b = Iterator(musicxml);  
+  let largestInterval = 1;
+
+  a.next();
+  while (a.hasNext() && b.hasNext())
+  {
+    const aNext = a.next();
+    const bNext = b.next();
+    const newInterval = noteToMidi(aNext.note) - noteToMidi(bNext.note);
+
+    if (aNext.note && bNext.note && newInterval <largestInterval)
+    {
+      largestInterval = newInterval;
+    }
+  }
+  return largestInterval;
+}
+
+console.log(getLargestAscendingInterval());
+console.log(getLargestDescendingInterval());
