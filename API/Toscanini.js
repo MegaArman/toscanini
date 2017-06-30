@@ -297,20 +297,22 @@ const createToscanini = (musicObj) =>
     const finalRhythm = [];
     const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
-    let popNote = new Object();
+
 
     function process(key,value)
     {
+      let popNote = new Object();
+
       if (key === "note")
       {
         if (value instanceof Array)
         {
           value.forEach((note) =>
           {
+
             if (note["rest"] === undefined)
             {
               popNote.noteType = note["type"];
-
 
               if (note["dot"] === undefined)
               {
@@ -330,20 +332,17 @@ const createToscanini = (musicObj) =>
 
               let toPush = true;
 
-              // console.log(JSON.stringify(popNote));
-              //excluding rests
               finalRhythm.forEach((potentialRhythm) =>
               {
                 if (JSON.stringify(potentialRhythm) === JSON.stringify(popNote))
                 {
-                  toPush = false;
+                  toPush = false; //never sets back
                 }
               });
 
               if (toPush === true)
               {
                 finalRhythm.push(popNote);
-
               }
             }
           });
@@ -372,14 +371,15 @@ const createToscanini = (musicObj) =>
 
             let toPush = true;
 
-            //excluding rests
             finalRhythm.forEach((potentialRhythm) =>
             {
               if (JSON.stringify(potentialRhythm) === JSON.stringify(popNote))
               {
-                toPush = false;
+                toPush = false; //never sets back
               }
             });
+
+
 
             if (toPush === true)
             {
