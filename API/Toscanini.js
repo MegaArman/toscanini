@@ -307,9 +307,10 @@ const createToscanini = (musicObj) =>
         {
           value.forEach((note) =>
           {
-            if (note["rest"] !== undefined)
+            if (note["rest"] === undefined)
             {
               popNote.noteType = note["type"];
+
 
               if (note["dot"] === undefined)
               {
@@ -342,13 +343,14 @@ const createToscanini = (musicObj) =>
               if (toPush === true)
               {
                 finalRhythm.push(popNote);
+
               }
             }
           });
         }
         else
         {
-          if (value["rest"] !== undefined)
+          if (value["rest"] === undefined)
           {
             popNote.noteType = value["type"];
 
