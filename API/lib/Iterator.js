@@ -17,7 +17,7 @@ const createIterator = (measures) =>
 
   iterator.nextMeasure = () =>
   { 
-    if (measureNum >= measures.length)
+    if (measureNum === measures.length - 1)
     {
       throw new Error(errors.noNext);
     }
@@ -49,7 +49,8 @@ const createIterator = (measures) =>
 
   iterator.hasNext = () =>
   {
-    return (beatIndex < beatMap.length - 1 && measureNum < measures.length - 1);
+    return (beatIndex < beatMap.length - 1 
+            ||  measureNum < measures.length - 1);
   };
 
   iterator.prev = () =>
@@ -61,6 +62,11 @@ const createIterator = (measures) =>
       return beatMap[beatIndex];
     }
     return beatMap[--beatIndex];
+  };
+
+  iterator.hasPrev = () =>
+  {
+    return (beatIndex > 0 ||  measureNum > 0);
   };
 
   return iterator;

@@ -1,53 +1,101 @@
+"use strict";
 const fs = require("fs");
 const path = require("path");
-const Iterator = require("../lib/Iterator");
-const noteToMidi = require("../lib/Concertmaster").noteToMidi;
-const musicxml = fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml"))
-                 .toString();
+const test = require("tape").test;
+const Iterator  = require("../lib/Iterator");
 
-//returns largest pitch interval in semitones
-function getLargestAscendingInterval()
+test("basic.xml", (t) =>
 {
-  const a = Iterator(musicxml);
-  const b = Iterator(musicxml);  
-  let largestInterval = -1;
+  const musicXML =
+    fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml")).toString();
+  const iterator =  Iterator(musicXML);
 
-  a.next();
-  while (a.hasNext() && b.hasNext())
   {
-    const aNext = a.next();
-    const bNext = b.next();
-    const newInterval = noteToMidi(aNext.note) - noteToMidi(bNext.note);
-
-    if (aNext.note && bNext.note && newInterval > largestInterval)
-    {
-      largestInterval = newInterval;
-    }
+    const actual = iterator.hasPrev();
+    const expected = false;
+    t.deepEqual(actual, expected, "hasPrev false");
   }
-  return largestInterval;
-}
 
-
-function getLargestDescendingInterval()
-{
-  const a = Iterator(musicxml);
-  const b = Iterator(musicxml);  
-  let largestInterval = 1;
-
-  a.next();
-  while (a.hasNext() && b.hasNext())
   {
-    const aNext = a.next();
-    const bNext = b.next();
-    const newInterval = noteToMidi(aNext.note) - noteToMidi(bNext.note);
-
-    if (aNext.note && bNext.note && newInterval <largestInterval)
-    {
-      largestInterval = newInterval;
-    }
+    const actual = iterator.hasNext();
+    const expected = true;
+    t.deepEqual(actual, expected, "hasNext true");
   }
-  return largestInterval;
-}
 
-console.log(getLargestAscendingInterval());
-console.log(getLargestDescendingInterval());
+  {
+    const actual = { beat: 1, duration: 1, note: "C4" };
+    const expected = iterator.next();
+    t.deepEqual(actual, expected, "next");
+  }
+  
+  {
+    const actual = iterator.hasNext();
+    const expected = true;
+    t.deepEqual(actual, expected, "hasNext true");
+  }
+
+  {
+    const actual = { beat: 2, duration: 1, note: "Bb4" };
+    const expected = iterator.next();
+    t.deepEqual(actual, expected, "next");
+  }
+ 
+  {
+    const actual = { beat: 3, duration: 2, note: "G5" };
+    const expected = iterator.next();
+    t.deepEqual(actual, expected, "next");
+  }
+
+  {
+    const actual = { beat: 1, duration: 4, rest: true };
+    const expected = iterator.next();
+    t.deepEqual(actual, expected, "next");
+  } 
+
+  {
+    const actual = iterator.hasNext();
+    const expected = false;
+    t.deepEqual(actual, expected, "hasNext false");
+  }
+
+  {
+    t.throws(iterator.next, "next exception");
+  }
+
+
+  {
+    const actual = iterator.hasPrev();
+    const expected = true;
+    t.deepEqual(actual, expected, "hasPrev true");
+  }
+
+  //prev
+  {
+    const actual = { beat: 3, duration: 2, note: "G5" };
+    const expected = iterator.prev();
+    t.deepEqual(actual, expected, "prev");
+  }
+  
+  {
+    const actual = { beat: 2, duration: 1, note: "Bb4" };
+    const expected = iterator.prev();
+    t.deepEqual(actual, expected, "prev");
+  }
+ 
+  {
+    const actual = { beat: 1, duration: 1, note: "C4" };
+    const expected = iterator.prev();
+    t.deepEqual(actual, expected, "prev");
+  }
+
+  {
+    const actual = iterator.hasPrev();
+    const expected = false;
+    t.deepEqual(actual, expected, "hasPrev false");
+  }
+
+  {
+    t.throws(iterator.prev, "prev exception");
+  }
+  t.end();
+});
