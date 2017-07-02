@@ -5,7 +5,7 @@ const et = require("elementtree");
 const createIterator = (parts) =>
 {
   const iterator = {};
-  let currentInstrument = "";
+  let measures = [];
   let measureNum = 0;
   let beatMap = measures[0];
   let beatIndex = -1;
@@ -19,7 +19,17 @@ const createIterator = (parts) =>
   iterator.select = (instrumentName) =>
   {
     if (instrumentName in parts)
-    currentInstrument = instrumentName;
+    {
+      measures = parts[instrumentName];
+      beatMap = measures[0];
+      beatIndex = -1;
+      return true;
+    }
+    else
+    {
+     //TODO should an error be thrown???
+     return false;
+    }
   };
 
   iterator.nextMeasure = () =>

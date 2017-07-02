@@ -6,9 +6,12 @@ const Iterator  = require("../lib/Iterator");
 
 test("basic.xml", (t) =>
 {
+
+  //TODO : remove actual and expected???
   const musicXML =
     fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml")).toString();
   const iterator =  Iterator(musicXML);
+  iterator.select("Flute");
 
   {
     const actual = iterator.hasPrev();
@@ -106,12 +109,12 @@ test("two_parts.xml", (t) =>
     path.resolve(__dirname, "../scores/two_monophonic_parts.xml")).toString();
   const iterator =  Iterator(musicXML);
 
-  //{
-  //  iterator.select("flute");
-  //  const actual = iterator.hasPrev();
-  //  const expected = false;
-  //  t.deepEqual(actual, expected, "hasPrev false");
-  //}
+  t.deepEqual(iterator.select("flute"), false, "has flute false");
+  t.deepEqual(iterator.select("Flute"), true, "has Flute true");
+  t.deepEqual(iterator.hasPrev(), false, "hasPrev false");
+  t.deepEqual(iterator.hasNext(), true, "hasNext true");
+  t.deepEqual(iterator.next(), 
+              { beat: 1, duration: 2, note: "G4" }, "next violin");
 
   //{
   //  const actual = iterator.next();
@@ -126,5 +129,5 @@ test("two_parts.xml", (t) =>
   //  t.deepEqual(actual, expected, "next in violin");
   //}
 
-  //t.end();
+  t.end();
 });
