@@ -99,3 +99,32 @@ test("basic.xml", (t) =>
   }
   t.end();
 });
+
+test("two_parts.xml", (t) =>
+{
+  const musicXML = fs.readFileSync(
+    path.resolve(__dirname, "../scores/two_monophonic_parts.xml")).toString();
+  const iterator =  Iterator(musicXML);
+
+  //{
+  //  iterator.select("flute");
+  //  const actual = iterator.hasPrev();
+  //  const expected = false;
+  //  t.deepEqual(actual, expected, "hasPrev false");
+  //}
+
+  //{
+  //  const actual = iterator.next();
+  //  const expected = "notes?";
+  //  t.deepEqual(actual, expected, "next in flute");
+  //} 
+
+  //
+  //{
+  //  const actual = iterator.next();
+  //  const expected = "notes?";
+  //  t.deepEqual(actual, expected, "next in violin");
+  //}
+
+  //t.end();
+});
