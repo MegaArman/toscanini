@@ -58,6 +58,17 @@ test ("assess-tempo", (t) =>
 
 test("assess-dynamics", (t) =>
 {
+  let musicXML =
+    fs.readFileSync(path.resolve(__dirname,
+      "../scores/musicxml/31a-Directions.xml"));
+  let gradeScore = GradeScore(musicXML);
+
+  {
+    const actual = gradeScore.assessDynamics();
+    const expected = 6;
+    //score has 4/4 and 3/8
+    t.deepEqual(actual, expected, "assess-dynamics extreme: 31a-Directions");
+  }
 
   t.end();
 });

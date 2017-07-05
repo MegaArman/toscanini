@@ -42,11 +42,13 @@ const gradeScore = (musicxml) =>
           || instrument === "Altus" || instrument === "Countertenor"
           || instrument === "Quintus" || instrument === "Bassus")
         {
-          dynamicAssessment.push(assessDynamicsChoral(instrument));
+          dynamicAssessment.push.apply(
+            dynamicAssessment, gradeLevel.assessDynamicsChoral(instrument));
         }
         else
         {
-          dynamicAssessment.push(assessDynamicsInstrumental(instrument));
+          dynamicAssessment.push.apply(dynamicAssessment,
+            gradeLevel.assessDynamicsInstrumental(instrument));
         }
     });
 
@@ -55,6 +57,8 @@ const gradeScore = (musicxml) =>
       averageDynamic += dynamicAssessment[i];
     }
     averageDynamic /= dynamicAssessment.length;
+
+    return averageDynamic;
   };
 
 //private funtion kind of?
@@ -68,28 +72,28 @@ const gradeScore = (musicxml) =>
     {
       if (dynamics === "ff" || dynamics === "pp")
       {
-        dynamicAssessment = 5;
+        dynamicAssessment.push(5);
       }
       else if (dynamics === "fp" || dynamics === "sfz")
       {
-        dynamicAssessment = 4;
+        dynamicAssessment.push(4);
       }
       else if (dynamics === "mp" || dynamics === "mf")
       {
-        dynamicAssessment = 3;
+        dynamicAssessment.push(3);
       }
       else if (dynamics === "crescendo" || dynamics === "cres."
         || dynamics === "diminuendo" || dynamics === "dim.")
       {
-        dynamicAssessment = 2;
+        dynamicAssessment.push(2);
       }
       else if (dynamics === "p" || dynamics === "f")
       {
-        dynamicAssessment = 1;
+        dynamicAssessment.push(1);
       }
       else
       {
-        dynamicAssessment = 6;
+        dynamicAssessment.push(6);
       }
     });
     return dynamicAssessment;
@@ -99,38 +103,39 @@ const gradeScore = (musicxml) =>
   {
     const toscanini = Toscanini(musicxml);
     const dynamics = toscanini.getDynamics(instrument);
-    let dynamicAssessment = 0;
+    let dynamicAssessment = [];
 
     dynamics.forEach((dynamic) =>
     {
       if (dynamics === "fff" || dynamics === "ppp")
       {
-        dynamicAssessment = 5;
+        dynamicAssessment.push(5);
       }
       else if (dynamics === "ff" || dynamics === "fp")
       {
-        dynamicAssessment = 4;
+        dynamicAssessment.push(4);
       }
       else if (dynamics === "mp" || dynamics === "pp" || dynamics === "fp"
         || dynamics === "sfz")
       {
-        dynamicAssessment = 3;
+        dynamicAssessment.push(3);
       }
       else if (dynamics === "crescendo" || dynamics === "cres."
         || dynamics === "diminuendo" || dynamics === "dim."
         || dynamics === "mf")
       {
-        dynamicAssessment = 2;
+        dynamicAssessment.push(2);
       }
       else if (dynamics === "p" || dynamics === "f")
       {
-        dynamicAssessment = 1;
+        dynamicAssessment.push(1);
       }
       else
       {
-        dynamicAssessment = 6;
+        dynamicAssessment.push(6);
       }
     });
+
     return dynamicAssessment;
   };
 
