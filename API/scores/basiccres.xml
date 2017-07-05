@@ -5,8 +5,9 @@
   <work-title>super_basic</work-title>
  </work>
  <identification>
+  <rights>super_basic</rights>
   <encoding>
-   <encoding-date>2017-06-28</encoding-date>
+   <encoding-date>2017-06-30</encoding-date>
    <encoder>Galina Belolipetski</encoder>
    <software>Sibelius 7.5.1</software>
    <software>Direct export, not from Dolet</software>
@@ -27,15 +28,15 @@
    <page-height>1584</page-height>
    <page-width>1224</page-width>
    <page-margins type="both">
-    <left-margin>56</left-margin>
-    <right-margin>56</right-margin>
-    <top-margin>56</top-margin>
+    <left-margin>55</left-margin>
+    <right-margin>55</right-margin>
+    <top-margin>55</top-margin>
     <bottom-margin>113</bottom-margin>
    </page-margins>
   </page-layout>
   <system-layout>
    <system-margins>
-    <left-margin>45</left-margin>
+    <left-margin>48</left-margin>
     <right-margin>0</right-margin>
    </system-margins>
    <system-distance>92</system-distance>
@@ -68,7 +69,10 @@
   <lyric-language xml:lang="en" />
  </defaults>
  <credit page="1">
-  <credit-words default-x="611" default-y="156" font-family="FreeSerif" font-style="normal" font-size="22.1875" font-weight="normal" justify="center" valign="middle">super_basic</credit-words>
+  <credit-words default-x="611" default-y="155" font-family="Plantin MT Std" font-style="normal" font-size="22.1875" font-weight="normal" justify="center" valign="middle">super_basic</credit-words>
+ </credit>
+ <credit page="1">
+  <credit-words default-x="611" default-y="144" font-family="Plantin MT Std" font-style="normal" font-size="10.1562" font-weight="normal" justify="center" valign="middle">super_basic</credit-words>
  </credit>
  <part-list>
   <score-part id="P1">
@@ -93,14 +97,14 @@
  </part-list>
  <part id="P1">
   <!--============== Part: P1, Measure: 1 ==============-->
-  <measure number="1" width="214">
+  <measure number="1" width="541">
    <print new-page="yes">
     <system-layout>
      <system-margins>
-      <left-margin>70</left-margin>
+      <left-margin>76</left-margin>
       <right-margin>0</right-margin>
      </system-margins>
-     <top-system-distance>173</top-system-distance>
+     <top-system-distance>176</top-system-distance>
     </system-layout>
    </print>
    <attributes>
@@ -122,7 +126,16 @@
    </attributes>
    <direction>
     <direction-type>
-     <wedge default-x="11" default-y="-65" color="#000000" type="crescendo" />
+     <dynamics default-x="70" default-y="-70" color="#000000" font-family="Opus Text Std" font-style="normal" font-size="12.0312" font-weight="normal">
+      <p />
+     </dynamics>
+    </direction-type>
+    <voice>1</voice>
+    <staff>1</staff>
+   </direction>
+   <direction>
+    <direction-type>
+     <wedge default-x="12" default-y="-65" color="#000000" type="crescendo" />
     </direction-type>
     <voice>1</voice>
     <staff>1</staff>
@@ -139,7 +152,7 @@
     <stem>up</stem>
     <staff>1</staff>
    </note>
-   <note color="#000000" default-x="113" default-y="-55">
+   <note color="#000000" default-x="201" default-y="-55">
     <pitch>
      <step>B</step>
      <alter>-1</alter>
@@ -161,7 +174,7 @@
     <voice>1</voice>
     <staff>1</staff>
    </direction>
-   <note color="#000000" default-x="150" default-y="-30">
+   <note color="#000000" default-x="327" default-y="-30">
     <pitch>
      <step>G</step>
      <octave>5</octave>
@@ -175,13 +188,50 @@
    </note>
   </measure>
   <!--============== Part: P1, Measure: 2 ==============-->
-  <measure number="2" width="118">
-   <note>
-    <rest />
-    <duration>1024</duration>
+  <measure number="2" width="495">
+   <direction>
+    <direction-type>
+     <words default-x="9" default-y="-70" justify="left" valign="middle" font-family="Plantin MT Std" font-style="italic" font-size="12.0312" font-weight="normal">dim.</words>
+    </direction-type>
+    <voice>1</voice>
+    <staff>1</staff>
+   </direction>
+   <note color="#000000" default-x="15" default-y="5">
+    <pitch>
+     <step>G</step>
+     <octave>4</octave>
+    </pitch>
+    <duration>256</duration>
     <instrument id="P1-I1" />
     <voice>1</voice>
-    <type>whole</type>
+    <type>quarter</type>
+    <stem>up</stem>
+    <staff>1</staff>
+   </note>
+   <note color="#000000" default-x="140" default-y="-55">
+    <pitch>
+     <step>B</step>
+     <alter>-1</alter>
+     <octave>4</octave>
+    </pitch>
+    <duration>256</duration>
+    <instrument id="P1-I1" />
+    <voice>1</voice>
+    <type>quarter</type>
+    <accidental>flat</accidental>
+    <stem>down</stem>
+    <staff>1</staff>
+   </note>
+   <note color="#000000" default-x="266" default-y="5">
+    <pitch>
+     <step>G</step>
+     <octave>4</octave>
+    </pitch>
+    <duration>512</duration>
+    <instrument id="P1-I1" />
+    <voice>1</voice>
+    <type>half</type>
+    <stem>up</stem>
     <staff>1</staff>
    </note>
    <barline>

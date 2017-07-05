@@ -286,6 +286,31 @@ const createToscanini = (musicObj) =>
           finalDynamics.push(newDynamics);
         }
       }
+      if (key === "wedge" && typeof value === "object")
+      {
+        const newDynamics = value["type"];
+
+        if (!finalDynamics.includes(newDynamics) && newDynamics !== "stop"
+          && newDynamics !== "start")
+        {
+          finalDynamics.push(newDynamics);
+        }
+      }
+
+      if (key === "words" && typeof value === "object")
+      {
+        const newDynamics = value;
+
+        console.log(newDynamics);
+
+        if (!finalDynamics.includes(newDynamics) && (newDynamics === "cres."
+          || newDynamics === "crescendo" || newDynamics === "dim."
+          || newDynamics === "diminuendo" || newDynamics === "descres."
+          || newDynamics === "descrescendo"))
+        {
+          finalDynamics.push(newDynamics);
+        }
+      }
     }
 
     traverse(jsObj, process);

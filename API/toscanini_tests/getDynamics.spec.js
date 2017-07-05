@@ -30,3 +30,18 @@ test("dynamics_test test", (t) =>
 
   t.end();
 });
+
+test("dynamics_test test", (t) =>
+{
+  const musicXML =
+    fs.readFileSync(path.resolve(__dirname, "../scores/basiccres.xml"));
+  const toscanini =  Toscanini(musicXML);
+
+  {
+    const actual = ["p", "crescendo", "diminuendo"];
+    const expected = toscanini.getDynamics();
+    t.deepEqual(actual, expected, "getDynamics cres/dim score");
+  }
+  
+  t.end();
+});
