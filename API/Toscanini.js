@@ -303,6 +303,8 @@ const createToscanini = (musicObj) =>
 
         console.log(newDynamics);
 
+        // struggling to get inside of the words tag
+
         if (!finalDynamics.includes(newDynamics) && (newDynamics === "cres."
           || newDynamics === "crescendo" || newDynamics === "dim."
           || newDynamics === "diminuendo" || newDynamics === "descres."

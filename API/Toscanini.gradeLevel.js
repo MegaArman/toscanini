@@ -24,13 +24,30 @@ const gradeScore = (musicxml) =>
     const toscanini = Toscanini(musicxml);
     const dynamics = toscanini.getDynamics();
     const dynamicAssessment = [];
+    const instruments = toscanini.getInstrumentNames();
     let averageDynamic = 0;
-    //missing crescendo and diminuendo
 
-    dynamics.forEach((dynamic) =>
+    instruments.forEach((instrument) =>
     {
-      //TODO
-      //this depends on whether it is choral or instrumental
+        if (instrument === "Solo Treble" || instrument === "Solo Soprano"
+          || instrument === "Solo Alto" || instrument === "Solo Tenor"
+          || instrument === "Solo Baritone" || instrument === "Solo Bass"
+          || instrument === "Treble" || instrument === "Soprano"
+          || instrument === "Alto" || instrument === "Tenor"
+          || instrument === "Baritone" || instrument === "Bass"
+          || instrument === "Voice" || instrument === "Choir"
+          || instrument === "Voice [male]" || instrument === "Mean"
+          || instrument === "Cantus" || instrument === "Mezzo-soprano"
+          || instrument === "Secundus" || instrument === "Contralto"
+          || instrument === "Altus" || instrument === "Countertenor"
+          || instrument === "Quintus" || instrument === "Bassus")
+        {
+          dynamicAssessment.push(assessDynamicsChoral(instrument));
+        }
+        else
+        {
+          dynamicAssessment.push(assessDynamicsInstrumental(instrument));
+        }
     });
 
     for (var i = 0; i < dynamicAssessment.length; i++)
@@ -38,6 +55,83 @@ const gradeScore = (musicxml) =>
       averageDynamic += dynamicAssessment[i];
     }
     averageDynamic /= dynamicAssessment.length;
+  };
+
+//private funtion kind of?
+  gradeLevel.assessDynamicsChoral = (instrument) =>
+  {
+    const toscanini = Toscanini(musicxml);
+    const dynamics = toscanini.getDynamics(instrument);
+    let dynamicAssessment = 0;
+
+    dynamics.forEach((dynamic) =>
+    {
+      if (dynamics === "ff" || dynamics === "pp")
+      {
+        dynamicAssessment = 5;
+      }
+      else if (dynamics === "fp" || dynamics === "sfz")
+      {
+        dynamicAssessment = 4;
+      }
+      else if (dynamics === "mp" || dynamics === "mf")
+      {
+        dynamicAssessment = 3;
+      }
+      else if (dynamics === "crescendo" || dynamics === "cres."
+        || dynamics === "diminuendo" || dynamics === "dim.")
+      {
+        dynamicAssessment = 2;
+      }
+      else if (dynamics === "p" || dynamics === "f")
+      {
+        dynamicAssessment = 1;
+      }
+      else
+      {
+        dynamicAssessment = 6;
+      }
+    });
+    return dynamicAssessment;
+  };
+
+  gradeLevel.assessDynamicsInstrumental = (instrument) =>
+  {
+    const toscanini = Toscanini(musicxml);
+    const dynamics = toscanini.getDynamics(instrument);
+    let dynamicAssessment = 0;
+
+    dynamics.forEach((dynamic) =>
+    {
+      if (dynamics === "fff" || dynamics === "ppp")
+      {
+        dynamicAssessment = 5;
+      }
+      else if (dynamics === "ff" || dynamics === "fp")
+      {
+        dynamicAssessment = 4;
+      }
+      else if (dynamics === "mp" || dynamics === "pp" || dynamics === "fp"
+        || dynamics === "sfz")
+      {
+        dynamicAssessment = 3;
+      }
+      else if (dynamics === "crescendo" || dynamics === "cres."
+        || dynamics === "diminuendo" || dynamics === "dim."
+        || dynamics === "mf")
+      {
+        dynamicAssessment = 2;
+      }
+      else if (dynamics === "p" || dynamics === "f")
+      {
+        dynamicAssessment = 1;
+      }
+      else
+      {
+        dynamicAssessment = 6;
+      }
+    });
+    return dynamicAssessment;
   };
 
   gradeLevel.assessMeter = () =>

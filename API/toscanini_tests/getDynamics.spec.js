@@ -38,10 +38,10 @@ test("dynamics_test test", (t) =>
   const toscanini =  Toscanini(musicXML);
 
   {
-    const actual = ["p", "crescendo", "diminuendo"];
+    const actual = ["p", "crescendo", "dim."];
     const expected = toscanini.getDynamics();
     t.deepEqual(actual, expected, "getDynamics cres/dim score");
   }
-  
+
   t.end();
 });
