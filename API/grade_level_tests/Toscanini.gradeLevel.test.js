@@ -55,3 +55,9 @@ test ("assess-tempo", (t) =>
 
   t.end();
 });
+
+test("assess-dynamics", (t) =>
+{
+
+  t.end();
+});

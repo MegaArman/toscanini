@@ -297,18 +297,14 @@ const createToscanini = (musicObj) =>
         }
       }
 
-      if (key === "words" && typeof value === "object")
+      if (key === "words")
       {
-        const newDynamics = value;
-
-        console.log(newDynamics);
-
-        // struggling to get inside of the words tag
+        const newDynamics = value["_"];
 
         if (!finalDynamics.includes(newDynamics) && (newDynamics === "cres."
           || newDynamics === "crescendo" || newDynamics === "dim."
           || newDynamics === "diminuendo" || newDynamics === "descres."
-          || newDynamics === "descrescendo"))
+          || newDynamics === "descrescendo" || newDynamics === undefined))
         {
           finalDynamics.push(newDynamics);
         }
@@ -326,7 +322,7 @@ const createToscanini = (musicObj) =>
 
     function process(key,value)
     {
-      let popNote = new Object();
+      let popNote = {};
 
       if (key === "note")
       {
@@ -334,7 +330,6 @@ const createToscanini = (musicObj) =>
         {
           value.forEach((note) =>
           {
-
             if (note["rest"] === undefined)
             {
               popNote.noteType = note["type"];
@@ -371,6 +366,8 @@ const createToscanini = (musicObj) =>
                 finalRhythm.push(popNote);
               }
             }
+
+            //npm run gt
           });
         }
         else
