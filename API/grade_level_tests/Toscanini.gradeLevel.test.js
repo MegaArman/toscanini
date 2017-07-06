@@ -13,7 +13,7 @@ test("assess-dynamics", (t) =>
 
   {
     const actual = gradeScore.assessDynamics();
-    const expected = 6;
+    const expected = 4.35;
     //score has 4/4 and 3/8
     t.deepEqual(actual, expected, "assess-dynamics extreme: 31a-Directions");
   }
@@ -63,7 +63,7 @@ test ("assess-meter", (t) =>
     t.deepEqual(actual, expected,
       "assess-meter grade 2.5: vivaldi_winter Solo Violin");
   }
-  
+
   {
     const actual = gradeScore.assessMeter("Violoncello");
     const expected = 2.5;

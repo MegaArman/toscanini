@@ -395,8 +395,8 @@ const createToscanini = (musicObj) =>
 
             finalRhythm.forEach((potentialRhythm) =>
             {
-              if ((potentialRhythm.noteType == popNote.noteType)
-                && (potentialRhythm.dotted == popNote.dotted))
+              if ((potentialRhythm.noteType === popNote.noteType)
+                && (potentialRhythm.dotted === popNote.dotted))
               {
                 toPush = false;
               }

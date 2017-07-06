@@ -22,23 +22,24 @@ const gradeScore = (musicxml) =>
   gradeLevel.assessDynamics = (instrumentName) =>
   {
     const toscanini = Toscanini(musicxml);
-    let dynamics = null;
 
+    const dynamicAssessment = [];
+
+    let instruments = null;
     if (instrumentName === undefined)
     {
-       dynamics = toscanini.getDynamics();
+      instruments = toscanini.getInstrumentNames();
     }
     else
     {
-      dynamics = toscanini.getDynamics(instrumentName);
+      instruments = toscanini.getInstrumentNames();
     }
 
-    const dynamicAssessment = [];
-    const instruments = toscanini.getInstrumentNames();
     let averageDynamic = 0;
 
     instruments.forEach((instrument) =>
     {
+      //lowercase
         if (instrument === "Solo Treble" || instrument === "Solo Soprano"
           || instrument === "Solo Alto" || instrument === "Solo Tenor"
           || instrument === "Solo Baritone" || instrument === "Solo Bass"
@@ -81,24 +82,24 @@ const gradeScore = (musicxml) =>
 
     dynamics.forEach((dynamic) =>
     {
-      if (dynamics === "ff" || dynamics === "pp")
+      if (dynamic === "ff" || dynamic === "pp")
       {
         dynamicAssessment.push(5);
       }
-      else if (dynamics === "fp" || dynamics === "sfz")
+      else if (dynamic === "fp" || dynamic === "sfz")
       {
         dynamicAssessment.push(4);
       }
-      else if (dynamics === "mp" || dynamics === "mf")
+      else if (dynamic === "mp" || dynamic === "mf")
       {
         dynamicAssessment.push(3);
       }
-      else if (dynamics === "crescendo" || dynamics === "cres."
-        || dynamics === "diminuendo" || dynamics === "dim.")
+      else if (dynamic === "crescendo" || dynamic === "cres."
+        || dynamic === "diminuendo" || dynamic === "dim.")
       {
         dynamicAssessment.push(2);
       }
-      else if (dynamics === "p" || dynamics === "f")
+      else if (dynamic === "p" || dynamic === "f")
       {
         dynamicAssessment.push(1);
       }
@@ -118,26 +119,26 @@ const gradeScore = (musicxml) =>
 
     dynamics.forEach((dynamic) =>
     {
-      if (dynamics === "fff" || dynamics === "ppp")
+      if (dynamic === "fff" || dynamic === "ppp")
       {
         dynamicAssessment.push(5);
       }
-      else if (dynamics === "ff" || dynamics === "fp")
+      else if (dynamic === "ff" || dynamic === "fp")
       {
         dynamicAssessment.push(4);
       }
-      else if (dynamics === "mp" || dynamics === "pp" || dynamics === "fp"
-        || dynamics === "sfz")
+      else if (dynamic === "mp" || dynamic === "pp" || dynamic === "fp"
+        || dynamic === "sfz")
       {
         dynamicAssessment.push(3);
       }
-      else if (dynamics === "crescendo" || dynamics === "cres."
-        || dynamics === "diminuendo" || dynamics === "dim."
-        || dynamics === "mf")
+      else if (dynamic === "crescendo" || dynamic === "cres."
+        || dynamic === "diminuendo" || dynamic === "dim."
+        || dynamic === "mf")
       {
         dynamicAssessment.push(2);
       }
-      else if (dynamics === "p" || dynamics === "f")
+      else if (dynamic === "p" || dynamic === "f")
       {
         dynamicAssessment.push(1);
       }
@@ -223,7 +224,8 @@ const gradeScore = (musicxml) =>
     {
       rhythms = toscanini.getRhythmComplexity();
     }
-    else {
+    else
+    {
       rhythms = toscanini.getRhythmComplexity(instrumentName);
     }
     let averageRhythm = 0;
@@ -241,7 +243,7 @@ const gradeScore = (musicxml) =>
       {
         rhythmicAssessment.push(2);
       }
-      else if ((rhythm.noteType === "16th" && rhythm.dotted == 0)
+      else if ((rhythm.noteType === "16th" && rhythm.dotted === 0)
       || (rhythm.noteType === "eighth" && rhythm.dotted === 1))
       {
         //not sure how syncopation will be calculated
