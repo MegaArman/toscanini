@@ -19,10 +19,20 @@ const gradeScore = (musicxml) =>
 {
   const gradeLevel = {};
 
-  gradeLevel.assessDynamics = () =>
+  gradeLevel.assessDynamics = (instrumentName) =>
   {
     const toscanini = Toscanini(musicxml);
-    const dynamics = toscanini.getDynamics();
+    let dynamics = null;
+
+    if (instrumentName === undefined)
+    {
+       dynamics = toscanini.getDynamics();
+    }
+    else
+    {
+      dynamics = toscanini.getDynamics(instrumentName);
+    }
+
     const dynamicAssessment = [];
     const instruments = toscanini.getInstrumentNames();
     let averageDynamic = 0;
@@ -57,6 +67,7 @@ const gradeScore = (musicxml) =>
       averageDynamic += dynamicAssessment[i];
     }
     averageDynamic /= dynamicAssessment.length;
+
 
     return averageDynamic;
   };
@@ -139,10 +150,20 @@ const gradeScore = (musicxml) =>
     return dynamicAssessment;
   };
 
-  gradeLevel.assessMeter = () =>
+  gradeLevel.assessMeter = (instrumentName) =>
   {
     const toscanini = Toscanini(musicxml);
-    const timeSignatures = toscanini.getTimeSignatures();
+
+    let timeSignatures = null;
+    if (instrumentName === undefined)
+    {
+      timeSignatures = toscanini.getTimeSignatures();
+    }
+    else
+    {
+      timeSignatures = toscanini.getTimeSignatures(instrumentName);
+    }
+
     const meterAssessment = [];
     let averageMeter = 0;
 
@@ -192,12 +213,19 @@ const gradeScore = (musicxml) =>
     return averageMeter;
   };
 
-  gradeLevel.assessRhythmicComplexity = () =>
+  gradeLevel.assessRhythmicComplexity = (instrumentName) =>
   {
     //does not include pickups
 
     const toscanini = Toscanini(musicxml);
-    const rhythms = toscanini.getRhythmComplexity(instrument);
+    let rhythms = null;
+    if (instrumentName === undefined)
+    {
+      rhythms = toscanini.getRhythmComplexity();
+    }
+    else {
+      rhythms = toscanini.getRhythmComplexity(instrumentName);
+    }
     let averageRhythm = 0;
     let rhythmicAssessment = [];
 
@@ -213,7 +241,7 @@ const gradeScore = (musicxml) =>
       {
         rhythmicAssessment.push(2);
       }
-      else if ((rhythm.noteType === "sixteenth" && rhythm.dotted == 0)
+      else if ((rhythm.noteType === "16th" && rhythm.dotted == 0)
       || (rhythm.noteType === "eighth" && rhythm.dotted === 1))
       {
         //not sure how syncopation will be calculated
@@ -221,7 +249,7 @@ const gradeScore = (musicxml) =>
       }
       //missing fourth
       //double check how 16ths and 32nds are marked in xml
-      else if ((rhythm.noteType === quarter && rhythm.dotted === 2)
+      else if ((rhythm.noteType === "quarter" && rhythm.dotted === 2)
       || (rhythm.noteType === "32nd" && rhythm.dotted === 0))
       {
         //also frequent syncopation
@@ -233,20 +261,28 @@ const gradeScore = (musicxml) =>
       }
     });
 
-    for (var i = 0; i < rhythmAssessment.length; i++)
+    for (var i = 0; i < rhythmicAssessment.length; i++)
     {
-      averageRhythm += rhythmAssessment[i];
+      averageRhythm += rhythmicAssessment[i];
     }
-    averageRhythm /= rhythmAssessment.length;
+    averageRhythm /= rhythmicAssessment.length;
+
+    return averageRhythm;
   };
 
-  gradeLevel.assessTempo = () =>
+  gradeLevel.assessTempo = (instrumentName) =>
   {
-    //does not include more nuances of the changes in tempo - words not
-    //extensively included
-
     const toscanini = Toscanini(musicxml);
-    const tempos = toscanini.getTempos();
+    let tempos = null;
+
+    if (instrumentName === undefined)
+    {
+      tempos = toscanini.getTempos();
+    }
+    else
+    {
+      tempos = toscanini.getTempos(instrumentName);
+    }
     const tempoAssessment = [];
     let averageTempo = 0;
 
