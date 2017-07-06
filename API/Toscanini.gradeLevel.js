@@ -194,14 +194,43 @@ const gradeScore = (musicxml) =>
 
   gradeLevel.assessRhythmicComplexity = () =>
   {
+    //does not include pickups
+
     const toscanini = Toscanini(musicxml);
-    const rhythms = toscanini.getRhythmComplexity();
-    const rhythmAssessment = [];
+    const rhythms = toscanini.getRhythmComplexity(instrument);
     let averageRhythm = 0;
+    let rhythmicAssessment = [];
 
     rhythms.forEach((rhythm) =>
     {
-      //TODO need to set up triplets first, comparison easier
+      if ((rhythm.noteType === "quarter" || rhythm.noteType === "half"
+      || rhythm.noteType === "whole") && rhythm.dotted === 0)
+      {
+        rhythmicAssessment.push(1);
+      }
+      else if ((rhythm.noteType === "eighth" && rhythm.dotted === 0)
+      || (rhythm.noteType === "quarter" && rhythm.dotted === 1))
+      {
+        rhythmicAssessment.push(2);
+      }
+      else if ((rhythm.noteType === "sixteenth" && rhythm.dotted == 0)
+      || (rhythm.noteType === "eighth" && rhythm.dotted === 1))
+      {
+        //not sure how syncopation will be calculated
+        rhythmicAssessment.push(3);
+      }
+      //missing fourth
+      //double check how 16ths and 32nds are marked in xml
+      else if ((rhythm.noteType === quarter && rhythm.dotted === 2)
+      || (rhythm.noteType === "32nd" && rhythm.dotted === 0))
+      {
+        //also frequent syncopation
+        rhythmicAssessment.push(5);
+      }
+      else
+      {
+        rhythmicAssessment.push(6);
+      }
     });
 
     for (var i = 0; i < rhythmAssessment.length; i++)
