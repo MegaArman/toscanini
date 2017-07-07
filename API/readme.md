@@ -72,6 +72,26 @@ score result example: ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"
 ### getNumberOfMeasures
 returns the number of measures in a score.
 
+## Toscanini.gradeLevel.js
+
+### assessDynamics(instrumentName)
+provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
+
+### assessDynamicsChoral(instrument)
+provides an individual instrument assessment, grading from 1-6, of dynamics for a choral instrument
+
+### assessDynamicsInstrument(instrument)
+provides an individual instrument assessment, grading from 1-6, of dynamics for an instrument
+
+### assessMeter(instrumentName)
+provides an assessment, grading from 1-6, of meter in a score, with instrument specification
+
+### assessRhythmicComplexity(instrumentName)
+provides an assessment, grading from 1-6, of rhythmic complexity in a score, with instrument specification
+
+### assessTempo(instrumentName)
+provides an assessment, grading from 1-6, of tempo in a score, with instrument specification
+
 ## Adding new query functions to Toscanini.js
 consider this code from Toscanini.js:
 
