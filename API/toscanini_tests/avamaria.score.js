@@ -49,5 +49,11 @@ test("ava_maria_pg1 tests", (t) =>
     const expected = [[4, 4]];
     t.deepEqual(actual, expected, "getTimeSignatures");
   }
+
+  {
+    const actual = toscanini.getNumberOfMeasures();
+    const expected = 8;
+    t.deepEqual(actual, expected, "getNumberOfMeasures");
+  }
   t.end();
 });

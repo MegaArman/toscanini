@@ -22,8 +22,6 @@ function instrumentCheck(instrumentName, toscanini)
   }
   else
   {
-    //check whether the instrument exists, then look for it
-    let exists = true;
     instruments = toscanini.getInstrumentNames();
 
     if (instruments.includes(instrumentName))
@@ -51,7 +49,7 @@ const gradeScore = (musicxml) =>
     //TODO fix this logic
     let instruments = instrumentCheck(instrumentName, toscanini);
 
-    if (instruments != null)
+    if (instruments !== null)
     {
       let averageDynamic = 0;
 
@@ -177,7 +175,7 @@ const gradeScore = (musicxml) =>
     const toscanini = Toscanini(musicxml);
     let checkInstrument = instrumentCheck(instrumentName, toscanini);
 
-    if (checkInstrument != null)
+    if (checkInstrument !== null)
     {
       let timeSignatures = null;
       if (instrumentName === undefined)
@@ -199,7 +197,8 @@ const gradeScore = (musicxml) =>
           meterAssessment.push(5);
         }
         else if (arraySame(timeSignature, [5, 4])
-          || arraySame(timeSignature, [9, 8]) || arraySame(timeSignature, [12, 8])
+          || arraySame(timeSignature, [9, 8])
+          || arraySame(timeSignature, [12, 8])
           || arraySame(timeSignature, [5, 8]))
         {
           meterAssessment.push(4);
@@ -211,7 +210,8 @@ const gradeScore = (musicxml) =>
           meterAssessment.push(3);
         }
         else if ((arraySame(timeSignature, [2, 2])
-          || arraySame(timeSignature, [4, 4]) || arraySame(timeSignature, [2, 4])
+          || arraySame(timeSignature, [4, 4])
+          || arraySame(timeSignature, [2, 4])
           || arraySame(timeSignature, [3, 4]))
           & timeSignatures.length > 1)
         {
@@ -246,7 +246,7 @@ const gradeScore = (musicxml) =>
     const toscanini = Toscanini(musicxml);
     let checkInstrument = instrumentCheck(instrumentName, toscanini);
 
-    if (checkInstrument != null)
+    if (checkInstrument !== null)
     {
       let rhythms = null;
       if (instrumentName === undefined)
@@ -308,7 +308,7 @@ const gradeScore = (musicxml) =>
     const toscanini = Toscanini(musicxml);
 
     let checkInstrument = instrumentCheck(instrumentName, toscanini);
-    if (checkInstrument != null)
+    if (checkInstrument !== null)
     {
       let tempos = null;
 
@@ -329,7 +329,7 @@ const gradeScore = (musicxml) =>
         {
           tempoAssessment.push(6);
         }
-        else if (tempo > 200 && tempo < 208)
+        else if (tempo > 200 && tempo <= 208)
         {
           tempoAssessment.push(5);
         }

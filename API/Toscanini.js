@@ -422,7 +422,10 @@ const createToscanini = (musicObj) =>
     {
       if (key === "measure")
       {
-        measureNumber = value.length;
+        if (value.length > measureNumber)
+        {
+          measureNumber = value.length;
+        }
       }
     }
     traverse(instrumentObjects[Object.keys(instrumentObjects)[0]], process);
