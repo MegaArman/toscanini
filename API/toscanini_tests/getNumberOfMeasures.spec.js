@@ -33,3 +33,23 @@ test("number_of_measures two tempos", (t) =>
 
   t.end();
 });
+
+test("ava_maria_pg1 number of measures", (t) =>
+{
+  const musicXML =
+    fs.readFileSync(path.resolve(__dirname, "../scores/ava_maria_pg1.xml"));
+  const toscanini =  Toscanini(musicXML);
+
+  {
+    const actual = toscanini.getNumberOfMeasures();
+    const expected = 8;
+    t.deepEqual(actual, expected, "getNumberOfMeasures");
+  }
+
+  {
+    const actual = toscanini.getNumberOfMeasures("Voice");
+    const expected = 8;
+    t.deepEqual(actual, expected, "getNumberOfMeasures Voice");
+  }
+  t.end();
+});

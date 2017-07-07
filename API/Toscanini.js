@@ -414,9 +414,10 @@ const createToscanini = (musicObj) =>
     return finalRhythm;
   };
 
-  toscanini.getNumberOfMeasures = () =>
+  toscanini.getNumberOfMeasures = (instrumentName) =>
   {
     let measureNumber = 0;
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
     function process(key, value)
     {
@@ -428,8 +429,8 @@ const createToscanini = (musicObj) =>
         }
       }
     }
-    traverse(instrumentObjects[Object.keys(instrumentObjects)[0]], process);
-
+    // traverse(instrumentObjects[Object.keys(instrumentObjects)[0]], process);
+    traverse(jsObj, process);
     return measureNumber;
   };
 
