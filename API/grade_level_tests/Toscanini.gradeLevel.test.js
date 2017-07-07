@@ -38,6 +38,14 @@ test("assess-dynamics", (t) =>
       "assess-meter grade 2.5: vivaldi_winter Solo Violin");
   }
 
+  {
+    const actual = gradeScore.assessDynamics("Violin");
+    const expected = "Instrument does not exist. Check your spelling!";
+    //score has 4/4 and 3/8
+    t.deepEqual(actual, expected,
+      "assess-meter grade 2.5: vivaldi_winter Violin DNE");
+  }
+
   t.end();
 });
 
@@ -91,6 +99,13 @@ test ("assess-meter", (t) =>
     t.deepEqual(actual, expected,
       "assess-meter grade 2.5: vivaldi_winter Violoncello");
   }
+
+  {
+    const actual = gradeScore.assessMeter("Voice");
+    const expected = "Instrument does not exist. Check your spelling!";
+    t.deepEqual(actual, expected,
+      "assess-meter grade 2.5: vivaldi_winter Voice DNE");
+  }
   t.end();
 });
 
@@ -125,6 +140,13 @@ test ("assess-rhythmic-complexity", (t) =>
     t.deepEqual(actual, expected, "assess-tempo grade 3: ave maria Voice");
   }
 
+  {
+    const actual = gradeScore.assessRhythmicComplexity("Violin");
+    const expected = "Instrument does not exist. Check your spelling!";
+    t.deepEqual(actual, expected,
+      "assess-meter grade 2.5: ava maria Violin DNE");
+  }
+
   t.end();
 });
 test ("assess-tempo", (t) =>
@@ -157,5 +179,13 @@ test ("assess-tempo", (t) =>
     t.deepEqual(actual, expected,
       "assess-tempo grade 3: vivaldi_winter violin");
   }
+
+  {
+    const actual = gradeScore.assessTempo("Voice");
+    const expected = "Instrument does not exist. Check your spelling!";
+    t.deepEqual(actual, expected,
+      "assess-meter grade 2.5: vivaldi_winter Voice DNE");
+  }
+
   t.end();
 });
