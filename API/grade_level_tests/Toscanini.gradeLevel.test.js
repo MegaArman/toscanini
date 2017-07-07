@@ -14,8 +14,28 @@ test("assess-dynamics", (t) =>
   {
     const actual = gradeScore.assessDynamics();
     const expected = 4.35;
+    //TODO
     //score has 4/4 and 3/8
     t.deepEqual(actual, expected, "assess-dynamics extreme: 31a-Directions");
+  }
+
+  musicXML =
+    fs.readFileSync(path.resolve(__dirname, "../scores/vivaldi_winter.xml"));
+  gradeScore = GradeScore(musicXML);
+
+  {
+    const actual = gradeScore.assessDynamics();
+    const expected = 2.25;
+    //score has 4/4 and 3/8
+    t.deepEqual(actual, expected, "assess-meter grade 2.5: vivaldi_winter");
+  }
+
+  {
+    const actual = gradeScore.assessDynamics("Solo Violin");
+    const expected = 2.25;
+    //score has 4/4 and 3/8
+    t.deepEqual(actual, expected,
+      "assess-meter grade 2.5: vivaldi_winter Solo Violin");
   }
 
   t.end();
@@ -88,6 +108,23 @@ test ("assess-rhythmic-complexity", (t) =>
       "assess-rhythmic-complexity grade 6: many rhythmic durations");
   }
 
+  musicXML =
+    fs.readFileSync(path.resolve(__dirname, "../scores/ava_maria_pg1.xml"));
+  gradeScore = GradeScore(musicXML);
+
+  {
+    const actual = Math.round(gradeScore.assessRhythmicComplexity());
+    const expected = 3;
+    t.deepEqual(actual, expected, "assess-tempo grade 3: ave maria");
+  }
+
+  {
+    const actual =
+      Math.round(gradeScore.assessRhythmicComplexity("Voice"));
+    const expected = 3;
+    t.deepEqual(actual, expected, "assess-tempo grade 3: ave maria Voice");
+  }
+
   t.end();
 });
 test ("assess-tempo", (t) =>
@@ -113,5 +150,12 @@ test ("assess-tempo", (t) =>
     t.deepEqual(actual, expected, "assess-tempo grade 3: vivaldi_winter");
   }
 
+  {
+    const actual = gradeScore.assessTempo("Solo Violin");
+    const expected = 3;
+    //score has 4/4 and 3/8
+    t.deepEqual(actual, expected,
+      "assess-tempo grade 3: vivaldi_winter violin");
+  }
   t.end();
 });
