@@ -2,9 +2,12 @@
 const et = require("elementtree");
 
 //-----------------------------------
+//TODO call partsBeatMaps???
 const createIterator = (parts) =>
 {
   const iterator = {};
+  
+  //TODO make a function that sets these for debugging purposes/code clean
   let measures = [];
   let measureNum = 0;
   let beatMap = measures[0];
@@ -13,10 +16,11 @@ const createIterator = (parts) =>
   const errors =  
   {
     "noNext": "no next exists!",
-    "noPrev": "no prev exists!"
+    "noPrev": "no prev exists!",
+    "badMeasure": "measure does not exist!"
   };
 
-  iterator.select = (instrumentName) =>
+  iterator.selectInstrument = (instrumentName) =>
   {
     if (instrumentName in parts)
     {
@@ -30,6 +34,17 @@ const createIterator = (parts) =>
      //TODO should an error be thrown???
      return false;
     }
+  };
+
+  iterator.setMeasureNum = (newMeasureNum) =>
+  {
+    if (newMeasureNum <= 0 || newMeasureNum >= measures.length)
+    {
+      throw new Error(errors.badMeasure);
+    }
+    measureNum = newMeasureNum;
+    beatMap = measures[measureNum];
+    beatIndex = -1;
   };
 
   iterator.nextMeasure = () =>
