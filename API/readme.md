@@ -1,22 +1,25 @@
 # API
 
-## Tooling
+# Table of contents
+1. [Developer Stuff](#dev)
+2. [Toscanini.Iterator](#iterator)
+3. [Toscanini](#toscanini)
+4. [Toscanini.gradeLevel](#gradeLevel)
 
-Last updated 1/27/17:
-
--OS: CentOS 7 (recommended)
+## Developer Stuff <a name="dev"></a>
+-OS: Should not matter. There's no binaries here.
 
 -JS runtime environment (and more): Node v6.9.4
 
 -Text editor: Any text editor that supports a plugin called "eslint". I've had success with Atom and Vim.
 
 _Refer to .eslintrc.js in the parent directory to see what linter rules there are_
-## Setup
+### Setup
 1) Clone/download
 
 2) Use npm install to get dependencies listed in package.json
 
-## Sample Execution 
+### Sample Execution 
  node _jsfileyouwanttorun_
  
 ### Lint and Run Unit Tests 
@@ -28,69 +31,6 @@ _Refer to .eslintrc.js in the parent directory to see what linter rules there ar
 ### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
  
-## Toscanini.js
-const toscanini = Toscanini(musicXML); //create a Toscanini instance from musicXML
-
-Currently supports the following queries:
-
-### getValsByTagName(tagName)
-Returns all the values matching an xml tag name as an array, ex: toscanini.getValsByTagName("octave") => ["4", "4", "5"]. Mainly useful for testing to see what's in a score.
-
-### getPitchRange(instrumentName)
-Returns an object like {"minPitch": 30, "maxPitch": 72"} 
-
-if no instrumentName is provided (ex: "flute"), gets the min and max pitches of the entire score.
-
-### getKeySignatures(instrumentName)
-gets the key signatures of the whole piece (returns an array) or for a particular instrument
-
-### getInstrumentNames()
-gets the name of the instruments in the score (returns as an array)
-  
-### getInstrumentsWithMelody(melodyString)
-returns array of instruments who have a melody. NOTE: may not work for instruments playing chords
-
-### getTempos()
-returns an array containing all tempos in the score
-
-### getTimeSignatures(instrumentName)
-returns a matrix like so [[4,4], [9,8]] for time signatures 4/4 and 9/8, for a particular instrument
-
-### getDynamics(instrumentName)
-returns an array of dynamics for a particular instrument, or all dynamics in a score
-
-### getRhythmComplexity(instrumentName)
-returns an array of note lengths associated with a score or instrument, returning a string or a series of strings, with a number representing the number of dots associated with that note.
-
-ex.
-half = half 0
-dotted half = half 1
-double dotted half = half 2
-
-score result example: ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
-
-### getNumberOfMeasures
-returns the number of measures in a score.
-
-## Toscanini.gradeLevel.js
-
-### assessDynamics(instrumentName)
-provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
-
-### assessDynamicsChoral(instrument)
-provides an individual instrument assessment, grading from 1-6, of dynamics for a choral instrument
-
-### assessDynamicsInstrument(instrument)
-provides an individual instrument assessment, grading from 1-6, of dynamics for an instrument
-
-### assessMeter(instrumentName)
-provides an assessment, grading from 1-6, of meter in a score, with instrument specification
-
-### assessRhythmicComplexity(instrumentName)
-provides an assessment, grading from 1-6, of rhythmic complexity in a score, with instrument specification
-
-### assessTempo(instrumentName)
-provides an assessment, grading from 1-6, of tempo in a score, with instrument specification
 
 ## Adding new query functions to Toscanini.js
 consider this code from Toscanini.js:
@@ -145,3 +85,95 @@ try calling toscanini.findValsByKey('octave') to see all the octaves of a score
 
       traverse(jsObj, process);
     }
+
+## Toscanini.Iterator <a name="iterator"></a>
+    const i = Iterator(musicXML); //create a Toscanini instance from musicXML
+    
+### selectInstrument(instrumentName)
+The iterator is set to the first measure of the instrument part specified by instrumentName (ex: "Violin")
+
+### nextMeasure()
+The iterator moves to the first beat of the next measure
+
+### prevMeasure()
+The iterator moves to the first beat of the previous measure
+
+### next()
+The iterator moves to the next symbol be it a note or rest and returns an object to represent that symbol, ex:
+{ beat: 3, duration: 2, note: "G5" }
+Tells us the next note is a G5 playing on beat 3
+
+### hasNext()
+Returns true or false depending on whether or not there is a next symbol. 
+Use this to avoid an exception being thrown.
+
+### prev()
+The iterator moves to the previous symbol be it a note or rest and returns an object to represent that symbol
+
+### hasPrev()
+Returns true or false depending on whether or not there is a previous symbol.
+Use this to avoid an exception being thrown.
+
+## Toscanini.js <a name="toscanini"></a>
+    const toscanini = Toscanini(musicXML); //create a Toscanini instance from musicXML
+
+Currently supports the following queries:
+
+### getValsByTagName(tagName)
+Returns all the values matching an xml tag name as an array, ex: toscanini.getValsByTagName("octave") => ["4", "4", "5"]. Mainly useful for testing to see what's in a score.
+
+### getPitchRange(instrumentName)
+Returns an object like {"minPitch": 30, "maxPitch": 72"} 
+
+if no instrumentName is provided (ex: "flute"), gets the min and max pitches of the entire score.
+
+### getKeySignatures(instrumentName)
+gets the key signatures of the whole piece (returns an array) or for a particular instrument
+
+### getInstrumentNames()
+gets the name of the instruments in the score (returns as an array)
+  
+### getInstrumentsWithMelody(melodyString)
+returns array of instruments who have a melody. NOTE: may not work for instruments playing chords
+
+### getTempos()
+returns an array containing all tempos in the score
+
+### getTimeSignatures(instrumentName)
+returns a matrix like so [[4,4], [9,8]] for time signatures 4/4 and 9/8, for a particular instrument
+
+### getDynamics(instrumentName)
+returns an array of dynamics for a particular instrument, or all dynamics in a score
+
+### getRhythmComplexity(instrumentName)
+returns an array of note lengths associated with a score or instrument, returning a string or a series of strings, with a number representing the number of dots associated with that note.
+
+ex.
+half = half 0
+dotted half = half 1
+double dotted half = half 2
+
+score result example: ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
+
+### getNumberOfMeasures
+returns the number of measures in a score.
+
+## Toscanini.gradeLevel.js <a name="gradeLevel"></a>
+
+### assessDynamics(instrumentName)
+provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
+
+### assessDynamicsChoral(instrument)
+provides an individual instrument assessment, grading from 1-6, of dynamics for a choral instrument
+
+### assessDynamicsInstrument(instrument)
+provides an individual instrument assessment, grading from 1-6, of dynamics for an instrument
+
+### assessMeter(instrumentName)
+provides an assessment, grading from 1-6, of meter in a score, with instrument specification
+
+### assessRhythmicComplexity(instrumentName)
+provides an assessment, grading from 1-6, of rhythmic complexity in a score, with instrument specification
+
+### assessTempo(instrumentName)
+provides an assessment, grading from 1-6, of tempo in a score, with instrument specification
