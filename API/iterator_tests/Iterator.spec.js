@@ -10,96 +10,30 @@ test("basic.xml", (t) =>
   //TODO : remove actual and expected???
   const musicXML =
     fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml")).toString();
-  const iterator =  Iterator(musicXML);
-  iterator.selectInstrument("Flute");
+  const i =  Iterator(musicXML);
 
-  {
-    const actual = iterator.hasPrev();
-    const expected = false;
-    t.deepEqual(actual, expected, "hasPrev false");
-  }
-
-  {
-    const actual = iterator.hasNext();
-    const expected = true;
-    t.deepEqual(actual, expected, "hasNext true");
-  }
-
-  {
-    const actual = { beat: 1, duration: 1, note: "C4" };
-    const expected = iterator.next();
-    t.deepEqual(actual, expected, "next");
-  }
+  t.deepEqual(i.selectInstrument("Flute"), true, "has Flute");
+  t.deepEqual(i.hasPrev(), false, "hasPrev false");
+  t.deepEqual(i.hasNext(), true, "hasNext true");
+  t.deepEqual(i.next(), { beat: 1, duration: 1, note: "C4" }, "next");
+  t.deepEqual(i.hasNext(), true, "hasNext true");
   
-  {
-    const actual = iterator.hasNext();
-    const expected = true;
-    t.deepEqual(actual, expected, "hasNext true");
-  }
+  //next
+  t.deepEqual(i.next(), { beat: 2, duration: 1, note: "Bb4" }, "next");
+  t.deepEqual(i.next(), { beat: 3, duration: 2, note: "G5" }, "next");
+  t.deepEqual(i.next(), { beat: 1, duration: 4, rest: true }, "next");
+  t.deepEqual(i.hasNext(), false, "hasNext false");
+  t.throws(i.next, "next exception");
 
-  {
-    const actual = { beat: 2, duration: 1, note: "Bb4" };
-    const expected = iterator.next();
-    t.deepEqual(actual, expected, "next");
-  }
- 
-  {
-    const actual = { beat: 3, duration: 2, note: "G5" };
-    const expected = iterator.next();
-    t.deepEqual(actual, expected, "next");
-  }
-
-  {
-    const actual = { beat: 1, duration: 4, rest: true };
-    const expected = iterator.next();
-    t.deepEqual(actual, expected, "next");
-  } 
-
-  {
-    const actual = iterator.hasNext();
-    const expected = false;
-    t.deepEqual(actual, expected, "hasNext false");
-  }
-
-  {
-    t.throws(iterator.next, "next exception");
-  }
-
-
-  {
-    const actual = iterator.hasPrev();
-    const expected = true;
-    t.deepEqual(actual, expected, "hasPrev true");
-  }
+  t.deepEqual(i.hasPrev(), true, "hasPrev true");
 
   //prev
-  {
-    const actual = { beat: 3, duration: 2, note: "G5" };
-    const expected = iterator.prev();
-    t.deepEqual(actual, expected, "prev");
-  }
-  
-  {
-    const actual = { beat: 2, duration: 1, note: "Bb4" };
-    const expected = iterator.prev();
-    t.deepEqual(actual, expected, "prev");
-  }
- 
-  {
-    const actual = { beat: 1, duration: 1, note: "C4" };
-    const expected = iterator.prev();
-    t.deepEqual(actual, expected, "prev");
-  }
+  t.deepEqual(i.prev(), { beat: 3, duration: 2, note: "G5" }, "prev");
+  t.deepEqual(i.prev(), { beat: 2, duration: 1, note: "Bb4" }, "prev");
+  t.deepEqual(i.prev(), { beat: 1, duration: 1, note: "C4" }, "prev");
+  t.deepEqual(i.hasPrev(), false, "hasPrev false");
 
-  {
-    const actual = iterator.hasPrev();
-    const expected = false;
-    t.deepEqual(actual, expected, "hasPrev false");
-  }
-
-  {
-    t.throws(iterator.prev, "prev exception");
-  }
+  t.throws(i.prev, "prev exception");
   t.end();
 });
 
@@ -107,17 +41,17 @@ test("two_parts.xml", (t) =>
 {
   const musicXML = fs.readFileSync(
     path.resolve(__dirname, "../scores/two_monophonic_parts.xml")).toString();
-  const iterator =  Iterator(musicXML);
+  const i =  Iterator(musicXML);
 
-  t.deepEqual(iterator.selectInstrument("flute"), false, "has flute false");
-  t.deepEqual(iterator.selectInstrument("Flute"), true, "has Flute true");
-  t.deepEqual(iterator.hasPrev(), false, "hasPrev false");
-  t.deepEqual(iterator.hasNext(), true, "hasNext true");
-  t.deepEqual(iterator.next(), 
+  t.deepEqual(i.selectInstrument("flute"), false, "has flute false");
+  t.deepEqual(i.selectInstrument("Flute"), true, "has Flute true");
+  t.deepEqual(i.hasPrev(), false, "hasPrev false");
+  t.deepEqual(i.hasNext(), true, "hasNext true");
+  t.deepEqual(i.next(), 
               { beat: 1, duration: 2, note: "G4" }, "Flute next");
 
-  t.deepEqual(iterator.selectInstrument("Violin"), true, "has Violin true");
-  t.deepEqual(iterator.next(), 
+  t.deepEqual(i.selectInstrument("Violin"), true, "has Violin true");
+  t.deepEqual(i.next(), 
               { beat: 1, duration: 2, note: "D5" }, "Violin next");
   t.end();
 });
