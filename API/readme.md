@@ -114,7 +114,7 @@ The iterator moves to the previous symbol be it a note or rest and returns an ob
 Returns true or false depending on whether or not there is a previous symbol.
 Use this to avoid an exception being thrown.
 
-## Toscanini.js <a name="toscanini"></a>
+## Toscanini <a name="toscanini"></a>
     const toscanini = Toscanini(musicXML); //create a Toscanini instance from musicXML
 
 Currently supports the following queries:
@@ -158,7 +158,7 @@ score result example: ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"
 ### getNumberOfMeasures
 returns the number of measures in a score.
 
-## Toscanini.gradeLevel.js <a name="gradeLevel"></a>
+## Toscanini.gradeLevel <a name="gradeLevel"></a>
 
 ### assessDynamics(instrumentName)
 provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
