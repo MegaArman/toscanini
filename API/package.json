@@ -11,9 +11,10 @@
     "url": "https://github.com/MegaArman/MusicXMLResearch/tree/master/JS/API"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint *.js",
+    "lint": "./node_modules/.bin/eslint --cache ./lib/*.js toscanini_tests/*.js grade_level_tests/*.js",
     "test": "npm run lint && nyc tape toscanini_tests/*.js | tap-nyc",
-    "gt": "npm run lint && nyc tape grade_level_tests/*.js | tap-nyc"
+    "gt": "npm run lint && nyc tape grade_level_tests/*.js | tap-nyc",
+    "it": "npm run lint && nyc tape iterator_tests/*.js | tap-nyc"
   },
   "dependencies": {
     "xml2js": "^0.4.17"
