@@ -1,4 +1,5 @@
 "use strict";
+const iterator = require("./Iterator");
 
 //"private static" utility definitions=========================================
 const pitchToMidiNum = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
@@ -319,11 +320,11 @@ const createToscanini = (musicObj) =>
   {
     const finalRhythm = [];
     const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
-    const iterator = Iterator(musicxml);
 
     if (jsObj !== musicObj)
     {
-      iterator.selectInstrument(jsObj);
+      console.log(instrumentName);
+      iterator.selectInstrument(instrumentName);
     }
 
     let next = null;
@@ -335,7 +336,7 @@ const createToscanini = (musicObj) =>
 
       if (next.rest === undefined)
       {
-        popNote.noteType = duration;
+        popNote.noteType = next.duration;
       }
 
       let toPush = true;
@@ -353,7 +354,7 @@ const createToscanini = (musicObj) =>
         finalRhythm.push(popNote);
       }
     }
-    
+
     // function process(key,value)
     // {
     //

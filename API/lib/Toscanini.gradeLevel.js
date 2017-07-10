@@ -1,6 +1,5 @@
 "use strict";
 const Toscanini = require("./Toscanini");
-const iterator = require("./Iterator");
 
 function arraySame(first, second)
 {
@@ -246,16 +245,10 @@ const gradeScore = (musicxml) =>
     //does not include pickups
     const toscanini = Toscanini(musicxml);
     let checkInstrument = instrumentCheck(instrumentName, toscanini);
-
+    const rhythms = toscanini.getRhythmComplexity(checkInstrument);
 
     if (checkInstrument !== null)
     {
-      if (instrumentName !== undefined)
-      {
-        iterator.selectInstrument(instrumentName);
-      }
-
-
       let averageRhythm = 0;
       let rhythmicAssessment = [];
 
