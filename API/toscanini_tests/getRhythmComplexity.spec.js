@@ -28,7 +28,8 @@ test("rhythmic_complexity", (t) =>
   //
   // {
   //   const actual = toscanini.getRhythmComplexity("String Bass");
-  //   const expected = ["whole 0", "half 0", "quarter 1", "half 1", "quarter 3"];
+  //   const expected = ["whole 0", "half 0", "quarter 1",
+  //    "half 1", "quarter 3"];
   //   t.deepEqual(actual, expected, "getRhythmComplexity String Bass");
   // }
   //
