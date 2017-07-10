@@ -17,7 +17,7 @@ test("basic.xml", (t) =>
   t.deepEqual(i.hasNext(), true, "hasNext true");
   t.deepEqual(i.next(), { beat: 1, duration: 1, note: "C4" }, "next");
   t.deepEqual(i.hasNext(), true, "hasNext true");
-  
+
   //next
   t.deepEqual(i.next(), { beat: 2, duration: 1, note: "Bb4" }, "next");
   t.deepEqual(i.next(), { beat: 3, duration: 2, note: "G5" }, "next");
@@ -52,5 +52,17 @@ test("two_parts.xml", (t) =>
 
   t.deepEqual(i.selectInstrument("Violin"), true, "has Violin true");
   t.deepEqual(i.next(), { beat: 1, duration: 2, note: "D5" }, "Violin next");
+  t.end();
+});
+
+test("with other things", (t) =>
+{
+  const musicXML = fs.readFileSync(
+    path.resolve(__dirname, "../scores/ava_maria_pg1.xml")).toString();
+  const i =  Iterator(musicXML);
+
+  i.selectInstrument("Voice");
+  console.log(i.next());
+  console.log(i.next());
   t.end();
 });

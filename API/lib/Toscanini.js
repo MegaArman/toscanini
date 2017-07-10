@@ -319,97 +319,131 @@ const createToscanini = (musicObj) =>
   {
     const finalRhythm = [];
     const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    const iterator = Iterator(musicxml);
 
-    function process(key,value)
+    if (jsObj !== musicObj)
+    {
+      iterator.selectInstrument(jsObj);
+    }
+
+    let next = null;
+    while (iterator.hasNext())
     {
       let popNote = {};
+      next = iterator.next();
+      console.log(next);
 
-      if (key === "note")
+      if (next.rest === undefined)
       {
-        if (value instanceof Array)
+        popNote.noteType = duration;
+      }
+
+      let toPush = true;
+
+      finalRhythm.forEach((potentialRhythm) =>
+      {
+        if ((potentialRhythm.noteType === popNote.noteType))
         {
-          value.forEach((note) =>
-          {
-            if (note["rest"] === undefined)
-            {
-              popNote.noteType = note["type"];
-
-              if (note["dot"] === undefined)
-              {
-                popNote.dotted = 0;
-              }
-              else
-              {
-                if (note["dot"] instanceof Array)
-                {
-                  popNote.dotted = note["dot"].length;
-                }
-                else
-                {
-                  popNote.dotted = 1;
-                }
-              }
-
-              let toPush = true;
-
-              finalRhythm.forEach((potentialRhythm) =>
-              {
-                if ((potentialRhythm.noteType === popNote.noteType) &&
-                  (potentialRhythm.dotted === popNote.dotted))
-                {
-                  toPush = false;
-                }
-              });
-
-              if (toPush === true)
-              {
-                finalRhythm.push(popNote);
-              }
-            }
-            //npm run gt
-          });
+          toPush = false;
         }
-        else
-        {
-          if (value["rest"] === undefined)
-          {
-            popNote.noteType = value["type"];
+      });
 
-            if (value["dot"] === undefined)
-            {
-              popNote.dotted = 0;
-            }
-            else
-            {
-              if (value["dot"] instanceof Array)
-              {
-                popNote.dotted = value["dot"].length;
-              }
-              else
-              {
-                popNote.dotted = 1;
-              }
-            }
-
-            let toPush = true;
-
-            finalRhythm.forEach((potentialRhythm) =>
-            {
-              if ((potentialRhythm.noteType === popNote.noteType)
-                && (potentialRhythm.dotted === popNote.dotted))
-              {
-                toPush = false;
-              }
-            });
-
-            if (toPush === true)
-            {
-              finalRhythm.push(popNote);
-            }
-          }
-        }
+      if (toPush === true)
+      {
+        finalRhythm.push(popNote);
       }
     }
+    
+    // function process(key,value)
+    // {
+    //
+    //
+    //   if (key === "note")
+    //   {
+    //     if (value instanceof Array)
+    //     {
+    //       value.forEach((note) =>
+    //       {
+    //         if (note["rest"] === undefined)
+    //         {
+    //           popNote.noteType = note["type"];
+    //
+    //           if (note["dot"] === undefined)
+    //           {
+    //             popNote.dotted = 0;
+    //           }
+    //           else
+    //           {
+    //             if (note["dot"] instanceof Array)
+    //             {
+    //               popNote.dotted = note["dot"].length;
+    //             }
+    //             else
+    //             {
+    //               popNote.dotted = 1;
+    //             }
+    //           }
+    //
+    //           let toPush = true;
+    //
+    //           finalRhythm.forEach((potentialRhythm) =>
+    //           {
+    //             if ((potentialRhythm.noteType === popNote.noteType) &&
+    //               (potentialRhythm.dotted === popNote.dotted))
+    //             {
+    //               toPush = false;
+    //             }
+    //           });
+    //
+    //           if (toPush === true)
+    //           {
+    //             finalRhythm.push(popNote);
+    //           }
+    //         }
+    //         //npm run gt
+    //       });
+    //     }
+    //     else
+    //     {
+    //       if (value["rest"] === undefined)
+    //       {
+    //         popNote.noteType = value["type"];
+    //
+    //         if (value["dot"] === undefined)
+    //         {
+    //           popNote.dotted = 0;
+    //         }
+    //         else
+    //         {
+    //           if (value["dot"] instanceof Array)
+    //           {
+    //             popNote.dotted = value["dot"].length;
+    //           }
+    //           else
+    //           {
+    //             popNote.dotted = 1;
+    //           }
+    //         }
+    //
+    //         let toPush = true;
+    //
+    //         finalRhythm.forEach((potentialRhythm) =>
+    //         {
+    //           if ((potentialRhythm.noteType === popNote.noteType)
+    //             && (potentialRhythm.dotted === popNote.dotted))
+    //           {
+    //             toPush = false;
+    //           }
+    //         });
+    //
+    //         if (toPush === true)
+    //         {
+    //           finalRhythm.push(popNote);
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
     traverse(jsObj, process);
     return finalRhythm;
   };
