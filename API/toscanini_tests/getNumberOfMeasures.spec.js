@@ -51,5 +51,11 @@ test("ava_maria_pg1 number of measures", (t) =>
     const expected = 8;
     t.deepEqual(actual, expected, "getNumberOfMeasures Voice");
   }
+
+  {
+    const actual = toscanini.getNumberOfMeasures("Piano");
+    const expected = 8;
+    t.deepEqual(actual, expected, "getNumberOfMeasures Piano");
+  }
   t.end();
 });
