@@ -1,5 +1,6 @@
 "use strict";
-const iterator = require("./Iterator");
+const Iterator = require("./Iterator");
+const et = require("elementtree");
 
 //"private static" utility definitions=========================================
 const pitchToMidiNum = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
@@ -72,7 +73,7 @@ function makeInstrumentObjects(musicObj)
 
 //=============================================================================
 //"class"
-const createToscanini = (musicObj) =>
+const createToscanini = (musicObj, et, iter) =>
 {
   //"private" variables..note state is safest kept constant-------------------
   const toscanini = {};
@@ -324,14 +325,18 @@ const createToscanini = (musicObj) =>
     if (jsObj !== musicObj)
     {
       console.log(instrumentName);
-      iterator.selectInstrument(instrumentName);
+      iter.selectInstrument(instrumentName);
+    }
+    else
+    {
+      console.log("nah");
     }
 
     let next = null;
-    while (iterator.hasNext())
+    while (iter.hasNext())
     {
       let popNote = {};
-      next = iterator.next();
+      next = iter.next();
       console.log(next);
 
       if (next.rest === undefined)
@@ -480,6 +485,8 @@ const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 const constructor = (musicxml) =>
 {
   let scoreObj;
+  let elementtree = et.parse(musicxml);
+  let iterator = Iterator(musicxml);
 
   parser.parseString(musicxml, (err, obj) =>
   {
@@ -492,7 +499,7 @@ const constructor = (musicxml) =>
 
   // console.log(JSON.stringify(scoreObj, null, 4));
 
-  return createToscanini(scoreObj);
+  return createToscanini(scoreObj, elementtree, iterator);
 };
 
 module.exports = constructor;
