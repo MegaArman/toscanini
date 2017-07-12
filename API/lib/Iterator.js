@@ -36,13 +36,15 @@ const createIterator = (parts) =>
     }
   };
 
+  iterator.getMeasureNum = () => measureNum + 1;
+
   iterator.setMeasureNum = (newMeasureNum) =>
   {
-    if (newMeasureNum <= 0 || newMeasureNum >= measures.length)
+    if (newMeasureNum <= 0 || newMeasureNum > measures.length)
     {
       throw new Error(errors.badMeasure);
     }
-    measureNum = newMeasureNum;
+    measureNum = newMeasureNum - 1;
     beatMap = measures[measureNum];
     beatIndex = -1;
   };
