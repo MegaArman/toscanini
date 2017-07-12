@@ -44,6 +44,8 @@ test("two_monophonic_parts.xml", (t) =>
   t.deepEqual(i.selectInstrument("flute"), false, "has flute false");
 
   t.deepEqual(i.selectInstrument("Flute"), true, "has Flute true");
+  t.deepEqual(i.getSelectedInstrumentName(), "Flute", 
+    "getSelectedInstrumentName");
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
   t.deepEqual(i.hasNext(), true, "hasNext true");
   t.deepEqual(i.next(), { beat: 1, duration: 2, note: "G4" }, "Flute next");
