@@ -122,8 +122,6 @@ const constructor = (musicxml) =>
       {
         if (child.tag === "note")
         {
-          //const voice = child.findtext(".//voice");
-
           const symbol = {};
           symbol.beat = currentBeat;
           symbol.duration =  parseInt(child.findtext(".//duration")); 
@@ -153,14 +151,35 @@ const constructor = (musicxml) =>
             symbol.note = noteString;
           }
 
-          beats.push(symbol);
-          currentBeat += symbol.duration;
-         // if (child.findtext("[chord]"))
-         // {
-         //   
-         // }
-         // !(voice in voices) ? 
-          //voices[voice] = duration : voices[voice] += duration;
+
+          //chord stuff
+          //const voice = child.findtext(".//voice");
+          //voices[voice] = (voice in voices) ? 
+            //voices[voice] += duration : voices[voice] = currentDuration;
+          
+          //if it's a chord we don't want to double count duration
+          if (child.findtext("[chord]")) 
+          {
+            const lastIndex = beats.length - 1;
+
+            //this is the third or further note of a chord
+            if (typeof beats[lastIndex].note === "object")
+            {
+              beats[lastIndex].note.push(symbol.note);             
+            }
+            else
+            {
+              beats[lastIndex].note = [beats[lastIndex].note, symbol.note];
+            }
+            
+            console.log(beats);
+            console.log("the beat of root", beats[beats.length - 1].note);
+          }
+          else
+          {
+            currentBeat += symbol.duration;
+            beats.push(symbol);
+          }
 
           //console.log("note", child.findtext(".//duration"));
         }
