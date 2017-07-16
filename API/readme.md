@@ -31,6 +31,10 @@ _Refer to .eslintrc.js in the parent directory to see what linter rules there ar
 ### Other
  package.json files may have scripts you can invoke via 'npm run _scriptname_'
  
+### Parsing MusicXML
+[musicxml documentation](https://usermanuals.musicxml.com/MusicXML/Content/XS-MusicXML.htm)
+
+[musicxml parser documentation](https://github.com/racker/node-elementtree)
 
 ## Adding new query functions to Toscanini.js
 consider this code from Toscanini.js:
