@@ -115,14 +115,27 @@ const constructor = (musicxml) =>
     acc[partNames[index]] = val.findall(".//measure").map((measure) => 
     {
       const beatMap = [];
+      let divisions;
       let currentBeat = 1;
         
       measure._children.forEach((child) => 
       {
-        if (child.tag === "note")
+        if (child.tag === "attributes")
+        {
+          //"For example, if duration = 1 and divisions = 2, 
+          //this is an eighth note duration"
+          divisions = parseInt(child.findtext(".//divisions"));
+        }
+        else if (child.tag === "note")
         {
           const symbol = {};
-          symbol.beat = currentBeat;
+          symbol.beat = Math.ceil(currentBeat / divisions);
+
+          //TODO need to change based on time signature?
+          if ((currentBeat % divisions / divisions) !== .25)
+          {
+            symbol.beat += (currentBeat & divisions / divisions);
+          }
           symbol.duration =  parseInt(child.findtext(".//duration")); 
 
           if (child.findtext("[rest]"))
@@ -179,7 +192,7 @@ const constructor = (musicxml) =>
         else if (child.tag === "forward")
         {
           currentBeat -= parseInt(child.findtext(".//duration"));
-        }
+        } 
       });
 
       return beatMap;
