@@ -112,10 +112,11 @@ const constructor = (musicxml) =>
 
   const parts = etree.findall(".//part").reduce((acc, val, index) =>
   {
+    let divisions;
+   
     acc[partNames[index]] = val.findall(".//measure").map((measure) => 
     {
       const beatMap = [];
-      let divisions;
       let currentBeat = 1;
         
       measure._children.forEach((child) => 
@@ -129,13 +130,14 @@ const constructor = (musicxml) =>
         else if (child.tag === "note")
         {
           const symbol = {};
-          symbol.beat = Math.ceil(currentBeat / divisions);
+          symbol.beat = Math.ceil((currentBeat / divisions));
 
           //TODO need to change based on time signature?
-          if ((currentBeat % divisions / divisions) !== .25)
+          if (!(currentBeat % divisions) === 1) //not on downbeat
           {
-            symbol.beat += (currentBeat & divisions / divisions);
+            symbol.beat += (currentBeat % divisions) / divisions;
           }
+          
           symbol.duration =  parseInt(child.findtext(".//duration")); 
 
           if (child.findtext("[rest]"))
