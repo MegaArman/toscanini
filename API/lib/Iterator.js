@@ -114,9 +114,8 @@ const constructor = (musicxml) =>
   {
     acc[partNames[index]] = val.findall(".//measure").map((measure) => 
     {
-      const beats = [];
+      const beatMap = [];
       let currentBeat = 1;
-      //const voices = {};
         
       measure._children.forEach((child) => 
       {
@@ -130,7 +129,7 @@ const constructor = (musicxml) =>
           {
             symbol.rest = true; 
           }
-          else
+          else if (child.findtext("[pitch]"))
           { 
             const step = child.findtext(".//step");
             const accidentals = child.findall(".//accidental");
@@ -151,49 +150,39 @@ const constructor = (musicxml) =>
             symbol.note = noteString;
           }
 
-
-          //chord stuff
-          //const voice = child.findtext(".//voice");
-          //voices[voice] = (voice in voices) ? 
-            //voices[voice] += duration : voices[voice] = currentDuration;
-          
+          //chord stuff------------------------------------------         
           //if it's a chord we don't want to double count duration
           if (child.findtext("[chord]")) 
           {
-            const lastIndex = beats.length - 1;
+            const lastIndex = beatMap.length - 1;
 
             //this is the third or further note of a chord
-            if (typeof beats[lastIndex].note === "object")
+            if (typeof beatMap[lastIndex].note === "object")
             {
-              beats[lastIndex].note.push(symbol.note);             
+              beatMap[lastIndex].note.push(symbol.note);             
             }
             else
             {
-              beats[lastIndex].note = [beats[lastIndex].note, symbol.note];
-            }
-            
-            console.log(beats);
-            console.log("the beat of root", beats[beats.length - 1].note);
+              beatMap[lastIndex].note = [beatMap[lastIndex].note, symbol.note];
+            }  
           }
           else
           {
             currentBeat += symbol.duration;
-            beats.push(symbol);
+            beatMap.push(symbol);
           }
-
-          //console.log("note", child.findtext(".//duration"));
         }
         else if (child.tag === "backup")
         {
-        //  console.log("backup", child.findtext(".//duration"));
+          currentBeat -= parseInt(child.findtext(".//duration"));
         }
         else if (child.tag === "forward")
         {
-          //console.log("forward", child.findtext(".//duration"));
+          currentBeat -= parseInt(child.findtext(".//duration"));
         }
       });
 
-      return beats;
+      return beatMap;
     });
 
     return acc;
