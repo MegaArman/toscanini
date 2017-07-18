@@ -49,5 +49,6 @@ test("ava_maria_pg1 tests", (t) =>
     const expected = [[4, 4]];
     t.deepEqual(actual, expected, "getTimeSignatures");
   }
+
   t.end();
 });

@@ -1,4 +1,6 @@
 "use strict";
+const Iterator = require("./Iterator");
+const et = require("elementtree");
 
 //"private static" utility definitions=========================================
 const pitchToMidiNum = {"C": 0, "D": 2, "E": 4, "F": 5, "G": 7, "A":9, "B": 11};
@@ -71,7 +73,7 @@ function makeInstrumentObjects(musicObj)
 
 //=============================================================================
 //"class"
-const createToscanini = (musicObj) =>
+const createToscanini = (musicObj, et, iter) =>
 {
   //"private" variables..note state is safest kept constant-------------------
   const toscanini = {};
@@ -286,6 +288,29 @@ const createToscanini = (musicObj) =>
           finalDynamics.push(newDynamics);
         }
       }
+      if (key === "wedge" && typeof value === "object")
+      {
+        const newDynamics = value["type"];
+
+        if (!finalDynamics.includes(newDynamics) && newDynamics !== "stop"
+          && newDynamics !== "start")
+        {
+          finalDynamics.push(newDynamics);
+        }
+      }
+
+      if (key === "words")
+      {
+        const newDynamics = value["_"];
+
+        if (!finalDynamics.includes(newDynamics) && (newDynamics === "cres."
+          || newDynamics === "crescendo" || newDynamics === "dim."
+          || newDynamics === "diminuendo" || newDynamics === "descres."
+          || newDynamics === "descrescendo" || newDynamics === undefined))
+        {
+          finalDynamics.push(newDynamics);
+        }
+      }
     }
 
     traverse(jsObj, process);
@@ -297,84 +322,155 @@ const createToscanini = (musicObj) =>
     const finalRhythm = [];
     const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
-    function process(key,value)
+    if (jsObj !== musicObj)
     {
-      if (key === "note")
+      console.log(instrumentName);
+      iter.selectInstrument(instrumentName);
+    }
+    else
+    {
+      console.log("nah");
+    }
+
+    let next = null;
+    while (iter.hasNext())
+    {
+      let popNote = {};
+      next = iter.next();
+      console.log(next);
+
+      if (next.rest === undefined)
       {
-        if (value instanceof Array)
+        popNote.noteType = next.duration;
+      }
+
+      let toPush = true;
+
+      finalRhythm.forEach((potentialRhythm) =>
+      {
+        if ((potentialRhythm.noteType === popNote.noteType))
         {
-          value.forEach((note) =>
-          {
-            let newRhythm = note["type"];
-
-            if (note["dot"] === undefined)
-            {
-              newRhythm = newRhythm + " 0";
-            }
-            else
-            {
-              if (note["dot"] instanceof Array)
-              {
-                newRhythm = newRhythm + " " + note["dot"].length;
-              }
-              else
-              {
-                newRhythm = newRhythm + " 1";
-              }
-            }
-
-            //excluding rests
-            if (!finalRhythm.includes(newRhythm) && note["rest"] === undefined)
-            {
-              finalRhythm.push(newRhythm);
-            }
-          });
+          toPush = false;
         }
-        else
-        {
-          let newRhythm = value["type"];
+      });
 
-          if (value["dot"] === undefined)
-          {
-            newRhythm = newRhythm + " 0";
-          }
-          else
-          {
-            if (value["dot"] instanceof Array)
-            {
-              newRhythm = newRhythm + " " + value["dot"].length;
-            }
-            else
-            {
-              newRhythm = newRhythm + " 1";
-            }
-          }
-          //excluding rests
-          if (!finalRhythm.includes(newRhythm) && value["rest"] === undefined)
-          {
-            finalRhythm.push(newRhythm);
-          }
-        }
+      if (toPush === true)
+      {
+        finalRhythm.push(popNote);
       }
     }
 
+    // function process(key,value)
+    // {
+    //
+    //
+    //   if (key === "note")
+    //   {
+    //     if (value instanceof Array)
+    //     {
+    //       value.forEach((note) =>
+    //       {
+    //         if (note["rest"] === undefined)
+    //         {
+    //           popNote.noteType = note["type"];
+    //
+    //           if (note["dot"] === undefined)
+    //           {
+    //             popNote.dotted = 0;
+    //           }
+    //           else
+    //           {
+    //             if (note["dot"] instanceof Array)
+    //             {
+    //               popNote.dotted = note["dot"].length;
+    //             }
+    //             else
+    //             {
+    //               popNote.dotted = 1;
+    //             }
+    //           }
+    //
+    //           let toPush = true;
+    //
+    //           finalRhythm.forEach((potentialRhythm) =>
+    //           {
+    //             if ((potentialRhythm.noteType === popNote.noteType) &&
+    //               (potentialRhythm.dotted === popNote.dotted))
+    //             {
+    //               toPush = false;
+    //             }
+    //           });
+    //
+    //           if (toPush === true)
+    //           {
+    //             finalRhythm.push(popNote);
+    //           }
+    //         }
+    //         //npm run gt
+    //       });
+    //     }
+    //     else
+    //     {
+    //       if (value["rest"] === undefined)
+    //       {
+    //         popNote.noteType = value["type"];
+    //
+    //         if (value["dot"] === undefined)
+    //         {
+    //           popNote.dotted = 0;
+    //         }
+    //         else
+    //         {
+    //           if (value["dot"] instanceof Array)
+    //           {
+    //             popNote.dotted = value["dot"].length;
+    //           }
+    //           else
+    //           {
+    //             popNote.dotted = 1;
+    //           }
+    //         }
+    //
+    //         let toPush = true;
+    //
+    //         finalRhythm.forEach((potentialRhythm) =>
+    //         {
+    //           if ((potentialRhythm.noteType === popNote.noteType)
+    //             && (potentialRhythm.dotted === popNote.dotted))
+    //           {
+    //             toPush = false;
+    //           }
+    //         });
+    //
+    //         if (toPush === true)
+    //         {
+    //           finalRhythm.push(popNote);
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
     traverse(jsObj, process);
     return finalRhythm;
   };
 
-  toscanini.getNumberOfMeasures = () =>
+  toscanini.getNumberOfMeasures = (instrumentName) =>
   {
     let measureNumber = 0;
+    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
 
     function process(key, value)
     {
       if (key === "measure")
       {
-        measureNumber = value.length;
+        if (value.length > measureNumber)
+        {
+          measureNumber = value.length;
+        }
       }
     }
-    traverse(instrumentObjects[Object.keys(instrumentObjects)[0]], process);
-
+    // traverse(instrumentObjects[Object.keys(instrumentObjects)[0]], process);
+    traverse(jsObj, process);
     return measureNumber;
   };
 
@@ -389,6 +485,8 @@ const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
 const constructor = (musicxml) =>
 {
   let scoreObj;
+  let elementtree = et.parse(musicxml);
+  let iterator = Iterator(musicxml);
 
   parser.parseString(musicxml, (err, obj) =>
   {
@@ -401,7 +499,7 @@ const constructor = (musicxml) =>
 
   // console.log(JSON.stringify(scoreObj, null, 4));
 
-  return createToscanini(scoreObj);
+  return createToscanini(scoreObj, elementtree, iterator);
 };
 
 module.exports = constructor;
