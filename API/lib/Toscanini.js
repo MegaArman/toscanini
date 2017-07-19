@@ -62,13 +62,41 @@ const createToscanini = (etree) =>
 
     tempos.forEach((tempo) =>
     {
-      const newTempo =  parseInt(tempo.text);
+      const newTempo =  {};
+      newTempo.tempo = parseInt(tempo.text);
+      newTempo.frequency = 1;
+      // console.log(newTempo);
 
-      if (!tempoCollection.includes(newTempo))
+      var goesin = false;
+
+      for (var tempoVariable in tempoCollection)
+      {
+        goesin = true;
+        console.log(tempoVariable);
+        if (tempoVariable.tempo === newTempo.tempo)
+        {
+          console.log("not pushing");
+          tempoCollection[i].frequency++;
+        }
+        else
+        {
+          console.log("pushing");
+          tempoCollection.push(newTempo);
+        }
+      }
+
+      if (goesin === false)
       {
         tempoCollection.push(newTempo);
       }
+
     });
+
+    if (tempoCollection.length === 0)
+    {
+      const filledTempo = {tempo: 120, frequency: 1}
+      tempoCollection.push(filledTempo);
+    }
 
     return tempoCollection;
   };
