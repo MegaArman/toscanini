@@ -57,7 +57,6 @@ const createToscanini = (etree) =>
       getPart(instrumentName).findall(".//per-minute")
       : etree.findall(".//per-minute");
 
-    //TODO change this to per-minute, but doesn
     const tempoCollection = [];
 
     tempos.forEach((tempo) =>
@@ -65,27 +64,24 @@ const createToscanini = (etree) =>
       const newTempo =  {};
       newTempo.tempo = parseInt(tempo.text);
       newTempo.frequency = 1;
-      // console.log(newTempo);
 
-      var goesin = false;
+      var notNullList = false;
 
       for (var tempoVariable in tempoCollection)
       {
-        goesin = true;
+        notNullList = true;
         console.log(tempoVariable);
         if (tempoVariable.tempo === newTempo.tempo)
         {
-          console.log("not pushing");
           tempoCollection[i].frequency++;
         }
         else
         {
-          console.log("pushing");
           tempoCollection.push(newTempo);
         }
       }
 
-      if (goesin === false)
+      if (notNullList === false)
       {
         tempoCollection.push(newTempo);
       }
