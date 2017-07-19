@@ -21,6 +21,78 @@ const createToscanini = (etree) =>
 
   //public----------------------------
   const toscanini = {};
+  //TODO make small method for repeated things
+  toscanini.getDynamics = (instrumentName) =>
+  {
+    const finalDynamics = [];
+    const possibleDynamics = ["ppppppp", "pppppp", "ppppp", "pppp", "ppp",
+      "pp", "p","mp", "mf", "f", "ff", "fff", "ffff", "fffff", "ffffff",
+      "fffffff", "fp", "sf", "rfz", "rf", "sfz", "sfzp", "fz"];
+
+    let dynamics = instrumentName ? getPart(instrumentName)
+      .findall(".//dynamics") : etree.findall(".//dynamics");
+
+    var notNullList = false;
+    var found = -1;
+
+    dynamics.forEach((dynamic) => {
+      for (var i = 0; i < finalDynamics.length; i++)
+      {
+        notNullList = true;
+        if (finalDynamics[i] === dynamic)
+        {
+          found = i;
+        }
+      }
+      console.log(dynamic._children);
+      if (notNullList === false)
+      {
+        finalDynamics.push(dynamic._children);
+      }
+      else if (found !== -1)
+      {
+        finalDynamics[found].frequency++;
+      }
+      else
+      {
+        finalDynamics.push(dynamic._children);
+      }
+    });
+
+    dynamics = instrumentName ? getPart(instrumentName)
+      .findall(".//wedge") : etree.findall(".//wedge");
+
+    dynamics.forEach((dynamic) => {
+      if (dynamic.type !== "stop" && dynamic.type !== "start")
+      for (var i = 0; i < finalDynamics.length; i++)
+      {
+        notNullList = true;
+        if (finalDynamics[i] === dynamic.type)
+        {
+          found = i;
+        }
+      }
+
+      if (notNullList === false)
+      {
+        finalDynamics.push(dynamic.type);
+      }
+      else if (found !== -1)
+      {
+        finalDynamics[found].frequency++;
+      }
+      else
+      {
+        finalDynamics.push(dynamic.type);
+      }
+    });
+
+    dynamics = instrumentName ? getPart(instrumentName)
+      .findall(".//words") : etree.findall(".//words");
+
+    //there's going to be an issue here too
+    return finalDynamics;
+  };
 
   toscanini.getInstrumentNames = () => partNames;
 
@@ -100,10 +172,7 @@ const createToscanini = (etree) =>
     return tempoCollection;
   };
 
-  toscanini.getDynamics = (instrumentName) =>
-  {
 
-  };
   return toscanini;
 }; //createToscanini
 

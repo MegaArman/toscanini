@@ -11,20 +11,20 @@ test("dynamics_test test", (t) =>
   const toscanini =  Toscanini(musicXML);
 
   {
-    const actual = ["pp", "f", "mp", "ff", "mf"];
-    const expected = toscanini.getDynamics();
+    const expected = ["pp", "f", "mp", "ff", "mf"];
+    const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "getDynamics score");
   }
 
   {
-    const actual = ["pp", "f", "mp"];
-    const expected = toscanini.getDynamics("Violin");
+    const expected = ["pp", "f", "mp"];
+    const actual = toscanini.getDynamics("Violin");
     t.deepEqual(actual, expected, "getDynamics Violin");
   }
 
   {
-    const actual = ["ff", "f", "mf"];
-    const expected = toscanini.getDynamics("Violoncello");
+    const expected = ["ff", "f", "mf"];
+    const actual = toscanini.getDynamics("Violoncello");
     t.deepEqual(actual, expected, "getDynamics Violoncello");
   }
 
