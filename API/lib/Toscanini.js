@@ -66,18 +66,14 @@ const createToscanini = (etree) =>
       newTempo.frequency = 1;
 
       var notNullList = false;
+      var found = -1;
 
-      for (var tempoVariable in tempoCollection)
+      for (var i = 0; i < tempoCollection.length; i++)
       {
         notNullList = true;
-        console.log(tempoVariable);
-        if (tempoVariable.tempo === newTempo.tempo)
+        if (tempoCollection[i].tempo === newTempo.tempo)
         {
-          tempoCollection[i].frequency++;
-        }
-        else
-        {
-          tempoCollection.push(newTempo);
+          found = i;
         }
       }
 
@@ -85,7 +81,14 @@ const createToscanini = (etree) =>
       {
         tempoCollection.push(newTempo);
       }
-
+      else if (found !== -1)
+      {
+        tempoCollection[found].frequency++;
+      }
+      else
+      {
+        tempoCollection.push(newTempo);
+      }
     });
 
     if (tempoCollection.length === 0)
