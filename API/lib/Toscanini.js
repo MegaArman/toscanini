@@ -12,28 +12,28 @@ const fifthToPitch =
 //"class"
 // etree represents the element tree for the entire score
 const createToscanini = (etree) =>
-{ 
+{
   //private---------------------------
   const partNames = etree.findall(".//part-name")
                           .map((partName) => partName.text);
   const parts = etree.findall(".//part");
   const getPart = (instrumentName)  => parts[partNames.indexOf(instrumentName)];
- 
-  //public---------------------------- 
+
+  //public----------------------------
   const toscanini = {};
-  
+
   toscanini.getInstrumentNames = () => partNames;
-  
+
   toscanini.getPitchRange = (instrumentName) =>
   {
-    const pitches = instrumentName ? 
+    const pitches = instrumentName ?
        getPart(instrumentName).findall(".//pitch") : etree.findall(".//pitch");
     const range = {min: Infinity, max: -Infinity};
 
     pitches.forEach((pitch) =>
     {
       const step  = pitchToMidiNum[pitch.findtext(".//step")];
-      const alter = (pitch.findtext(".//alter") !== undefined) ? 
+      const alter = (pitch.findtext(".//alter") !== undefined) ?
         parseInt(pitch.findtext(".//alter")) : 0;
       const octave = parseInt(pitch.findtext(".//octave")) * 12;
       const midiNum = step + alter + octave;
@@ -41,22 +41,48 @@ const createToscanini = (etree) =>
       if (midiNum < range.min)
       {
         range.min = midiNum;
-      } 
+      }
       if (midiNum > range.max)
       {
         range.max = midiNum;
       }
     });
-    
-    return range;
-  }; 
 
+    return range;
+  };
+
+  toscanini.getTempos = (instrumentName) =>
+  {
+    const tempos = instrumentName ?
+      getPart(instrumentName).findall(".//per-minute")
+      : etree.findall(".//per-minute");
+
+    //TODO change this to per-minute, but doesn
+    const tempoCollection = [];
+
+    tempos.forEach((tempo) =>
+    {
+      const newTempo =  parseInt(tempo.text);
+
+      if (!tempoCollection.includes(newTempo))
+      {
+        tempoCollection.push(newTempo);
+      }
+    });
+
+    return tempoCollection;
+  };
+
+  toscanini.getDynamics = (instrumentName) =>
+  {
+
+  };
   return toscanini;
 }; //createToscanini
 
 //======================================================================
 const elementtree = require("elementtree");
-const constructor = (musicxml) => 
+const constructor = (musicxml) =>
   createToscanini(elementtree.parse(musicxml.toString()));
 
 module.exports = constructor;
