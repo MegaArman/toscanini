@@ -21,13 +21,10 @@ const createToscanini = (etree) =>
 
   //public----------------------------
   const toscanini = {};
-  //TODO make small method for repeated things
+
   toscanini.getDynamics = (instrumentName) =>
   {
     const finalDynamics = [];
-    const possibleDynamics = ["ppppppp", "pppppp", "ppppp", "pppp", "ppp",
-      "pp", "p","mp", "mf", "f", "ff", "fff", "ffff", "fffff", "ffffff",
-      "fffffff", "fp", "sf", "rfz", "rf", "sfz", "sfzp", "fz"];
 
     let dynamics = instrumentName ? getPart(instrumentName)
       .findall(".//dynamics") : etree.findall(".//dynamics");
@@ -44,10 +41,12 @@ const createToscanini = (etree) =>
           found = i;
         }
       }
-      console.log(dynamic._children);
+
       if (notNullList === false)
       {
-        finalDynamics.push(dynamic._children);
+        var newDynamic = {dynamic: dynamic._children[0].tag,
+          frequency: 0};
+        finalDynamics.push(newDynamic);
       }
       else if (found !== -1)
       {
@@ -55,7 +54,9 @@ const createToscanini = (etree) =>
       }
       else
       {
-        finalDynamics.push(dynamic._children);
+        var newDynamic = {dynamic: dynamic._children[0].tag,
+          frequency: 0};
+        finalDynamics.push(newDynamic);
       }
     });
 
@@ -64,31 +65,44 @@ const createToscanini = (etree) =>
 
     dynamics.forEach((dynamic) => {
       if (dynamic.type !== "stop" && dynamic.type !== "start")
-      for (var i = 0; i < finalDynamics.length; i++)
       {
-        notNullList = true;
-        if (finalDynamics[i] === dynamic.type)
+        for (var i = 0; i < finalDynamics.length; i++)
         {
-          found = i;
+          notNullList = true;
+          if (finalDynamics[i] === dynamic.type)
+          {
+            found = i;
+          }
         }
-      }
 
-      if (notNullList === false)
-      {
-        finalDynamics.push(dynamic.type);
-      }
-      else if (found !== -1)
-      {
-        finalDynamics[found].frequency++;
-      }
-      else
-      {
-        finalDynamics.push(dynamic.type);
+        if (notNullList === false)
+        {
+          var newDynamic = {dynamic: dynamic._children[0].tag,
+            frequency: 0};
+          finalDynamics.push(newDynamic);
+        }
+        else if (found !== -1)
+        {
+          finalDynamics[found].frequency++;
+        }
+        else
+        {
+          var newDynamic = {dynamic: dynamic._children[0].tag,
+            frequency: 0};
+          finalDynamics.push(newDynamic);
+        }
       }
     });
 
     dynamics = instrumentName ? getPart(instrumentName)
       .findall(".//words") : etree.findall(".//words");
+
+    if (!finalDynamics.includes(newDynamics) && (newDynamics === "cres."
+         || newDynamics === "crescendo" || newDynamics === "dim."
+         || newDynamics === "diminuendo" || newDynamics === "descres."
+         || newDynamics === "descrescendo" || newDynamics === undefined))
+       {
+         finalDynamics.push(newDynamics);
 
     //there's going to be an issue here too
     return finalDynamics;
@@ -172,6 +186,41 @@ const createToscanini = (etree) =>
     return tempoCollection;
   };
 
+  toscanini.getTimeSignatures = (instrumentName) =>
+  {
+    // const timeSignatures = instrumentName ?
+    //   getPart(instrumentName).findall(".//time")
+    //   : etree.findall(".//time");
+    //
+    // const finalTimeSigs = [];
+    //
+    // //get sig's children and get the value associated with the beat's text
+    // const timeSignature = {parseInt(sig._children)};
+    //
+    // for (var i = 0; i < timeSignatures.length; i++)
+    // {
+    //   notNullList = true;
+    //   if (timeSignatures[i].tempo === newTempo.tempo)
+    //   {
+    //     found = i;
+    //   }
+    // }
+    //
+    // if (notNullList === false)
+    // {
+    //   tempoCollection.push(newTempo);
+    // }
+    // else if (found !== -1)
+    // {
+    //   tempoCollection[found].frequency++;
+    // }
+    // else
+    // {
+    //   tempoCollection.push(newTempo);
+    // }
+    // console.log(timeSignatures[0]);
+
+  };
 
   return toscanini;
 }; //createToscanini
