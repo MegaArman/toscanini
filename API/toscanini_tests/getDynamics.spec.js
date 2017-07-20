@@ -30,3 +30,6 @@ test("dynamics_test test", (t) =>
 
   t.end();
 });
+//TODO
+//also test with 31a directions
+//also test for repeated dynamics
