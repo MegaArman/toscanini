@@ -35,30 +35,33 @@ const createToscanini = (etree) =>
     dynamics.forEach((dynamic) => {
       found = -1;
       dynamic = dynamic._children[0].tag;
-      for (var i = 0; i < finalDynamics.length; i++)
+      if (dynamic !== "other-dynamics")
       {
-        notNullList = true;
-        if (finalDynamics[i].dynamic === dynamic)
+        for (var i = 0; i < finalDynamics.length; i++)
         {
-          found = i;
+          notNullList = true;
+          if (finalDynamics[i].dynamic === dynamic)
+          {
+            found = i;
+          }
         }
-      }
 
-      if (notNullList === false)
-      {
-        var newDynamic = {dynamic: dynamic,
-          frequency: 1};
-        finalDynamics.push(newDynamic);
-      }
-      else if (found !== -1)
-      {
-        finalDynamics[found].frequency++;
-      }
-      else
-      {
-        var newDynamic = {dynamic: dynamic,
-          frequency: 1};
-        finalDynamics.push(newDynamic);
+        if (notNullList === false)
+        {
+          var newDynamic = {dynamic: dynamic,
+            frequency: 1};
+          finalDynamics.push(newDynamic);
+        }
+        else if (found !== -1)
+        {
+          finalDynamics[found].frequency++;
+        }
+        else
+        {
+          var newDynamic = {dynamic: dynamic,
+            frequency: 1};
+          finalDynamics.push(newDynamic);
+        }
       }
     });
 
@@ -69,6 +72,7 @@ const createToscanini = (etree) =>
     dynamics.forEach((dynamic) => {
       dynamic = dynamic.attrib.type;
       found = -1;
+
       if (dynamic !== "stop" && dynamic !== "start")
       {
         for (var i = 0; i < finalDynamics.length; i++)
