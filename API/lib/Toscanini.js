@@ -237,38 +237,45 @@ const createToscanini = (etree) =>
 
   toscanini.getTimeSignatures = (instrumentName) =>
   {
-    // const timeSignatures = instrumentName ?
-    //   getPart(instrumentName).findall(".//time")
-    //   : etree.findall(".//time");
-    //
-    // const finalTimeSigs = [];
-    //
-    // //get sig's children and get the value associated with the beat's text
-    // const timeSignature = {parseInt(sig._children)};
-    //
-    // for (var i = 0; i < timeSignatures.length; i++)
-    // {
-    //   notNullList = true;
-    //   if (timeSignatures[i].tempo === newTempo.tempo)
-    //   {
-    //     found = i;
-    //   }
-    // }
-    //
-    // if (notNullList === false)
-    // {
-    //   tempoCollection.push(newTempo);
-    // }
-    // else if (found !== -1)
-    // {
-    //   tempoCollection[found].frequency++;
-    // }
-    // else
-    // {
-    //   tempoCollection.push(newTempo);
-    // }
-    // console.log(timeSignatures[0]);
+    const timeSignatures = instrumentName ?
+      getPart(instrumentName).findall(".//time")
+      : etree.findall(".//time");
+    const finalTimeSigs = [];
+    let notNullList = false;
 
+    timeSignatures.forEach((timeSignature) => {
+      //TODO issue here
+      let found = -1;
+      var newSig = {beatTypeBottom: timeSignature._children[1].text,
+        beatsTop: timeSignature._children[0].text,
+        frequency: 1}
+
+      var notNullList = false;
+      for (var i = 0; i < finalTimeSigs.length; i++)
+      {
+        notNullList = true;
+
+        if (finalTimeSigs[i].beatsTop=== newSig.beatsTop
+          && finalTimeSigs[i].beatTypeBottom === newSig.beatTypeBottom)
+        {
+          found = i;
+        }
+      }
+
+      if (notNullList === false)
+      {
+        finalTimeSigs.push(newSig);
+      }
+      else if (found !== -1)
+      {
+        finalTimeSigs[found].frequency++;
+      }
+      else
+      {
+        finalTimeSigs.push(newSig);
+      }
+    });
+    return finalTimeSigs;
   };
 
   return toscanini;

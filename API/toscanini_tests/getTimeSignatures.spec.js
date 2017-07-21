@@ -13,7 +13,8 @@ test("two_time_signatures", (t) =>
 
   {
     const actual = toscanini.getTimeSignatures();
-    const expected = [[4,4], [9,8]];
+    const expected = [{ beatTypeBottom: '4', beatsTop: '4', frequency: 2},
+      { beatTypeBottom: '8', beatsTop: '9', frequency: 1 }];
     t.deepEqual(actual, expected, "getTimeSignatures");
   }
 
