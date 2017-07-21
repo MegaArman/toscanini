@@ -8,6 +8,9 @@ const fifthToPitch =
   "0": "C","1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"
 };
 
+//make properties immutable
+Object.freeze(pitchToMidiNum);
+Object.freeze(fifthToPitch);
 //=============================================================================
 //"class"
 // etree represents the element tree for the entire score
@@ -89,17 +92,7 @@ const createToscanini = (etree) =>
     return timeSignatures;
   };
 
-  //TODO: how should octaves and accidentals be accounted for?
-  //toscanini.getInstrumentsWithMelody = (melodyString) =>
-  //{
-  //  const instrumentsWithMelody = parts.filter((part) => 
-  //  {
-  //    const pitches = part.findall(".//pitch");  
-
-  //  })
-  //}
-
-  return toscanini;
+  return Object.freeze(toscanini);
 }; //createToscanini
 
 //======================================================================
