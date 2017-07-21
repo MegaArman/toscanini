@@ -33,11 +33,12 @@ const createToscanini = (etree) =>
     var found = -1;
 
     dynamics.forEach((dynamic) => {
+      found = -1;
       dynamic = dynamic._children[0].tag;
       for (var i = 0; i < finalDynamics.length; i++)
       {
         notNullList = true;
-        if (finalDynamics[i] === dynamic)
+        if (finalDynamics[i].dynamic === dynamic)
         {
           found = i;
         }
@@ -46,7 +47,7 @@ const createToscanini = (etree) =>
       if (notNullList === false)
       {
         var newDynamic = {dynamic: dynamic,
-          frequency: 0};
+          frequency: 1};
         finalDynamics.push(newDynamic);
       }
       else if (found !== -1)
@@ -56,7 +57,7 @@ const createToscanini = (etree) =>
       else
       {
         var newDynamic = {dynamic: dynamic,
-          frequency: 0};
+          frequency: 1};
         finalDynamics.push(newDynamic);
       }
     });
@@ -64,14 +65,16 @@ const createToscanini = (etree) =>
     dynamics = instrumentName ? getPart(instrumentName)
       .findall(".//wedge") : etree.findall(".//wedge");
 
+
     dynamics.forEach((dynamic) => {
       dynamic = dynamic.attrib.type;
+      found = -1;
       if (dynamic !== "stop" && dynamic !== "start")
       {
         for (var i = 0; i < finalDynamics.length; i++)
         {
           notNullList = true;
-          if (finalDynamics[i] === dynamic)
+          if (finalDynamics[i].dynamic === dynamic)
           {
             found = i;
           }
@@ -80,7 +83,7 @@ const createToscanini = (etree) =>
         if (notNullList === false)
         {
           var newDynamic = {dynamic: dynamic,
-            frequency: 0};
+            frequency: 1};
           finalDynamics.push(newDynamic);
         }
         else if (found !== -1)
@@ -90,7 +93,7 @@ const createToscanini = (etree) =>
         else
         {
           var newDynamic = {dynamic: dynamic,
-            frequency: 0};
+            frequency: 1};
           finalDynamics.push(newDynamic);
         }
       }
@@ -101,39 +104,52 @@ const createToscanini = (etree) =>
 
     dynamics.forEach((dynamic) => {
       dynamic = dynamic.text;
+      found = -1;
       if (dynamic === "cres." || dynamic === "crescendo" || dynamic === "dim."
            || dynamic === "diminuendo" || dynamic === "descres."
            || dynamic === "descrescendo" || dynamic === undefined)
       {
-         for (var i = 0; i < finalDynamics.length; i++)
-         {
-           notNullList = true;
-           if (finalDynamics[i] === dynamic)
-           {
-             found = i;
-           }
-         }
+        if (dynamic === "cres.")
+        {
+          dynamic = "crescendo";
+        }
+        else if (dynamic = "dim.")
+        {
+          dynamic = "diminuendo";
+        }
+        else if (dynamic = "decres.")
+        {
+          dynamic = "descrescendo";
+        }
 
-         if (notNullList === false)
-         {
-           var newDynamic = {dynamic: dynamic,
-             frequency: 0};
-           finalDynamics.push(newDynamic);
-         }
-         else if (found !== -1)
-         {
-           finalDynamics[found].frequency++;
-         }
-         else
-         {
-           var newDynamic = {dynamic: dynamic,
-             frequency: 0};
-           finalDynamics.push(newDynamic);
-         }
-       }
+        for (var i = 0; i < finalDynamics.length; i++)
+        {
+          notNullList = true;
+          if (finalDynamics[i].dynamic === dynamic)
+          {
+           found = i;
+          }
+        }
+
+        if (notNullList === false)
+        {
+          var newDynamic = {dynamic: dynamic,
+          frequency: 1};
+          finalDynamics.push(newDynamic);
+        }
+        else if (found !== -1)
+        {
+          finalDynamics[found].frequency++;
+        }
+        else
+        {
+          var newDynamic = {dynamic: dynamic,
+           frequency: 1};
+          finalDynamics.push(newDynamic);
+        }
+      }
     });
 
-    //there's going to be an issue here too
     return finalDynamics;
   };
 
