@@ -12,13 +12,7 @@ test("two_tempos", (t) =>
 
   {
     const actual = toscanini.getTempos();
-    const expected = [105, 90];
-    t.deepEqual(actual, expected, "getTempos");
-  }
-
-  { //confirms for single instrument we can use the same queries
-    const actual = toscanini.getPitchRange("Flute")["minPitch"];
-    const expected = toscanini.getPitchRange()["minPitch"];
+    const expected = [{tempo: 105, frequency: 1}, {tempo: 90, frequency: 1}];
     t.deepEqual(actual, expected, "getTempos");
   }
 
@@ -33,7 +27,22 @@ test("no tempos", (t) =>
 
   {
     const actual = toscanini.getTempos();
-    const expected = [120];
+    const expected = [{tempo: 120, frequency: 1}];
+    t.deepEqual(actual, expected, "getTempos");
+  }
+
+  t.end();
+});
+
+test("repeating tempos", (t) =>
+{
+  const musicXML =
+    fs.readFileSync(path.resolve(__dirname, "../scores/repeating_tempos.xml"));
+  const toscanini =  Toscanini(musicXML);
+
+  {
+    const actual = toscanini.getTempos();
+    const expected = [{tempo: 105, frequency: 2}, {tempo: 90, frequency: 1}];
     t.deepEqual(actual, expected, "getTempos");
   }
 
