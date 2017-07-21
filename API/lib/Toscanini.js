@@ -32,64 +32,31 @@ const createToscanini = (etree) =>
     let dynamics = instrumentName ? getPart(instrumentName)
       .findall(".//dynamics") : etree.findall(".//dynamics");
 
-    var notNullList = false;
-    var found = -1;
-
-    dynamics.forEach((dynamic) => {
-      found = -1;
+    dynamics.forEach((dynamic) =>
+    {
       dynamic = dynamic._children[0].tag;
       if (dynamic !== "other-dynamics")
       {
-        for (var i = 0; i < finalDynamics.length; i++)
+        var newDynamic = {dynamic: dynamic};
+        if (!finalDynamics.includes(newDynamic))
         {
-          notNullList = true;
-          if (finalDynamics[i].dynamic === dynamic)
-          {
-            found = i;
-          }
-        }
-
-        if (notNullList === false)
-        {
-          var newDynamic = {dynamic: dynamic};
           finalDynamics.push(newDynamic);
-        } 
+        }
       }
     });
 
     dynamics = instrumentName ? getPart(instrumentName)
       .findall(".//wedge") : etree.findall(".//wedge");
 
-
-    dynamics.forEach((dynamic) => {
+    dynamics.forEach((dynamic) =>
+    {
       dynamic = dynamic.attrib.type;
-      found = -1;
 
       if (dynamic !== "stop" && dynamic !== "start")
       {
-        for (var i = 0; i < finalDynamics.length; i++)
+        const newDynamic = {dynamic: dynamic};
+        if (!finalDynamics.includes(newDynamic))
         {
-          notNullList = true;
-          if (finalDynamics[i].dynamic === dynamic)
-          {
-            found = i;
-          }
-        }
-
-        if (notNullList === false)
-        {
-          var newDynamic = {dynamic: dynamic,
-            frequency: 1}
-          finalDynamics.push(newDynamic);
-        }
-        else if (found !== -1)
-        {
-          finalDynamics[found].frequency++;
-        }
-        else
-        {
-          var newDynamic = {dynamic: dynamic,
-            frequency: 1};
           finalDynamics.push(newDynamic);
         }
       }
@@ -98,9 +65,9 @@ const createToscanini = (etree) =>
     dynamics = instrumentName ? getPart(instrumentName)
       .findall(".//words") : etree.findall(".//words");
 
-    dynamics.forEach((dynamic) => {
+    dynamics.forEach((dynamic) =>
+    {
       dynamic = dynamic.text;
-      found = -1;
       if (dynamic === "cres." || dynamic === "crescendo" || dynamic === "dim."
            || dynamic === "diminuendo" || dynamic === "descres."
            || dynamic === "descrescendo" || dynamic === undefined)
@@ -109,38 +76,17 @@ const createToscanini = (etree) =>
         {
           dynamic = "crescendo";
         }
-        else if (dynamic = "dim.")
+        else if (dynamic === "dim.")
         {
           dynamic = "diminuendo";
         }
-        else if (dynamic = "decres.")
+        else if (dynamic === "decres.")
         {
           dynamic = "descrescendo";
         }
-
-        for (var i = 0; i < finalDynamics.length; i++)
+        var newDynamic = {dynamic: dynamic};
+        if (!finalDynamics.includes(newDynamic))
         {
-          notNullList = true;
-          if (finalDynamics[i].dynamic === dynamic)
-          {
-           found = i;
-          }
-        }
-
-        if (notNullList === false)
-        {
-          var newDynamic = {dynamic: dynamic,
-          frequency: 1};
-          finalDynamics.push(newDynamic);
-        }
-        else if (found !== -1)
-        {
-          finalDynamics[found].frequency++;
-        }
-        else
-        {
-          var newDynamic = {dynamic: dynamic,
-           frequency: 1};
           finalDynamics.push(newDynamic);
         }
       }
@@ -149,7 +95,7 @@ const createToscanini = (etree) =>
     return finalDynamics;
   };
 
-  toscanini.getNumberOfMeasures = () => parts[0].findall(".//measure").length; 
+  toscanini.getNumberOfMeasures = () => parts[0].findall(".//measure").length;
 
   toscanini.getInstrumentNames = () => partNames;
 
@@ -170,12 +116,12 @@ const createToscanini = (etree) =>
       if (midiNum < range.minPitch)
       {
         range.minPitch = midiNum;
-      } 
+      }
       if (midiNum > range.maxPitch)
       {
         range.maxPitch = midiNum;
       }
-      
+
      });
 
     return range;
@@ -187,10 +133,10 @@ const createToscanini = (etree) =>
 
     const tempoCollection = [];
 
-    soundTags.forEach((soundTag) => 
+    soundTags.forEach((soundTag) =>
     {
       const newTempo = parseInt(soundTag.attrib.tempo);
-      
+
       if (!tempoCollection.includes(newTempo))
       {
         tempoCollection.push(parseInt(newTempo));
@@ -203,10 +149,10 @@ const createToscanini = (etree) =>
   toscanini.getKeySignatures = (instrumentName) =>
   {
     const keySignatures = [];
-    const allFifths = instrumentName ? 
+    const allFifths = instrumentName ?
       getPart(instrumentName).findall(".//fifths") : etree.findall(".//fifths");
 
-    allFifths.forEach((fifths) => 
+    allFifths.forEach((fifths) =>
     {
       if (!keySignatures.includes(fifthToPitch[fifths.text]))
       {
@@ -214,28 +160,28 @@ const createToscanini = (etree) =>
       }
     });
 
-    return keySignatures; 
+    return keySignatures;
   };
 
   toscanini.getTimeSignatures = (instrumentName) =>
   {
-    const times = instrumentName ? 
+    const times = instrumentName ?
       getPart(instrumentName).findall(".//time") : etree.findall(".//time");
     const timeSignatures = [];
-    
+
     times.forEach((time) =>
     {
       const beats = parseInt(time.findtext(".//beats"));
       const beatType = parseInt(time.findtext(".//beat-type"));
       const duplicate = timeSignatures.some((oldTimeSignature) =>
       {
-        return beats === oldTimeSignature.beats 
+        return beats === oldTimeSignature.beats
           && beatType === oldTimeSignature.beatType;
-      });  
-     
+      });
+
       if (!duplicate)
-      {  
-        timeSignatures.push({beats: beats, beatType: beatType}); 
+      {
+        timeSignatures.push({beats: beats, beatType: beatType});
       }
     });
 
