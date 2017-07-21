@@ -37,7 +37,7 @@ const createToscanini = (etree) =>
       dynamic = dynamic._children[0].tag;
       if (dynamic !== "other-dynamics")
       {
-        var newDynamic = {dynamic: dynamic};
+        const newDynamic = {dynamic: dynamic};
         if (!finalDynamics.includes(newDynamic))
         {
           finalDynamics.push(newDynamic);
@@ -84,7 +84,7 @@ const createToscanini = (etree) =>
         {
           dynamic = "descrescendo";
         }
-        var newDynamic = {dynamic: dynamic};
+        const newDynamic = {dynamic: dynamic};
         if (!finalDynamics.includes(newDynamic))
         {
           finalDynamics.push(newDynamic);
