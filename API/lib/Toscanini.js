@@ -26,9 +26,9 @@ const createToscanini = (etree) =>
   
   toscanini.getPitchRange = (instrumentName) =>
   {
+    const range = {minPitch: Infinity, maxPitch: -Infinity};
     const pitches = instrumentName ? 
        getPart(instrumentName).findall(".//pitch") : etree.findall(".//pitch");
-    const range = {min: Infinity, max: -Infinity};
 
     pitches.forEach((pitch) =>
     {
@@ -38,18 +38,66 @@ const createToscanini = (etree) =>
       const octave = parseInt(pitch.findtext(".//octave")) * 12;
       const midiNum = step + alter + octave;
 
-      if (midiNum < range.min)
+      if (midiNum < range.minPitch)
       {
-        range.min = midiNum;
+        range.minPitch = midiNum;
       } 
-      if (midiNum > range.max)
+      if (midiNum > range.maxPitch)
       {
-        range.max = midiNum;
+        range.maxPitch = midiNum;
       }
     });
     
     return range;
   }; 
+
+  toscanini.getKeySignatures = (instrumentName) =>
+  {
+    const keySignatures = [];
+    const allFifths = instrumentName ? 
+      getPart(instrumentName).findall(".//fifths") : etree.findall(".//fifths");
+
+    allFifths.forEach((fifths) => 
+    {
+      if (!keySignatures.includes(fifthToPitch[fifths.text]))
+      {
+        keySignatures.push(fifthToPitch[fifths.text]);
+      }
+    });
+
+    return keySignatures; 
+  };
+
+  toscanini.getTimeSignatures = (instrumentName) =>
+  {
+    const times = instrumentName ? 
+      getPart(instrumentName).findall(".//time") : etree.findall(".//time");
+    const timeSignatures = [];
+    
+    times.forEach((time) =>
+    {
+      const beats = parseInt(time.findtext(".//beats"));
+      const beatType = parseInt(time.findtext(".//beat-type"));
+      const newTimeSignature = {beats: beats, beatType: beatType};
+
+      if (!timeSignatures.includes(newTimeSignature))
+      {
+        timeSignatures.push(newTimeSignature);
+      }
+    });
+
+    return timeSignatures;
+  };
+
+  //TODO: how should octaves and accidentals be accounted for?
+  //toscanini.getInstrumentsWithMelody = (melodyString) =>
+  //{
+  //  const instrumentsWithMelody = parts.filter((part) => 
+  //  {
+  //    const pitches = part.findall(".//pitch");  
+
+  //  })
+  //}
 
   return toscanini;
 }; //createToscanini
