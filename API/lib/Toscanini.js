@@ -79,7 +79,7 @@ const createToscanini = (etree) =>
         if (notNullList === false)
         {
           var newDynamic = {dynamic: dynamic,
-            frequency: 1};
+            frequency: 1}
           finalDynamics.push(newDynamic);
         }
         else if (found !== -1)
@@ -181,51 +181,21 @@ const createToscanini = (etree) =>
     return range;
   };
 
-  toscanini.getTempos = (instrumentName) =>
+  toscanini.getTempos = () =>
   {
-    const tempos = instrumentName ?
-      getPart(instrumentName).findall(".//per-minute")
-      : etree.findall(".//per-minute");
+    const soundTags = etree.findall(".//sound[@tempo]");
 
     const tempoCollection = [];
 
-    tempos.forEach((tempo) =>
+    soundTags.forEach((soundTag) => 
     {
-      const newTempo =  {};
-      newTempo.tempo = parseInt(tempo.text);
-      newTempo.frequency = 1;
-
-      var notNullList = false;
-      var found = -1;
-
-      for (var i = 0; i < tempoCollection.length; i++)
+      const newTempo = parseInt(soundTag.attrib.tempo);
+      
+      if (!tempoCollection.includes(newTempo))
       {
-        notNullList = true;
-        if (tempoCollection[i].tempo === newTempo.tempo)
-        {
-          found = i;
-        }
-      }
-
-      if (notNullList === false)
-      {
-        tempoCollection.push(newTempo);
-      }
-      else if (found !== -1)
-      {
-        tempoCollection[found].frequency++;
-      }
-      else
-      {
-        tempoCollection.push(newTempo);
+        tempoCollection.push(parseInt(newTempo));
       }
     });
-
-    if (tempoCollection.length === 0)
-    {
-      const filledTempo = {tempo: 120, frequency: 1}
-      tempoCollection.push(filledTempo);
-    }
 
     return tempoCollection;
   };
