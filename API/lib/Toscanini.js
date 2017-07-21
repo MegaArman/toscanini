@@ -188,6 +188,24 @@ const createToscanini = (etree) =>
     return timeSignatures;
   };
 
+  toscanini.getRhythmicComplexity = (instrumentName) =>
+  {
+    const rhythms = instrumentName ?
+      getPart(instrumentName).findall(".//note") : etree.findall(".//note");
+
+    //check 4 and 5
+
+    rhythms.forEach((rhythm) =>
+    {
+      const newRhythm = {};
+      newRhythm.type = rhythm[4].text;
+      if (rhythm[5].tag === "dot")
+      {
+        //TODO need to check for rests and for dots
+      }
+    });
+  };
+
   return Object.freeze(toscanini);
 }; //createToscanini
 
