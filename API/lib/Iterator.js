@@ -2,12 +2,10 @@
 const et = require("elementtree");
 
 //-----------------------------------
-//TODO call partsBeatMaps???
-const createIterator = (parts) =>
+const createIterator = (partsBeatMap) =>
 {
   const iterator = {};
   
-  //TODO make a function that sets these for debugging purposes/code clean
   let measures = [];
   let measureNum = 0;
   let beatMap = measures[0];
@@ -22,9 +20,9 @@ const createIterator = (parts) =>
 
   iterator.selectInstrument = (instrumentName) =>
   {
-    if (instrumentName in parts)
+    if (instrumentName in partsBeatMap)
     {
-      measures = parts[instrumentName];
+      measures = partsBeatMap[instrumentName];
       beatMap = measures[0];
       beatIndex = -1;
       return true;
@@ -101,7 +99,7 @@ const createIterator = (parts) =>
     return (beatIndex > 0 ||  measureNum > 0);
   };
 
-  return iterator;
+  return Object.freeze(iterator);
 };
 
 const constructor = (musicxml) =>
@@ -110,7 +108,7 @@ const constructor = (musicxml) =>
   const partNames = etree.findall(".//part-name")
                    .map((partName) => partName.text);
 
-  const parts = etree.findall(".//part").reduce((acc, val, index) =>
+  const partsBeatMap = etree.findall(".//part").reduce((acc, val, index) =>
   {
     let divisions;
    
@@ -208,7 +206,7 @@ const constructor = (musicxml) =>
     return acc;
   }, {});
    
-  return createIterator(parts);
+  return createIterator(partsBeatMap);
 };
 
 module.exports = constructor;
