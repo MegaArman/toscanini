@@ -12,10 +12,11 @@ test(("guitar_two_voice_chords"), (t) =>
   const i =  Iterator(musicXML);
   
   i.selectInstrument("Classical Guitar");
-  t.deepEqual(i.next(), {beat: 1, duration: 16,
+  t.deepEqual(i.next(), {beat: 1, duration: 4, noteType: "whole",
                          pitch: ["C4"]}, "next is voice 1");
   t.deepEqual(i.next(), 
-              { beat: 3, duration: 8, pitch: ["F3"]}, "next is voice2");
+              { beat: 3, duration: 2, noteType: "half",
+                pitch: ["F3"]}, "next is voice2");
 
   t.deepEqual(i.next(), { beat: 1, duration: 8, pitch: [ "G4", "E3" ] },
               "next is both voices");
