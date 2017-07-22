@@ -1,22 +1,20 @@
 "use strict";
 const et = require("elementtree");
 
-//-----------------------------------
 const createIterator = (partsBeatMap) =>
 {
   const iterator = {};
-  
-  let measures = [];
-  let measureNum = 0;
-  let beatMap = measures[0];
-  let beatIndex = -1;
-
   const errors =  
   {
     "noNext": "no next exists!",
     "noPrev": "no prev exists!",
     "badMeasure": "measure does not exist!"
   };
+
+  let measures = [];
+  let measureNum = 0;
+  let beatMap = measures[0];
+  let beatIndex = -1;
 
   iterator.selectInstrument = (instrumentName) =>
   {
@@ -108,6 +106,7 @@ const constructor = (musicxml) =>
   const partNames = etree.findall(".//part-name")
                    .map((partName) => partName.text);
 
+  //we accumulate (acc)  measures as we reduce
   const partsBeatMap = etree.findall(".//part").reduce((acc, val, index) =>
   {
     let divisions;
@@ -127,20 +126,16 @@ const constructor = (musicxml) =>
         }
         else if (child.tag === "note")
         {
-          const symbol = {};
+          const symbol = {}; //a note or a rest
           symbol.beat = Math.ceil((currentBeat / divisions));
 
-          //TODO need to change based on time signature?
           if (!(currentBeat % divisions) === 1) //not on downbeat
           {
             symbol.beat += (currentBeat % divisions) / divisions;
           }
-          
-          let duration =  parseInt(child.findtext(".//duration")); 
-          
+           
           symbol.noteType = "";
-          child.findall(".//dot").forEach(() => 
-            symbol.noteType += "dot ");
+          child.findall(".//dot").forEach(() => symbol.noteType += "dot ");
           symbol.noteType += child.findtext(".//type");
 
           if (child.findtext("[rest]"))
@@ -165,22 +160,24 @@ const constructor = (musicxml) =>
                 noteString += "#";
               }
             });
+
             noteString += octave;
             symbol.pitch = [noteString];
           }
 
           //chord stuff------------------------------------------         
           //if it's a chord we don't want to double count duration
+          //single voice chord case:
           if (child.findtext("[chord]")) 
           {
             const lastIndex = beatMap.length - 1;
             beatMap[lastIndex].pitch.push(symbol.pitch[0]);             
           } 
+          //two voice chord case:
           else
           {
-            //two voice chord case
             const indexOfExistingBeat = beatMap.findIndex((oldSymbol) =>
-                             oldSymbol.beat === currentBeat);
+                                        oldSymbol.beat === currentBeat);
             
             if (indexOfExistingBeat !== -1)
             {
@@ -191,17 +188,16 @@ const constructor = (musicxml) =>
               beatMap.push(symbol);
             }
 
-            currentBeat += duration;
+            currentBeat += parseInt(child.findtext(".//duration"));
           }
         }
         else if (child.tag === "backup")
         {
           currentBeat -= parseInt(child.findtext(".//duration"));
-          console.log("currentBeat", currentBeat);
         }
         else if (child.tag === "forward")
         {
-          currentBeat -= parseInt(child.findtext(".//duration"));
+          currentBeat += parseInt(child.findtext(".//duration"));
         } 
       });
 
