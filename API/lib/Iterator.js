@@ -136,7 +136,12 @@ const constructor = (musicxml) =>
             symbol.beat += (currentBeat % divisions) / divisions;
           }
           
-          symbol.duration =  parseInt(child.findtext(".//duration")); 
+          let duration =  parseInt(child.findtext(".//duration")); 
+          
+          symbol.noteType = "";
+          child.findall(".//dot").forEach(() => 
+            symbol.noteType += "dot ");
+          symbol.noteType += child.findtext(".//type");
 
           if (child.findtext("[rest]"))
           {
@@ -186,7 +191,7 @@ const constructor = (musicxml) =>
               beatMap.push(symbol);
             }
 
-            currentBeat += symbol.duration;
+            currentBeat += duration;
           }
         }
         else if (child.tag === "backup")

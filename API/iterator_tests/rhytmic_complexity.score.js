@@ -4,17 +4,17 @@ const path = require("path");
 const test = require("tape").test;
 const Iterator  = require("../lib/Iterator");
 
-test("two_monophonic_parts.xml", (t) =>
+test("rhythmic_complexity.xml", (t) =>
 {
 
   //TODO : remove actual and expected???
   const musicXML =
     fs.readFileSync(path
-      .resolve(__dirname, "../scores/two_monophonic_parts.xml")).toString();
+      .resolve(__dirname, "../scores/rhythmic_complexity.xml")).toString();
   const i =  Iterator(musicXML);
 
-  t.deepEqual(i.selectInstrument("Flute"), true, "has Flute");
-
+  t.deepEqual(i.selectInstrument("Violin"), true, "has violin");
+  t.deepEqual(i.next(), {}, "dotted half");
   t.end();
 });
 
