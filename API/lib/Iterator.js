@@ -133,7 +133,9 @@ const constructor = (musicxml) =>
           {
             symbol.beat += (currentBeat % divisions) / divisions;
           }
-           
+          //***IN TERMS OF QUARTERS!***
+          symbol.duration = parseInt(child.findtext(".//duration")) / divisions;
+      
           symbol.noteType = "";
           child.findall(".//dot").forEach(() => symbol.noteType += "dot ");
           symbol.noteType += child.findtext(".//type");
