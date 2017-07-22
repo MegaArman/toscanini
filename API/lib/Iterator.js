@@ -150,6 +150,7 @@ const constructor = (musicxml) =>
             const accidentals = child.findall(".//accidental");
             const octave = child.findtext(".//octave");
             let noteString = step;
+            
             accidentals.forEach((accidental) => 
             {
               if (accidental.text === "flat")
@@ -162,7 +163,7 @@ const constructor = (musicxml) =>
               }
             });
             noteString += octave;
-            symbol.note = noteString;
+            symbol.note = [noteString];
           }
 
           //chord stuff------------------------------------------         
@@ -170,26 +171,30 @@ const constructor = (musicxml) =>
           if (child.findtext("[chord]")) 
           {
             const lastIndex = beatMap.length - 1;
-
-            //this is the third or further note of a chord
-            if (typeof beatMap[lastIndex].note === "object")
-            {
-              beatMap[lastIndex].note.push(symbol.note);             
-            }
-            else
-            {
-              beatMap[lastIndex].note = [beatMap[lastIndex].note, symbol.note];
-            }  
-          }
+            beatMap[lastIndex].note.push(symbol.note[0]);             
+          } 
           else
           {
+            //two voice chord case
+            const indexOfExistingBeat = beatMap.findIndex((oldSymbol) =>
+                             oldSymbol.beat === currentBeat);
+            
+            if (indexOfExistingBeat !== -1)
+            {
+              beatMap[indexOfExistingBeat].note.push(symbol.note[0]);
+            }
+            else 
+            {
+              beatMap.push(symbol);
+            }
+
             currentBeat += symbol.duration;
-            beatMap.push(symbol);
           }
         }
         else if (child.tag === "backup")
         {
           currentBeat -= parseInt(child.findtext(".//duration"));
+          console.log("currentBeat", currentBeat);
         }
         else if (child.tag === "forward")
         {
