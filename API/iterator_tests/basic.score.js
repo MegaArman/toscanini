@@ -15,12 +15,12 @@ test("basic.xml", (t) =>
   t.deepEqual(i.selectInstrument("Flute"), true, "has Flute");
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
   t.deepEqual(i.hasNext(), true, "hasNext true");
-  t.deepEqual(i.next(), { beat: 1, duration: 1, pitch: "C4" }, "next");
+  t.deepEqual(i.next(), { beat: 1, duration: 1, pitch: ["C4"] }, "next");
   t.deepEqual(i.hasNext(), true, "hasNext true");
   
   //next
-  t.deepEqual(i.next(), { beat: 2, duration: 1, pitch: "Bb4" }, "next");
-  t.deepEqual(i.next(), { beat: 3, duration: 2, pitch: "G5" }, "next");
+  t.deepEqual(i.next(), { beat: 2, duration: 1, pitch: ["Bb4"] }, "next");
+  t.deepEqual(i.next(), { beat: 3, duration: 2, pitch: ["G5"] }, "next");
   t.deepEqual(i.next(), { beat: 1, duration: 4, rest: true }, "next");
   t.deepEqual(i.hasNext(), false, "hasNext false");
   t.throws(i.next, "next exception");
@@ -28,9 +28,9 @@ test("basic.xml", (t) =>
   t.deepEqual(i.hasPrev(), true, "hasPrev true");
 
   //prev
-  t.deepEqual(i.prev(), { beat: 3, duration: 2, pitch: "G5" }, "prev");
-  t.deepEqual(i.prev(), { beat: 2, duration: 1, pitch: "Bb4" }, "prev");
-  t.deepEqual(i.prev(), { beat: 1, duration: 1, pitch: "C4" }, "prev");
+  t.deepEqual(i.prev(), { beat: 3, duration: 2, pitch: ["G5"] }, "prev");
+  t.deepEqual(i.prev(), { beat: 2, duration: 1, pitch: ["Bb4"] }, "prev");
+  t.deepEqual(i.prev(), { beat: 1, duration: 1, pitch: ["C4"] }, "prev");
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
 
   t.throws(i.prev, "prev exception");
