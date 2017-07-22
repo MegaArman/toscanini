@@ -163,7 +163,7 @@ const constructor = (musicxml) =>
               }
             });
             noteString += octave;
-            symbol.note = [noteString];
+            symbol.pitch = [noteString];
           }
 
           //chord stuff------------------------------------------         
@@ -171,7 +171,7 @@ const constructor = (musicxml) =>
           if (child.findtext("[chord]")) 
           {
             const lastIndex = beatMap.length - 1;
-            beatMap[lastIndex].note.push(symbol.note[0]);             
+            beatMap[lastIndex].pitch.push(symbol.pitch[0]);             
           } 
           else
           {
@@ -181,7 +181,7 @@ const constructor = (musicxml) =>
             
             if (indexOfExistingBeat !== -1)
             {
-              beatMap[indexOfExistingBeat].note.push(symbol.note[0]);
+              beatMap[indexOfExistingBeat].pitch.push(symbol.pitch[0]);
             }
             else 
             {
