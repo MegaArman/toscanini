@@ -193,17 +193,47 @@ const createToscanini = (etree) =>
     const rhythms = instrumentName ?
       getPart(instrumentName).findall(".//note") : etree.findall(".//note");
 
-    //check 4 and 5
+    const finalRhythms = [];
 
     rhythms.forEach((rhythm) =>
     {
       const newRhythm = {};
-      newRhythm.type = rhythm[4].text;
-      if (rhythm[5].tag === "dot")
+      const childrenList = rhythm._children;
+      let numDots = 0;
+
+      childrenList.forEach((child) =>
       {
-        //TODO need to check for rests and for dots
+        if (child.tag === "type")
+        {
+          newRhythm.type = child.text;
+        }
+        if (child.tag === "dot")
+        {
+          numDots++;
+        }
+        if (child.tag === "rest")
+        {
+          newRhythm.rest = true;
+        }
+      });
+      newRhythm.dotted = numDots;
+
+      let isIn = false;
+      finalRhythms.forEach((rhythm) =>
+      {
+        if (rhythm.type === newRhythm.type
+          && rhythm.dotted === newRhythm.dotted)
+        {
+          isIn = true;
+        }
+      });
+      if (newRhythm.rest !== true && isIn !== true)
+      {
+        finalRhythms.push(newRhythm);
       }
     });
+
+    return finalRhythms;
   };
 
   return Object.freeze(toscanini);
