@@ -95,9 +95,26 @@ const createToscanini = (etree) =>
     return finalDynamics;
   };
 
-  toscanini.getNumberOfMeasures = () => parts[0].findall(".//measure").length;
-
   toscanini.getInstrumentNames = () => partNames;
+
+  toscanini.getKeySignatures = (instrumentName) =>
+  {
+    const keySignatures = [];
+    const allFifths = instrumentName ?
+      getPart(instrumentName).findall(".//fifths") : etree.findall(".//fifths");
+
+    allFifths.forEach((fifths) =>
+    {
+      if (!keySignatures.includes(fifthToPitch[fifths.text]))
+      {
+        keySignatures.push(fifthToPitch[fifths.text]);
+      }
+    });
+
+    return keySignatures;
+  };
+
+  toscanini.getNumberOfMeasures = () => parts[0].findall(".//measure").length;
 
   toscanini.getPitchRange = (instrumentName) =>
   {
@@ -125,67 +142,6 @@ const createToscanini = (etree) =>
      });
 
     return range;
-  };
-
-  toscanini.getTempos = () =>
-  {
-    const soundTags = etree.findall(".//sound[@tempo]");
-
-    const tempoCollection = [];
-
-    soundTags.forEach((soundTag) =>
-    {
-      const newTempo = parseInt(soundTag.attrib.tempo);
-
-      if (!tempoCollection.includes(newTempo))
-      {
-        tempoCollection.push(parseInt(newTempo));
-      }
-    });
-
-    return tempoCollection;
-  };
-
-  toscanini.getKeySignatures = (instrumentName) =>
-  {
-    const keySignatures = [];
-    const allFifths = instrumentName ?
-      getPart(instrumentName).findall(".//fifths") : etree.findall(".//fifths");
-
-    allFifths.forEach((fifths) =>
-    {
-      if (!keySignatures.includes(fifthToPitch[fifths.text]))
-      {
-        keySignatures.push(fifthToPitch[fifths.text]);
-      }
-    });
-
-    return keySignatures;
-  };
-
-  toscanini.getTimeSignatures = (instrumentName) =>
-  {
-    const times = instrumentName ?
-      getPart(instrumentName).findall(".//time") : etree.findall(".//time");
-    const timeSignatures = [];
-
-    times.forEach((time) =>
-    {
-      const beats = parseInt(time.findtext(".//beats"));
-      const beatType = parseInt(time.findtext(".//beat-type"));
-      const duplicate = timeSignatures.some((oldTimeSignature) =>
-      {
-        return beats === oldTimeSignature.beats
-          && beatType === oldTimeSignature.beatType;
-      });
-
-      if (!duplicate)
-      {
-        timeSignatures.push({beats: beats, beatType: beatType});
-      }
-    });
-
-    return timeSignatures;
   };
 
   toscanini.getRhythmicComplexity = (instrumentName) =>
@@ -234,6 +190,50 @@ const createToscanini = (etree) =>
     });
 
     return finalRhythms;
+  };
+
+  toscanini.getTempos = () =>
+  {
+    const soundTags = etree.findall(".//sound[@tempo]");
+
+    const tempoCollection = [];
+
+    soundTags.forEach((soundTag) =>
+    {
+      const newTempo = parseInt(soundTag.attrib.tempo);
+
+      if (!tempoCollection.includes(newTempo))
+      {
+        tempoCollection.push(parseInt(newTempo));
+      }
+    });
+
+    return tempoCollection;
+  };
+
+  toscanini.getTimeSignatures = (instrumentName) =>
+  {
+    const times = instrumentName ?
+      getPart(instrumentName).findall(".//time") : etree.findall(".//time");
+    const timeSignatures = [];
+
+    times.forEach((time) =>
+    {
+      const beats = parseInt(time.findtext(".//beats"));
+      const beatType = parseInt(time.findtext(".//beat-type"));
+      const duplicate = timeSignatures.some((oldTimeSignature) =>
+      {
+        return beats === oldTimeSignature.beats
+          && beatType === oldTimeSignature.beatType;
+      });
+
+      if (!duplicate)
+      {
+        timeSignatures.push({beats: beats, beatType: beatType});
+      }
+    });
+
+    return timeSignatures;
   };
 
   return Object.freeze(toscanini);
