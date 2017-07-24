@@ -3,7 +3,7 @@ const Toscanini = require("./Toscanini");
 
 function arraySame(first, second)
 {
-    var compareLen = first.length;
+    let compareLen = first.length;
     if (compareLen !== second.length)
       return false;
     while (compareLen--)
@@ -13,9 +13,15 @@ function arraySame(first, second)
     return true;
 }
 
+function meterArray(meter)
+{
+  return [meter.beats, meter.beatType];
+}
+
 function instrumentCheck(instrumentName, toscanini)
 {
   let instruments = null;
+
   if (instrumentName === undefined)
   {
     instruments = toscanini.getInstrumentNames();
@@ -26,13 +32,14 @@ function instrumentCheck(instrumentName, toscanini)
 
     if (instruments.includes(instrumentName))
     {
-      instruments = toscanini.getInstrumentNames(instrumentName);
+      instruments = instrumentName;
     }
     else
     {
       instruments = null;
     }
   }
+
   return instruments;
 }
 //------------------------------------------------------------------------
@@ -46,8 +53,16 @@ const gradeScore = (musicxml) =>
     const toscanini = Toscanini(musicxml);
 
     const dynamicAssessment = [];
-    //TODO fix this logic
-    let instruments = instrumentCheck(instrumentName, toscanini);
+
+    let instruments;
+    if (instrumentName !== undefined && instrumentName !== null)
+    {
+      instruments = [instrumentName];
+    }
+    else
+    {
+      instruments = toscanini.getPartNames();
+    }
 
     if (instruments !== null)
     {
@@ -101,24 +116,26 @@ const gradeScore = (musicxml) =>
 
     dynamics.forEach((dynamic) =>
     {
-      if (dynamic === "ff" || dynamic === "pp")
+      let dynamicComparison = dynamic.dynamic;
+
+      if (dynamicComparison === "ff" || dynamicComparison === "pp")
       {
         dynamicAssessment.push(5);
       }
-      else if (dynamic === "fp" || dynamic === "sfz")
+      else if (dynamicComparison === "fp" || dynamicComparison === "sfz")
       {
         dynamicAssessment.push(4);
       }
-      else if (dynamic === "mp" || dynamic === "mf")
+      else if (dynamicComparison === "mp" || dynamicComparison === "mf")
       {
         dynamicAssessment.push(3);
       }
-      else if (dynamic === "crescendo" || dynamic === "cres."
-        || dynamic === "diminuendo" || dynamic === "dim.")
+      else if (dynamicComparison === "crescendo" || dynamicComparison === "cres."
+        || dynamicComparison === "diminuendo" || dynamicComparison === "dim.")
       {
         dynamicAssessment.push(2);
       }
-      else if (dynamic === "p" || dynamic === "f")
+      else if (dynamicComparison === "p" || dynamicComparison === "f")
       {
         dynamicAssessment.push(1);
       }
@@ -138,26 +155,28 @@ const gradeScore = (musicxml) =>
 
     dynamics.forEach((dynamic) =>
     {
-      if (dynamic === "fff" || dynamic === "ppp")
+      let dynamicComparison = dynamic.dynamic;
+
+      if (dynamicComparison === "fff" || dynamicComparison === "ppp")
       {
         dynamicAssessment.push(5);
       }
-      else if (dynamic === "ff" || dynamic === "fp")
+      else if (dynamicComparison === "ff" || dynamicComparison === "fp")
       {
         dynamicAssessment.push(4);
       }
-      else if (dynamic === "mp" || dynamic === "pp" || dynamic === "fp"
-        || dynamic === "sfz")
+      else if (dynamicComparison === "mp" || dynamicComparison === "pp"
+        || dynamicComparison === "fp" || dynamicComparison === "sfz")
       {
         dynamicAssessment.push(3);
       }
-      else if (dynamic === "crescendo" || dynamic === "cres."
-        || dynamic === "diminuendo" || dynamic === "dim."
-        || dynamic === "mf")
+      else if (dynamicComparison === "crescendo" || dynamicComparison === "cres."
+        || dynamicComparison === "diminuendo" || dynamicComparison === "dim."
+        || dynamicComparison === "mf")
       {
         dynamicAssessment.push(2);
       }
-      else if (dynamic === "p" || dynamic === "f")
+      else if (dynamicComparison === "p" || dynamicComparison === "f")
       {
         dynamicAssessment.push(1);
       }
@@ -173,186 +192,185 @@ const gradeScore = (musicxml) =>
   gradeLevel.assessMeter = (instrumentName) =>
   {
     const toscanini = Toscanini(musicxml);
-    let checkInstrument = instrumentCheck(instrumentName, toscanini);
 
-    if (checkInstrument !== null)
+    let timeSignatures = null;
+    if (instrumentName === undefined)
     {
-      let timeSignatures = null;
-      if (instrumentName === undefined)
+      timeSignatures = toscanini.getTimeSignatures();
+    }
+    else
+    {
+      timeSignatures = toscanini.getTimeSignatures(instrumentName);
+    }
+
+    const meterAssessment = [];
+    let averageMeter = 0;
+
+    timeSignatures.forEach((timeSignature) =>
+    {
+      if (arraySame(meterArray(timeSignature), [7, 8]))
       {
-        timeSignatures = toscanini.getTimeSignatures();
+        meterAssessment.push(5);
+      }
+      else if (arraySame(meterArray(timeSignature), [5, 4])
+        || arraySame(meterArray(timeSignature), [9, 8])
+        || arraySame(meterArray(timeSignature), [12, 8])
+        || arraySame(meterArray(timeSignature), [5, 8]))
+      {
+        meterAssessment.push(4);
+      }
+      else if (arraySame(meterArray(timeSignature), [6, 8])
+        || arraySame(meterArray(timeSignature), [6, 4])
+        || arraySame(meterArray(timeSignature), [3, 8]))
+      {
+        meterAssessment.push(3);
+      }
+      else if ((arraySame(meterArray(timeSignature), [2, 2])
+        || arraySame(meterArray(timeSignature), [4, 4])
+        || arraySame(meterArray(timeSignature), [2, 4])
+        || arraySame(meterArray(timeSignature), [3, 4]))
+        & timeSignatures.length > 1)
+      {
+        meterAssessment.push(2);
+      }
+      else if ((arraySame(meterArray(timeSignature), [4,4]) ||
+        arraySame(meterArray(timeSignature), [2, 4]) || arraySame(meterArray(timeSignature), [3, 4]))
+        & (timeSignatures.length === 1))
+      {
+        meterAssessment.push(1);
       }
       else
       {
-        timeSignatures = toscanini.getTimeSignatures(instrumentName);
+        meterAssessment.push(6);
       }
+    });
 
-      const meterAssessment = [];
-      let averageMeter = 0;
-
-      timeSignatures.forEach((timeSignature) =>
-      {
-        if (arraySame(timeSignature, [7, 8]))
-        {
-          meterAssessment.push(5);
-        }
-        else if (arraySame(timeSignature, [5, 4])
-          || arraySame(timeSignature, [9, 8])
-          || arraySame(timeSignature, [12, 8])
-          || arraySame(timeSignature, [5, 8]))
-        {
-          meterAssessment.push(4);
-        }
-        else if (arraySame(timeSignature, [6, 8])
-          || arraySame(timeSignature, [6, 4])
-          || arraySame(timeSignature, [3, 8]))
-        {
-          meterAssessment.push(3);
-        }
-        else if ((arraySame(timeSignature, [2, 2])
-          || arraySame(timeSignature, [4, 4])
-          || arraySame(timeSignature, [2, 4])
-          || arraySame(timeSignature, [3, 4]))
-          & timeSignatures.length > 1)
-        {
-          meterAssessment.push(2);
-        }
-        else if ((arraySame(timeSignature, [4,4]) ||
-          arraySame(timeSignature, [2, 4]) || arraySame(timeSignature, [3, 4]))
-          & (timeSignatures.length === 1))
-        {
-          meterAssessment.push(1);
-        }
-        else
-        {
-          meterAssessment.push(6);
-        }
-      });
-
-      for (var i = 0; i < meterAssessment.length; i++)
-      {
-        averageMeter += meterAssessment[i];
-      }
-      averageMeter /= meterAssessment.length;
-      //maybe instead of this I can ask for the largest meterassesment?
-      return averageMeter;
+    for (var i = 0; i < meterAssessment.length; i++)
+    {
+      averageMeter += meterAssessment[i];
     }
-    return "Instrument does not exist. Check your spelling!";
+    averageMeter /= meterAssessment.length;
+    //maybe instead of this I can ask for the largest meterassesment?
+    return averageMeter;
   };
 
   gradeLevel.assessRhythmicComplexity = (instrumentName) =>
   {
     //does not include pickups
     const toscanini = Toscanini(musicxml);
-    let checkInstrument = instrumentCheck(instrumentName, toscanini);
-    const rhythms = toscanini.getRhythmComplexity(checkInstrument);
 
-    if (checkInstrument !== null)
+    let rhythms;
+
+    if (instrumentName === undefined || instrumentName === null)
     {
-      let averageRhythm = 0;
-      let rhythmicAssessment = [];
-
-      rhythms.forEach((rhythm) =>
-      {
-        if ((rhythm.noteType === "quarter" || rhythm.noteType === "half"
-        || rhythm.noteType === "whole") && rhythm.dotted === 0)
-        {
-          rhythmicAssessment.push(1);
-        }
-        else if ((rhythm.noteType === "eighth" && rhythm.dotted === 0)
-        || (rhythm.noteType === "quarter" && rhythm.dotted === 1))
-        {
-          rhythmicAssessment.push(2);
-        }
-        else if ((rhythm.noteType === "16th" && rhythm.dotted === 0)
-        || (rhythm.noteType === "eighth" && rhythm.dotted === 1))
-        {
-          //not sure how syncopation will be calculated
-          rhythmicAssessment.push(3);
-        }
-        //missing fourth
-        //double check how 16ths and 32nds are marked in xml
-        else if ((rhythm.noteType === "quarter" && rhythm.dotted === 2)
-        || (rhythm.noteType === "32nd" && rhythm.dotted === 0))
-        {
-          //also frequent syncopation
-          rhythmicAssessment.push(5);
-        }
-        else
-        {
-          rhythmicAssessment.push(6);
-        }
-      });
-
-      for (var i = 0; i < rhythmicAssessment.length; i++)
-      {
-        averageRhythm += rhythmicAssessment[i];
-      }
-      averageRhythm /= rhythmicAssessment.length;
-
-      return averageRhythm;
+      rhythms = toscanini.getRhythmicComplexity();
     }
-    return "Instrument does not exist. Check your spelling!";
+    else
+    {
+      rhythms = toscanini.getRhythmicComplexity(instrumentName);
+    }
+
+    let averageRhythm = 0;
+    let rhythmicAssessment = [];
+
+    rhythms.forEach((rhythm) =>
+    {
+      let rhythmType = rhythm.type;
+      let rhythmDot = rhythm.dotted;
+      if ((rhythmType === "quarter" || rhythmType === "half"
+      || rhythmType === "whole") && rhythmDot === 0)
+      {
+        rhythmicAssessment.push(1);
+      }
+      else if ((rhythmType === "eighth" && rhythmDot === 0)
+      || (rhythmType === "quarter" && rhythmDot === 1))
+      {
+        rhythmicAssessment.push(2);
+      }
+      else if ((rhythmType === "16th" && rhythmDot === 0)
+      || (rhythmType === "eighth" && rhythmDot === 1))
+      {
+        //not sure how syncopation will be calculated
+        rhythmicAssessment.push(3);
+      }
+      //missing fourth
+      //double check how 16ths and 32nds are marked in xml
+      else if ((rhythmType === "quarter" && rhythmDot === 2)
+      || (rhythmType === "32nd" && rhythmDot === 0))
+      {
+        //also frequent syncopation
+        rhythmicAssessment.push(5);
+      }
+      else
+      {
+        rhythmicAssessment.push(6);
+      }
+    });
+
+    for (var i = 0; i < rhythmicAssessment.length; i++)
+    {
+      averageRhythm += rhythmicAssessment[i];
+    }
+    averageRhythm /= rhythmicAssessment.length;
+
+    return averageRhythm;
+
   };
 
   gradeLevel.assessTempo = (instrumentName) =>
   {
     const toscanini = Toscanini(musicxml);
 
-    let checkInstrument = instrumentCheck(instrumentName, toscanini);
-    if (checkInstrument !== null)
+
+    let tempos = null;
+
+    if (instrumentName === undefined)
     {
-      let tempos = null;
-
-      if (instrumentName === undefined)
-      {
-        tempos = toscanini.getTempos();
-      }
-      else
-      {
-        tempos = toscanini.getTempos(instrumentName);
-      }
-      const tempoAssessment = [];
-      let averageTempo = 0;
-
-      tempos.forEach((tempo) =>
-      {
-        if (tempo < 40 || tempo > 208)
-        {
-          tempoAssessment.push(6);
-        }
-        else if (tempo > 200 && tempo <= 208)
-        {
-          tempoAssessment.push(5);
-        }
-        else if (tempo > 168 && tempo <= 200)
-        {
-          tempoAssessment.push(4);
-        }
-        else if ((tempo > 40 && tempo <= 66))
-        {
-          //not entirely sure what Michael meant in this one
-          tempoAssessment.push(3);
-        }
-        else if ((tempo > 66 && tempo < 78) || (tempo > 120 && tempo <= 168))
-        {
-          tempoAssessment.push(2);
-        }
-        else if (tempo >= 78 && tempo <= 120)
-        {
-          tempoAssessment.push(1);
-        }
-      });
-
-      for (var i = 0; i < tempoAssessment.length; i++)
-      {
-        averageTempo += tempoAssessment[i];
-      }
-      averageTempo /= tempoAssessment.length;
-      //maybe instead of this I can ask for the largest meterassesment?
-      return averageTempo;
+      tempos = toscanini.getTempos();
     }
-    return "Instrument does not exist. Check your spelling!";
+    else
+    {
+      tempos = toscanini.getTempos(instrumentName);
+    }
+    const tempoAssessment = [];
+    let averageTempo = 0;
+
+    tempos.forEach((tempo) =>
+    {
+      if (tempo < 40 || tempo > 208)
+      {
+        tempoAssessment.push(6);
+      }
+      else if (tempo > 200 && tempo <= 208)
+      {
+        tempoAssessment.push(5);
+      }
+      else if (tempo > 168 && tempo <= 200)
+      {
+        tempoAssessment.push(4);
+      }
+      else if ((tempo > 40 && tempo <= 66))
+      {
+        //not entirely sure what Michael meant in this one
+        tempoAssessment.push(3);
+      }
+      else if ((tempo > 66 && tempo < 78) || (tempo > 120 && tempo <= 168))
+      {
+        tempoAssessment.push(2);
+      }
+      else if (tempo >= 78 && tempo <= 120)
+      {
+        tempoAssessment.push(1);
+      }
+    });
+
+    for (var i = 0; i < tempoAssessment.length; i++)
+    {
+      averageTempo += tempoAssessment[i];
+    }
+    averageTempo /= tempoAssessment.length;
+    //maybe instead of this I can ask for the largest meterassesment?
+    return averageTempo;
   };
 
   return gradeLevel;
