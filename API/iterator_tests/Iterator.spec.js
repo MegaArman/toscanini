@@ -6,8 +6,6 @@ const Iterator  = require("../lib/Iterator");
 
 test("basic.xml", (t) =>
 {
-
-  //TODO : remove actual and expected???
   const musicXML =
     fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml")).toString();
   const i =  Iterator(musicXML);
@@ -37,7 +35,7 @@ test("basic.xml", (t) =>
   t.end();
 });
 
-test("two_parts.xml", (t) =>
+test("two_monophonic_parts.xml", (t) =>
 {
   const musicXML = fs.readFileSync(
     path.resolve(__dirname, "../scores/two_monophonic_parts.xml")).toString();
@@ -46,12 +44,20 @@ test("two_parts.xml", (t) =>
   t.deepEqual(i.selectInstrument("flute"), false, "has flute false");
 
   t.deepEqual(i.selectInstrument("Flute"), true, "has Flute true");
+  t.deepEqual(i.getSelectedInstrumentName(), "Flute", 
+    "getSelectedInstrumentName");
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
   t.deepEqual(i.hasNext(), true, "hasNext true");
   t.deepEqual(i.next(), { beat: 1, duration: 2, note: "G4" }, "Flute next");
 
   t.deepEqual(i.selectInstrument("Violin"), true, "has Violin true");
   t.deepEqual(i.next(), { beat: 1, duration: 2, note: "D5" }, "Violin next");
+  
+  t.deepEqual(i.getMeasureNum(), 1, "getCurrentMeasureNum 1");
+  i.setMeasureNum(2);
+  t.deepEqual(i.getMeasureNum(), 2, "setMeasureNum 2");
+  
+  t.throws(i.setMeasureNum.bind(null, 4), "setMeasureNum exception");
   t.end();
 });
 

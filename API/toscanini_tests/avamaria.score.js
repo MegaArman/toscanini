@@ -46,7 +46,7 @@ test("ava_maria_pg1 tests", (t) =>
 
   {
     const actual = toscanini.getTimeSignatures();
-    const expected = [[4, 4]];
+    const expected = [{ beatType: 4, beats: 4 }];
     t.deepEqual(actual, expected, "getTimeSignatures");
   }
 

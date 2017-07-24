@@ -11,20 +11,22 @@ test("dynamics_test test", (t) =>
   const toscanini =  Toscanini(musicXML);
 
   {
-    const actual = ["pp", "f", "mp", "ff", "mf"];
-    const expected = toscanini.getDynamics();
+    const expected = [{dynamic: "pp"}, {dynamic: "f"}, {dynamic: "mp"},
+      {dynamic: "ff"}, {dynamic: "mf"}, {dynamic: "crescendo"}];
+    const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "getDynamics score");
   }
 
   {
-    const actual = ["pp", "f", "mp"];
-    const expected = toscanini.getDynamics("Violin");
+    const expected = [{dynamic: "pp"}, {dynamic: "f"}, {dynamic: "mp"},
+      {dynamic: "crescendo"}];
+    const actual = toscanini.getDynamics("Violin");
     t.deepEqual(actual, expected, "getDynamics Violin");
   }
 
   {
-    const actual = ["ff", "f", "mf"];
-    const expected = toscanini.getDynamics("Violoncello");
+    const expected = [{dynamic: "ff"}, {dynamic: "f"}, {dynamic: "mf"}];
+    const actual = toscanini.getDynamics("Violoncello");
     t.deepEqual(actual, expected, "getDynamics Violoncello");
   }
 
@@ -34,14 +36,26 @@ test("dynamics_test test", (t) =>
 test("dynamics_test test", (t) =>
 {
   const musicXML =
-    fs.readFileSync(path.resolve(__dirname, "../scores/basiccres.xml"));
+    fs.readFileSync(path.resolve(__dirname,
+      "../scores/musicxml/31a-Directions.xml"));
   const toscanini =  Toscanini(musicXML);
 
   {
-    const actual = ["p", "crescendo", "dim."];
-    const expected = toscanini.getDynamics();
-    t.deepEqual(actual, expected, "getDynamics cres/dim score");
+    const expected = [{ dynamic: "p"},
+      { dynamic: "pp"}, { dynamic: "ppp"},
+      { dynamic: "pppp"}, { dynamic: "ppppp"},
+      { dynamic: "pppppp"}, { dynamic: "f"},
+      { dynamic: "ff"}, { dynamic: "fff"},
+      { dynamic: "ffff"}, { dynamic: "fffff"},
+      { dynamic: "ffffff"}, { dynamic: "mp"},
+      { dynamic: "mf"}, { dynamic: "sf"},
+      { dynamic: "sfp"}, { dynamic: "sfpp"},
+      { dynamic: "fp"}, { dynamic: "rf"},
+      { dynamic: "rfz"}, { dynamic: "sfz"},
+      { dynamic: "sffz"}, { dynamic: "fz"},
+      { dynamic: "crescendo"} ];
+    const actual = toscanini.getDynamics();
+    t.deepEqual(actual, expected, "all dynamics 31a Directions score");
   }
-
   t.end();
 });

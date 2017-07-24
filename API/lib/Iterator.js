@@ -12,6 +12,7 @@ const createIterator = (parts) =>
   let measureNum = 0;
   let beatMap = measures[0];
   let beatIndex = -1;
+  let selectedInstrumentName;
 
   const errors =  
   {
@@ -24,7 +25,8 @@ const createIterator = (parts) =>
   {
     if (instrumentName in parts)
     {
-      measures = parts[instrumentName];
+      selectedInstrumentName = instrumentName;
+      measures = parts[selectedInstrumentName];
       beatMap = measures[0];
       beatIndex = -1;
       return true;
@@ -36,13 +38,17 @@ const createIterator = (parts) =>
     }
   };
 
+  iterator.getSelectedInstrumentName = () => selectedInstrumentName;
+
+  iterator.getMeasureNum = () => measureNum + 1;
+
   iterator.setMeasureNum = (newMeasureNum) =>
   {
-    if (newMeasureNum <= 0 || newMeasureNum >= measures.length)
+    if (newMeasureNum <= 0 || newMeasureNum > measures.length)
     {
       throw new Error(errors.badMeasure);
     }
-    measureNum = newMeasureNum;
+    measureNum = newMeasureNum - 1;
     beatMap = measures[measureNum];
     beatIndex = -1;
   };
