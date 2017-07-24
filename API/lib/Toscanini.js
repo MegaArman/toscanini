@@ -8,400 +8,240 @@ const fifthToPitch =
   "0": "C","1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"
 };
 
-function traverse(obj,func)
-{
-  Object.keys(obj).forEach((key) =>
-  {
-    func.apply(this,[key, obj[key]]);
-    if (obj[key] !== null && typeof(obj[key])==="object")
-    {
-      traverse(obj[key],func);
-    }
-  });
-}
-
-//create objects for each part, this will reduce searching whole score.
-//part being the full name of parts, ex: Solo Violin, Violin I, Violin II
-function makeInstrumentObjects(musicObj)
-{
-  const partNames = [];
-  const instrumentObjects = {};
-
-  function searchForInstruments(obj)
-  {
-    Object.keys(obj).forEach((key) =>
-    {
-      const value = obj[key];
-
-      if (key === "part-name")
-      {
-        partNames.push(value);
-      }
-      //the actual parts data are in an ordered array found via key "part"
-      //bc they"re ordered, they correspond to the ordering of the part-names
-      else if (key === "part")
-      {
-        let index = 0;
-
-        partNames.forEach((name) =>
-        {
-          instrumentObjects[name] = value[index]; //value is array of parts
-          index++;
-        });
-
-        return; //avoid redundant traversal- VERY IMPORTANT
-      }
-      else if (value !== null && typeof(value)==="object")
-      {
-       searchForInstruments(value);
-      }
-    });
-  }
-  searchForInstruments(musicObj);
-
-  //if there's a single instrument we need to do some hacking...
-  if (Object.keys(instrumentObjects).length === 1)
-  {
-    const instrumentName = Object.keys(instrumentObjects)[0];
-    instrumentObjects[instrumentName] = musicObj;
-  }
-
-  return instrumentObjects;
-}
-
+//make properties immutable
+Object.freeze(pitchToMidiNum);
+Object.freeze(fifthToPitch);
 //=============================================================================
 //"class"
-const createToscanini = (musicObj) =>
+// etree represents the element tree for the entire score
+const createToscanini = (etree) =>
 {
-  //"private" variables..note state is safest kept constant-------------------
+  //private---------------------------
+  const partNames = etree.findall(".//part-name")
+                          .map((partName) => partName.text);
+  const parts = etree.findall(".//part");
+  const getPart = (instrumentName)  => parts[partNames.indexOf(instrumentName)];
+
+  //public----------------------------
   const toscanini = {};
-  const instrumentObjects = makeInstrumentObjects(musicObj);
-
-  //"private" functions in scope------------------------------
-  //...ex: function poop() { ... }
-
-  //"public" functions---------------------------
-  toscanini.getValsByTagName = (tagName) =>
-  {
-    const vals = [];
-
-    function process(key,value) //called with every property and it"s value
-    {
-      if (key === tagName)
-      {
-        vals.push(value);
-      }
-    }
-
-    traverse(musicObj, process);
-    return vals;
-  };
-
-  toscanini.getInstrumentNames = () => Object.keys(instrumentObjects);
-
-  toscanini.getPitchRange = (instrumentName) =>//of the whole piece
-  {
-    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
-    let midiNum = 0;
-    let min = 999;
-    let max = -999;
-
-    function process(key, value)
-    {
-      if (key === "step")
-      {
-        midiNum += pitchToMidiNum[value];
-      }
-      else if (key === "alter")
-      {
-        midiNum += parseInt(value);
-      }
-      else if (key === "octave")
-      {
-        midiNum += parseInt(value) * 12;
-        if (min > midiNum)
-        {
-          min = midiNum;
-        }
-        if (max < midiNum)
-        {
-          max = midiNum;
-        }
-        midiNum = 0; //"octave" is the last key in a note, so reset
-      }
-    }
-
-    traverse(jsObj, process);
-    const range = {"minPitch": min, "maxPitch": max};
-    return range;
-  };
-
-  toscanini.getKeySignatures = (instrumentName) =>
-  {
-    const keySignatures = [];
-    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
-
-    function process(key,value)
-    {
-      if (key === "fifths")
-      {
-        const newKeySig = fifthToPitch[value];
-        let shouldPush = true;
-
-        keySignatures.forEach((oldKeySignature) =>
-        {
-          if (newKeySig === oldKeySignature)
-          {
-            shouldPush = false;
-          }
-        });
-
-        if (shouldPush)
-        {
-          keySignatures.push(newKeySig);
-        }
-      }
-    }
-
-    traverse(jsObj, process);
-    return keySignatures;
-  };
-
-  toscanini.getInstrumentsWithMelody = (melodyString) =>
-  {
-    let tempStrNotes = "";
-    const instrumentsWithMelody = [];
-    let midiNum = 0;
-
-    //build a string of notes ex: CDAGB--------------------
-    function midiNumToNote(midiNum)
-    {
-      const notes =
-      ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-      const pitchNum = midiNum % 12; //remove the octave info
-      return (notes[pitchNum]);
-    }
-
-    function process(key, value)
-    {
-      if (key === "step")
-      {
-        midiNum += pitchToMidiNum[value];
-      }
-      else if (key === "alter")
-      {
-        midiNum += parseInt(value);
-      }
-      else if (key === "octave")
-      {
-        //Must do toscanini... suppose there"s a Cb
-        midiNum += parseInt(value) * 12;
-        tempStrNotes += midiNumToNote(midiNum);
-        midiNum = 0; //"octave" is the last key in a note, so reset
-      }
-    }
-    //---------------------------------------------------
-
-    Object.keys(instrumentObjects).forEach((instrumentName) =>
-    {
-      traverse(instrumentObjects[instrumentName], process);
-
-      if (tempStrNotes.includes(melodyString))
-      {
-        instrumentsWithMelody.push(instrumentName);
-      }
-      tempStrNotes = "";
-    });
-
-    return instrumentsWithMelody;
-  };
-
-  toscanini.getTempos = () =>
-  {
-    const tempos = [];
-    function process(key,value)
-    {
-      if (key === "tempo")
-      {
-        const newTempo = parseInt(value);
-
-        if (!tempos.includes(newTempo))
-        {
-          tempos.push(newTempo);
-        }
-      }
-    }
-
-    traverse(musicObj, process);
-
-    if (tempos.length === 0)
-    {
-      tempos.push(120);
-    }
-    return tempos;
-  };
-
-  toscanini.getTimeSignatures = (instrumentName) =>
-  {
-    const timeSignatures = []; //ex: [{beats: 5, beats-type: 2}, ...]
-    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
-
-    function process(key,value)
-    {
-     if (key === "time")
-     {
-      const newTimeSignature =
-        [parseInt(value["beats"]), parseInt(value["beat-type"])];
-
-      if (!timeSignatures.some((oldTimeSignature) =>
-            oldTimeSignature[0] === newTimeSignature[0]
-            && oldTimeSignature[1] === newTimeSignature[1]))
-      {
-        timeSignatures.push(newTimeSignature);
-      }
-     }
-    }
-
-    traverse(jsObj, process);
-    return timeSignatures;
-  };
 
   toscanini.getDynamics = (instrumentName) =>
   {
     const finalDynamics = [];
-    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
-    const possibleDynamics = ["ppppp", "pppp", "ppp", "pp", "p","mp",
-      "mf", "f", "ff", "fff", "ffff", "fffff", "fp", "sf", "rfz", "rf",
-      "sfz", "sfzp", "fz"];
 
-    function process(key,value)
+    let dynamics = instrumentName ? getPart(instrumentName)
+      .findall(".//dynamics") : etree.findall(".//dynamics");
+
+    dynamics.forEach((dynamic) =>
     {
-      if (key === "dynamics" && typeof value === "object")
+      dynamic = dynamic._children[0].tag;
+      if (dynamic !== "other-dynamics")
       {
-        const newDynamics = possibleDynamics
-          .find(dynamic => (dynamic in value));
-
-        if (!finalDynamics.includes(newDynamics))
+        const newDynamic = {dynamic: dynamic};
+        if (!finalDynamics.includes(newDynamic))
         {
-          finalDynamics.push(newDynamics);
+          finalDynamics.push(newDynamic);
         }
       }
-    }
+    });
 
-    traverse(jsObj, process);
+    dynamics = instrumentName ? getPart(instrumentName)
+      .findall(".//wedge") : etree.findall(".//wedge");
+
+    dynamics.forEach((dynamic) =>
+    {
+      dynamic = dynamic.attrib.type;
+
+      if (dynamic !== "stop" && dynamic !== "start")
+      {
+        const newDynamic = {dynamic: dynamic};
+        if (!finalDynamics.includes(newDynamic))
+        {
+          finalDynamics.push(newDynamic);
+        }
+      }
+    });
+
+    dynamics = instrumentName ? getPart(instrumentName)
+      .findall(".//words") : etree.findall(".//words");
+
+    dynamics.forEach((dynamic) =>
+    {
+      dynamic = dynamic.text;
+      if (dynamic === "cres." || dynamic === "crescendo" || dynamic === "dim."
+           || dynamic === "diminuendo" || dynamic === "descres."
+           || dynamic === "descrescendo" || dynamic === undefined)
+      {
+        if (dynamic === "cres.")
+        {
+          dynamic = "crescendo";
+        }
+        else if (dynamic === "dim.")
+        {
+          dynamic = "diminuendo";
+        }
+        else if (dynamic === "decres.")
+        {
+          dynamic = "descrescendo";
+        }
+        const newDynamic = {dynamic: dynamic};
+        if (!finalDynamics.includes(newDynamic))
+        {
+          finalDynamics.push(newDynamic);
+        }
+      }
+    });
+
     return finalDynamics;
   };
 
-  toscanini.getRhythmComplexity = (instrumentName) =>
+  toscanini.getInstrumentNames = () => partNames;
+
+  toscanini.getKeySignatures = (instrumentName) =>
   {
-    const finalRhythm = [];
-    const jsObj = instrumentName ? instrumentObjects[instrumentName] : musicObj;
+    const keySignatures = [];
+    const allFifths = instrumentName ?
+      getPart(instrumentName).findall(".//fifths") : etree.findall(".//fifths");
 
-    function process(key,value)
+    allFifths.forEach((fifths) =>
     {
-      if (key === "note")
+      if (!keySignatures.includes(fifthToPitch[fifths.text]))
       {
-        if (value instanceof Array)
-        {
-          value.forEach((note) =>
-          {
-            let newRhythm = note["type"];
-
-            if (note["dot"] === undefined)
-            {
-              newRhythm = newRhythm + " 0";
-            }
-            else
-            {
-              if (note["dot"] instanceof Array)
-              {
-                newRhythm = newRhythm + " " + note["dot"].length;
-              }
-              else
-              {
-                newRhythm = newRhythm + " 1";
-              }
-            }
-
-            //excluding rests
-            if (!finalRhythm.includes(newRhythm) && note["rest"] === undefined)
-            {
-              finalRhythm.push(newRhythm);
-            }
-          });
-        }
-        else
-        {
-          let newRhythm = value["type"];
-
-          if (value["dot"] === undefined)
-          {
-            newRhythm = newRhythm + " 0";
-          }
-          else
-          {
-            if (value["dot"] instanceof Array)
-            {
-              newRhythm = newRhythm + " " + value["dot"].length;
-            }
-            else
-            {
-              newRhythm = newRhythm + " 1";
-            }
-          }
-          //excluding rests
-          if (!finalRhythm.includes(newRhythm) && value["rest"] === undefined)
-          {
-            finalRhythm.push(newRhythm);
-          }
-        }
+        keySignatures.push(fifthToPitch[fifths.text]);
       }
-    }
+    });
 
-    traverse(jsObj, process);
-    return finalRhythm;
+    return keySignatures;
   };
 
-  toscanini.getNumberOfMeasures = () =>
+  toscanini.getNumberOfMeasures = () => parts[0].findall(".//measure").length;
+
+  toscanini.getPitchRange = (instrumentName) =>
   {
-    let measureNumber = 0;
+    const range = {minPitch: Infinity, maxPitch: -Infinity};
+    const pitches = instrumentName ?
+      getPart(instrumentName).findall(".//pitch") : etree.findall(".//pitch");
 
-    function process(key, value)
+    pitches.forEach((pitch) =>
     {
-      if (key === "measure")
-      {
-        measureNumber = value.length;
-      }
-    }
-    traverse(instrumentObjects[Object.keys(instrumentObjects)[0]], process);
+      const step  = pitchToMidiNum[pitch.findtext(".//step")];
+      const alter = (pitch.findtext(".//alter") !== undefined) ?
+        parseInt(pitch.findtext(".//alter")) : 0;
+      const octave = parseInt(pitch.findtext(".//octave")) * 12;
+      const midiNum = step + alter + octave;
 
-    return measureNumber;
+      if (midiNum < range.minPitch)
+      {
+        range.minPitch = midiNum;
+      }
+      if (midiNum > range.maxPitch)
+      {
+        range.maxPitch = midiNum;
+      }
+
+     });
+
+    return range;
   };
 
-  return toscanini;
+  toscanini.getRhythmicComplexity = (instrumentName) =>
+  {
+    const rhythms = instrumentName ?
+      getPart(instrumentName).findall(".//note") : etree.findall(".//note");
+
+    const finalRhythms = [];
+
+    rhythms.forEach((rhythm) =>
+    {
+      const newRhythm = {};
+      const childrenList = rhythm._children;
+      let numDots = 0;
+
+      childrenList.forEach((child) =>
+      {
+        if (child.tag === "type")
+        {
+          newRhythm.type = child.text;
+        }
+        if (child.tag === "dot")
+        {
+          numDots++;
+        }
+        if (child.tag === "rest")
+        {
+          newRhythm.rest = true;
+        }
+      });
+      newRhythm.dotted = numDots;
+
+      let isIn = false;
+      finalRhythms.forEach((rhythm) =>
+      {
+        if (rhythm.type === newRhythm.type
+          && rhythm.dotted === newRhythm.dotted)
+        {
+          isIn = true;
+        }
+      });
+      if (newRhythm.rest !== true && isIn !== true)
+      {
+        finalRhythms.push(newRhythm);
+      }
+    });
+
+    return finalRhythms;
+  };
+
+  toscanini.getTempos = () =>
+  {
+    const soundTags = etree.findall(".//sound[@tempo]");
+
+    const tempoCollection = [];
+
+    soundTags.forEach((soundTag) =>
+    {
+      const newTempo = parseInt(soundTag.attrib.tempo);
+
+      if (!tempoCollection.includes(newTempo))
+      {
+        tempoCollection.push(parseInt(newTempo));
+      }
+    });
+
+    return tempoCollection;
+  };
+
+  toscanini.getTimeSignatures = (instrumentName) =>
+  {
+    const times = instrumentName ?
+      getPart(instrumentName).findall(".//time") : etree.findall(".//time");
+    const timeSignatures = [];
+
+    times.forEach((time) =>
+    {
+      const beats = parseInt(time.findtext(".//beats"));
+      const beatType = parseInt(time.findtext(".//beat-type"));
+      const duplicate = timeSignatures.some((oldTimeSignature) =>
+      {
+        return beats === oldTimeSignature.beats
+          && beatType === oldTimeSignature.beatType;
+      });
+
+      if (!duplicate)
+      {
+        timeSignatures.push({beats: beats, beatType: beatType});
+      }
+    });
+
+    return timeSignatures;
+  };
+
+  return Object.freeze(toscanini);
 }; //createToscanini
 
 //======================================================================
-const xml2js = require("xml2js");
-const parser = new xml2js.Parser({explicitArray: false, mergeAttrs: true});
-
-
+const elementtree = require("elementtree");
 const constructor = (musicxml) =>
-{
-  let scoreObj;
-
-  parser.parseString(musicxml, (err, obj) =>
-  {
-    if (err)
-    {
-      throw err;
-    }
-    scoreObj = obj;
-  });
-
-  // console.log(JSON.stringify(scoreObj, null, 4));
-
-  return createToscanini(scoreObj);
-};
+  createToscanini(elementtree.parse(musicxml.toString()));
 
 module.exports = constructor;

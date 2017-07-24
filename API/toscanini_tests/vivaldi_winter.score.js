@@ -43,22 +43,22 @@ test("vivaldi_winter tests", (t) =>
   }
 
   {
-    const actual = [[4, 4], [3, 8]];
+    const actual = [ { beatType: 4, beats: 4 }, { beatType: 8, beats: 3 } ];
     const expected = toscanini.getTimeSignatures("Violin I");
     t.deepEqual(actual, expected, "getTimeSignatures Violin I");
   }
 
   {
-    const actual = [[4, 4], [3, 8]];
+    const actual = [ { beatType: 4, beats: 4 }, { beatType: 8, beats: 3 } ];
     const expected = toscanini.getTimeSignatures();
     t.deepEqual(actual, expected, "getTimeSignatures score");
   }
 
-  {
-    const actual = [68, 60, 33, 78, 45, 40];
-    const expected = toscanini.getTempos("Viola");
-    t.deepEqual(actual, expected, "getTempos Viola");
-  }
+  //{
+  //  const actual = [68, 60, 33, 78, 45, 40];
+  //  const expected = toscanini.getTempos("Viola");
+  //  t.deepEqual(actual, expected, "getTempos Viola");
+  //}
 
   {
     const actual = [68, 60, 33, 78, 45, 40];
