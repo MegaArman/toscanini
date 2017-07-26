@@ -73,7 +73,25 @@ const createToscanini = (etree) =>
 
     articulations.forEach((articulation) =>
     {
+      let children = articulation._children[0]._children;
       articulation = articulation._children[0].tag;
+
+      if (children !== undefined && children.length > 1)
+      {
+        let addOn = "";
+        children.forEach((child) =>
+        {
+          if (addOn === undefined)
+          {
+            addOn = child.tag;
+          }
+          else {
+            addOn = addOn + " " + child.tag;
+          }
+        });
+        articulation = addOn + " " + articulation;
+      }
+
       if (!finalArticulations.includes(articulation))
       {
         finalArticulations.push(articulation);
@@ -82,7 +100,25 @@ const createToscanini = (etree) =>
 
     ornaments.forEach((ornament) =>
     {
+      let children = ornament._children[0]._children;
       ornament = ornament._children[0].tag;
+
+      if (children !== undefined && children.length > 1)
+      {
+        let addOn = "";
+        children.forEach((child) =>
+        {
+          if (addOn === undefined)
+          {
+            addOn = child.tag;
+          }
+          else {
+            addOn = addOn + " " + child.tag;
+          }
+        });
+        ornament = addOn + " " + ornament;
+      }
+
       if (!finalArticulations.includes(ornament))
       {
         finalArticulations.push(ornament);
@@ -94,16 +130,26 @@ const createToscanini = (etree) =>
       let children = technique._children[0]._children;
       technique = technique._children[0].tag;
 
+
       if (children !== undefined && children.length > 1)
       {
-        let addOn = "";
+        let addOn = undefined;
         children.forEach((child) =>
         {
-          addOn = addOn + " " + child.tag;
+          if (child.tag !== "" && child.tag !== " " && child.tag !== null
+            && child.tag !== undefined)
+          {
+            if (addOn === undefined)
+            {
+              addOn = child.tag;
+            }
+            else {
+              addOn = addOn + " " + child.tag;
+            }
+          }
         });
         technique = addOn + " " + technique;
       }
-      console.log(technique);
 
       if (!finalArticulations.includes(technique))
       {
@@ -113,7 +159,19 @@ const createToscanini = (etree) =>
 
     notations.forEach((notation) =>
     {
-      notation = notation._children[0].tag;
+      if (notation._children[0].text !== undefined
+        && notation._children[0].text !== "\n            "
+        && notation._children[0].text !== " "
+        && notation._children[0].text !== null
+        && notation._children[0].text !== "")
+      {
+        notation = notation._children[0].text
+          + " " + notation._children[0].tag;
+      }
+      else
+      {
+        notation = notation._children[0].tag;
+      }
 
       if (notation !== "ornaments" && notation !== "articulations"
         && notation !== "dynamics" && notation !== "technical"
