@@ -43,6 +43,82 @@ const createToscanini = (etree) =>
 
   toscanini.getPart = (instrumentName) => getPart(instrumentName);
 
+  toscanini.getArticulations = (instrumentName) =>
+  {
+    const finalArticulations = [];
+
+    let articulations = instrumentName ? toscanini.getPart(instrumentName)
+      .findall(".//articulations") : etree.findall(".//articulations");
+
+    let ornaments = instrumentName ? toscanini.getPart(instrumentName)
+      .findall(".//ornaments") : etree.findall(".//ornaments");
+
+    let notations = instrumentName ? toscanini.getPart(instrumentName)
+      .findall(".//notations") : etree.findall(".//notations");
+
+    let technical = instrumentName ? toscanini.getPart(instrumentName)
+      .findall(".//technical") : etree.findall(".//technical");
+
+    //CAUTION: these may or may not be all articulations
+
+    articulations.forEach((articulation) =>
+    {
+      articulation = articulation._children[0].tag;
+      if (!finalArticulations.includes(articulation))
+      {
+        finalArticulations.push(articulation);
+      }
+    });
+
+    ornaments.forEach((ornament) =>
+    {
+      ornament = ornament._children[0].tag;
+      if (!finalArticulations.includes(ornament))
+      {
+        finalArticulations.push(ornament);
+      }
+    });
+
+    technical.forEach((technique) =>
+    {
+      let tech = technique;
+      technique = technique._children[0].tag;
+      if (technique === "harmonic")
+      {
+        console.log(tech._children[0]);
+        if (tech._children.length > 1)
+        {
+          console.log(tech._children[1]);
+        }
+      }
+      if (tech._children !== undefined && tech._children.length > 1)
+      {
+        console.log("here");
+        technique = tech._children[1].tag + tech._children[0].tag;
+      }
+
+      if (!finalArticulations.includes(technique))
+      {
+
+        finalArticulations.push(technique);
+      }
+    });
+
+    notations.forEach((notation) =>
+    {
+      notation = notation._children[0].tag;
+
+      if (notation !== "ornaments" && notation !== "articulations"
+        && notation !== "dynamics" && notation !== "technical"
+        && !finalArticulations.includes(notation))
+      {
+        finalArticulations.push(notation);
+      }
+    });
+
+    return finalArticulations;
+  };
+
   toscanini.getDynamics = (instrumentName) =>
   {
     const finalDynamics = [];
