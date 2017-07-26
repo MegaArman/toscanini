@@ -32,8 +32,7 @@ test("dynamics_test test", (t) =>
 
   t.end();
 });
-//TODO
-//also test with 31a directions
+
 test("dynamics_test test", (t) =>
 {
   const musicXML =
@@ -58,6 +57,5 @@ test("dynamics_test test", (t) =>
     const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "all dynamics 31a Directions score");
   }
-
   t.end();
 });

@@ -2,12 +2,11 @@
 <!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "http://www.musicxml.org/dtds/partwise.dtd">
 <score-partwise version="3.0">
  <work>
-  <work-title>super_basic</work-title>
+  <work-title>time_signature_change.xml</work-title>
  </work>
  <identification>
-  <rights>super_basic</rights>
   <encoding>
-   <encoding-date>2017-06-30</encoding-date>
+   <encoding-date>2017-06-29</encoding-date>
    <encoder>Galina Belolipetski</encoder>
    <software>Sibelius 7.5.1</software>
    <software>Direct export, not from Dolet</software>
@@ -21,22 +20,22 @@
  </identification>
  <defaults>
   <scaling>
-   <millimeters>215.9</millimeters>
-   <tenths>1224</tenths>
+   <millimeters>210</millimeters>
+   <tenths>1190</tenths>
   </scaling>
   <page-layout>
-   <page-height>1584</page-height>
-   <page-width>1224</page-width>
+   <page-height>1683</page-height>
+   <page-width>1190</page-width>
    <page-margins type="both">
-    <left-margin>55</left-margin>
-    <right-margin>55</right-margin>
-    <top-margin>55</top-margin>
+    <left-margin>56</left-margin>
+    <right-margin>56</right-margin>
+    <top-margin>56</top-margin>
     <bottom-margin>113</bottom-margin>
    </page-margins>
   </page-layout>
   <system-layout>
    <system-margins>
-    <left-margin>48</left-margin>
+    <left-margin>63</left-margin>
     <right-margin>0</right-margin>
    </system-margins>
    <system-distance>92</system-distance>
@@ -69,42 +68,37 @@
   <lyric-language xml:lang="en" />
  </defaults>
  <credit page="1">
-  <credit-words default-x="611" default-y="155" font-family="Plantin MT Std" font-style="normal" font-size="22.1875" font-weight="normal" justify="center" valign="middle">super_basic</credit-words>
- </credit>
- <credit page="1">
-  <credit-words default-x="611" default-y="144" font-family="Plantin MT Std" font-style="normal" font-size="10.1562" font-weight="normal" justify="center" valign="middle">super_basic</credit-words>
+  <credit-words default-x="595" default-y="156" font-family="FreeSerif" font-style="normal" font-size="22.1875" font-weight="normal" justify="center" valign="middle">time_signature_change.xml</credit-words>
  </credit>
  <part-list>
   <score-part id="P1">
-   <part-name>Flute</part-name>
+   <part-name>Piano</part-name>
    <part-name-display>
-    <display-text>Flute</display-text>
+    <display-text>Piano</display-text>
    </part-name-display>
-   <part-abbreviation>Fl.</part-abbreviation>
+   <part-abbreviation>Pno.</part-abbreviation>
    <part-abbreviation-display>
-    <display-text>Fl.</display-text>
+    <display-text>Pno.</display-text>
    </part-abbreviation-display>
    <score-instrument id="P1-I1">
-    <instrument-name>Flute (2)</instrument-name>
-    <instrument-sound>wind.flutes.flute</instrument-sound>
-    <solo />
+    <instrument-name> </instrument-name>
     <virtual-instrument>
      <virtual-library>General MIDI</virtual-library>
-     <virtual-name>Flute</virtual-name>
+     <virtual-name>Bright Piano</virtual-name>
     </virtual-instrument>
    </score-instrument>
   </score-part>
  </part-list>
  <part id="P1">
   <!--============== Part: P1, Measure: 1 ==============-->
-  <measure number="1" width="541">
+  <measure number="1" width="387">
    <print new-page="yes">
     <system-layout>
      <system-margins>
       <left-margin>76</left-margin>
       <right-margin>0</right-margin>
      </system-margins>
-     <top-system-distance>176</top-system-distance>
+     <top-system-distance>173</top-system-distance>
     </system-layout>
    </print>
    <attributes>
@@ -113,7 +107,7 @@
      <fifths>0</fifths>
      <mode>major</mode>
     </key>
-    <time color="#000000">
+    <time symbol="common" color="#000000">
      <beats>4</beats>
      <beat-type>4</beat-type>
     </time>
@@ -124,114 +118,124 @@
     </clef>
     <staff-details number="1" print-object="yes" />
    </attributes>
-   <direction>
-    <direction-type>
-     <dynamics default-x="70" default-y="-70" color="#000000" font-family="Opus Text Std" font-style="normal" font-size="12.0312" font-weight="normal">
-      <p />
-     </dynamics>
-    </direction-type>
-    <voice>1</voice>
-    <staff>1</staff>
-   </direction>
-   <direction>
-    <direction-type>
-     <wedge default-x="12" default-y="-65" color="#000000" type="crescendo" />
-    </direction-type>
-    <voice>1</voice>
-    <staff>1</staff>
-   </direction>
-   <note color="#000000" default-x="76" default-y="-15">
+   <note color="#000000" default-x="75" default-y="-50">
     <pitch>
      <step>C</step>
-     <octave>4</octave>
+     <octave>5</octave>
     </pitch>
-    <duration>256</duration>
+    <duration>170</duration>
     <instrument id="P1-I1" />
     <voice>1</voice>
     <type>quarter</type>
-    <stem>up</stem>
+    <time-modification>
+     <actual-notes>3</actual-notes>
+     <normal-notes>2</normal-notes>
+     <normal-type>quarter</normal-type>
+    </time-modification>
+    <stem>down</stem>
     <staff>1</staff>
+    <notations>
+     <tuplet type="start" bracket="yes" number="1" default-y="-62" placement="below" />
+    </notations>
    </note>
-   <note color="#000000" default-x="201" default-y="-55">
+   <note color="#000000" default-x="136" default-y="-50">
     <pitch>
-     <step>B</step>
-     <alter>-1</alter>
-     <octave>4</octave>
+     <step>C</step>
+     <octave>5</octave>
     </pitch>
-    <duration>256</duration>
+    <duration>171</duration>
     <instrument id="P1-I1" />
     <voice>1</voice>
     <type>quarter</type>
-    <accidental>flat</accidental>
+    <time-modification>
+     <actual-notes>3</actual-notes>
+     <normal-notes>2</normal-notes>
+     <normal-type>quarter</normal-type>
+    </time-modification>
     <stem>down</stem>
     <staff>1</staff>
    </note>
-   <direction>
-    <direction-type>
-     <wedge default-y="-65" color="#000000" type="stop" />
-    </direction-type>
-    <offset sound="no">236</offset>
-    <voice>1</voice>
-    <staff>1</staff>
-   </direction>
-   <note color="#000000" default-x="327" default-y="-30">
+   <note color="#000000" default-x="197" default-y="-50">
     <pitch>
-     <step>G</step>
+     <step>C</step>
      <octave>5</octave>
     </pitch>
+    <duration>171</duration>
+    <instrument id="P1-I1" />
+    <voice>1</voice>
+    <type>quarter</type>
+    <time-modification>
+     <actual-notes>3</actual-notes>
+     <normal-notes>2</normal-notes>
+     <normal-type>quarter</normal-type>
+    </time-modification>
+    <stem>down</stem>
+    <staff>1</staff>
+    <notations>
+     <tuplet type="stop" bracket="yes" number="1" default-y="-62" placement="below" />
+    </notations>
+   </note>
+   <note default-x="258">
+    <rest />
     <duration>512</duration>
     <instrument id="P1-I1" />
     <voice>1</voice>
     <type>half</type>
-    <stem>down</stem>
     <staff>1</staff>
    </note>
   </measure>
   <!--============== Part: P1, Measure: 2 ==============-->
-  <measure number="2" width="495">
-   <direction>
-    <direction-type>
-     <words default-x="9" default-y="-70" justify="left" valign="middle" font-family="Plantin MT Std" font-style="italic" font-size="12.0312" font-weight="normal">dim.</words>
-    </direction-type>
-    <voice>1</voice>
-    <staff>1</staff>
-   </direction>
-   <note color="#000000" default-x="15" default-y="5">
-    <pitch>
-     <step>G</step>
-     <octave>4</octave>
-    </pitch>
-    <duration>256</duration>
+  <measure number="2" width="381">
+   <print new-system="yes">
+    <system-layout>
+     <system-margins>
+      <left-margin>64</left-margin>
+      <right-margin>0</right-margin>
+     </system-margins>
+     <system-distance>92</system-distance>
+    </system-layout>
+   </print>
+   <attributes>
+    <time color="#000000">
+     <beats>9</beats>
+     <beat-type>8</beat-type>
+    </time>
+    <staff-details number="1" print-object="yes" />
+   </attributes>
+   <note default-x="60">
+    <rest />
+    <duration>1152</duration>
     <instrument id="P1-I1" />
     <voice>1</voice>
-    <type>quarter</type>
-    <stem>up</stem>
-    <staff>1</staff>
-   </note>
-   <note color="#000000" default-x="140" default-y="-55">
-    <pitch>
-     <step>B</step>
-     <alter>-1</alter>
-     <octave>4</octave>
-    </pitch>
-    <duration>256</duration>
-    <instrument id="P1-I1" />
-    <voice>1</voice>
-    <type>quarter</type>
-    <accidental>flat</accidental>
-    <stem>down</stem>
+    <type>whole</type>
     <staff>1</staff>
    </note>
-   <note color="#000000" default-x="266" default-y="5">
-    <pitch>
-     <step>G</step>
-     <octave>4</octave>
-    </pitch>
-    <duration>512</duration>
+  </measure>
+  <!--============== Part: P1, Measure: 3 ==============-->
+  <measure number="3" width="321">
+   <note>
+    <rest />
+    <duration>1152</duration>
     <instrument id="P1-I1" />
     <voice>1</voice>
-    <type>half</type>
-    <stem>up</stem>
+    <type>whole</type>
+    <staff>1</staff>
+   </note>
+  </measure>
+  <!--============== Part: P1, Measure: 4 ==============-->
+  <measure number="4" width="310">
+   <attributes>
+    <time color="#000000">
+     <beats>3</beats>
+     <beat-type>4</beat-type>
+    </time>
+   </attributes>
+   <note default-x="19">
+    <rest />
+    <duration>768</duration>
+    <instrument id="P1-I1" />
+    <voice>1</voice>
+    <type>whole</type>
     <staff>1</staff>
    </note>
    <barline>

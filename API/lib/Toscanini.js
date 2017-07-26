@@ -18,18 +18,36 @@ const createToscanini = (etree) =>
 {
   //private---------------------------
   const partNames = etree.findall(".//part-name")
-                          .map((partName) => partName.text);
+    .map((partName) => partName.text);
+
   const parts = etree.findall(".//part");
-  const getPart = (instrumentName)  => parts[partNames.indexOf(instrumentName)];
+
+  const getPart = ((instrumentName) =>
+  {
+    return parts[partNames.indexOf(instrumentName)];
+  });
+
 
   //public----------------------------
   const toscanini = {};
+
+  toscanini.getPartNames = () =>
+  {
+    return partNames;
+  };
+
+  toscanini.getParts = () =>
+  {
+    return parts;
+  };
+
+  toscanini.getPart = (instrumentName) => getPart(instrumentName);
 
   toscanini.getDynamics = (instrumentName) =>
   {
     const finalDynamics = [];
 
-    let dynamics = instrumentName ? getPart(instrumentName)
+    let dynamics = instrumentName ? toscanini.getPart(instrumentName)
       .findall(".//dynamics") : etree.findall(".//dynamics");
 
     dynamics.forEach((dynamic) =>
@@ -38,7 +56,18 @@ const createToscanini = (etree) =>
       if (dynamic !== "other-dynamics")
       {
         const newDynamic = {dynamic: dynamic};
-        if (!finalDynamics.includes(newDynamic))
+
+        let isIn = false;
+
+        finalDynamics.forEach((dynamic) =>
+        {
+          if (dynamic.dynamic === newDynamic.dynamic)
+          {
+            isIn = true;
+          }
+        });
+
+        if (isIn === false)
         {
           finalDynamics.push(newDynamic);
         }
@@ -55,7 +84,18 @@ const createToscanini = (etree) =>
       if (dynamic !== "stop" && dynamic !== "start")
       {
         const newDynamic = {dynamic: dynamic};
-        if (!finalDynamics.includes(newDynamic))
+
+        let isIn = false;
+
+        finalDynamics.forEach((dynamic) =>
+        {
+          if (dynamic.dynamic === newDynamic.dynamic)
+          {
+            isIn = true;
+          }
+        });
+
+        if (isIn === false)
         {
           finalDynamics.push(newDynamic);
         }
@@ -85,7 +125,18 @@ const createToscanini = (etree) =>
           dynamic = "descrescendo";
         }
         const newDynamic = {dynamic: dynamic};
-        if (!finalDynamics.includes(newDynamic))
+
+        let isIn = false;
+
+        finalDynamics.forEach((dynamic) =>
+        {
+          if (dynamic.dynamic === newDynamic.dynamic)
+          {
+            isIn = true;
+          }
+        });
+
+        if (isIn === false)
         {
           finalDynamics.push(newDynamic);
         }

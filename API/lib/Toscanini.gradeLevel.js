@@ -3,7 +3,7 @@ const Toscanini = require("./Toscanini");
 
 function arraySame(first, second)
 {
-    var compareLen = first.length;
+    let compareLen = first.length;
     if (compareLen !== second.length)
       return false;
     while (compareLen--)
@@ -13,46 +13,228 @@ function arraySame(first, second)
     return true;
 }
 
+function meterArray(meter)
+{
+  return [meter.beats, meter.beatType];
+}
+
+function instrumentCheck(instrumentName, toscanini)
+{
+  let instruments = null;
+
+  if (instrumentName === undefined)
+  {
+    instruments = toscanini.getInstrumentNames();
+  }
+  else
+  {
+    instruments = toscanini.getInstrumentNames();
+
+    if (instruments.includes(instrumentName))
+    {
+      instruments = instrumentName;
+    }
+    else
+    {
+      instruments = null;
+    }
+  }
+
+  return instruments;
+}
 //------------------------------------------------------------------------
 
 const gradeScore = (musicxml) =>
 {
   const gradeLevel = {};
 
-  gradeLevel.assessMeter = () =>
+  gradeLevel.assessDynamics = (instrumentName) =>
   {
     const toscanini = Toscanini(musicxml);
-    const timeSignatures = toscanini.getTimeSignatures();
+
+    const dynamicAssessment = [];
+
+    let instruments;
+    if (instrumentName !== undefined && instrumentName !== null)
+    {
+      instruments = [instrumentName];
+    }
+    else
+    {
+      instruments = toscanini.getPartNames();
+    }
+
+    if (instruments !== null)
+    {
+      let averageDynamic = 0;
+
+      instruments.forEach((instrument) =>
+      {
+        //lowercase
+          if (instrument === "Solo Treble" || instrument === "Solo Soprano"
+            || instrument === "Solo Alto" || instrument === "Solo Tenor"
+            || instrument === "Solo Baritone" || instrument === "Solo Bass"
+            || instrument === "Treble" || instrument === "Soprano"
+            || instrument === "Alto" || instrument === "Tenor"
+            || instrument === "Baritone" || instrument === "Bass"
+            || instrument === "Voice" || instrument === "Choir"
+            || instrument === "Voice [male]" || instrument === "Mean"
+            || instrument === "Cantus" || instrument === "Mezzo-soprano"
+            || instrument === "Secundus" || instrument === "Contralto"
+            || instrument === "Altus" || instrument === "Countertenor"
+            || instrument === "Quintus" || instrument === "Bassus")
+          {
+            dynamicAssessment.push.apply(
+              dynamicAssessment, gradeLevel.assessDynamicsChoral(instrument));
+          }
+          else
+          {
+            dynamicAssessment.push.apply(dynamicAssessment,
+              gradeLevel.assessDynamicsInstrumental(instrument));
+          }
+      });
+
+      for (var i = 0; i < dynamicAssessment.length; i++)
+      {
+        averageDynamic += dynamicAssessment[i];
+      }
+      averageDynamic /= dynamicAssessment.length;
+
+
+      return averageDynamic;
+    }
+
+    return "Instrument does not exist. Check your spelling!";
+  };
+
+//private funtion kind of?
+  gradeLevel.assessDynamicsChoral = (instrument) =>
+  {
+    const toscanini = Toscanini(musicxml);
+    const dynamics = toscanini.getDynamics(instrument);
+    let dynamicAssessment = 0;
+
+    dynamics.forEach((dynamic) =>
+    {
+      let dynamicComparison = dynamic.dynamic;
+
+      if (dynamicComparison === "ff" || dynamicComparison === "pp")
+      {
+        dynamicAssessment.push(5);
+      }
+      else if (dynamicComparison === "fp" || dynamicComparison === "sfz")
+      {
+        dynamicAssessment.push(4);
+      }
+      else if (dynamicComparison === "mp" || dynamicComparison === "mf")
+      {
+        dynamicAssessment.push(3);
+      }
+      else if (dynamicComparison === "crescendo" || dynamicComparison === "cres."
+        || dynamicComparison === "diminuendo" || dynamicComparison === "dim.")
+      {
+        dynamicAssessment.push(2);
+      }
+      else if (dynamicComparison === "p" || dynamicComparison === "f")
+      {
+        dynamicAssessment.push(1);
+      }
+      else
+      {
+        dynamicAssessment.push(6);
+      }
+    });
+    return dynamicAssessment;
+  };
+
+  gradeLevel.assessDynamicsInstrumental = (instrument) =>
+  {
+    const toscanini = Toscanini(musicxml);
+    const dynamics = toscanini.getDynamics(instrument);
+    let dynamicAssessment = [];
+
+    dynamics.forEach((dynamic) =>
+    {
+      let dynamicComparison = dynamic.dynamic;
+
+      if (dynamicComparison === "fff" || dynamicComparison === "ppp")
+      {
+        dynamicAssessment.push(5);
+      }
+      else if (dynamicComparison === "ff" || dynamicComparison === "fp")
+      {
+        dynamicAssessment.push(4);
+      }
+      else if (dynamicComparison === "mp" || dynamicComparison === "pp"
+        || dynamicComparison === "fp" || dynamicComparison === "sfz")
+      {
+        dynamicAssessment.push(3);
+      }
+      else if (dynamicComparison === "crescendo" || dynamicComparison === "cres."
+        || dynamicComparison === "diminuendo" || dynamicComparison === "dim."
+        || dynamicComparison === "mf")
+      {
+        dynamicAssessment.push(2);
+      }
+      else if (dynamicComparison === "p" || dynamicComparison === "f")
+      {
+        dynamicAssessment.push(1);
+      }
+      else
+      {
+        dynamicAssessment.push(6);
+      }
+    });
+
+    return dynamicAssessment;
+  };
+
+  gradeLevel.assessMeter = (instrumentName) =>
+  {
+    const toscanini = Toscanini(musicxml);
+
+    let timeSignatures = null;
+    if (instrumentName === undefined)
+    {
+      timeSignatures = toscanini.getTimeSignatures();
+    }
+    else
+    {
+      timeSignatures = toscanini.getTimeSignatures(instrumentName);
+    }
+
     const meterAssessment = [];
     let averageMeter = 0;
 
     timeSignatures.forEach((timeSignature) =>
     {
-      if (arraySame(timeSignature, [7, 8]))
+      if (arraySame(meterArray(timeSignature), [7, 8]))
       {
         meterAssessment.push(5);
       }
-      else if (arraySame(timeSignature, [5, 4])
-        || arraySame(timeSignature, [9, 8]) || arraySame(timeSignature, [12, 8])
-        || arraySame(timeSignature, [5, 8]))
+      else if (arraySame(meterArray(timeSignature), [5, 4])
+        || arraySame(meterArray(timeSignature), [9, 8])
+        || arraySame(meterArray(timeSignature), [12, 8])
+        || arraySame(meterArray(timeSignature), [5, 8]))
       {
         meterAssessment.push(4);
       }
-      else if (arraySame(timeSignature, [6, 8])
-        || arraySame(timeSignature, [6, 4])
-        || arraySame(timeSignature, [3, 8]))
+      else if (arraySame(meterArray(timeSignature), [6, 8])
+        || arraySame(meterArray(timeSignature), [6, 4])
+        || arraySame(meterArray(timeSignature), [3, 8]))
       {
         meterAssessment.push(3);
       }
-      else if ((arraySame(timeSignature, [2, 2])
-        || arraySame(timeSignature, [4, 4]) || arraySame(timeSignature, [2, 4])
-        || arraySame(timeSignature, [3, 4]))
+      else if ((arraySame(meterArray(timeSignature), [2, 2])
+        || arraySame(meterArray(timeSignature), [4, 4])
+        || arraySame(meterArray(timeSignature), [2, 4])
+        || arraySame(meterArray(timeSignature), [3, 4]))
         & timeSignatures.length > 1)
       {
         meterAssessment.push(2);
       }
-      else if ((arraySame(timeSignature, [4,4]) ||
-        arraySame(timeSignature, [2, 4]) || arraySame(timeSignature, [3, 4]))
+      else if ((arraySame(meterArray(timeSignature), [4,4]) ||
+        arraySame(meterArray(timeSignature), [2, 4]) || arraySame(meterArray(timeSignature), [3, 4]))
         & (timeSignatures.length === 1))
       {
         meterAssessment.push(1);
@@ -72,13 +254,84 @@ const gradeScore = (musicxml) =>
     return averageMeter;
   };
 
-  gradeLevel.assessTempo = () =>
+  gradeLevel.assessRhythmicComplexity = (instrumentName) =>
   {
-    //does not include more nuances of the changes in tempo - words not
-    //extensively included
-
+    //does not include pickups
     const toscanini = Toscanini(musicxml);
-    const tempos = toscanini.getTempos();
+
+    let rhythms;
+
+    if (instrumentName === undefined || instrumentName === null)
+    {
+      rhythms = toscanini.getRhythmicComplexity();
+    }
+    else
+    {
+      rhythms = toscanini.getRhythmicComplexity(instrumentName);
+    }
+
+    let averageRhythm = 0;
+    let rhythmicAssessment = [];
+
+    rhythms.forEach((rhythm) =>
+    {
+      let rhythmType = rhythm.type;
+      let rhythmDot = rhythm.dotted;
+      if ((rhythmType === "quarter" || rhythmType === "half"
+      || rhythmType === "whole") && rhythmDot === 0)
+      {
+        rhythmicAssessment.push(1);
+      }
+      else if ((rhythmType === "eighth" && rhythmDot === 0)
+      || (rhythmType === "quarter" && rhythmDot === 1))
+      {
+        rhythmicAssessment.push(2);
+      }
+      else if ((rhythmType === "16th" && rhythmDot === 0)
+      || (rhythmType === "eighth" && rhythmDot === 1))
+      {
+        //not sure how syncopation will be calculated
+        rhythmicAssessment.push(3);
+      }
+      //missing fourth
+      //double check how 16ths and 32nds are marked in xml
+      else if ((rhythmType === "quarter" && rhythmDot === 2)
+      || (rhythmType === "32nd" && rhythmDot === 0))
+      {
+        //also frequent syncopation
+        rhythmicAssessment.push(5);
+      }
+      else
+      {
+        rhythmicAssessment.push(6);
+      }
+    });
+
+    for (var i = 0; i < rhythmicAssessment.length; i++)
+    {
+      averageRhythm += rhythmicAssessment[i];
+    }
+    averageRhythm /= rhythmicAssessment.length;
+
+    return averageRhythm;
+
+  };
+
+  gradeLevel.assessTempo = (instrumentName) =>
+  {
+    const toscanini = Toscanini(musicxml);
+
+
+    let tempos = null;
+
+    if (instrumentName === undefined)
+    {
+      tempos = toscanini.getTempos();
+    }
+    else
+    {
+      tempos = toscanini.getTempos(instrumentName);
+    }
     const tempoAssessment = [];
     let averageTempo = 0;
 
@@ -88,7 +341,7 @@ const gradeScore = (musicxml) =>
       {
         tempoAssessment.push(6);
       }
-      else if (tempo > 200 && tempo < 208)
+      else if (tempo > 200 && tempo <= 208)
       {
         tempoAssessment.push(5);
       }
