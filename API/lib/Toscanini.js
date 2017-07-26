@@ -59,7 +59,17 @@ const createToscanini = (etree) =>
     let technical = instrumentName ? toscanini.getPart(instrumentName)
       .findall(".//technical") : etree.findall(".//technical");
 
+    let harmonics = instrumentName ? toscanini.getPart(instrumentName)
+      .findall(".//harmonic") : etree.findall(".//harmonic");
     //CAUTION: these may or may not be all articulations
+    //doesn't include internal info
+
+    // technical.forEach((technique) =>
+    // {
+    //
+    //   console.log(technique);
+    //   console.log(technique._children[0]._children.length);
+    // });
 
     articulations.forEach((articulation) =>
     {
@@ -81,25 +91,22 @@ const createToscanini = (etree) =>
 
     technical.forEach((technique) =>
     {
-      let tech = technique;
+      let children = technique._children[0]._children;
       technique = technique._children[0].tag;
-      if (technique === "harmonic")
+
+      if (children !== undefined && children.length > 1)
       {
-        console.log(tech._children[0]);
-        if (tech._children.length > 1)
+        let addOn = "";
+        children.forEach((child) =>
         {
-          console.log(tech._children[1]);
-        }
+          addOn = addOn + " " + child.tag;
+        });
+        technique = addOn + " " + technique;
       }
-      if (tech._children !== undefined && tech._children.length > 1)
-      {
-        console.log("here");
-        technique = tech._children[1].tag + tech._children[0].tag;
-      }
+      console.log(technique);
 
       if (!finalArticulations.includes(technique))
       {
-
         finalArticulations.push(technique);
       }
     });
