@@ -59,17 +59,7 @@ const createToscanini = (etree) =>
     let technical = instrumentName ? toscanini.getPart(instrumentName)
       .findall(".//technical") : etree.findall(".//technical");
 
-    let harmonics = instrumentName ? toscanini.getPart(instrumentName)
-      .findall(".//harmonic") : etree.findall(".//harmonic");
     //CAUTION: these may or may not be all articulations
-    //doesn't include internal info
-
-    // technical.forEach((technique) =>
-    // {
-    //
-    //   console.log(technique);
-    //   console.log(technique._children[0]._children.length);
-    // });
 
     articulations.forEach((articulation) =>
     {
@@ -85,7 +75,8 @@ const createToscanini = (etree) =>
           {
             addOn = child.tag;
           }
-          else {
+          else
+          {
             addOn = addOn + " " + child.tag;
           }
         });

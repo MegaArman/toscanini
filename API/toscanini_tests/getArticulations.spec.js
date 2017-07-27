@@ -21,7 +21,20 @@ test("getArticulations test", (t) =>
   toscanini =  Toscanini(musicXML);
 
   {
-    const expected = [];
+    const expected = ["accent", "strong-accent", "staccato", "tenuto",
+      "detached-legato", "staccatissimo", "spiccato", "scoop", "plop", "doit",
+      "falloff", "breath-mark", "caesura", "stress", "unstress", "trill-mark",
+      "turn", "delayed-turn", "inverted-turn", "shake", "wavy-line", "mordent",
+      "inverted-mordent", "schleifer", "tremolo", "up-bow", "down-bow",
+      "harmonic", "natural base-pitch harmonic",
+      "natural touching-pitch harmonic", "natural sounding-pitch harmonic",
+      "open-string", "thumb-position", "fingering", "pluck", "double-tongue",
+      "triple-tongue", "stopped", "snap-pizzicato", "fret", "string",
+      "hammer-on", "pull-off", "bend", "bend-alter release with-bar bend",
+      "bend-alter pre-bend bend", "bend-alter release bend", "tap", "heel",
+      "toe", "fingernails", "fermata", "normal fermata", "angled fermata",
+      "square fermata", "arpeggiate", "non-arpeggiate",
+      "double-sharp accidental-mark"];
     const actual = toscanini.getArticulations();
     t.deepEqual(actual, expected, "notations test");
   }

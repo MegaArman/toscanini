@@ -4,6 +4,22 @@ const path = require("path");
 const test = require("tape").test;
 const GradeScore = require("../lib/Toscanini.gradeLevel.js");
 
+test("assess-articulations", (t) =>
+{
+  let musicXML =
+    fs.readFileSync(path.resolve(__dirname,
+      "../scores/musicxml/32a-Notations.xml"));
+  let gradeScore = GradeScore(musicXML);
+
+  {
+    const actual = gradeScore.assessArticulations();
+    const expected = 4.625;
+    t.deepEqual(actual, expected,
+      "assess articulations extreme: 32a-Notations");
+  }
+  t.end();
+});
+
 test("assess-dynamics", (t) =>
 {
   let musicXML =

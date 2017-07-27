@@ -48,6 +48,148 @@ const gradeScore = (musicxml) =>
 {
   const gradeLevel = {};
 
+  gradeLevel.assessArticulations = (instrumentName) =>
+  {
+    const toscanini = Toscanini(musicxml);
+    const articulationAssessment = [];
+
+    let instruments;
+    if (instrumentName !== undefined && instrumentName !== null)
+    {
+      instruments = [instrumentName];
+    }
+    else
+    {
+      instruments = toscanini.getPartNames();
+    }
+
+    if (instruments !== null)
+    {
+      let averageArticulation = 0;
+
+      instruments.forEach((instrument) =>
+      {
+        //lowercase
+          if (instrument === "Solo Treble" || instrument === "Solo Soprano"
+            || instrument === "Solo Alto" || instrument === "Solo Tenor"
+            || instrument === "Solo Baritone" || instrument === "Solo Bass"
+            || instrument === "Treble" || instrument === "Soprano"
+            || instrument === "Alto" || instrument === "Tenor"
+            || instrument === "Baritone" || instrument === "Bass"
+            || instrument === "Voice" || instrument === "Choir"
+            || instrument === "Voice [male]" || instrument === "Mean"
+            || instrument === "Cantus" || instrument === "Mezzo-soprano"
+            || instrument === "Secundus" || instrument === "Contralto"
+            || instrument === "Altus" || instrument === "Countertenor"
+            || instrument === "Quintus" || instrument === "Bassus")
+          {
+            articulationAssessment.push.apply(articulationAssessment,
+              gradeLevel.assessArticulationsChoral(instrument, toscanini));
+          }
+          else
+          {
+            articulationAssessment.push.apply(articulationAssessment,
+              gradeLevel.assesArticulationsInstrumental(instrument, toscanini));
+          }
+      });
+
+      for (var i = 0; i < articulationAssessment.length; i++)
+      {
+        averageArticulation += articulationAssessment[i];
+      }
+      averageArticulation = articulationAssessment.length;
+
+      return averageArticulation;
+  };
+
+  gradeLevel.assessArticulationsChoral = (instrumentName, toscanini) =>
+  {
+    const articulations = toscanini.getArticulations(instrumentName);
+    let articulationAssessment = [];
+
+    //Does not include level 5, because no way to incorporate 2 things at a time
+    articulations.forEach((articulation) =>
+    {
+      if (articulation.includes("legato-staccato")
+        || articulation.includes("stacatto-legato"))
+      {
+        //include swing weightedness
+        articulationAssessment.push(4);
+      }
+      else if (articulation.includes("tenuto")
+        || articulation.includes("inverted accent")
+        || articulation.includes("fermata"))
+      {
+        articulationAssessment.push(3);
+      }
+      else if (articulation.includes("slur")
+        || articulation.includes("staccato")
+        || articulation.includes("accent"))
+      {
+        articulationAssessment.push(2);
+      }
+      else if (articulation.includes("attack")
+        || articulation.includes("release")
+        || articulation.includes("breath-mark"))
+      {
+        articulationAssessment.push(1);
+      }
+      else
+      {
+        articulationAssessment.push(6);
+      }
+    });
+
+    return articulationAssessment;
+  };
+
+  gradeLevel.assessArticulationsInstrumental = (instrumentName, toscanini) =>
+  {
+    const articulations = toscanini.getArticulations(instrumentName);
+    let articulationAssessment = [];
+
+    //Does not include level 5, because no way to incorporate 2 things at a time
+    articulations.forEach((articulation) =>
+    {
+      if (articulation.includes("richochet")
+        || articulation.includes("stacatto-legato")
+        || articulation.includes("double-tongue"))
+      {
+        articulationAssessment.push(4);
+      }
+      else if (articulation.includes("legato-staccato")
+        || articulation.includes("stacatto-legato")
+        || articulation.includes("marcato"))
+      {
+        //include swing weightedness
+        articulationAssessment.push(3);
+      }
+      else if (articulation.includes("accent")
+        || articulation.includes("tenuto")
+        || articulation.includes("fermata")
+        || articulation.includes("spiccato"))
+      {
+        articulationAssessment.push(2);
+      }
+      else if (articulation.includes("attack")
+        || articulation.includes("release")
+        || articulation.includes("breath-mark")
+        || articulation.includes("slur")
+        || articulation.includes("staccato")
+        || articulation.includes("legato")
+        || articulation.includes("tied"))
+      {
+        articulationAssessment.push(1);
+      }
+      else
+      {
+        articulationAssessment.push(6);
+      }
+    });
+
+    return articulationAssessment;
+  };
+
   gradeLevel.assessDynamics = (instrumentName) =>
   {
     const toscanini = Toscanini(musicxml);
