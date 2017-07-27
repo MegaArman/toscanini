@@ -12,8 +12,8 @@ test("assess-articulations", (t) =>
   let gradeScore = GradeScore(musicXML);
 
   {
-    const actual = gradeScore.assessArticulations();
-    const expected = 4.625;
+    const actual = Math.round(gradeScore.assessArticulations());
+    const expected = 5;
     t.deepEqual(actual, expected,
       "assess articulations extreme: 32a-Notations");
   }

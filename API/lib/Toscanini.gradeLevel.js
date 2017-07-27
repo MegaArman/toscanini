@@ -70,36 +70,37 @@ const gradeScore = (musicxml) =>
       instruments.forEach((instrument) =>
       {
         //lowercase
-          if (instrument === "Solo Treble" || instrument === "Solo Soprano"
-            || instrument === "Solo Alto" || instrument === "Solo Tenor"
-            || instrument === "Solo Baritone" || instrument === "Solo Bass"
-            || instrument === "Treble" || instrument === "Soprano"
-            || instrument === "Alto" || instrument === "Tenor"
-            || instrument === "Baritone" || instrument === "Bass"
-            || instrument === "Voice" || instrument === "Choir"
-            || instrument === "Voice [male]" || instrument === "Mean"
-            || instrument === "Cantus" || instrument === "Mezzo-soprano"
-            || instrument === "Secundus" || instrument === "Contralto"
-            || instrument === "Altus" || instrument === "Countertenor"
-            || instrument === "Quintus" || instrument === "Bassus")
-          {
-            articulationAssessment.push.apply(articulationAssessment,
-              gradeLevel.assessArticulationsChoral(instrument, toscanini));
-          }
-          else
-          {
-            articulationAssessment.push.apply(articulationAssessment,
-              gradeLevel.assesArticulationsInstrumental(instrument, toscanini));
-          }
+        if (instrument === "Solo Treble" || instrument === "Solo Soprano"
+          || instrument === "Solo Alto" || instrument === "Solo Tenor"
+          || instrument === "Solo Baritone" || instrument === "Solo Bass"
+          || instrument === "Treble" || instrument === "Soprano"
+          || instrument === "Alto" || instrument === "Tenor"
+          || instrument === "Baritone" || instrument === "Bass"
+          || instrument === "Voice" || instrument === "Choir"
+          || instrument === "Voice [male]" || instrument === "Mean"
+          || instrument === "Cantus" || instrument === "Mezzo-soprano"
+          || instrument === "Secundus" || instrument === "Contralto"
+          || instrument === "Altus" || instrument === "Countertenor"
+          || instrument === "Quintus" || instrument === "Bassus")
+        {
+          articulationAssessment.push.apply(articulationAssessment,
+            gradeLevel.assessArticulationsChoral(instrument, toscanini));
+        }
+        else
+        {
+          articulationAssessment.push.apply(articulationAssessment,
+            gradeLevel.assessArticulationsInstrumental(instrument, toscanini));
+        }
       });
 
-      for (var i = 0; i < articulationAssessment.length; i++)
+      for (let i = 0; i < articulationAssessment.length; i++)
       {
         averageArticulation += articulationAssessment[i];
       }
-      averageArticulation = articulationAssessment.length;
+      averageArticulation /= articulationAssessment.length;
 
       return averageArticulation;
+    }
   };
 
   gradeLevel.assessArticulationsChoral = (instrumentName, toscanini) =>
