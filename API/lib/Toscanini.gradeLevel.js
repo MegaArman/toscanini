@@ -18,30 +18,30 @@ function meterArray(meter)
   return [meter.beats, meter.beatType];
 }
 
-function instrumentCheck(instrumentName, toscanini)
-{
-  let instruments = null;
-
-  if (instrumentName === undefined)
-  {
-    instruments = toscanini.getInstrumentNames();
-  }
-  else
-  {
-    instruments = toscanini.getInstrumentNames();
-
-    if (instruments.includes(instrumentName))
-    {
-      instruments = instrumentName;
-    }
-    else
-    {
-      instruments = null;
-    }
-  }
-
-  return instruments;
-}
+// function instrumentCheck(instrumentName, toscanini)
+// {
+//   let instruments = null;
+//
+//   if (instrumentName === undefined)
+//   {
+//     instruments = toscanini.getInstrumentNames();
+//   }
+//   else
+//   {
+//     instruments = toscanini.getInstrumentNames();
+//
+//     if (instruments.includes(instrumentName))
+//     {
+//       instruments = instrumentName;
+//     }
+//     else
+//     {
+//       instruments = null;
+//     }
+//   }
+//
+//   return instruments;
+// }
 //------------------------------------------------------------------------
 
 const gradeScore = (musicxml) =>
@@ -273,7 +273,8 @@ const gradeScore = (musicxml) =>
       {
         dynamicAssessment.push(3);
       }
-      else if (dynamicComparison === "crescendo" || dynamicComparison === "cres."
+      else if (dynamicComparison === "crescendo"
+        || dynamicComparison === "cres."
         || dynamicComparison === "diminuendo" || dynamicComparison === "dim.")
       {
         dynamicAssessment.push(2);
@@ -313,7 +314,8 @@ const gradeScore = (musicxml) =>
       {
         dynamicAssessment.push(3);
       }
-      else if (dynamicComparison === "crescendo" || dynamicComparison === "cres."
+      else if (dynamicComparison === "crescendo"
+        || dynamicComparison === "cres."
         || dynamicComparison === "diminuendo" || dynamicComparison === "dim."
         || dynamicComparison === "mf")
       {
@@ -376,8 +378,9 @@ const gradeScore = (musicxml) =>
       {
         meterAssessment.push(2);
       }
-      else if ((arraySame(meterArray(timeSignature), [4,4]) ||
-        arraySame(meterArray(timeSignature), [2, 4]) || arraySame(meterArray(timeSignature), [3, 4]))
+      else if ((arraySame(meterArray(timeSignature), [4,4])
+        || arraySame(meterArray(timeSignature), [2, 4])
+        || arraySame(meterArray(timeSignature), [3, 4]))
         & (timeSignatures.length === 1))
       {
         meterAssessment.push(1);

@@ -7,7 +7,8 @@ const Toscanini = require("../lib/Toscanini");
 test("getArticulations test", (t) =>
 {
   let musicXML =
-    fs.readFileSync(path.resolve(__dirname, "../scores/musicxml/33f-Trill-EndingOnGraceNote.xml"));
+    fs.readFileSync(path.resolve(
+      __dirname, "../scores/musicxml/33f-Trill-EndingOnGraceNote.xml"));
   let toscanini =  Toscanini(musicXML);
 
   {
@@ -17,7 +18,8 @@ test("getArticulations test", (t) =>
   }
 
   musicXML =
-    fs.readFileSync(path.resolve(__dirname, "../scores/musicxml/32a-Notations.xml"));
+    fs.readFileSync(
+      path.resolve(__dirname, "../scores/musicxml/32a-Notations.xml"));
   toscanini =  Toscanini(musicXML);
 
   {

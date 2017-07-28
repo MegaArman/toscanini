@@ -103,7 +103,8 @@ const createToscanini = (etree) =>
           {
             addOn = child.tag;
           }
-          else {
+          else
+          {
             addOn = addOn + " " + child.tag;
           }
         });
@@ -134,7 +135,8 @@ const createToscanini = (etree) =>
             {
               addOn = child.tag;
             }
-            else {
+            else
+            {
               addOn = addOn + " " + child.tag;
             }
           }
