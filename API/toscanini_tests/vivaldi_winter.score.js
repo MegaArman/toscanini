@@ -54,15 +54,15 @@ test("vivaldi_winter tests", (t) =>
     t.deepEqual(actual, expected, "getTimeSignatures score");
   }
 
-  //{
-  //  const actual = [68, 60, 33, 78, 45, 40];
-  //  const expected = toscanini.getTempos("Viola");
-  //  t.deepEqual(actual, expected, "getTempos Viola");
-  //}
+  {
+   const actual = [68, 60, 33, 78, 45, 40];
+   const expected = toscanini.getTempos("Viola");
+   t.deepEqual(actual, expected, "getTempos Viola");
+  }
 
   {
-    const actual = [68, 60, 33, 78, 45, 40];
-    const expected = toscanini.getTempos();
+    const expected = [68, 60, 33, 78, 45, 40];
+    const actual = toscanini.getTempos();
     t.deepEqual(actual, expected, "getTempos score");
   }
 

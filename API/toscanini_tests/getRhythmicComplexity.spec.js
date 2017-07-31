@@ -14,19 +14,19 @@ test("rhythmic_complexity", (t) =>
 
   {
     const actual = toscanini.getRhythmicComplexity();
-    const expected = [{dotted: 1, type: "half"},
+    const expected = [{dotted: 1, type: "half"}, {dotted: 0, type: "eighth"},
       {dotted: 0, type: "quarter"}, {dotted: 1, type: "quarter"},
-      {dotted: 0, type: "eighth"}, {dotted: 0, type: "whole"},
+      {dotted: 0, type: "whole"},
       {dotted: 0, type: "half"}, {dotted: 3, type: "quarter"}];
-    t.deepEqual(actual, expected, "getRhythmComplexity score");
+    t.deepEqual(actual, expected, "getRhythmicComplexity score");
   }
 
   {
     const actual = toscanini.getRhythmicComplexity("Violin");
-    const expected = [{dotted: 1, type: "half"}, {dotted: 0, type: "quarter"},
-      {dotted: 1, type: "quarter"}, {dotted: 0, type: "eighth"},
+    const expected = [{dotted: 1, type: "half"}, {dotted: 0, type: "eighth"},
+      {dotted: 0, type: "quarter"}, {dotted: 1, type: "quarter"},
       {dotted: 0, type: "whole"}];
-    t.deepEqual(actual, expected, "getRhythmComplexity Violin");
+    t.deepEqual(actual, expected, "getRhythmicComplexity Violin");
   }
 
   {
@@ -34,7 +34,7 @@ test("rhythmic_complexity", (t) =>
     const expected = [{dotted: 0, type: "whole"},
       {dotted: 0, type: "half"}, {dotted: 1, type: "quarter"},
       {dotted: 1, type: "half"}, {dotted: 3, type: "quarter"}];
-    t.deepEqual(actual, expected, "getRhythmComplexity String Bass");
+    t.deepEqual(actual, expected, "getRhythmicComplexity String Bass");
   }
   t.end();
 });
@@ -50,7 +50,7 @@ test("rhythmic_complexity rests", (t) =>
   {
     const actual = toscanini.getRhythmicComplexity();
     const expected = [];
-    t.deepEqual(actual, expected, "getRhythmComplexity score");
+    t.deepEqual(actual, expected, "getRhythmicComplexity score");
   }
 
   t.end();

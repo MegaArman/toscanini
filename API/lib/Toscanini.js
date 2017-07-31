@@ -379,9 +379,20 @@ const createToscanini = (etree) =>
 
   toscanini.getTempos = () =>
   {
-    const soundTags = etree.findall(".//sound[@tempo]");
-
+    let soundTags = etree.findall(".//per-minute");
     const tempoCollection = [];
+
+    soundTags.forEach((soundTag) =>
+    {
+      const newTempo = parseInt(soundTag.text);
+
+      if (!tempoCollection.includes(newTempo))
+      {
+        tempoCollection.push(parseInt(newTempo));
+      }
+    });
+
+    soundTags = etree.findall(".//sound[@tempo]");
 
     soundTags.forEach((soundTag) =>
     {
@@ -392,6 +403,11 @@ const createToscanini = (etree) =>
         tempoCollection.push(parseInt(newTempo));
       }
     });
+
+    if (tempoCollection.length === 0)
+    {
+      tempoCollection.push(120);
+    }
 
     return tempoCollection;
   };

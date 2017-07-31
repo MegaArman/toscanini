@@ -12,7 +12,7 @@ test("two_tempos", (t) =>
 
   {
     const actual = toscanini.getTempos();
-    const expected = [{tempo: 105, frequency: 1}, {tempo: 90, frequency: 1}];
+    const expected = [105, 90];
     t.deepEqual(actual, expected, "getTempos");
   }
 
@@ -27,7 +27,7 @@ test("no tempos", (t) =>
 
   {
     const actual = toscanini.getTempos();
-    const expected = [{tempo: 120, frequency: 1}];
+    const expected = [120];
     t.deepEqual(actual, expected, "getTempos");
   }
 
@@ -42,7 +42,7 @@ test("repeating tempos", (t) =>
 
   {
     const actual = toscanini.getTempos();
-    const expected = [{tempo: 105, frequency: 2}, {tempo: 90, frequency: 1}];
+    const expected = [105, 90];
     t.deepEqual(actual, expected, "getTempos");
   }
 
