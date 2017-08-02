@@ -17,7 +17,7 @@
     "it": "npm run lint && nyc tape iterator_tests/*.js | tap-nyc"
   },
   "dependencies": {
-    "xml2js": "^0.4.17"
+    "elementtree": "^0.1.7"
   },
   "devDependencies": {
     "eslint": "^3.15.0",
