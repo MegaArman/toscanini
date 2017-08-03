@@ -214,27 +214,29 @@ const gradeScore = (musicxml) =>
       instruments.forEach((instrument) =>
       {
         //lowercase
-          if (instrument === "Solo Treble" || instrument === "Solo Soprano"
-            || instrument === "Solo Alto" || instrument === "Solo Tenor"
-            || instrument === "Solo Baritone" || instrument === "Solo Bass"
-            || instrument === "Treble" || instrument === "Soprano"
-            || instrument === "Alto" || instrument === "Tenor"
-            || instrument === "Baritone" || instrument === "Bass"
-            || instrument === "Voice" || instrument === "Choir"
-            || instrument === "Voice [male]" || instrument === "Mean"
-            || instrument === "Cantus" || instrument === "Mezzo-soprano"
-            || instrument === "Secundus" || instrument === "Contralto"
-            || instrument === "Altus" || instrument === "Countertenor"
-            || instrument === "Quintus" || instrument === "Bassus")
-          {
-            dynamicAssessment.push.apply(
-              dynamicAssessment, gradeLevel.assessDynamicsChoral(instrument));
-          }
-          else
-          {
-            dynamicAssessment.push.apply(dynamicAssessment,
-              gradeLevel.assessDynamicsInstrumental(instrument));
-          }
+        const lowercaseInst = instrument.toLowerCase();
+        if (lowercaseInst.includes("treble")
+          || lowercaseInst.includes("soprano")
+          || lowercaseInst.includes("alto")
+          || lowercaseInst.includes("tenor")
+          || lowercaseInst.includes("baritone")
+          || lowercaseInst.includes("bass")
+          || lowercaseInst.includes("voice")
+          || lowercaseInst === "choir"
+          || lowercaseInst === "Mean"
+          || lowercaseInst === "Cantus"
+          || lowercaseInst === "Secundus"
+          || lowercaseInst === "Altus"
+          || lowercaseInst === "Quintus")
+        {
+          dynamicAssessment.push.apply(
+            dynamicAssessment, gradeLevel.assessDynamicsChoral(instrument));
+        }
+        else
+        {
+          dynamicAssessment.push.apply(dynamicAssessment,
+            gradeLevel.assessDynamicsInstrumental(instrument));
+        }
       });
 
       for (var i = 0; i < dynamicAssessment.length; i++)
