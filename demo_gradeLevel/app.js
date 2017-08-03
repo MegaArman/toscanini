@@ -3,19 +3,16 @@ alert("NOTE: This app has only been tested with Google Chrome");
 
 //===========================================
 
-let xml2js = require("xml2js");
-let Toscanini = require("./Toscanini.js");
 let GradeLevel = require("./Toscanini.gradeLevel.js");
-let parser = new xml2js.Parser({explicitArray: false});
-
 let fileInput = document.getElementById("fileInput");
-let xmlStrings;
+let filesObj; //ex: {"basic.xml": "<xml string here..."}
 
-fileInput.addEventListener("change", function()
+fileInput.addEventListener("change", () =>
 {
-  xmlStrings = {};
+  filesObj = {};
   let textType = /text.xml/;
 
+  // fileInput.files IS A MAP - NOT a normal object!!
   for (let file of fileInput.files)
   {
     if (file.type.match(textType))
@@ -24,7 +21,7 @@ fileInput.addEventListener("change", function()
 
       reader.onload = function()
       {
-        xmlStrings[file.name] = reader.result;
+        filesObj[file.name] = reader.result;
       };
 
       reader.readAsText(file);
@@ -41,12 +38,14 @@ fileInput.addEventListener("change", function()
 
 window.analyze = function()
 {
-  for (let fileName in xmlStrings)
+  //filesObj is like {"basic.xml": "<xml string here..."}
+  //Object.keys(filesObj) -> basic.xml
+
+  //Iterate over the keys (file names) of filesObj:
+  Object.keys(filesObj).forEach((fileName) =>
   {
-    console.log(xmlStrings[fileName]);
-    parser.parseString(xmlStrings[fileName], function (err, result)
-    {
-      const gradeLevel = new GradeLevel(result);
+      //filesObj.fileName -> "<xml..."
+      const gradeLevel = GradeLevel(filesObj[fileName]);
 
       const articulations = gradeLevel.assessArticulations();
       const dynamics = gradeLevel.assessDynamics();
@@ -67,7 +66,6 @@ window.analyze = function()
       "<td>" + "overall grade: " + overallScore + "</td>" +
       "</tr>");
     });
-  }
 };
 
 window.clear = function()
