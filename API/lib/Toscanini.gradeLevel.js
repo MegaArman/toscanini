@@ -93,12 +93,14 @@ const gradeScore = (musicxml) =>
         }
       });
 
-      for (let i = 0; i < articulationAssessment.length; i++)
+      if (articulationAssessment.length !== 0)
       {
-        averageArticulation += articulationAssessment[i];
+        for (let i = 0; i < articulationAssessment.length; i++)
+        {
+          averageArticulation += articulationAssessment[i];
+        }
+        averageArticulation /= articulationAssessment.length;
       }
-      averageArticulation /= articulationAssessment.length;
-
       return averageArticulation;
     }
   };
@@ -206,7 +208,6 @@ const gradeScore = (musicxml) =>
     {
       instruments = toscanini.getPartNames();
     }
-
     if (instruments !== null)
     {
       let averageDynamic = 0;
@@ -214,40 +215,40 @@ const gradeScore = (musicxml) =>
       instruments.forEach((instrument) =>
       {
         //lowercase
-          if (instrument === "Solo Treble" || instrument === "Solo Soprano"
-            || instrument === "Solo Alto" || instrument === "Solo Tenor"
-            || instrument === "Solo Baritone" || instrument === "Solo Bass"
-            || instrument === "Treble" || instrument === "Soprano"
-            || instrument === "Alto" || instrument === "Tenor"
-            || instrument === "Baritone" || instrument === "Bass"
-            || instrument === "Voice" || instrument === "Choir"
-            || instrument === "Voice [male]" || instrument === "Mean"
-            || instrument === "Cantus" || instrument === "Mezzo-soprano"
-            || instrument === "Secundus" || instrument === "Contralto"
-            || instrument === "Altus" || instrument === "Countertenor"
-            || instrument === "Quintus" || instrument === "Bassus")
-          {
-            dynamicAssessment.push.apply(
-              dynamicAssessment, gradeLevel.assessDynamicsChoral(instrument));
-          }
-          else
-          {
-            dynamicAssessment.push.apply(dynamicAssessment,
-              gradeLevel.assessDynamicsInstrumental(instrument));
-          }
+        const lowercaseInst = instrument.toLowerCase();
+        if (lowercaseInst.includes("treble")
+          || lowercaseInst.includes("soprano")
+          || lowercaseInst.includes("alto")
+          || lowercaseInst.includes("tenor")
+          || lowercaseInst.includes("baritone")
+          || lowercaseInst === "bass"
+          || lowercaseInst.includes("voice")
+          || lowercaseInst === "choir"
+          || lowercaseInst === "Mean"
+          || lowercaseInst === "Cantus"
+          || lowercaseInst === "Secundus"
+          || lowercaseInst === "Altus"
+          || lowercaseInst === "Quintus")
+        {
+          dynamicAssessment.push.apply(
+            dynamicAssessment, gradeLevel.assessDynamicsChoral(instrument));
+        }
+        else
+        {
+          dynamicAssessment.push.apply(dynamicAssessment,
+            gradeLevel.assessDynamicsInstrumental(instrument));
+        }
       });
-
-      for (var i = 0; i < dynamicAssessment.length; i++)
+      if (dynamicAssessment .length !== 0)
       {
-        averageDynamic += dynamicAssessment[i];
+        for (var i = 0; i < dynamicAssessment.length; i++)
+        {
+          averageDynamic += dynamicAssessment[i];
+        }
+        averageDynamic /= dynamicAssessment.length;
       }
-      averageDynamic /= dynamicAssessment.length;
-
-
       return averageDynamic;
     }
-
-    return "Instrument does not exist. Check your spelling!";
   };
 
 //private funtion kind of?
@@ -390,12 +391,14 @@ const gradeScore = (musicxml) =>
         meterAssessment.push(6);
       }
     });
-
-    for (var i = 0; i < meterAssessment.length; i++)
+    if (meterAssessment.length !== 0)
     {
-      averageMeter += meterAssessment[i];
+      for (var i = 0; i < meterAssessment.length; i++)
+      {
+        averageMeter += meterAssessment[i];
+      }
+      averageMeter /= meterAssessment.length;
     }
-    averageMeter /= meterAssessment.length;
     //maybe instead of this I can ask for the largest meterassesment?
     return averageMeter;
   };
@@ -452,15 +455,15 @@ const gradeScore = (musicxml) =>
         rhythmicAssessment.push(6);
       }
     });
-
-    for (var i = 0; i < rhythmicAssessment.length; i++)
+    if (rhythmicAssessment.length !== 0)
     {
-      averageRhythm += rhythmicAssessment[i];
+      for (var i = 0; i < rhythmicAssessment.length; i++)
+      {
+        averageRhythm += rhythmicAssessment[i];
+      }
+      averageRhythm /= rhythmicAssessment.length;
     }
-    averageRhythm /= rhythmicAssessment.length;
-
     return averageRhythm;
-
   };
 
   gradeLevel.assessTempo = (instrumentName) =>
@@ -509,12 +512,14 @@ const gradeScore = (musicxml) =>
         tempoAssessment.push(1);
       }
     });
-
-    for (var i = 0; i < tempoAssessment.length; i++)
+    if (tempoAssessment.length !== 0)
     {
-      averageTempo += tempoAssessment[i];
+      for (var i = 0; i < tempoAssessment.length; i++)
+      {
+        averageTempo += tempoAssessment[i];
+      }
+      averageTempo /= tempoAssessment.length;
     }
-    averageTempo /= tempoAssessment.length;
     //maybe instead of this I can ask for the largest meterassesment?
     return averageTempo;
   };
