@@ -6,8 +6,6 @@ const Iterator  = require("../lib/Iterator");
 
 test("basic.xml", (t) =>
 {
-
-  //TODO : remove actual and expected???
   const musicXML =
     fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml")).toString();
   const i =  Iterator(musicXML);

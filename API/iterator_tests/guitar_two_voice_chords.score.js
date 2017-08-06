@@ -14,18 +14,25 @@ test(("guitar_two_voice_chords"), (t) =>
   //These tests exercise backup and forward tags?
 
   i.selectInstrument("Classical Guitar");
-  t.deepEqual(i.next(), {notes: [{duration: 4, noteType: "whole", pitch: "C4"}],
-                         beat: 1}, "next is voice 1");
-  t.deepEqual(i.next(), {notes: [{ duration: 2, noteType: "half", pitch: "F3"}],
-                         beat: 3}, "next is voice2");
+  t.deepEqual(i.next(), 
+             {notes: [{duration: 4, noteType: "whole", pitch: "C4"}],
+              beat: 1}, 
+              "next is voice 1");
+  t.deepEqual(i.next(), 
+             {notes: [{ duration: 2, noteType: "half", pitch: "F3"}],
+              beat: 3}, 
+              "next is voice2");
 
-  t.deepEqual(i.next(), {notes: [{duration: 2, noteType: "half", pitch: "G4"}, 
-                                 {duration: 4, noteType: "whole", pitch: "E3"}],
-                         beat: 1 }, "next is both voices");
+  t.deepEqual(i.next(), 
+             {notes: [{duration: 2, noteType: "half", pitch: "G4"}, 
+                      {duration: 4, noteType: "whole", pitch: "E3"}],
+              beat: 1}, 
+              "next is both voices");
 
   t.deepEqual(i.next(),
               {notes: [{ duration: 2, noteType: "half", pitch: "D4"}], 
-               beat: 3}, "next");
+               beat: 3},
+               "next");
 
   t.end();
 });
