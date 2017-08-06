@@ -14,7 +14,9 @@ test("rhythmic_complexity.xml", (t) =>
   const i =  Iterator(musicXML);
 
   t.deepEqual(i.selectInstrument("Violin"), true, "has violin");
-  t.deepEqual(i.next(), {}, "dotted half");
+  t.deepEqual(i.next(), 
+    {notes: [{duration: 3, noteType: "dot half", pitch: "G4"}], beat: 1}, 
+    "dotted half");
   t.end();
 });
 
