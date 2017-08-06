@@ -197,7 +197,7 @@ const constructor = (musicxml) =>
                                         oldSymbol.beat === currentBeat);
             if (indexOfExistingBeat !== -1)
             {
-              beatMap[indexOfExistingBeat].pitch.push(symbol.pitch[0]);
+              beatMap[indexOfExistingBeat].notes.push(symbol.notes[0]);
             }
             else 
             {
