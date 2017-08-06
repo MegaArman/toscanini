@@ -15,13 +15,17 @@ test(("guitar_one_voice_chords"), (t) =>
   i.next();
   i.next();
   t.deepEqual(i.next(), 
-      { beat: 3, duration: 1, noteType: "quarter", 
-      pitch: ["B3", "D4"] }, "next is a chord");
+      {notes: [{duration: 1, noteType: "quarter", pitch: "B3"},
+               {duration: 1, noteType: "quarter", pitch: "D4"}],
+       beat: 3}, "next is a chord");
+  
   i.next();
   i.next();
   t.deepEqual(i.next(),
-    { beat: 2, duration: 1, noteType: "quarter",
-      pitch: ["F#3", "A3", "B3"] } , "next is a chord");
+    {notes: [{duration: 1, noteType: "quarter",  pitch: "F#3"}, 
+             {duration: 1, noteType: "quarter", pitch: "A3"}, 
+             {duration: 1, noteType: "quarter", pitch: "B3"}],
+    beat: 2 } , "next is a chord");
 
   t.end();
 });

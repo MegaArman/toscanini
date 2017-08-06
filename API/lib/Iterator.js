@@ -150,7 +150,7 @@ const constructor = (musicxml) =>
           child.findall(".//dot").forEach(() => currentNote.noteType += "dot ");
           currentNote.noteType += child.findtext(".//type");
          
-          //the note is constructed:
+          //***the note is constructed:
           symbol.notes.push(currentNote);
 
 
@@ -188,7 +188,7 @@ const constructor = (musicxml) =>
           if (child.findtext("[chord]")) 
           {
             const lastIndex = beatMap.length - 1;
-            beatMap[lastIndex].pitch.push(symbol.pitch[0]);             
+            beatMap[lastIndex].notes.push(symbol.notes[0]);             
           } 
           //two voice chord case:
           else
