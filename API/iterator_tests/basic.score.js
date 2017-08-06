@@ -16,30 +16,35 @@ test("basic.xml", (t) =>
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
   t.deepEqual(i.hasNext(), true, "hasNext true");
   t.deepEqual(i.next(), 
-              { beat: 1, duration: 1, 
-                noteType: "quarter", pitch: ["C4"] }, "next");
+    {beat: 1, notes: [{duration: 1, noteType: "quarter", pitch: "C4"}]}, 
+    "next");
   t.deepEqual(i.hasNext(), true, "hasNext true");
   
   //next
   t.deepEqual(i.next(), 
-              { beat: 2, duration: 1,
-                noteType: "quarter", pitch: ["Bb4"] }, "next");
-  t.deepEqual(i.next(), { beat: 3, duration: 2,
-                          noteType: "half", pitch: ["G5"] }, "next");
-  t.deepEqual(i.next(), { beat: 1, duration: 4, noteType: "undefined", 
-                          rest: true }, "next");
+    {beat: 2, notes: [{duration: 1, noteType: "quarter", pitch: "Bb4"}]},
+    "next");
+  t.deepEqual(i.next(), 
+    {beat: 3, notes:[{duration: 2, noteType: "half", pitch: "G5"}]}, 
+    "next");
+  t.deepEqual(i.next(), 
+    {beat: 1, notes: [{duration: 4, noteType: "undefined"}], rest: true},
+    "next");
   t.deepEqual(i.hasNext(), false, "hasNext false");
   t.throws(i.next, "next exception");
 
   t.deepEqual(i.hasPrev(), true, "hasPrev true");
 
   //prev
-  t.deepEqual(i.prev(), { beat: 3, duration: 2, noteType: "half",
-                          pitch: ["G5"] }, "prev");
-  t.deepEqual(i.prev(), { beat: 2, duration: 1, noteType: "quarter",
-                          pitch: ["Bb4"] }, "prev");
-  t.deepEqual(i.prev(), { beat: 1, duration: 1, noteType: "quarter",
-                          pitch: ["C4"] }, "prev");
+  t.deepEqual(i.prev(), 
+    {beat: 3, notes:[{duration: 2, noteType: "half",pitch: "G5"}]},
+    "prev");
+  t.deepEqual(i.prev(), 
+    {beat: 2, notes:[{duration: 1, noteType: "quarter", pitch: "Bb4"}]}, 
+    "prev");
+  t.deepEqual(i.prev(), 
+    {beat: 1, notes:[{duration: 1, noteType: "quarter", pitch: "C4"}]},
+    "prev");
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
 
   t.throws(i.prev, "prev exception");

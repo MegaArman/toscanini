@@ -126,19 +126,33 @@ const constructor = (musicxml) =>
         }
         else if (child.tag === "note")
         {
-          const symbol = {}; //a note or a rest
+          const symbol = {notes:[]}; //a note or a rest
+          const currentNote = {};
+
           symbol.beat = Math.ceil((currentBeat / divisions));
 
           if (!(currentBeat % divisions) === 1) //not on downbeat
           {
             symbol.beat += (currentBeat % divisions) / divisions;
           }
-          //***IN TERMS OF QUARTERS!***
-          symbol.duration = parseInt(child.findtext(".//duration")) / divisions;
-      
-          symbol.noteType = "";
-          child.findall(".//dot").forEach(() => symbol.noteType += "dot ");
-          symbol.noteType += child.findtext(".//type");
+
+          //***DURATION IN TERMS OF QUARTERS!***
+
+          //symbol.duration = parseInt(child.findtext(".//duration")) 
+          /// divisions;
+          currentNote.duration = 
+            parseInt(child.findtext(".//duration")) / divisions;
+
+          //symbol.noteType = "";
+          //child.findall(".//dot").forEach(() => symbol.noteType += "dot ");
+          //symbol.noteType += child.findtext(".//type");
+          currentNote.noteType = "";
+          child.findall(".//dot").forEach(() => currentNote.noteType += "dot ");
+          currentNote.noteType += child.findtext(".//type");
+         
+          //the note is constructed:
+          symbol.notes.push(currentNote);
+
 
           if (child.findtext("[rest]"))
           {
@@ -164,7 +178,8 @@ const constructor = (musicxml) =>
             });
 
             noteString += octave;
-            symbol.pitch = [noteString];
+            //symbol.pitch = [noteString];
+            currentNote.pitch = noteString;
           }
 
           //chord stuff------------------------------------------         
@@ -180,7 +195,6 @@ const constructor = (musicxml) =>
           {
             const indexOfExistingBeat = beatMap.findIndex((oldSymbol) =>
                                         oldSymbol.beat === currentBeat);
-            
             if (indexOfExistingBeat !== -1)
             {
               beatMap[indexOfExistingBeat].pitch.push(symbol.pitch[0]);
