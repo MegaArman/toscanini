@@ -1038,6 +1038,7 @@ alert("NOTE: This app has only been tested with Google Chrome");
 let GradeLevel = require("./Toscanini.gradeLevel.js");
 let fileInput = document.getElementById("fileInput");
 let filesObj; //ex: {"basic.xml": "<xml string here..."}
+const Toscanini = require("./Toscanini");
 
 fileInput.addEventListener("change", () =>
 {
@@ -1103,7 +1104,51 @@ window.analyze = function()
       "<td>" + tempo + "</td>" +
       "<td>" + overallScore + "</td>" +
       "</tr>");
-    });
+  });
+};
+
+window.selectInstrument = function()
+{
+  //filesObj is like {"basic.xml": "<xml string here..."}
+  //Object.keys(filesObj) -> basic.xml
+
+  //Iterate over the keys (file names) of filesObj:
+  Object.keys(filesObj).forEach((fileName) =>
+  {
+      //filesObj.fileName -> "<xml..."
+      const toscanini = Toscanini(filesObj[fileName]);
+      const gradeLevel = GradeLevel(filesObj[fileName]);
+      let instruments = toscanini.getInstrumentNames();
+
+      instruments.forEach((instrument) =>
+      {
+        let articulations = gradeLevel.assessArticulations(instrument);
+        let dynamics = gradeLevel.assessDynamics(instrument);
+        let meter = gradeLevel.assessMeter(instrument);
+        let rhythmicComplexity =
+          gradeLevel.assessRhythmicComplexity(instrument);
+        let tempo = gradeLevel.assessTempo(instrument);
+        const overallScore = ((articulations + dynamics
+          + meter + rhythmicComplexity
+          + tempo) / 5).toFixed(2);
+        articulations = articulations.toFixed(2);
+        dynamics = dynamics.toFixed(2);
+        meter = meter.toFixed(2);
+        rhythmicComplexity = rhythmicComplexity.toFixed(2);
+        tempo = tempo.toFixed(2);
+
+        $("#results").
+        append("<tr>" +
+        "<td>" + instrument + "</td>" +
+        "<td>" + articulations +"</td>" +
+        "<td>" + dynamics + "</td>" +
+        "<td>" + meter + "</td>" +
+        "<td>" + rhythmicComplexity + "</td>" +
+        "<td>" + tempo + "</td>" +
+        "<td>" + overallScore + "</td>" +
+        "</tr>");
+      });
+  });
 };
 
 window.clear = function()
@@ -1111,10 +1156,11 @@ window.clear = function()
   $("#results").empty();
 };
 
+$("#selectInstrument").on("click", window.selectInstrument);
 $("#analyze").on("click", window.analyze);
 $("#clear").on("click", window.clear);
 
-},{"./Toscanini.gradeLevel.js":1}],4:[function(require,module,exports){
+},{"./Toscanini":2,"./Toscanini.gradeLevel.js":1}],4:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
