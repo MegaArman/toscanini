@@ -17,12 +17,11 @@ test("score-assessment", (t) =>
     t.deepEqual(actual, expected,
       "assess articulations ava maria score");
   }
-  // TODO: this is failing
-  // {
-  //   const actual = Math.round(gradeScore.assessDynamics());
-  //   const expected = 3;
-  //   t.deepEqual(actual, expected,
-  //     "assess articulations ava maria score");
-  // }
+  {
+    const actual = Math.round(gradeScore.assessDynamicsChoral("Voice"));
+    const expected = 0;
+    t.deepEqual(actual, expected,
+      "assess articulations ava maria score");
+  }
   t.end();
 });

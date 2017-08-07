@@ -83,13 +83,29 @@ const gradeScore = (musicxml) =>
           || instrument === "Altus" || instrument === "Countertenor"
           || instrument === "Quintus" || instrument === "Bassus")
         {
-          articulationAssessment.push.apply(articulationAssessment,
-            gradeLevel.assessArticulationsChoral(instrument, toscanini));
+          const a = gradeLevel.assessArticulationsChoral(instrument, toscanini);
+          if (a === 0)
+          {
+            articulationAssessment.push(0);
+          }
+          else
+          {
+            articulationAssessment.push.apply(articulationAssessment, a);
+          }
+
         }
         else
         {
-          articulationAssessment.push.apply(articulationAssessment,
-            gradeLevel.assessArticulationsInstrumental(instrument, toscanini));
+          const a =
+            gradeLevel.assessArticulationsInstrumental(instrument, toscanini);
+          if (a === 0)
+          {
+            articulationAssessment.push(0);
+          }
+          else
+          {
+            articulationAssessment.push.apply(articulationAssessment, a);
+          }
         }
       });
 
@@ -143,6 +159,10 @@ const gradeScore = (musicxml) =>
       }
     });
 
+    if (articulationAssessment.length === 0)
+    {
+      return 0;
+    }
     return articulationAssessment;
   };
 
@@ -189,7 +209,10 @@ const gradeScore = (musicxml) =>
         articulationAssessment.push(6);
       }
     });
-
+    if (articulationAssessment.length === 0)
+    {
+      return 0;
+    }
     return articulationAssessment;
   };
 
@@ -214,7 +237,6 @@ const gradeScore = (musicxml) =>
 
       instruments.forEach((instrument) =>
       {
-        //lowercase
         if (instrument === "Solo Treble" || instrument === "Solo Soprano"
           || instrument === "Solo Alto" || instrument === "Solo Tenor"
           || instrument === "Solo Baritone" || instrument === "Solo Bass"
@@ -228,13 +250,27 @@ const gradeScore = (musicxml) =>
           || instrument === "Altus" || instrument === "Countertenor"
           || instrument === "Quintus" || instrument === "Bassus")
         {
-          dynamicAssessment.push.apply(
-            dynamicAssessment, gradeLevel.assessDynamicsChoral(instrument));
+          const a = gradeLevel.assessDynamicsChoral(instrument);
+          if (a === 0)
+          {
+            dynamicAssessment.push(a);
+          }
+          else
+          {
+            dynamicAssessment.push.apply(dynamicAssessment, a);
+          }
         }
         else
         {
-          dynamicAssessment.push.apply(dynamicAssessment,
-            gradeLevel.assessDynamicsInstrumental(instrument));
+          const a = gradeLevel.assessDynamicsInstrumental(instrument);
+          if (a === 0)
+          {
+            dynamicAssessment.push(a);
+          }
+          else
+          {
+            dynamicAssessment.push.apply(dynamicAssessment, a);
+          }
         }
       });
       if (dynamicAssessment .length !== 0)
@@ -254,7 +290,7 @@ const gradeScore = (musicxml) =>
   {
     const toscanini = Toscanini(musicxml);
     const dynamics = toscanini.getDynamics(instrument);
-    let dynamicAssessment = 0;
+    let dynamicAssessment = [];
 
     dynamics.forEach((dynamic) =>
     {
@@ -287,6 +323,11 @@ const gradeScore = (musicxml) =>
         dynamicAssessment.push(6);
       }
     });
+
+    if (dynamicAssessment.length === 0)
+    {
+      return 0;
+    }
     return dynamicAssessment;
   };
 
@@ -329,7 +370,10 @@ const gradeScore = (musicxml) =>
         dynamicAssessment.push(6);
       }
     });
-
+    if (dynamicAssessment.length === 0)
+    {
+      return 0;
+    }
     return dynamicAssessment;
   };
 
