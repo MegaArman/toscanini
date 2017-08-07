@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="./materialize.css">
+<link rel="stylesheet" type="text/css" href="./styles.css">
+
+<title>Toscanini Assessment Levels</title>
+</head>
+<h1>Ask Toscanini: Assessment Levels</h1>
+<div class="container" id="main">
+  <form action="#">
+    <div class="file-field input-field">
+      <div class="btn">
+        <span>File</span>
+        <input type="file" id = "fileInput" multiple>
+      </div>
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text"
+        placeholder="Upload one or more MusicXML scores">
+      </div>
+    </div>
+  </form>
+  <button id="analyze" class="btn">ANALYZE</button>
+  <button id="clear" class="btn">CLEAR</button>
+  <a href="./downloads.html" target="_blank"  id="download">
+    Get MusicXML Scores
+  </a>
+  <title>select</title>
+
+  <br /><br />
+
+
+
+  <table class="centered striped">
+   <thead>
+     <tr>
+       <th data-field="fileName">File Name</th>
+       <th data-field="articulations">Articulation</th>
+       <th data-field="dynamics">Dynamics</th>
+       <th data-field="meter">Meter</th>
+       <th data-field="rhythmicComplexity">Rhythmic Complexity</th>
+       <th data-field="tempo">Tempo</th>
+       <th data-field="overall">Overall Assessment</th>
+     </tr>
+   </thead>
+   <tbody id="results">
+   </tbody>
+  </table>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<script src="./bundle.js"></script>
