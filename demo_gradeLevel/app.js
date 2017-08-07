@@ -47,23 +47,29 @@ window.analyze = function()
       //filesObj.fileName -> "<xml..."
       const gradeLevel = GradeLevel(filesObj[fileName]);
 
-      const articulations = gradeLevel.assessArticulations();
-      const dynamics = gradeLevel.assessDynamics();
-      const meter = gradeLevel.assessMeter();
-      const rhythmicComplexity = gradeLevel.assessRhythmicComplexity();
-      const tempo = gradeLevel.assessTempo();
-      const overallScore = (articulations + dynamics + meter
-        + rhythmicComplexity + tempo) / 5;
+      let articulations = gradeLevel.assessArticulations();
+      let dynamics = gradeLevel.assessDynamics();
+      let meter = gradeLevel.assessMeter();
+      let rhythmicComplexity = gradeLevel.assessRhythmicComplexity();
+      let tempo = gradeLevel.assessTempo();
+      const overallScore = ((articulations + dynamics
+        + meter + rhythmicComplexity
+        + tempo) / 5).toFixed(2);
+      articulations = articulations.toFixed(2);
+      dynamics = dynamics.toFixed(2);
+      meter = meter.toFixed(2);
+      rhythmicComplexity = rhythmicComplexity.toFixed(2);
+      tempo = tempo.toFixed(2);
 
       $("#results").
       append("<tr>" +
       "<td>" + fileName + "</td>" +
-      "<td>" + "articulations: " + articulations +"</td>" +
-      "<td>" + "dynamics: " + dynamics + "</td>" +
-      "<td>" + "meter: " + meter + "</td>" +
-      "<td>" + "rhythmic complexity: " + rhythmicComplexity + "</td>" +
-      "<td>" + "tempo: " + tempo + "</td>" +
-      "<td>" + "overall grade: " + overallScore + "</td>" +
+      "<td>" + articulations +"</td>" +
+      "<td>" + dynamics + "</td>" +
+      "<td>" + meter + "</td>" +
+      "<td>" + rhythmicComplexity + "</td>" +
+      "<td>" + tempo + "</td>" +
+      "<td>" + overallScore + "</td>" +
       "</tr>");
     });
 };
