@@ -47,6 +47,8 @@ window.analyze = function()
   {
       //filesObj.fileName -> "<xml..."
       const gradeLevel = GradeLevel(filesObj[fileName]);
+      const toscanini = Toscanini(filesObj[fileName]);
+      let instruments = toscanini.getInstrumentNames();
 
       let articulations = gradeLevel.assessArticulations();
       let dynamics = gradeLevel.assessDynamics();
@@ -65,6 +67,7 @@ window.analyze = function()
       $("#results").
       append("<tr>" +
       "<td>" + fileName + "</td>" +
+      "<td>" + instruments + "</td>" +
       "<td>" + articulations +"</td>" +
       "<td>" + dynamics + "</td>" +
       "<td>" + meter + "</td>" +
@@ -75,7 +78,7 @@ window.analyze = function()
   });
 };
 
-window.selectInstrument = function()
+window.allInstruments = function()
 {
   //filesObj is like {"basic.xml": "<xml string here..."}
   //Object.keys(filesObj) -> basic.xml
@@ -107,6 +110,7 @@ window.selectInstrument = function()
 
         $("#results").
         append("<tr>" +
+        "<td>" + fileName + "</td>" +
         "<td>" + instrument + "</td>" +
         "<td>" + articulations +"</td>" +
         "<td>" + dynamics + "</td>" +
@@ -124,6 +128,12 @@ window.clear = function()
   $("#results").empty();
 };
 
-$("#selectInstrument").on("click", window.selectInstrument);
+// window.selectInstrument = function()
+// {
+//     $("p").toggle();
+// });
+//
+// $("#selectInstrument").on("click", window.selectInstrument);
+$("#allInstruments").on("click", window.allInstruments);
 $("#analyze").on("click", window.analyze);
 $("#clear").on("click", window.clear);
