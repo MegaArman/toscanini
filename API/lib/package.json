@@ -1,0 +1,32 @@
+{
+  "name": "toscanini",
+  "version": "1.0.0",
+  "description": "A library for music score analysis",
+  "main": "Toscanini.js",
+  "author": "Arman Bahraini, Galina Belolipetski",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MegaArman/Toscanini/tree/master/API/lib"
+  },
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint --cache ./lib/*.js toscanini_tests/*.js grade_level_tests/*.js",
+    "test": "npm run lint && nyc tape toscanini_tests/*.js | tap-nyc",
+    "gt": "npm run lint && nyc tape grade_level_tests/*.js | tap-nyc",
+    "it": "npm run lint && nyc tape iterator_tests/*.js | tap-nyc"
+  },
+  "keywords": [
+    "music informatics",
+    "Toscanini",
+    "music scores"
+  ],
+  "dependencies": {
+    "elementtree": "^0.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "nyc": "^11.0.2",
+    "tap-nyc": "^1.0.1",
+    "tape": "^4.6.3"
+  }
+}
