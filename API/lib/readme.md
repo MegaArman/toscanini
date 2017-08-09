@@ -1,22 +1,27 @@
 #  Toscanini "a library for music score analysis"
-0. [Installation] (#Installation)
+0. [Installation](#installation)
 1. [Toscanini](#toscanini)
 2. [Toscanini.Iterator](#iterator)
-3. [Toscanini.gradeLevel](#gradeLevel)
+3. [Toscanini.Grader](#grader)
 
-## Installation <a name="Installation"></a>
+## Installation <a name="installation"></a>
+```
 npm install toscanini
+```
 
 ## Toscanini <a name="toscanini"></a>
 This is the main module, from which facts are extracted/computed from the music score. 
-    
-    const toscanini = Toscanini(musicXML); //create a Toscanini instance from a musicXML string
+
+```javascript
+const Toscanini = require("toscanini"); //gives a factory function
+const toscanini = Toscanini(musicXML); //create a Toscanini instance from a musicXML string
+toscanini.getPitchRange("Flute");
+```
 
 Currently supports the following queries:
 
 ### getPitchRange(instrumentName)
-Returns an object like {"minPitch": 30, "maxPitch": 72"} 
-
+Returns an object like {"minPitch": 30, "maxPitch": 72"}
 if no instrumentName is provided (ex: "flute"), gets the min and max pitches of the entire score.
 
 ### getKeySignatures(instrumentName)
@@ -42,8 +47,10 @@ half = half 0
 dotted half = half 1
 double dotted half = half 2
 
-score result example: ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
-
+score result example: 
+```javascript
+["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
+```
 ### getNumberOfMeasures
 returns the number of measures in a score.
 
@@ -51,7 +58,10 @@ returns the number of measures in a score.
 This module aims to make melodic, harmonic, and rhythmic analysis easier by abstracting away the necessity of parsing musicxml in the form of an Iterator.
 
 ```javascript
-const i = Iterator(musicXML); //create a Toscanini instance from musicXML
+const Iterator = require("toscanini/Iterator");
+const i = Iterator(musicXML); //create an Iterator instance from a musicXML string
+i.selectInstrumentName("Flute");
+i.next();
 ```
 
 ### selectInstrument(instrumentName)
@@ -61,7 +71,6 @@ The iterator is set to the first measure of the instrument part specified by ins
 The iterator moves to the next "symbol" (note(s) or rest) and returns an object to represent that symbol, for example:
     
 ```javascript
-i.next();
 // outputs:
 // {notes: [{duration: 1, noteType: "quarter", pitch: "B3"},
 //          {duration: 1, noteType: "quarter", pitch: "D4"}],
@@ -88,8 +97,15 @@ The iterator moves to the previous symbol be it a note or rest and returns an ob
 Returns true or false depending on whether or not there is a previous symbol.
 Use this to avoid an exception being thrown.
 
-## Toscanini.gradeLevel <a name="gradeLevel"></a>
+## Toscanini.Grader <a name="grader"></a>
+Uses Toscanini, Grader assesses the difficulty of an entire score or instrument part within a score.
 
+```javascript
+const Grader = require("toscanini/Grader");
+const grader = Grader(musicXML); // Create a Grader instance from a musicxml string
+grader.assessDynamics();
+// outputs a decimal number based on the grading rubrics below...
+```
 
 ### assessDynamics(instrumentName)
 provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
