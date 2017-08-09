@@ -1,5 +1,3 @@
-# API
-
 # Table of contents
 1. [Toscanini.Iterator](#iterator)
 2. [Toscanini](#toscanini)
