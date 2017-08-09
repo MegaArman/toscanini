@@ -1,4 +1,4 @@
-# Table of contents
+#  Toscanini "a library for music score analysis"
 1. [Toscanini.Iterator](#iterator)
 2. [Toscanini](#toscanini)
 3. [Toscanini.gradeLevel](#gradeLevel)
