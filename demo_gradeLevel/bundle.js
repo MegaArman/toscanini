@@ -1068,6 +1068,11 @@ fileInput.addEventListener("change", () =>
 
 //can I create a button for individual instruments and overall?
 //currently doing overall
+let gradeLevel;
+let toscanini;
+
+$("#analyzeSelected").hide();
+$("#checkboxes").hide();
 
 window.analyze = function()
 {
@@ -1078,8 +1083,8 @@ window.analyze = function()
   Object.keys(filesObj).forEach((fileName) =>
   {
       //filesObj.fileName -> "<xml..."
-      const gradeLevel = GradeLevel(filesObj[fileName]);
-      const toscanini = Toscanini(filesObj[fileName]);
+      gradeLevel = GradeLevel(filesObj[fileName]);
+      toscanini = Toscanini(filesObj[fileName]);
       let instruments = toscanini.getInstrumentNames();
 
       let articulations = gradeLevel.assessArticulations();
@@ -1112,60 +1117,147 @@ window.analyze = function()
 
 window.allInstruments = function()
 {
-  //filesObj is like {"basic.xml": "<xml string here..."}
-  //Object.keys(filesObj) -> basic.xml
-
-  //Iterate over the keys (file names) of filesObj:
-  Object.keys(filesObj).forEach((fileName) =>
+  if (filesObj === undefined)
   {
-      //filesObj.fileName -> "<xml..."
-      const toscanini = Toscanini(filesObj[fileName]);
-      const gradeLevel = GradeLevel(filesObj[fileName]);
-      let instruments = toscanini.getInstrumentNames();
+    alert("Input files!")
+  }
+  else
+  {
+    //filesObj is like {"basic.xml": "<xml string here..."}
+    //Object.keys(filesObj) -> basic.xml
 
-      instruments.forEach((instrument) =>
-      {
-        let articulations = gradeLevel.assessArticulations(instrument);
-        let dynamics = gradeLevel.assessDynamics(instrument);
-        let meter = gradeLevel.assessMeter(instrument);
-        let rhythmicComplexity =
-          gradeLevel.assessRhythmicComplexity(instrument);
-        let tempo = gradeLevel.assessTempo(instrument);
-        const overallScore = ((articulations + dynamics
-          + meter + rhythmicComplexity
-          + tempo) / 5).toFixed(2);
-        articulations = articulations.toFixed(2);
-        dynamics = dynamics.toFixed(2);
-        meter = meter.toFixed(2);
-        rhythmicComplexity = rhythmicComplexity.toFixed(2);
-        tempo = tempo.toFixed(2);
+    //Iterate over the keys (file names) of filesObj:
+    Object.keys(filesObj).forEach((fileName) =>
+    {
+        //filesObj.fileName -> "<xml..."
+        toscanini = Toscanini(filesObj[fileName]);
+        gradeLevel = GradeLevel(filesObj[fileName]);
+        let instruments = toscanini.getInstrumentNames();
 
-        $("#results").
-        append("<tr>" +
-        "<td>" + fileName + "</td>" +
-        "<td>" + instrument + "</td>" +
-        "<td>" + articulations +"</td>" +
-        "<td>" + dynamics + "</td>" +
-        "<td>" + meter + "</td>" +
-        "<td>" + rhythmicComplexity + "</td>" +
-        "<td>" + tempo + "</td>" +
-        "<td>" + overallScore + "</td>" +
-        "</tr>");
-      });
-  });
+        instruments.forEach((instrument) =>
+        {
+          let articulations = gradeLevel.assessArticulations(instrument);
+          let dynamics = gradeLevel.assessDynamics(instrument);
+          let meter = gradeLevel.assessMeter(instrument);
+          let rhythmicComplexity =
+            gradeLevel.assessRhythmicComplexity(instrument);
+          let tempo = gradeLevel.assessTempo(instrument);
+          const overallScore = ((articulations + dynamics
+            + meter + rhythmicComplexity
+            + tempo) / 5).toFixed(2);
+          articulations = articulations.toFixed(2);
+          dynamics = dynamics.toFixed(2);
+          meter = meter.toFixed(2);
+          rhythmicComplexity = rhythmicComplexity.toFixed(2);
+          tempo = tempo.toFixed(2);
+
+          $("#results").
+          append("<tr>" +
+          "<td>" + fileName + "</td>" +
+          "<td>" + instrument + "</td>" +
+          "<td>" + articulations +"</td>" +
+          "<td>" + dynamics + "</td>" +
+          "<td>" + meter + "</td>" +
+          "<td>" + rhythmicComplexity + "</td>" +
+          "<td>" + tempo + "</td>" +
+          "<td>" + overallScore + "</td>" +
+          "</tr>");
+        });
+    });
+  }
 };
 
 window.clear = function()
 {
-  $("#results").empty();
+  if (filesObj === undefined)
+  {
+    alert("Input files!")
+  }
+  else
+  {
+    $("#results").empty();
+    $("#checkboxes").empty();
+    $("#file-path-wrapper").empty();
+  }
 };
 
-// window.selectInstrument = function()
-// {
-//     $("p").toggle();
-// });
-//
-// $("#selectInstrument").on("click", window.selectInstrument);
+window.selectInstrument = function()
+{
+  if (filesObj === undefined)
+  {
+    alert("Input files!")
+  }
+  else
+  {
+    $("#checkboxes").empty();
+    $("#checkboxes").toggle();
+    $("#analyzeSelected").toggle();
+
+    Object.keys(filesObj).forEach((fileName) =>
+    {
+      toscanini = Toscanini(filesObj[fileName]);
+      const instruments = toscanini.getInstrumentNames();
+      instruments.forEach((instrument) =>
+      {
+        $("#checkboxes").append("<p><input type='checkbox' id='" + instrument + "'/><label for='" + instrument + "'>"+ instrument +"</label></p>");
+      });
+
+    });
+  }
+};
+
+window.analyzeSelected = function()
+{
+  if (filesObj === undefined)
+  {
+    alert("Input files!")
+  }
+  else
+  {
+    Object.keys(filesObj).forEach((fileName) =>
+    {
+      toscanini = Toscanini(filesObj[fileName]);
+      gradeLevel = GradeLevel(filesObj[fileName]);
+      const instruments = toscanini.getInstrumentNames();
+      instruments.forEach((instrument) =>
+      {
+        let checked = $('#' + instrument).is(":checked");
+        if (checked)
+        {
+          let articulations = gradeLevel.assessArticulations(instrument);
+          let dynamics = gradeLevel.assessDynamics(instrument);
+          let meter = gradeLevel.assessMeter(instrument);
+          let rhythmicComplexity =
+            gradeLevel.assessRhythmicComplexity(instrument);
+          let tempo = gradeLevel.assessTempo(instrument);
+          const overallScore = ((articulations + dynamics
+            + meter + rhythmicComplexity
+            + tempo) / 5).toFixed(2);
+          articulations = articulations.toFixed(2);
+          dynamics = dynamics.toFixed(2);
+          meter = meter.toFixed(2);
+          rhythmicComplexity = rhythmicComplexity.toFixed(2);
+          tempo = tempo.toFixed(2);
+
+          $("#results").
+          append("<tr>" +
+          "<td>" + fileName + "</td>" +
+          "<td>" + instrument + "</td>" +
+          "<td>" + articulations +"</td>" +
+          "<td>" + dynamics + "</td>" +
+          "<td>" + meter + "</td>" +
+          "<td>" + rhythmicComplexity + "</td>" +
+          "<td>" + tempo + "</td>" +
+          "<td>" + overallScore + "</td>" +
+          "</tr>");
+        }
+      });
+    });
+  }
+};
+
+$("#analyzeSelected").on("click", window.analyzeSelected);
+$("#selectInstrument").on("click", window.selectInstrument);
 $("#allInstruments").on("click", window.allInstruments);
 $("#analyze").on("click", window.analyze);
 $("#clear").on("click", window.clear);

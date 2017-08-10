@@ -6,6 +6,7 @@
 
 <title>Toscanini Assessment Levels</title>
 </head>
+<button id="info" class="btn"><img src="./info-icon.png"/></button>
 <h1>Ask Toscanini: Assessment Levels</h1>
 <div class="container" id="main">
   <form action="#">
@@ -20,7 +21,7 @@
       </div>
     </div>
   </form>
-  <button id="allInstruments" class="btn">ANALYZE INSTRUMENT</button>
+  <button id="allInstruments" class="btn">ANALYZE INSTRUMENTS SEPARATELY</button>
   <button id="selectInstrument" class="btn">SELECT INSTRUMENTS</button>
   <button id="analyze" class="btn">ANALYZE SCORE</button>
   <button id="clear" class="btn">CLEAR</button>
@@ -28,12 +29,11 @@
     Get MusicXML Scores
   </a>
   <title>select</title>
-  <form action="#">
-    <p>
-      <input type="checkbox" id="test5" />
-      <label for="test5">Red</label>
-    </p>
-  </form>
+  <div id="selection">
+    <form id="checkboxes">
+    </form>
+    <button id="analyzeSelected" class="btn">ANALYZE SELECTED INSTRUMENTS</button>
+  </div>
   <br /><br />
 
   <table class="centered striped">
