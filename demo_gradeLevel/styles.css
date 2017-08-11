@@ -21,11 +21,24 @@ h1
   margin-left:1%
 }
 
-#info
+#information
 {
   position:absolute;
   top:0;
   right:0;
-  height: 125px;
-  width: 125px;
+}
+.header{
+  overflow: auto;
+}
+.header img {
+  float: right;
+  width: 100px;
+  height: 100px;
+  outline-style: none;
+}
+
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
 }

@@ -1031,7 +1031,7 @@ module.exports = constructor;
 
 },{"elementtree":11}],3:[function(require,module,exports){
 //suggest Google Chrome======================
-alert("NOTE: This app has only been tested with Google Chrome");
+// alert("NOTE: This app has only been tested with Google Chrome");
 
 //===========================================
 
@@ -1255,7 +1255,19 @@ window.analyzeSelected = function()
     });
   }
 };
-
+$(document).ready(function(){
+    // to fade in on page load
+    $("body").css("display", "none");
+    $("body").fadeIn(400);
+    // to fade out before redirect
+    $('information').click(function(e){
+        redirect = $(this).attr('href');
+        e.preventDefault();
+        $('body').fadeOut(400, function(){
+            document.location.href = redirect
+        });
+    });
+})
 $("#analyzeSelected").on("click", window.analyzeSelected);
 $("#selectInstrument").on("click", window.selectInstrument);
 $("#allInstruments").on("click", window.allInstruments);
