@@ -1,5 +1,5 @@
 #  Toscanini "a library for music score analysis"
-Toscanini is a library that aims to simplify music score analysis. Currently Toscanini's modules only support the [MusicXML](https://en.wikipedia.org/wiki/MusicXML) format for music scores, though various other formats (Ex: Finale, Sibelius, etc) can be converted to MusicXML. Our code is developed/maintained by Virginia Tech Computer Science students. Feel free to raise issues on our GitHub with questions/ideas. 
+Toscanini is a library that aims to simplify music score analysis. Currently Toscanini's modules only support the [MusicXML](https://en.wikipedia.org/wiki/MusicXML) format for music scores, though various other formats (Ex: Finale, Sibelius, etc) can be converted to MusicXML. Our code is developed/maintained by Virginia Tech Computer Science students. Feel free to raise issues on our GitHub with issues, questions, and idea proposals. 
 
 0. [Installation](#installation)
 1. [Toscanini](#toscanini)
@@ -56,12 +56,12 @@ score result example:
 returns the number of measures in a score.
 
 ## Toscanini.Iterator <a name="iterator"></a>
-This module aims to make melodic, harmonic, and rhythmic analysis easier by abstracting away the necessity of parsing musicxml in the form of an Iterator.
+This module aims to make melodic, harmonic, and rhythmic analysis easier by abstracting away the necessity of parsing MusicXML in the form of an Iterator.
 
 ```javascript
 const Iterator = require("toscanini/Iterator");
-const i = Iterator(musicXML); //create an Iterator instance from a musicXML string
-i.selectInstrument("Flute");
+const i = Iterator(musicXML); //create an Iterator instance from a MusicXML string
+i.selectInstrument("Guitar");
 i.next();
 ```
 
@@ -78,7 +78,7 @@ The iterator moves to the next "symbol" (note(s) or rest) and returns an object 
 // beat: 3};
 ```
 
-So the next thing that the player sees to play is a B3 and D4, both quarter notes, hit on the downbeat of beat 3.
+So the next thing that the player sees to play in the above example is a B3 and D4, both quarter notes, hit on the downbeat of beat 3.
 
 ### nextMeasure()
 The iterator moves to the first beat of the next measure, throws an exception if no next measure
@@ -89,15 +89,14 @@ The iterator moves to the first beat of the previous measure, throws an exceptio
 
 ### hasNext()
 Returns true or false depending on whether or not there is a next symbol. 
-***Use this to avoid an exception being thrown.***
+***Use this to avoid an exception being thrown by .nextMeasure().***
 
 ### prev()
 The iterator moves to the previous symbol be it a note or rest and returns an object to represent that symbol
 
 ### hasPrev()
 Returns true or false depending on whether or not there is a previous symbol.
-Use this to avoid an exception being thrown.
-***Use this to avoid an exception being thrown.***
+***Use this to avoid an exception being thrown by .prevMeasure().***
 
 ## Toscanini.Grader <a name="grader"></a>
 Uses Toscanini, Grader assesses the difficulty of an entire score or instrument part within a score.
