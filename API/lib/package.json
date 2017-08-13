@@ -1,6 +1,6 @@
 {
   "name": "toscanini",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A library for music score analysis",
   "main": "Toscanini.js",
   "author": "Arman Bahraini, Galina Belolipetski",
@@ -16,9 +16,12 @@
     "it": "npm run lint && nyc tape iterator_tests/*.js | tap-nyc"
   },
   "keywords": [
-    "music informatics",
     "Toscanini",
-    "music scores"
+    "music informatics",
+    "music analysis",
+    "music research",
+    "music scores",
+    "music"
   ],
   "dependencies": {
     "elementtree": "^0.1.7"
