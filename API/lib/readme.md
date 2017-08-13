@@ -72,7 +72,6 @@ The iterator is set to the first measure of the instrument part specified by ins
 The iterator moves to the next "symbol" (note(s) or rest) and returns an object to represent that symbol, for example:
     
 ```javascript
-outputs:
 {notes: [{duration: 1, noteType: "quarter", pitch: "B3"},
          {duration: 1, noteType: "quarter", pitch: "D4"}],
  beat: 3};
