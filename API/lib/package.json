@@ -16,11 +16,12 @@
     "it": "npm run lint && nyc tape iterator_tests/*.js | tap-nyc"
   },
   "keywords": [
-    "Toscanini",
+    "toscanini",
     "music informatics",
     "music analysis",
     "music research",
     "music scores",
+    "musicxml",
     "music"
   ],
   "dependencies": {
