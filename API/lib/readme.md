@@ -108,6 +108,9 @@ const grader = Grader(musicXML); // Create a Grader instance from a musicxml str
 grader.assessDynamics();
 // outputs a decimal number based on the grading rubrics below...
 ```
+![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/grade_level1.png)
+
+![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/grade_level2.png)
 
 ### assessDynamics(instrumentName)
 provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
