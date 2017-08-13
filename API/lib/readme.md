@@ -35,7 +35,7 @@ gets the key signatures of the whole piece (returns an array) or for a particula
 returns an array containing all tempos in the score
 
 ### getTimeSignatures()
-returns an array like [{ beatType: 4, beats: 4}, {beatType: 8, beats: 9}] to show the score has time signatures 4/4 and 9/8 (in any instrument part).
+returns an array of objects like [{ beatType: 4, beats: 4}, {beatType: 8, beats: 9}] to show the score has time signatures 4/4 and 9/8 (in any instrument part). Note that node.js may reorder keys in objects.
 
 ### getDynamics(instrumentName)
 returns an array of dynamics for a particular instrument, or all dynamics in a score
