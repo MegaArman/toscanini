@@ -5,8 +5,13 @@
 <link rel="stylesheet" type="text/css" href="./styles.css">
 
 <title>Toscanini Assessment Levels</title>
+
+
 </head>
-<h1>Ask Toscanini: Assessment Levels</h1>
+<div class="header">
+  <a href="info.html" id="information"style="width:2px; height:3px;"><img src="./info-icon.png"/></a>
+  <h1>Ask Toscanini: Assessment Level</h1>
+</div>
 <div class="container" id="main">
   <form action="#">
     <div class="file-field input-field">
@@ -20,21 +25,26 @@
       </div>
     </div>
   </form>
-  <button id="analyze" class="btn">ANALYZE</button>
+  <button id="allInstruments" class="btn">ANALYZE INSTRUMENTS SEPARATELY</button>
+  <button id="selectInstrument" class="btn">SELECT INSTRUMENTS</button>
+  <button id="analyze" class="btn">ANALYZE SCORE</button>
   <button id="clear" class="btn">CLEAR</button>
   <a href="./downloads.html" target="_blank"  id="download">
     Get MusicXML Scores
   </a>
   <title>select</title>
-
+  <div id="selection">
+    <form id="checkboxes">
+    </form>
+    <button id="analyzeSelected" class="btn">ANALYZE SELECTED INSTRUMENTS</button>
+  </div>
   <br /><br />
-
-
 
   <table class="centered striped">
    <thead>
      <tr>
        <th data-field="fileName">File Name</th>
+       <th data-field="instruments">Instruments</th>
        <th data-field="articulations">Articulation</th>
        <th data-field="dynamics">Dynamics</th>
        <th data-field="meter">Meter</th>
