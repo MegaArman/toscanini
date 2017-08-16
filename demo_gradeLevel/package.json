@@ -9,7 +9,8 @@
     "watchjs": "onchange \"app.js\" -- browserify app.js -o bundle.js && ugly",
     "watchscss": "onchange \"*.scss\" -- npm run buildcss",
     "watch": "parallelshell \"npm run watchjs\" \"npm run watchscss\"",
-    "changetheme": "node-sass --output-style=compressed ./materialize-src/sass/materialize.scss ./materialize.css"
+    "changetheme": "node-sass --output-style=compressed ./materialize-src/sass/materialize.scss ./materialize.css",
+    "page2": "browserify infoapp.js -o bundle2.js"
   },
   "author": "",
   "license": "ISC",
