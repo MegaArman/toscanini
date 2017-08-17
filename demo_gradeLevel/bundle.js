@@ -1178,6 +1178,7 @@ window.clear = function()
     $("#results").empty();
     $("#checkboxes").empty();
     $("#file-path-wrapper").empty();
+    $("#analyzeSelected").hide();
   }
 };
 
