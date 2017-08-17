@@ -1178,6 +1178,7 @@ window.clear = function()
     $("#results").empty();
     $("#checkboxes").empty();
     $("#file-path-wrapper").empty();
+    $("#analyzeSelected").hide();
   }
 };
 
@@ -1264,7 +1265,7 @@ $(document).ready(function(){
         redirect = $(this).attr('href');
         e.preventDefault();
         $('body').fadeOut(400, function(){
-            document.location.href = redirect
+            document.location.href = redirect;
         });
     });
 })
