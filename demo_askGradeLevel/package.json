@@ -1,0 +1,23 @@
+{
+  "name": "browser_input",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "buildjs": "browserify app.js -o bundle.js",
+    "buildcss": "node-sass --output-style=compressed ./_styles.scss ./styles.css",
+    "watchjs": "onchange \"app.js\" -- browserify app.js -o bundle.js && ugly",
+    "watchscss": "onchange \"*.scss\" -- npm run buildcss",
+    "watch": "parallelshell \"npm run watchjs\" \"npm run watchscss\"",
+    "changetheme": "node-sass --output-style=compressed ./materialize-src/sass/materialize.scss ./materialize.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^13.1.1",
+    "elementtree": "^0.1.7",
+    "node-sass": "^3.13.0",
+    "onchange": "^3.0.2",
+    "parallelshell": "^2.0.0"
+  }
+}
