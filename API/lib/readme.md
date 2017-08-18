@@ -112,11 +112,13 @@ Grade Level Definitions
 
 Choral Grade Levels
 
-![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/choral_gradeLevel.png)
+![](https://github.com/MegaArman/Toscanini/blob/readmeUpdate/reference_media/choral_gradeLevel.png)
 
 Instrumental Grade Levels
 
-![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/instrumental_gradeLevel.png)
+![](https://github.com/MegaArman/Toscanini/blob/readmeUpdate/reference_media/instrumental_gradeLevel.png)
+
+
 
 All grade levels have been based off the Colorado Department of Education Literature Difficulty Level Criteria, linked https://www.coloradoplc.org/files/archives/smartmusicdifficultycorrelations.pdf. 
 
