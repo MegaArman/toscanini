@@ -1,13 +1,23 @@
-.header h1 {
+h1 {
   text-align:center;
   position: relative;
   top: 18px;
   left: 10px;
+  bottom: 100px;
 }
-
+#clear
+{
+  position:relative;
+  left: 90%;
+}
 
 #assessArticulations
 {
   right: 100px;
   font-size: 5px;
+}
+
+#instrument
+{
+  width: 600px;
 }

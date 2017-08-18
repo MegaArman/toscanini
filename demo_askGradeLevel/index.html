@@ -9,12 +9,15 @@
 </head>
 <div class="header">
   <h1>Ask Toscanini: Assessment Level</h1>
+  <button id="clear" class="btn">CLEAR</button>
 </div>
-<h4>Do you want a particular instrument or an overall score?</h2>
+<br>
+<h5>Do you want a particular instrument or an overall score? (Enter "score" or an instrument)</h5>
   <form>
-    <input type="text" name = instrumetn>
+    <input type="text" id="instrument">
   </form>
-<h4>What assessments do you want for scores?</h2>
+  <br>
+<h5>What assessments do you want for scores?</h5>
 <div class="checkboxes">
   <input type="checkbox" id="assessArticulations"/><label for="assessArticulations">Articulations</label>
   <input type="checkbox" id="assessDynamics"/><label for="assessDynamics">Dynamics</label>
@@ -23,6 +26,10 @@
   <input type="checkbox" id="assessTempo"/><label for="assessTempo">Tempo</label>
   <input type="checkbox" id="overall"/><label for="overall">Overall</label>
 </div>
+<button id="selectRanges" class="btn">SELECT RANGES</button>
+<br>
+<br>
+<h5>What's your range for each?<h5>
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
