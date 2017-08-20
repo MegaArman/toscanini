@@ -55,7 +55,7 @@ score result example:
 ### getNumberOfMeasures
 returns the number of measures in a score.
 
-## Toscanini.Iterator <a name="iterator"></a>
+## toscanini/Iterator <a name="iterator"></a>
 This module aims to make melodic, harmonic, and rhythmic analysis easier by abstracting away the necessity of parsing MusicXML in the form of an Iterator.
 
 ```javascript
@@ -97,7 +97,7 @@ The iterator moves to the previous symbol be it a note or rest and returns an ob
 Returns true or false depending on whether or not there is a previous symbol.
 ***Use this to avoid an exception being thrown by .prevMeasure().***
 
-## Toscanini.Grader <a name="grader"></a>
+## toscanini/Grader <a name="grader"></a>
 Uses Toscanini, Grader assesses the difficulty of an entire score or instrument part within a score.
 
 ```javascript
