@@ -16,7 +16,7 @@ This is the main module, from which facts can be extracted/computed from the mus
 
 ```javascript
 const Toscanini = require("toscanini"); //gives a factory function
-const toscanini = Toscanini(musicXML); //create a Toscanini instance from a musicXML string
+const toscanini = Toscanini(musicXML); //create a Toscanini instance from a MusicXML string
 toscanini.getPitchRange("Flute"); //assuming there is a flute in the score, see getInstrumentNames()
 ```
 
