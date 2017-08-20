@@ -43,6 +43,11 @@ const createIterator = (partsBeatMap) =>
     beatIndex = -1;
   };
 
+  iterator.getMeasureNum = () =>
+  {
+   return (measureNum + 1);
+  };
+
   iterator.nextMeasure = () =>
   { 
     if (measureNum === measures.length - 1)

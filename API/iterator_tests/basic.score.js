@@ -10,6 +10,7 @@ test("basic.xml", (t) =>
     fs.readFileSync(path.resolve(__dirname, "../scores/basic.xml")).toString();
   const i =  Iterator(musicXML);
 
+  t.deepEqual(i.getMeasureNum(), 1, "getMeasureNum 1");
   t.deepEqual(i.selectInstrument("Flute"), true, "has Flute");
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
   t.deepEqual(i.hasNext(), true, "hasNext true");
@@ -25,12 +26,12 @@ test("basic.xml", (t) =>
   t.deepEqual(i.next(), 
     {beat: 3, notes:[{duration: 2, noteType: "half", pitch: "G5"}]}, 
     "next");
+  t.deepEqual(i.getMeasureNum(), 1, "getMeasureNum 1");
   t.deepEqual(i.next(), 
     {beat: 1, notes: [{duration: 4, noteType: "undefined"}], rest: true},
     "next");
   t.deepEqual(i.hasNext(), false, "hasNext false");
   t.throws(i.next, "next exception");
-
   t.deepEqual(i.hasPrev(), true, "hasPrev true");
 
   //prev
@@ -44,6 +45,9 @@ test("basic.xml", (t) =>
     {beat: 1, notes:[{duration: 1, noteType: "quarter", pitch: "C4"}]},
     "prev");
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
+
+
+  t.deepEqual(i.getMeasureNum(), 1, "getMeasureNum 1");
 
   t.throws(i.prev, "prev exception");
   t.end();
