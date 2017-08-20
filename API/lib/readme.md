@@ -106,9 +106,21 @@ const grader = Grader(musicXML); // Create a Grader instance from a musicxml str
 grader.assessDynamics();
 // outputs a decimal number based on the grading rubrics below...
 ```
+Grade Level Definitions
+
 ![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/grade_level1.png)
 
-![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/grade_level2.png)
+Choral Grade Levels
+
+![](https://github.com/MegaArman/Toscanini/blob/readmeUpdate/reference_media/choral_gradeLevel.png)
+
+Instrumental Grade Levels
+
+![](https://github.com/MegaArman/Toscanini/blob/readmeUpdate/reference_media/instrumental_gradeLevel.png)
+
+
+
+All grade levels have been based off the Colorado Department of Education Literature Difficulty Level Criteria, linked https://www.coloradoplc.org/files/archives/smartmusicdifficultycorrelations.pdf. 
 
 ### assessDynamics(instrumentName)
 provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
