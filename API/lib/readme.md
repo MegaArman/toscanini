@@ -11,7 +11,7 @@ Toscanini is a library that aims to simplify music score analysis. Currently Tos
 npm install toscanini
 ```
 
-## Toscanini <a name="toscanini"></a>
+## toscanini <a name="toscanini"></a>
 This is the main module, from which facts can be extracted/computed from the music score. 
 
 ```javascript
