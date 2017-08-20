@@ -112,11 +112,11 @@ Grade Level Definitions
 
 Choral Grade Levels
 
-![](https://github.com/MegaArman/Toscanini/blob/readmeUpdate/reference_media/choral_gradeLevel.png)
+![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/choral_gradeLevel.png)
 
 Instrumental Grade Levels
 
-![](https://github.com/MegaArman/Toscanini/blob/readmeUpdate/reference_media/instrumental_gradeLevel.png)
+![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/instrumental_gradeLevel.png)
 
 
 
