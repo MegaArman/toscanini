@@ -2,9 +2,9 @@
 Toscanini is a library that aims to simplify music score analysis. Currently Toscanini's modules only support the [MusicXML](https://en.wikipedia.org/wiki/MusicXML) format for music scores, though various other formats (Ex: Finale, Sibelius, etc) can be converted to MusicXML. Our code is developed/maintained by Virginia Tech Computer Science students. Feel free to raise issues on our GitHub with issues, questions, and idea proposals. 
 
 0. [Installation](#installation)
-1. [Toscanini](#toscanini)
-2. [Toscanini.Iterator](#iterator)
-3. [Toscanini.Grader](#grader)
+1. [toscanini](#toscanini)
+2. [toscanini/Iterator](#iterator)
+3. [toscanini/Grader](#grader)
 
 ## Installation <a name="installation"></a>
 ```
