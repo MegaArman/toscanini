@@ -52,7 +52,7 @@ score result example:
 ```javascript
 ["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
 ```
-### getNumberOfMeasures
+### getNumberOfMeasures()
 returns the number of measures in a score.
 
 ## toscanini/Iterator <a name="iterator"></a>
