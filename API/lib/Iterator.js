@@ -51,7 +51,7 @@ const createIterator = (partsBeatMap) =>
   iterator.getNumberOfMeasures = () =>
   {
     return measures.length;
-  }
+  };
 
   iterator.nextMeasure = () =>
   { 
