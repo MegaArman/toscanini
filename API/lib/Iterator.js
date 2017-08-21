@@ -17,6 +17,11 @@ const createIterator = (partsBeatMap) =>
   let beatMap;
   let beatIndex = -1;
 
+  iterator.getInstrumentNames = () =>
+  {
+    return Object.keys(partsBeatMap);
+  }
+
   iterator.selectInstrument = (instrumentName) =>
   {
     if (instrumentName in partsBeatMap)
@@ -147,15 +152,10 @@ const constructor = (musicxml) =>
           }
 
           //***DURATION IN TERMS OF QUARTERS!***
-
-          //symbol.duration = parseInt(child.findtext(".//duration")) 
           /// divisions;
           currentNote.duration = 
             parseInt(child.findtext(".//duration")) / divisions;
 
-          //symbol.noteType = "";
-          //child.findall(".//dot").forEach(() => symbol.noteType += "dot ");
-          //symbol.noteType += child.findtext(".//type");
           currentNote.noteType = "";
           child.findall(".//dot").forEach(() => currentNote.noteType += "dot ");
           currentNote.noteType += child.findtext(".//type");

@@ -51,6 +51,8 @@ test("basic.xml", (t) =>
 
   t.deepEqual(i.getNumberOfMeasures(), 2, "getNumberOfMeasures");
 
+  t.deepEqual(i.getInstrumentNames(), ["Flute"], "getInstrumentNames");
+
   t.throws(i.prev, "prev exception");
   t.end();
 });
