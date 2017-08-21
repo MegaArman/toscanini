@@ -22,7 +22,7 @@ toscanini.getPitchRange("Flute"); //assuming there is a flute in the score, see 
 
 Currently supports the following queries:
 ### getInstrumentNames()
-gets the name of the instruments in the score (returns as an array)
+gets the names of the instruments in the score (returns as an array)
 
 ### getPitchRange(instrumentName)
 Returns an object like {"minPitch": 30, "maxPitch": 72"} to represent the lowest and highest pitch in terms of midi numbers.
@@ -67,6 +67,10 @@ i.next();
 
 ### selectInstrument(instrumentName)
 The iterator is set to the first measure of the instrument part specified by instrumentName (ex: "Violin")
+Throws an exception if no instrument of instrumentName is found. Use getInstrumentNames() to be safe.
+
+### getInstrumentNames()
+gets the names of the instruments in the score (returns as an array)
 
 ### next()
 The iterator moves to the next "symbol" (note(s) or rest) and returns an object to represent that symbol, for example:
@@ -85,7 +89,6 @@ The iterator moves to the first beat of the next measure, throws an exception if
 ### prevMeasure()
 The iterator moves to the first beat of the previous measure, throws an exception if no previous measure
 
-
 ### hasNext()
 Returns true or false depending on whether or not there is a next symbol. 
 ***Use this to avoid an exception being thrown by .nextMeasure().***
@@ -100,12 +103,11 @@ Returns true or false depending on whether or not there is a previous symbol.
 ### getMeasureNum()
 Returns the measure number currently at
 
-### setMeasureNum()
-Sets the iterator to the measure number specified. 
-***An exception will be thrown if attempting to set to an invalid measure number! The lowest measure number can be is #1***
-
 ### getNumberOfMeasures()
 Returns the number of measures
+
+### setMeasureNum()
+Sets the iterator to the measure number specified. An exception will be thrown if attempting to set to an invalid measure number. The first measure is measure #1
 
 ## toscanini/Grader <a name="grader"></a>
 Uses Toscanini, Grader assesses the difficulty of an entire score or instrument part within a score.
