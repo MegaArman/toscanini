@@ -12,7 +12,7 @@ npm install toscanini
 ```
 
 ## toscanini <a name="toscanini"></a>
-This is the main module, from which facts can be extracted/computed from the music score. 
+This is the main module, from which facts can be extracted/computed from the music score. This module does not provide any explicit means for adding new custom queries (though one certainly could by modifying the source code), rather we've aggregated and coded some of the common queries we've found band directors are interested in. If you would like to make your own queries, check out the toscanini/Iterator section below.
 
 ```javascript
 const Toscanini = require("toscanini"); //gives a factory function
