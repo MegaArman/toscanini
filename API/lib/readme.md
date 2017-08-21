@@ -102,7 +102,10 @@ Returns the measure number currently at
 
 ### setMeasureNum()
 Sets the iterator to the measure number specified. 
-***An exception will be thrown if attempting to set to an invalid measure number!***
+***An exception will be thrown if attempting to set to an invalid measure number! The lowest measure number can be is #1***
+
+### getNumberOfMeasures()
+Returns the number of measures
 
 ## toscanini/Grader <a name="grader"></a>
 Uses Toscanini, Grader assesses the difficulty of an entire score or instrument part within a score.
