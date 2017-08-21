@@ -97,6 +97,13 @@ The iterator moves to the previous symbol be it a note or rest and returns an ob
 Returns true or false depending on whether or not there is a previous symbol.
 ***Use this to avoid an exception being thrown by .prevMeasure().***
 
+### getMeasureNum()
+Returns the measure number currently at
+
+### setMeasureNum()
+Sets the iterator to the measure number specified. 
+***An exception will be thrown if attempting to set to an invalid measure number!***
+
 ## toscanini/Grader <a name="grader"></a>
 Uses Toscanini, Grader assesses the difficulty of an entire score or instrument part within a score.
 
