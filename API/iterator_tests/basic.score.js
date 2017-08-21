@@ -47,7 +47,9 @@ test("basic.xml", (t) =>
   t.deepEqual(i.hasPrev(), false, "hasPrev false");
 
 
-  t.deepEqual(i.getMeasureNum(), 1, "getMeasureNum 1");
+  t.deepEqual(i.getMeasureNum(), 1, "getMeasureNum");
+
+  t.deepEqual(i.getNumberOfMeasures(), 2, "getNumberOfMeasures");
 
   t.throws(i.prev, "prev exception");
   t.end();

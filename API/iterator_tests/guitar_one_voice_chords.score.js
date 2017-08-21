@@ -29,6 +29,7 @@ test(("guitar_one_voice_chords"), (t) =>
              {duration: 1, noteType: "quarter", pitch: "B3"}],
      beat: 2 } , "next is a chord");
 
+  t.deepEqual(i.getNumberOfMeasures(), 2, "getNumberOfMeasures");
   t.end();
 });
 

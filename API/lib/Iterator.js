@@ -6,6 +6,7 @@ const createIterator = (partsBeatMap) =>
   const iterator = {};
   const errors =  
   {
+    "noInstrument": "this instrument is not in the score: ",
     "noNext": "no next exists!",
     "noPrev": "no prev exists!",
     "badMeasure": "measure does not exist!"
@@ -13,7 +14,7 @@ const createIterator = (partsBeatMap) =>
 
   let measures = [];
   let measureNum = 0;
-  let beatMap = measures[0];
+  let beatMap;
   let beatIndex = -1;
 
   iterator.selectInstrument = (instrumentName) =>
@@ -27,8 +28,7 @@ const createIterator = (partsBeatMap) =>
     }
     else
     {
-     //TODO should an error be thrown???
-     return false;
+     throw new Error(errors.noInstrument + instrumentName);
     }
   };
 
@@ -47,6 +47,11 @@ const createIterator = (partsBeatMap) =>
   {
    return (measureNum + 1);
   };
+
+  iterator.getNumberOfMeasures = () =>
+  {
+    return measures.length;
+  }
 
   iterator.nextMeasure = () =>
   { 
