@@ -21,6 +21,8 @@ test(("guitar_one_voice_chords"), (t) =>
   
   i.next();
   i.next();
+
+  t.deepEqual(i.getMeasureNum(), 2, "getMeasureNum 2");
   t.deepEqual(i.next(),
     {notes: [{duration: 1, noteType: "quarter",  pitch: "F#3"}, 
              {duration: 1, noteType: "quarter", pitch: "A3"}, 
