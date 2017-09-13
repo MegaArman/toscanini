@@ -128,7 +128,7 @@ Choral Grade Levels
 
 Instrumental Grade Levels
 
-![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/instrumental_gradeLevel.png)
+![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/instrumental_gradeLevel_cut.png)
 
 
 
