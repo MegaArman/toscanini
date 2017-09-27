@@ -22,4 +22,16 @@ Concertmaster.noteToMidi = (note) =>
   }
 };
 
+Concertmaster.fifthToKey = (fifth) =>
+{
+  const fifthToKeyMap = 
+  {
+    "-6": "Gb", "-5": "Db", "-4":"Ab", "-3": "Eb", "-2": "Bb", "-1": 
+    "F","0": "C","1": "G", "2": "D", "3": "A", "4": "E", "5": "B", "6": "F#"
+  };
+  
+  return fifthToKeyMap[fifth];
+};
+
+
 module.exports = Concertmaster;

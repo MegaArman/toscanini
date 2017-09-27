@@ -12,6 +12,8 @@ const createIterator = (partsBeatMap) =>
     "measureNumber": "measure does not exist: "
   };
 
+  //console.log(JSON.stringify(partsBeatMap));
+
   let measures = [];
   let measureNum = 0;
   let beatMap;
@@ -126,15 +128,21 @@ const constructor = (musicxml) =>
 {
   const etree = et.parse(musicxml);
   const partNames = etree.findall(".//part-name")
-                   .map((partName) => partName.text);
+                    .map((partName) => partName.text); 
+  let partIndex = -1;
 
-  //we accumulate (acc)  measures as we reduce
-  const partsBeatMap = etree.findall(".//part")
-  .reduce((acc, val, indexMeasure) =>
+  //allPartsBeatMap--------------------------------------------------
+  //{"Piano":[
+  //[{"notes":[{"duration":2,"noteType":"half","pitch":"B4"}],"beat":1}
+  const allPartsBeatMap = {};
+ 
+  etree.findall(".//part").forEach((part) =>
   {
+    partIndex++;
     let divisions;
-   
-    acc[partNames[indexMeasure]] = val.findall(".//measure").map((measure) => 
+
+    allPartsBeatMap[partNames[partIndex]] = 
+    part.findall(".//measure").map((measure) => 
     {
       const beatMap = [];
       let currentBeat = 1;
@@ -165,7 +173,8 @@ const constructor = (musicxml) =>
             symbol.beat += (currentBeat % divisions) / divisions;
           }
 
-          //***DURATION IN TERMS OF QUARTERS!***
+          //***DURATION IN TERMS OF QUARTERS!*** 
+          // ^ Makes rhythmic pattern matching simpler
           /// divisions;
           currentNote.duration = 
             parseInt(child.findtext(".//duration")) / divisions;
@@ -201,7 +210,6 @@ const constructor = (musicxml) =>
             });
 
             noteString += octave;
-            //symbol.pitch = [noteString];
             currentNote.pitch = noteString;
           }
 
@@ -242,11 +250,21 @@ const constructor = (musicxml) =>
 
       return beatMap;
     });
+  });
+  //-------------------------------------------allPartsBeatMap
 
-    return acc;
-  }, {});
- 
-  return createIterator(partsBeatMap);
+  //keyMap
+  //{"Flute": [{"measureNum": 23, "key": "Bb"}],...}
+  partIndex = -1;
+  const keyMap = {};
+
+  etree.findall(".//part").forEach((part) =>
+  {
+    partIndex++;
+    keyMap[partNames[partIndex]] = [];
+    console.log("ya", part.findall(".//fifths"));
+  });
+  return createIterator(allPartsBeatMap);
 };
 
 module.exports = constructor;
