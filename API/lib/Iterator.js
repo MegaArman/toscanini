@@ -120,6 +120,8 @@ const createIterator = (partsBeatMap) =>
   return Object.freeze(iterator);
 };
 
+
+//takes MusicXML string and creates objects for an Iterator instance
 const constructor = (musicxml) =>
 {
   const etree = et.parse(musicxml);
@@ -127,11 +129,12 @@ const constructor = (musicxml) =>
                    .map((partName) => partName.text);
 
   //we accumulate (acc)  measures as we reduce
-  const partsBeatMap = etree.findall(".//part").reduce((acc, val, index) =>
+  const partsBeatMap = etree.findall(".//part")
+  .reduce((acc, val, indexMeasure) =>
   {
     let divisions;
    
-    acc[partNames[index]] = val.findall(".//measure").map((measure) => 
+    acc[partNames[indexMeasure]] = val.findall(".//measure").map((measure) => 
     {
       const beatMap = [];
       let currentBeat = 1;
@@ -144,11 +147,9 @@ const constructor = (musicxml) =>
           //this is an eighth note duration"
           let newDivisions = parseInt(child.findtext(".//divisions"));
           
-          console.log("newDivisions", newDivisions); 
           if (newDivisions > 0)
           {
             divisions = newDivisions;
-            console.log("divisions", divisions); 
           }
         }
         else if (child.tag === "note")
@@ -244,7 +245,7 @@ const constructor = (musicxml) =>
 
     return acc;
   }, {});
-   
+ 
   return createIterator(partsBeatMap);
 };
 
