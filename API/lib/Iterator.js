@@ -17,6 +17,11 @@ const createIterator = (partsBeatMap) =>
   let beatMap;
   let beatIndex = -1;
 
+  //iterator.listen = (instrumentName, keyChange, response) =>
+  //{
+  //  response.call(keyChange);
+  //};
+
   iterator.getInstrumentNames = () =>
   {
     return Object.keys(partsBeatMap);
@@ -137,10 +142,18 @@ const constructor = (musicxml) =>
         {
           //"For example, if duration = 1 and divisions = 2, 
           //this is an eighth note duration"
-          divisions = parseInt(child.findtext(".//divisions"));
+          let newDivisions = parseInt(child.findtext(".//divisions"));
+          
+          console.log("newDivisions", newDivisions); 
+          if (newDivisions > 0)
+          {
+            divisions = newDivisions;
+            console.log("divisions", divisions); 
+          }
         }
         else if (child.tag === "note")
         {
+          //single note stuff
           const symbol = {notes:[]}; //a note or a rest
           const currentNote = {};
 
@@ -162,7 +175,6 @@ const constructor = (musicxml) =>
          
           //***the note is constructed:
           symbol.notes.push(currentNote);
-
 
           if (child.findtext("[rest]"))
           {
@@ -209,7 +221,7 @@ const constructor = (musicxml) =>
             {
               beatMap[indexOfExistingBeat].notes.push(symbol.notes[0]);
             }
-            else 
+            else //new beat 
             {
               beatMap.push(symbol);
             }
