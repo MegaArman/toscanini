@@ -1,5 +1,6 @@
 "use strict";
 const et = require("elementtree");
+const Concertmaster = require("./Concertmaster.js");
 
 const createIterator = (partsBeatMap) =>
 {
@@ -11,8 +12,6 @@ const createIterator = (partsBeatMap) =>
     "noPrev": "no prev exists!",
     "measureNumber": "measure does not exist: "
   };
-
-  //console.log(JSON.stringify(partsBeatMap));
 
   let measures = [];
   let measureNum = 0;
@@ -261,9 +260,26 @@ const constructor = (musicxml) =>
   etree.findall(".//part").forEach((part) =>
   {
     partIndex++;
-    keyMap[partNames[partIndex]] = [];
-    console.log("ya", part.findall(".//fifths"));
+    const partName = partNames[partIndex];
+    keyMap[partName] = [];
+
+    let measureNum = -1;
+    part.findall(".//measure").forEach((measure) =>
+    {
+      measureNum++;
+      const fifths = measure.findtext(".//fifths");
+
+      if (fifths !== undefined)
+      {
+        const obj = {};
+        obj.key = Concertmaster.fifthsToKey(fifths);
+        obj.measureNum = measureNum;
+        keyMap[partName].push(obj);
+      }
+    });
   });
+  
+  console.log("keyMap", keyMap);
   return createIterator(allPartsBeatMap);
 };
 

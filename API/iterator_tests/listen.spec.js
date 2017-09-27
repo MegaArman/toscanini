@@ -13,12 +13,7 @@ test("key_change.xml", (t) =>
       .resolve(__dirname, "../scores/key_change.xml")).toString();
   const i =  Iterator(musicXML);
 
-  t.deepEqual(i.selectInstrument("Piano"), true, "has Flute");
-
-  while (i.hasNext())
-  {
-    console.log(i.next());
-  }
+  t.deepEqual(i.selectInstrument("Piano"), true, "has Flute"); 
 
   t.end();
 });
