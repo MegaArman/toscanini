@@ -2,9 +2,9 @@
 const et = require("elementtree");
 const Concertmaster = require("./Concertmaster.js");
 
-const createIterator = (partsBeatMap) =>
+const createIterator = (partsBeatMap, keyMap) =>
 {
-  const iterator = {};
+  //private--------------------------------
   const errors =  
   {
     "noInstrument": "this instrument is not in the score: ",
@@ -12,16 +12,59 @@ const createIterator = (partsBeatMap) =>
     "noPrev": "no prev exists!",
     "measureNumber": "measure does not exist: "
   };
-
+  
+  const activeListeners = {}; 
+  
   let measures = [];
   let measureNum = 0;
   let beatMap;
   let beatIndex = -1;
 
-  //iterator.listen = (instrumentName, keyChange, response) =>
-  //{
-  //  response.call(keyChange);
-  //};
+  const checkEventChange = () =>
+  {
+    console.log("measureNum", measureNum);
+
+    Object.keys(activeListeners).forEach((instrumentName) => 
+    {
+      activeListeners[instrumentName].forEach((obj) =>
+      {
+        //user wants to know of key changes
+        if (obj.musicalChange === "key")
+        {
+          const newKeyChange = keyMap[instrumentName].find((keyChange) =>
+          {
+            //jackpot
+            return keyChange.measureNum === measureNum; 
+          });
+
+          if (newKeyChange !== undefined)
+          {
+            obj.response.call({}, newKeyChange.key);
+          }
+        }
+      });
+    });
+  };
+  //public:--------------------------------
+  const iterator = {};
+  
+  iterator.setMusicalChangeListener = 
+  (instrumentName, musicalChange, response) =>
+  {
+    if (instrumentName in activeListeners)
+    {
+      activeListeners[instrumentName]
+        .push({"musicalChange": musicalChange, "response": response});
+    }
+    else
+    {
+      activeListeners[instrumentName] = []; 
+      activeListeners[instrumentName]
+        .push({"musicalChange": musicalChange, "response": response});
+    }
+
+    console.log(activeListeners);
+  };
 
   iterator.getInstrumentNames = () =>
   {
@@ -72,6 +115,8 @@ const createIterator = (partsBeatMap) =>
     }
     beatMap = measures[++measureNum];
     beatIndex = 0;
+
+    checkEventChange(); 
     return beatMap[0];
   };
 
@@ -263,7 +308,7 @@ const constructor = (musicxml) =>
     const partName = partNames[partIndex];
     keyMap[partName] = [];
 
-    let measureNum = -1;
+    let measureNum = 0;
     part.findall(".//measure").forEach((measure) =>
     {
       measureNum++;
@@ -280,7 +325,7 @@ const constructor = (musicxml) =>
   });
   
   console.log("keyMap", keyMap);
-  return createIterator(allPartsBeatMap);
+  return createIterator(allPartsBeatMap, keyMap);
 };
 
 module.exports = constructor;
