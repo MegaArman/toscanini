@@ -22,8 +22,6 @@ const createIterator = (partsBeatMap, keyMap) =>
 
   const checkEventChange = () =>
   {
-    console.log("measureNum", measureNum);
-
     Object.keys(activeListeners).forEach((instrumentName) => 
     {
       activeListeners[instrumentName].forEach((obj) =>
@@ -33,7 +31,6 @@ const createIterator = (partsBeatMap, keyMap) =>
         {
           const newKeyChange = keyMap[instrumentName].find((keyChange) =>
           {
-            //jackpot
             return keyChange.measureNum === measureNum; 
           });
 
@@ -62,8 +59,6 @@ const createIterator = (partsBeatMap, keyMap) =>
       activeListeners[instrumentName]
         .push({"musicalChange": musicalChange, "response": response});
     }
-
-    console.log(activeListeners);
   };
 
   iterator.getInstrumentNames = () =>
@@ -324,7 +319,6 @@ const constructor = (musicxml) =>
     });
   });
   
-  console.log("keyMap", keyMap);
   return createIterator(allPartsBeatMap, keyMap);
 };
 
