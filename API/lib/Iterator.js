@@ -2,7 +2,7 @@
 const et = require("elementtree");
 const Concertmaster = require("./Concertmaster.js");
 
-const createIterator = (partsBeatMap, keyMap) =>
+const createIterator = (partsBeatMap, etree, partNames) =>
 {
   //private--------------------------------
   const errors =  
@@ -48,6 +48,11 @@ const createIterator = (partsBeatMap, keyMap) =>
   iterator.setMusicalChangeListener = 
   (instrumentName, musicalChange, response) =>
   {
+    if (!(instrumentName in partNames))
+    {
+      throw new Error(errors.noInstrument + instrumentName);
+    }
+    
     if (instrumentName in activeListeners)
     {
       activeListeners[instrumentName]
@@ -59,6 +64,8 @@ const createIterator = (partsBeatMap, keyMap) =>
       activeListeners[instrumentName]
         .push({"musicalChange": musicalChange, "response": response});
     }
+
+
   };
 
   iterator.getInstrumentNames = () =>
@@ -164,10 +171,11 @@ const createIterator = (partsBeatMap, keyMap) =>
 
 //takes MusicXML string and creates objects for an Iterator instance
 const constructor = (musicxml) =>
-{
+{ 
   const etree = et.parse(musicxml);
   const partNames = etree.findall(".//part-name")
-                    .map((partName) => partName.text); 
+                   .map((partName) => partName.text); 
+
   let partIndex = -1;
 
   //allPartsBeatMap--------------------------------------------------
@@ -291,35 +299,8 @@ const constructor = (musicxml) =>
     });
   });
   //-------------------------------------------allPartsBeatMap
-
-  //keyMap
-  //{"Flute": [{"measureNum": 23, "key": "Bb"}],...}
-  partIndex = -1;
-  const keyMap = {};
-
-  etree.findall(".//part").forEach((part) =>
-  {
-    partIndex++;
-    const partName = partNames[partIndex];
-    keyMap[partName] = [];
-
-    let measureNum = 0;
-    part.findall(".//measure").forEach((measure) =>
-    {
-      measureNum++;
-      const fifths = measure.findtext(".//fifths");
-
-      if (fifths !== undefined)
-      {
-        const obj = {};
-        obj.key = Concertmaster.fifthsToKey(fifths);
-        obj.measureNum = measureNum;
-        keyMap[partName].push(obj);
-      }
-    });
-  });
   
-  return createIterator(allPartsBeatMap, keyMap);
+  return createIterator(allPartsBeatMap, etree, partNames);
 };
 
 module.exports = constructor;
