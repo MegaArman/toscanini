@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "buildjs": "browserify app.js -o bundle.js",
+    "buildjs": "node_modules/browserify/bin/cmd.js app.js -o bundle.js",
     "buildcss": "node-sass --output-style=compressed ./_styles.scss ./styles.css",
     "watchjs": "onchange \"app.js\" -- browserify app.js -o bundle.js && ugly",
     "watchscss": "onchange \"*.scss\" -- npm run buildcss",
