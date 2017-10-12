@@ -30,7 +30,7 @@ returns the names of the instruments in the score as an array, ex:
 ### getPitchRange(instrumentName)
 returns an object to represent the lowest and highest pitch in terms of midi numbers for an instrument or the entire score if no instrumentName is provided, ex:
 ```javascript
-{"minPitch": 30, "maxPitch": 72"}
+{"minPitch": 30, "maxPitch": 72}
 ```
 
 ### getKeySignatures(instrumentName)
