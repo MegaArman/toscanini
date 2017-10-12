@@ -43,13 +43,13 @@ const createToscanini = (etree) =>
       dynamic = dynamic._children[0].tag;
       if (dynamic !== "other-dynamics")
       {
-        const newDynamic = {dynamic: dynamic};
+        const newDynamic = dynamic;
 
         let isIn = false;
 
         finalDynamics.forEach((dynamic) =>
         {
-          if (dynamic.dynamic === newDynamic.dynamic)
+          if (dynamic === newDynamic)
           {
             isIn = true;
           }
@@ -71,13 +71,13 @@ const createToscanini = (etree) =>
 
       if (dynamic !== "stop" && dynamic !== "start")
       {
-        const newDynamic = {dynamic: dynamic};
+        const newDynamic = dynamic;
 
         let isIn = false;
 
         finalDynamics.forEach((dynamic) =>
         {
-          if (dynamic.dynamic === newDynamic.dynamic)
+          if (dynamic === newDynamic)
           {
             isIn = true;
           }
@@ -112,13 +112,13 @@ const createToscanini = (etree) =>
         {
           dynamic = "descrescendo";
         }
-        const newDynamic = {dynamic: dynamic};
+        const newDynamic = dynamic;
 
         let isIn = false;
 
         finalDynamics.forEach((dynamic) =>
         {
-          if (dynamic.dynamic === newDynamic.dynamic)
+          if (dynamic === newDynamic)
           {
             isIn = true;
           }

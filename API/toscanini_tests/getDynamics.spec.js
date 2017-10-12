@@ -11,21 +11,21 @@ test("dynamics_test test", (t) =>
   const toscanini =  Toscanini(musicXML);
 
   {
-    const expected = [{dynamic: "pp"}, {dynamic: "f"}, {dynamic: "mp"},
-      {dynamic: "ff"}, {dynamic: "mf"}, {dynamic: "crescendo"}];
+    const expected = [ "pp",  "f",  "mp",
+       "ff",  "mf",  "crescendo"];
     const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "getDynamics score");
   }
 
   {
-    const expected = [{dynamic: "pp"}, {dynamic: "f"}, {dynamic: "mp"},
-      {dynamic: "crescendo"}];
+    const expected = [ "pp",  "f",  "mp",
+       "crescendo"];
     const actual = toscanini.getDynamics("Violin");
     t.deepEqual(actual, expected, "getDynamics Violin");
   }
 
   {
-    const expected = [{dynamic: "ff"}, {dynamic: "f"}, {dynamic: "mf"}];
+    const expected = [ "ff",  "f",  "mf"];
     const actual = toscanini.getDynamics("Violoncello");
     t.deepEqual(actual, expected, "getDynamics Violoncello");
   }
@@ -41,19 +41,19 @@ test("dynamics_test test", (t) =>
   const toscanini =  Toscanini(musicXML);
 
   {
-    const expected = [{ dynamic: "p"},
-      { dynamic: "pp"}, { dynamic: "ppp"},
-      { dynamic: "pppp"}, { dynamic: "ppppp"},
-      { dynamic: "pppppp"}, { dynamic: "f"},
-      { dynamic: "ff"}, { dynamic: "fff"},
-      { dynamic: "ffff"}, { dynamic: "fffff"},
-      { dynamic: "ffffff"}, { dynamic: "mp"},
-      { dynamic: "mf"}, { dynamic: "sf"},
-      { dynamic: "sfp"}, { dynamic: "sfpp"},
-      { dynamic: "fp"}, { dynamic: "rf"},
-      { dynamic: "rfz"}, { dynamic: "sfz"},
-      { dynamic: "sffz"}, { dynamic: "fz"},
-      { dynamic: "crescendo"} ];
+    const expected = [ "p",
+       "pp",  "ppp",
+       "pppp",  "ppppp",
+       "pppppp",  "f",
+       "ff",  "fff",
+       "ffff",  "fffff",
+       "ffffff",  "mp",
+       "mf",  "sf",
+       "sfp",  "sfpp",
+       "fp",  "rf",
+       "rfz",  "sfz",
+       "sffz",  "fz",
+       "crescendo" ];
     const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "all dynamics 31a Directions score");
   }
