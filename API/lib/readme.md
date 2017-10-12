@@ -22,26 +22,44 @@ toscanini.getPitchRange("Flute"); //assuming there is a flute in the score, see 
 
 Currently supports the following queries:
 ### getInstrumentNames()
-gets the names of the instruments in the score (returns as an array)
+returns the names of the instruments in the score as an array, ex:
+```javascript
+[ "Voice", "Piano" ]
+```
 
 ### getPitchRange(instrumentName)
-Returns an object like {"minPitch": 30, "maxPitch": 72"} to represent the lowest and highest pitch in terms of midi numbers.
-if no instrumentName is provided (ex: "Flute"), gets the min and max pitches of the entire score.
+returns an object to represent the lowest and highest pitch in terms of midi numbers for an instrument or the entire score if no instrumentName is provided, ex:
+```javascript
+{"minPitch": 30, "maxPitch": 72"}
+```
 
 ### getKeySignatures(instrumentName)
-gets the key signatures of the whole piece (returns an array) or for a particular instrument
+returns the key signatures for a particular instrument as an array, or the entire score if no instrumentName is provided, ex:
+```javascript
+["Ab", "Eb"]
+```
   
 ### getTempos()
-returns an array containing all tempos in the score
+returns an array containing all tempos in the score, ex:
+```javascript
+[105, 90]
+```
 
 ### getTimeSignatures()
-returns an array of objects like [{ beatType: 4, beats: 4}, {beatType: 8, beats: 9}] to show the score has time signatures 4/4 and 9/8 (in any instrument part). Note that node.js may reorder keys in objects.
+returns an array of objects to represent the time signatures, ex:
+```javascript
+[{ beatType: 4, beats: 4}, {beatType: 8, beats: 9}] 
+```
+to show the score has time signatures 4/4 and 9/8 (in any instrument part). Note that node.js may reorder keys in objects.
 
 ### getDynamics(instrumentName)
-returns an array of dynamics for a particular instrument, or all dynamics in a score
+returns an array of dynamics for a particular instrument, or for the score if no instrumentName is provided, ex:
+```javascript
+["ff",  "f",  "mf"] 
+```
 
 ### getRhythmComplexity(instrumentName)
-returns an array of note lengths associated with a score or instrument, returning a string or a series of strings, with a number representing the number of dots associated with that note.
+returns an array of note lengths for a particular instrument or the entire score if no instrumentName is provided,ex:
 
 ex.
 half = half 0
