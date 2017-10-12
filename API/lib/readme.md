@@ -1,5 +1,5 @@
 # toscanini 
-Arturo Toscanini was one of the greatest conductors of the 20th century. His photographic memory allowed him to answer questions by his performers regarding their parts in entire performances, without physically examining the scores. 
+Arturo Toscanini was one of the greatest conductors of the 20th century. His photographic memory allowed him to answer his performers questions regarding their parts in entire performances, without physically examining the scores. 
 
 Inspired by Arturo Toscanini's great ability and skill, we made this module to answer some of the most common questions about music scores, particularly with band directors, performers, and musicologists in mind.
 Currently, this module only supports [MusicXML](https://en.wikipedia.org/wiki/MusicXML), though various other formats (Ex: Finale, Sibelius, etc) can be converted to MusicXML. See also https://www.npmjs.com/package/musicxml-iterator.
