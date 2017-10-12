@@ -9,6 +9,9 @@
     "type": "git",
     "url": "https://github.com/MegaArman/Toscanini/tree/master/API/lib"
   },
+  "files":[
+    "lib"
+  ],
   "scripts": {
     "lint": "./node_modules/.bin/eslint --cache ./lib/*.js tests/*.js",
     "test": "npm run lint && nyc tape tests/*.js | tap-nyc"
