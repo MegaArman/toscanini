@@ -10,10 +10,8 @@
     "url": "https://github.com/MegaArman/Toscanini/tree/master/API/lib"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint --cache ./lib/*.js toscanini_tests/*.js grade_level_tests/*.js",
-    "test": "npm run lint && nyc tape toscanini_tests/*.js | tap-nyc",
-    "gt": "npm run lint && nyc tape grade_level_tests/*.js | tap-nyc",
-    "it": "npm run lint && nyc tape iterator_tests/*.js | tap-nyc"
+    "lint": "./node_modules/.bin/eslint --cache ./lib/*.js tests/*.js",
+    "test": "npm run lint && nyc tape tests/*.js | tap-nyc"
   },
   "keywords": [
     "toscanini",
@@ -26,5 +24,11 @@
   ],
   "dependencies": {
     "elementtree": "^0.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "nyc": "^11.2.1",
+    "tap-nyc": "^1.0.3",
+    "tape": "^4.8.0"
   }
 }
