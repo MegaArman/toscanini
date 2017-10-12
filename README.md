@@ -5,7 +5,7 @@ Inspired by Arturo Toscanini's great ability and skill, we made this module to a
 Currently, this module only supports [MusicXML](https://en.wikipedia.org/wiki/MusicXML), though various other formats (Ex: Finale, Sibelius, etc) can be converted to MusicXML. See also https://www.npmjs.com/package/musicxml-iterator.
 
 ## Demo
-https://megaarman.github.io/Toscanini/
+https://megaarman.github.io/toscanini/
 
 ## Installation <a name="installation"></a>
 ```
