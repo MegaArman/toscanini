@@ -62,9 +62,10 @@ returns an array of dynamics for a particular instrument, or for the score if no
 returns an array of objects representing the note types that appear for a particular instrument or for the entire score if no instrumentName is provided:
 
 ```javascript
-[{dotted: 0, type: "whole"},
- {dotted: 0, type: "half"}, {dotted: 1, type: "quarter"},
+[{dotted: 0, type: "whole"}, {dotted: 0, type: "half"}, {dotted: 1, type: "quarter"},
  {dotted: 1, type: "half"}, {dotted: 3, type: "quarter"}]
 ```
+We can see from this example that the part had whole notes, half notes, dotted quarters, dotted halfs, and triple dotted quarters (a very particular composer indeed).
+
 ### getNumberOfMeasures()
 returns the number of measures in a score.
