@@ -1,13 +1,13 @@
 {
   "name": "toscanini",
   "version": "1.0.4",
-  "description": "A library for music score analysis",
-  "main": "Toscanini.js",
+  "description": "A music score deep search tool",
+  "main": "./lib/Toscanini.js",
   "author": "Arman Bahraini, Galina Belolipetski",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MegaArman/Toscanini/tree/master/API/lib"
+    "url": "https://github.com/MegaArman/toscanini"
   },
   "files":[
     "lib"
