@@ -1,18 +1,18 @@
-#  Toscanini "a library for music score analysis"
-Toscanini is a library that aims to simplify music score analysis. Currently Toscanini's modules only support the [MusicXML](https://en.wikipedia.org/wiki/MusicXML) format for music scores, though various other formats (Ex: Finale, Sibelius, etc) can be converted to MusicXML. Our code is developed/maintained by Virginia Tech Computer Science students. Feel free to raise issues on our GitHub for bugs, questions, and idea proposals. 
+# toscanini 
+Arturo Toscanini was one of the greatest conductors of the 20th century. His photographic memory allowed him to answer questions by his performers regarding their parts in entire performances, without physically examining the scores. 
 
-0. [Installation](#installation)
-1. [toscanini](#toscanini)
-2. [toscanini/Iterator](#iterator)
-3. [toscanini/Grader](#grader)
+Inspired by Arturo Toscanini's great ability and skill, we made this module to answer some of the most common questions about music scores, particularly with band directors, performers, and musicologists in mind.
+Currently, this module only supports [MusicXML](https://en.wikipedia.org/wiki/MusicXML), though various other formats (Ex: Finale, Sibelius, etc) can be converted to MusicXML. See also https://www.npmjs.com/package/musicxml-iterator.
+
+## Demo
+https://megaarman.github.io/Toscanini/
 
 ## Installation <a name="installation"></a>
 ```
 npm install toscanini
 ```
 
-## toscanini <a name="toscanini"></a>
-This is the main module, from which facts can be extracted/computed from the music score. This module does not provide any explicit means for adding new custom queries (though one certainly could by modifying the source code), rather we've aggregated and coded some of the common queries we've found band directors are interested in. If you would like to make your own queries, check out the toscanini/Iterator section below.
+## Usage
 
 ```javascript
 const Toscanini = require("toscanini"); //gives a factory function
@@ -54,100 +54,3 @@ score result example:
 ```
 ### getNumberOfMeasures()
 returns the number of measures in a score.
-
-## toscanini/Iterator <a name="iterator"></a>
-This module aims to make melodic, harmonic, and rhythmic analysis easier by abstracting away the necessity of parsing MusicXML in the form of an Iterator.
-
-```javascript
-const Iterator = require("toscanini/Iterator");
-const i = Iterator(musicXML); //create an Iterator instance from a MusicXML string
-i.selectInstrument("Guitar");
-i.next();
-```
-
-### selectInstrument(instrumentName)
-The iterator is set to the first measure of the instrument part specified by instrumentName (ex: "Violin")
-Throws an exception if no instrument of instrumentName is found. Use getInstrumentNames() to be safe.
-
-### getInstrumentNames()
-gets the names of the instruments in the score (returns as an array)
-
-### next()
-The iterator moves to the next "symbol" (note(s) or rest) and returns an object to represent that symbol, for example:
-    
-```javascript
-{notes: [{duration: 1, noteType: "quarter", pitch: "B3"},
-         {duration: 1, noteType: "quarter", pitch: "D4"}],
- beat: 3};
-```
-
-So the next thing that the player sees to play in the above example is a B3 and D4, both quarter notes, hit on the downbeat of beat 3.
-
-### nextMeasure()
-The iterator moves to the first beat of the next measure, throws an exception if no next measure
-
-### prevMeasure()
-The iterator moves to the first beat of the previous measure, throws an exception if no previous measure
-
-### hasNext()
-Returns true or false depending on whether or not there is a next symbol. 
-***Use this to avoid an exception being thrown by .nextMeasure().***
-
-### prev()
-The iterator moves to the previous symbol be it a note or rest and returns an object to represent that symbol
-
-### hasPrev()
-Returns true or false depending on whether or not there is a previous symbol.
-***Use this to avoid an exception being thrown by .prevMeasure().***
-
-### getMeasureNum()
-Returns the measure number currently at
-
-### getNumberOfMeasures()
-Returns the number of measures
-
-### setMeasureNum()
-Sets the iterator to the measure number specified. An exception will be thrown if attempting to set to an invalid measure number. The first measure is measure #1
-
-## toscanini/Grader <a name="grader"></a>
-Uses Toscanini, Grader assesses the difficulty of an entire score or instrument part within a score.
-
-```javascript
-const Grader = require("toscanini/Grader");
-const grader = Grader(musicXML); // Create a Grader instance from a musicxml string
-grader.assessDynamics();
-// outputs a decimal number based on the grading rubrics below...
-```
-Grade Level Definitions
-
-![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/grade_level1.png)
-
-Choral Grade Levels
-
-![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/choral_gradeLevel.png)
-
-Instrumental Grade Levels
-
-![](https://raw.githubusercontent.com/MegaArman/Toscanini/master/reference_media/instrumental_gradeLevel_cut.png)
-
-
-
-All grade levels have been based off the Colorado Department of Education Literature Difficulty Level Criteria, linked https://www.coloradoplc.org/files/archives/smartmusicdifficultycorrelations.pdf. 
-
-### assessDynamics(instrumentName)
-provides an assessment, grading from 1-6, of dynamics in a score, with instrument specification
-
-### assessDynamicsChoral(instrument)
-provides an individual instrument assessment, grading from 1-6, of dynamics for a choral instrument
-
-### assessDynamicsInstrument(instrument)
-provides an individual instrument assessment, grading from 1-6, of dynamics for an instrument
-
-### assessMeter(instrumentName)
-provides an assessment, grading from 1-6, of meter in a score, with instrument specification
-
-### assessRhythmicComplexity(instrumentName)
-provides an assessment, grading from 1-6, of rhythmic complexity in a score, with instrument specification
-
-### assessTempo(instrumentName)
-provides an assessment, grading from 1-6, of tempo in a score, with instrument specification
