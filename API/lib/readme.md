@@ -59,16 +59,12 @@ returns an array of dynamics for a particular instrument, or for the score if no
 ```
 
 ### getRhythmComplexity(instrumentName)
-returns an array of note lengths for a particular instrument or the entire score if no instrumentName is provided,ex:
+returns an array of objects representing the note types that appear for a particular instrument or for the entire score if no instrumentName is provided:
 
-ex.
-half = half 0
-dotted half = half 1
-double dotted half = half 2
-
-score result example: 
 ```javascript
-["half 1", "quarter 0", "quarter 1", "eighth 0", "whole 0"];
+[{dotted: 0, type: "whole"},
+ {dotted: 0, type: "half"}, {dotted: 1, type: "quarter"},
+ {dotted: 1, type: "half"}, {dotted: 3, type: "quarter"}]
 ```
 ### getNumberOfMeasures()
 returns the number of measures in a score.
