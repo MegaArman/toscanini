@@ -1,5 +1,5 @@
 //suggest Google Chrome======================
-alert('NOTE: This app has only been tested with Google Chrome');
+alert('NOTE: This app has only been tested with Firefox and Chrome');
 //===========================================
 
 let xml2js = require('xml2js');
