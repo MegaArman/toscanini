@@ -51,7 +51,7 @@ test("dynamics_test test", (t) =>
        "sfp",  "sfpp",
        "fp",  "rf",
        "rfz",  "sfz",
-       "sffz",  "fz", "other-dynamics"];
+       "sffz",  "fz", "abc-ffz"];
     const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "all dynamics 31a Directions score");
   }
