@@ -12,14 +12,13 @@ test("dynamics_test test", (t) =>
 
   {
     const expected = [ "pp",  "f",  "mp",
-       "ff",  "mf",  "crescendo"];
+       "ff",  "mf"];
     const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "getDynamics score");
   }
 
   {
-    const expected = [ "pp",  "f",  "mp",
-       "crescendo"];
+    const expected = [ "pp",  "f",  "mp"];
     const actual = toscanini.getDynamics("Violin");
     t.deepEqual(actual, expected, "getDynamics Violin");
   }
@@ -52,8 +51,7 @@ test("dynamics_test test", (t) =>
        "sfp",  "sfpp",
        "fp",  "rf",
        "rfz",  "sfz",
-       "sffz",  "fz",
-       "crescendo" ];
+       "sffz",  "fz", "other-dynamics"];
     const actual = toscanini.getDynamics();
     t.deepEqual(actual, expected, "all dynamics 31a Directions score");
   }
