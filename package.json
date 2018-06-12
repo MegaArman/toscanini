@@ -1,6 +1,6 @@
 {
   "name": "toscanini",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A music score deep search tool",
   "main": "./lib/Toscanini.js",
   "author": "Arman Bahraini, Galina Belolipetski",
