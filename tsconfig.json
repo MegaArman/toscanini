@@ -8,8 +8,6 @@
         "moduleResolution": "node",            
        "esModuleInterop": true                    
     },
-   "include": [
-      "lib"
-    ]
+   "include": []
 }
 
